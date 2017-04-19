@@ -10,6 +10,7 @@
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B61EA75EC900BDAF2C /* ExposureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842B51EA75EC900BDAF2C /* ExposureTests.swift */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		76A842C21EA7604F00BDAF2C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 76A842C11EA7604F00BDAF2C /* Cartfile */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		76A842B01EA75EC900BDAF2C /* ExposureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExposureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842B51EA75EC900BDAF2C /* ExposureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureTests.swift; sourceTree = "<group>"; };
 		76A842B71EA75EC900BDAF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76A842C11EA7604F00BDAF2C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		76A842A91EA75EC900BDAF2C /* Exposure */ = {
 			isa = PBXGroup;
 			children = (
+				76A842C11EA7604F00BDAF2C /* Cartfile */,
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 			);
@@ -181,6 +184,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76A842C21EA7604F00BDAF2C /* Cartfile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +406,7 @@
 				76A842BD1EA75EC900BDAF2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		76A842BE1EA75EC900BDAF2C /* Build configuration list for PBXNativeTarget "ExposureTests" */ = {
 			isa = XCConfigurationList;
@@ -410,6 +415,7 @@
 				76A842C01EA75EC900BDAF2C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
