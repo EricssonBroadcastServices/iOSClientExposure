@@ -11,8 +11,6 @@
 		76A842B61EA75EC900BDAF2C /* ExposureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842B51EA75EC900BDAF2C /* ExposureTests.swift */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76A842C21EA7604F00BDAF2C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 76A842C11EA7604F00BDAF2C /* Cartfile */; };
-		76A842C61EA7653600BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842C41EA7653600BDAF2C /* Alamofire.framework */; };
-		76A842C71EA7653600BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842C51EA7653600BDAF2C /* SwiftyJSON.framework */; };
 		76A842EB1EA7667D00BDAF2C /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842CB1EA7667D00BDAF2C /* DeviceInfo.swift */; };
 		76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842CD1EA7667D00BDAF2C /* Anonymous.swift */; };
 		76A842ED1EA7667D00BDAF2C /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842CE1EA7667D00BDAF2C /* Login.swift */; };
@@ -33,6 +31,8 @@
 		76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E51EA7667D00BDAF2C /* ExposureResponseMessage.swift */; };
 		76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */; };
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
+		76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */; };
+		76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +53,6 @@
 		76A842B51EA75EC900BDAF2C /* ExposureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureTests.swift; sourceTree = "<group>"; };
 		76A842B71EA75EC900BDAF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		76A842C11EA7604F00BDAF2C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = SOURCE_ROOT; };
-		76A842C41EA7653600BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
-		76A842C51EA7653600BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		76A842CB1EA7667D00BDAF2C /* DeviceInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		76A842CD1EA7667D00BDAF2C /* Anonymous.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Anonymous.swift; sourceTree = "<group>"; };
 		76A842CE1EA7667D00BDAF2C /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -75,6 +73,8 @@
 		76A842E51EA7667D00BDAF2C /* ExposureResponseMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureResponseMessage.swift; sourceTree = "<group>"; };
 		76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchServerTime.swift; sourceTree = "<group>"; };
 		76A842EA1EA7667D00BDAF2C /* ServerTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTime.swift; sourceTree = "<group>"; };
+		76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
+		76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A842C61EA7653600BDAF2C /* Alamofire.framework in Frameworks */,
-				76A842C71EA7653600BDAF2C /* SwiftyJSON.framework in Frameworks */,
+				76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */,
+				76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,8 +146,8 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				76A842C41EA7653600BDAF2C /* Alamofire.framework */,
-				76A842C51EA7653600BDAF2C /* SwiftyJSON.framework */,
+				76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */,
+				76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -299,7 +299,6 @@
 				76A842A31EA75EC900BDAF2C /* Frameworks */,
 				76A842A41EA75EC900BDAF2C /* Headers */,
 				76A842A51EA75EC900BDAF2C /* Resources */,
-				76A842C81EA7655000BDAF2C /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -386,25 +385,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		76A842C81EA7655000BDAF2C /* Carthage */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-			);
-			name = Carthage;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		76A842A21EA75EC900BDAF2C /* Sources */ = {
