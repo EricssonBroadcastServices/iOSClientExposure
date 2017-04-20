@@ -45,6 +45,10 @@ public enum HTTPMethod {
     }
 }
 
+struct testStruct {
+    let test: String
+}
+
 let sessionManager: SessionManager = {
     let configuration = URLSessionConfiguration.default
     configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
