@@ -12,7 +12,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BFDE0505-122B-4EB9-910F-4DB6639E2D0F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/Externals\/Nimble\/",
+    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Nimble\/",
     "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/",
     "214A69DBE68449124238BBE07F858F4905887B1B" : "iOSClientExposure\/",
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "iOSClientExposure\/Carthage\/Checkouts\/SwiftyJSON\/",
