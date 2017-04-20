@@ -47,6 +47,7 @@ public enum HTTPMethod {
 
 struct testStruct {
     let test: String
+    let more: Int
 }
 
 let sessionManager: SessionManager = {
