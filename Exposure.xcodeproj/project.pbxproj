@@ -37,6 +37,7 @@
 		76BBFB7A1EA8C11F001DBDDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFB791EA8C11F001DBDDB /* Nimble.framework */; };
 		76BBFB7C1EA8CE80001DBDDB /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */; };
 		76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */; };
+		76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		76BBFB791EA8C11F001DBDDB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
 		76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = SOURCE_ROOT; };
 		76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoSpec.swift; sourceTree = "<group>"; };
+		76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 			children = (
 				76A842B71EA75EC900BDAF2C /* Info.plist */,
 				76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */,
+				76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
