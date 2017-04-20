@@ -38,6 +38,7 @@
 		76BBFB7C1EA8CE80001DBDDB /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */; };
 		76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */; };
 		76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */; };
+		76BBFBC31EA8FA8C001DBDDB /* AnonymousSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBC21EA8FA8C001DBDDB /* AnonymousSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = SOURCE_ROOT; };
 		76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoSpec.swift; sourceTree = "<group>"; };
 		76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentSpec.swift; sourceTree = "<group>"; };
+		76BBFBC21EA8FA8C001DBDDB /* AnonymousSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				76A842B71EA75EC900BDAF2C /* Info.plist */,
 				76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */,
 				76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */,
+				76BBFBC21EA8FA8C001DBDDB /* AnonymousSpec.swift */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 			files = (
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */,
+				76BBFBC31EA8FA8C001DBDDB /* AnonymousSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
