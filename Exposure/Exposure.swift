@@ -85,31 +85,3 @@ extension Exposure where Parameters == JSON?, Headers == HTTPHeaders? {
         }
     }
 }
-
-// MARK: Temporary testing
-func test(env: Environment) {
-    Login(username: "blixtuser1",
-          password: "blixtuser1",
-          environment: env)
-        .request(.post)
-        .validate()
-        .mapError{ ExposureError.generalError(error: $0.0) }
-        .response{ (response: ExposureResponse<Credentials>) in
-            
-    }
-}
-
-func register(credentials: Credentials, in env: Environment) {
-    guard let sessionToken = credentials.sessionToken else { return }
-    
-    let playRequest = PlayRequest(drm: .edrm, format: .hls)
-    PlayVod(assetId: "testAsset",
-            playRequest: playRequest,
-            environment: env,
-            sessionToken: sessionToken)
-        .request(.post)
-        .validate(statusCode: 200..<299)
-        .response{ (response: ExposureResponse<PlaybackEntitlement>) in
-            
-    }
-}
