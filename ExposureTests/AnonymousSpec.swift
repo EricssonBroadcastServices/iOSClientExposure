@@ -13,13 +13,14 @@ import Nimble
 
 class AnonymousSpec: QuickSpec {
     override func spec() {
+        let base = "https://exposure.empps.ebsd.ericsson.net"
+        let customer = "BlixtGroup"
+        let businessUnit = "Blixt"
+        let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+        
+        let anonymous = Anonymous(environment: env)
+        
         describe("Anonymous") {
-            let base = "http://base.url.com"
-            let customer = "TestCustomer"
-            let businessUnit = "TestBusinessUnit"
-            let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
-            
-            let anonymous = Anonymous(environment: env)
             
             it("should have no headers") {
                 expect(anonymous.headers).to(beNil())
@@ -33,6 +34,48 @@ class AnonymousSpec: QuickSpec {
             it("should generate paramters") {
                 let json = anonymous.deviceInfo.toJSON()
                 expect(anonymous.parameters.count).to(equal(json.count))
+            }
+        }
+        
+        describe("Anonymous Login Response") {
+            // http://httpbin.org/
+            
+            var request: URLRequest?
+            var response: URLResponse?
+            var data: Data?
+            var credentials: Credentials?
+            var token: SessionToken?
+            
+            it("should eventually return a response") {
+                anonymous
+                    .request(.post)
+                    .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        request = exposureResponse.request
+                        response = exposureResponse.response
+                        data = exposureResponse.data
+                        credentials = exposureResponse.value
+                        token = credentials?.sessionToken
+                }
+                
+                expect(request).toEventuallyNot(beNil())
+                expect(response).toEventuallyNot(beNil())
+                expect(data).toEventuallyNot(beNil())
+                expect(credentials).toEventuallyNot(beNil())
+                expect(token).toEventuallyNot(beNil())
+            }
+            
+            it("should eventually return an error on invalid endpoint") {
+                let invalidEnv = Environment(baseUrl: base, customer: "", businessUnit: "")
+                let invalidAnonymous = Anonymous(environment: invalidEnv)
+                
+                var error: Error?
+                invalidAnonymous
+                    .request(.post)
+                    .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        error = exposureResponse.error
+                }
+                
+                expect(error).toEventuallyNot(beNil())
             }
         }
     }
