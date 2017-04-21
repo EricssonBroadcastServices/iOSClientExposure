@@ -38,7 +38,7 @@ public struct PlayRequest {
 }
 
 extension PlayRequest: JSONEncodable {
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String: Any] {
         return [
             JSONKeys.drm.rawValue: drm.rawValue,
             JSONKeys.format.rawValue: format.rawValue

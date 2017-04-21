@@ -27,7 +27,7 @@ public struct PlayVod: Exposure {
         return environment.apiUrl + "/entitlement/" + assetId + "/play"
     }
     
-    public var parameters: JSON {
+    public var parameters: [String: Any] {
         return playRequest.toJSON()
     }
     

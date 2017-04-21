@@ -17,7 +17,7 @@ public struct EDRMConfiguration {
 }
 
 extension EDRMConfiguration: ExposureConvertible {
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
         ownerId = actualJSON[JSONKeys.ownerId.rawValue].string
         userToken = actualJSON[JSONKeys.userToken.rawValue].string

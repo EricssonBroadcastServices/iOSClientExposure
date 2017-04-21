@@ -9,14 +9,12 @@
 import Foundation
 import Alamofire
 
-public typealias JSON = [String: Any]
-
 public protocol ExposureConvertible {
-    init?(json: JSON)
+    init?(json: Any)
 }
 
 public protocol JSONEncodable {
-    func toJSON() -> JSON
+    func toJSON() -> [String: Any]
 }
 
 public protocol Exposure {
@@ -52,7 +50,7 @@ let sessionManager: SessionManager = {
 }()
 
 // MARK: - REST API
-extension Exposure where Parameters == JSON, Headers == HTTPHeaders? {
+extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
     
     public func request(_ method: HTTPMethod) -> ExposureRequest {
         let dataRequest = sessionManager
@@ -65,7 +63,7 @@ extension Exposure where Parameters == JSON, Headers == HTTPHeaders? {
     }
 }
 
-extension Exposure where Parameters == JSON?, Headers == HTTPHeaders? {
+extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
     public func request(_ method: HTTPMethod) -> ExposureRequest {
         if let params = parameters {
             let dataRequest = sessionManager

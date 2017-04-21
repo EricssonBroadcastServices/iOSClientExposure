@@ -18,7 +18,7 @@ public struct Anonymous: Exposure {
         return environment.apiUrl + "/auth/anonymous"
     }
     
-    public var parameters: JSON {
+    public var parameters: [String: Any] {
         return deviceInfo.toJSON()
     }
     

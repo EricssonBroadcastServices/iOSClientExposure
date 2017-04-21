@@ -26,7 +26,7 @@ public struct Credentials {
 }
 
 extension Credentials: ExposureConvertible {
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJson = SwiftyJSON.JSON(json)
         guard let jSessionToken = SessionToken(value: actualJson[JSONKeys.sessionToken.rawValue].string) else { return nil }
         
@@ -49,7 +49,7 @@ extension Credentials: ExposureConvertible {
         
     }
     
-    public func toJson() -> JSON {
+    public func toJson() -> [String: Any] {
         var json: [String: Any] = [:]
         if let sessionToken = sessionToken { json[JSONKeys.sessionToken.rawValue] = sessionToken.value }
         if let crmToken = crmToken { json[JSONKeys.crmToken.rawValue] = crmToken }
