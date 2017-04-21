@@ -183,32 +183,6 @@ class AnonymousSpec: QuickSpec {
                     expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
                 }
             }
-            
-            context("Failure with bad responseJson") {
-                let invalidResponseJson = [["Invalid":"responseJson"]]
-                beforeEach {
-                    self.stub(uri(anonymous.endpointUrl), json(invalidResponseJson))
-                    
-                    anonymous
-                        .request(.post)
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
-                            request = exposureResponse.request
-                            response = exposureResponse.response
-                            data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
-                            error = exposureResponse.error
-                    }
-                }
-                
-                it("should thrown objectSerialization error with invalid json response") {
-                    expect(data).toEventuallyNot(beNil())
-                    expect(credentials).toEventually(beNil())
-                    expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: invalidResponseJson))))
-                }
-            }
         }
     }
 }
