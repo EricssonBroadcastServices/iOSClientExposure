@@ -18,9 +18,12 @@ public struct FairplayConfiguration {
 extension FairplayConfiguration: ExposureConvertible {
     public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
-        secondaryMediaLocator = actualJSON[JSONKeys.secondaryMediaLocator.rawValue].string
-        certificateUrl = actualJSON[JSONKeys.certificateUrl.rawValue].string
-        licenseAcquisitionUrl = actualJSON[JSONKeys.licenseAcquisitionUrl.rawValue].string
+        guard let secondaryMediaLocator = actualJSON[JSONKeys.secondaryMediaLocator.rawValue].string,
+            let certificateUrl = actualJSON[JSONKeys.certificateUrl.rawValue].string,
+            let licenseAcquisitionUrl = actualJSON[JSONKeys.licenseAcquisitionUrl.rawValue].string else { return nil }
+        self.secondaryMediaLocator = secondaryMediaLocator
+        self.certificateUrl = certificateUrl
+        self.licenseAcquisitionUrl = licenseAcquisitionUrl
     }
     
     internal enum JSONKeys: String {
