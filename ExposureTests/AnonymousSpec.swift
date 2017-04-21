@@ -71,11 +71,9 @@ class AnonymousSpec: QuickSpec {
                 token = nil
                 date = nil
             }
-            /*
+            
             context("Success") {
                 beforeEach {
-                    print(expectedJson)
-                    
                     self.stub(uri(anonymous.endpointUrl), json(expectedJson))
                     
                     anonymous
@@ -104,10 +102,9 @@ class AnonymousSpec: QuickSpec {
                     expect(credentials!.crmToken).toEventually(equal(expectedCrmToken))
                     
                     expect(Date.utcFormatter().string(from: date!)).toEventually(equal(Date.utcFormatter().string(from: expectedExpirationDate)))
-                    
                     expect(token!.value).toEventually(equal(expectedSessionToken))
                 }
-            }*/
+            }
             /*
             it("should eventually return an error on invalid endpoint") {
                 let invalidEnv = Environment(baseUrl: base, customer: "", businessUnit: "")
