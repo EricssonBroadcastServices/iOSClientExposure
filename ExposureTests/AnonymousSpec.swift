@@ -9,6 +9,7 @@
 import Quick
 import Nimble
 import Mockingjay
+import SwiftyJSON
 
 @testable import Exposure
 
@@ -62,6 +63,7 @@ class AnonymousSpec: QuickSpec {
             var credentials: Credentials?
             var token: SessionToken?
             var date: Date?
+            var error: Error?
             
             beforeEach {
                 request = nil
@@ -70,6 +72,7 @@ class AnonymousSpec: QuickSpec {
                 credentials = nil
                 token = nil
                 date = nil
+                error = nil
             }
             
             context("Success") {
@@ -85,6 +88,7 @@ class AnonymousSpec: QuickSpec {
                             credentials = exposureResponse.value
                             token = credentials?.sessionToken
                             date = credentials?.expiration
+                            error = exposureResponse.error
                     }
                 }
                 
@@ -96,6 +100,7 @@ class AnonymousSpec: QuickSpec {
                     expect(credentials).toEventuallyNot(beNil())
                     expect(token).toEventuallyNot(beNil())
                     expect(date).toEventuallyNot(beNil())
+                    expect(error).toEventually(beNil())
                     
                     expect(credentials!.accountId).toEventually(equal(expectedAccountId))
                     expect(credentials!.accountStatus).toEventually(equal(expectedAccountStatus))
@@ -105,20 +110,103 @@ class AnonymousSpec: QuickSpec {
                     expect(token!.value).toEventually(equal(expectedSessionToken))
                 }
             }
-            /*
-            it("should eventually return an error on invalid endpoint") {
-                let invalidEnv = Environment(baseUrl: base, customer: "", businessUnit: "")
-                let invalidAnonymous = Anonymous(environment: invalidEnv)
-                
-                var error: Error?
-                invalidAnonymous
-                    .request(.post)
-                    .response{ (exposureResponse: ExposureResponse<Credentials>) in
-                        error = exposureResponse.error
+            
+            let invalidEnv = Environment(baseUrl: base, customer: "WrongCustomer", businessUnit: "WrongBusinessUnit")
+            let invalidAnonymous = Anonymous(environment: invalidEnv)
+            
+            let errorJson: [String: Any] = [
+                "httpCode":404,
+                "message":"UNKNOWN_BUSINESS_UNIT"
+            ]
+            context("Failure with invalid environment") {
+                var httpCode: Int?
+                var message: String?
+                beforeEach {
+                    self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
+                    
+                    invalidAnonymous
+                        .request(.post)
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                            error = exposureResponse.error
+                            
+                            let json = JSON(data).dictionary
+                            httpCode = json?["httpCode"]?.int
+                            message = json?["message"]?.string
+                    }
                 }
                 
-                expect(error).toEventuallyNot(beNil())
-            }*/
+                it("should throw an objectSerialization error without validate()") {
+                    expect(data).toEventuallyNot(beNil())
+                    expect(httpCode).toEventuallyNot(beNil())
+                    expect(message).toEventuallyNot(beNil())
+                    
+                    expect(credentials).toEventually(beNil())
+                    expect(error).toEventuallyNot(beNil())
+                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))))
+                    
+                    expect(httpCode).toEventually(equal(404))
+                    expect(message).toEventually(equal("UNKNOWN_BUSINESS_UNIT"))
+                }
+            }
+            
+            context("Failure with invalid environment using validate()") {
+                let exposureResponse = ExposureResponseMessage(json: errorJson)!
+                beforeEach {
+                    self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
+                    
+                    invalidAnonymous
+                        .request(.post)
+                        .validate()
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                            error = exposureResponse.error
+                    }
+                }
+                
+                it("should throw an exposureResponse error when using validate()") {
+                    expect(data).toEventuallyNot(beNil())
+                    expect(credentials).toEventually(beNil())
+                    expect(error).toEventuallyNot(beNil())
+                    expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
+                }
+            }
+            
+            context("Failure with bad responseJson") {
+                let invalidResponseJson = [["Invalid":"responseJson"]]
+                beforeEach {
+                    self.stub(uri(anonymous.endpointUrl), json(invalidResponseJson))
+                    
+                    anonymous
+                        .request(.post)
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                            error = exposureResponse.error
+                    }
+                }
+                
+                it("should thrown an serialization error with invalid json response") {
+                    expect(data).toEventuallyNot(beNil())
+                    expect(credentials).toEventually(beNil())
+                    expect(error).toEventuallyNot(beNil())
+                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.invalidTopLevelJson(json: invalidResponseJson))))
+                }
+            }
         }
     }
 }

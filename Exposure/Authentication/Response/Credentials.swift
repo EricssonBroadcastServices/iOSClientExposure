@@ -28,22 +28,25 @@ public struct Credentials {
 extension Credentials: ExposureConvertible {
     public init?(json: JSON) {
         let actualJson = SwiftyJSON.JSON(json)
+        guard let jSessionToken = SessionToken(value: actualJson[JSONKeys.sessionToken.rawValue].string) else { return nil }
         
-        sessionToken = SessionToken(value: actualJson[JSONKeys.sessionToken.rawValue].string)
+        sessionToken = jSessionToken
         
         crmToken = actualJson[JSONKeys.crmToken.rawValue].string
         accountId = actualJson[JSONKeys.accountId.rawValue].string
+        accountStatus = actualJson[JSONKeys.accountStatus.rawValue].string
         
-        if let jExpiration = actualJson[JSONKeys.expiration.rawValue].string {
+        let jExpiration = actualJson[JSONKeys.expiration.rawValue].string
+        if jExpiration != nil {
             expiration = Date
                 .utcFormatter()
-                .date(from: jExpiration)
+                .date(from: jExpiration!)
         }
         else {
             expiration = nil
         }
         
-        accountStatus = actualJson[JSONKeys.accountStatus.rawValue].string
+        
     }
     
     public func toJson() -> JSON {
