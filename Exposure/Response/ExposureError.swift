@@ -16,7 +16,6 @@ public enum ExposureError: Error {
     
     public enum SerializationFailureReason {
         case jsonSerialization(error: Error)
-        case invalidTopLevelJson(json: Any)
         case objectSerialization(reason: String, json: Any)
     }
     

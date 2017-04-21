@@ -206,7 +206,7 @@ class AnonymousSpec: QuickSpec {
                     expect(data).toEventuallyNot(beNil())
                     expect(credentials).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.invalidTopLevelJson(json: invalidResponseJson))))
+                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: invalidResponseJson))))
                 }
             }
         }
