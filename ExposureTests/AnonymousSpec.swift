@@ -202,7 +202,7 @@ class AnonymousSpec: QuickSpec {
                     }
                 }
                 
-                it("should thrown an serialization error with invalid json response") {
+                it("should thrown objectSerialization error with invalid json response") {
                     expect(data).toEventuallyNot(beNil())
                     expect(credentials).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
