@@ -8,11 +8,16 @@
 
 import Quick
 import Nimble
+import Mockingjay
 
 @testable import Exposure
 
 class AnonymousSpec: QuickSpec {
+    var endpointStub: Stub?
+    
     override func spec() {
+        super.spec()
+        
         let base = "https://exposure.empps.ebsd.ericsson.net"
         let customer = "BlixtGroup"
         let businessUnit = "Blixt"
@@ -20,8 +25,19 @@ class AnonymousSpec: QuickSpec {
         
         let anonymous = Anonymous(environment: env)
         
+        let expectedSessionToken = "sessionToken"
+        let expectedCrmToken = "crmToken"
+        let expectedAccountId = "accountId"
+        let expectedExpirationDate = Date()
+        let expectedAccountStatus = "accountStatus"
+        let expectedCredentials = Credentials(sessionToken: SessionToken(value: expectedSessionToken),
+                                              crmToken: expectedCrmToken,
+                                              accountId: expectedAccountId,
+                                              expiration: expectedExpirationDate,
+                                              accountStatus: expectedAccountStatus)
+        let expectedJson = expectedCredentials.toJson()
+        
         describe("Anonymous") {
-            
             it("should have no headers") {
                 expect(anonymous.headers).to(beNil())
             }
@@ -45,25 +61,54 @@ class AnonymousSpec: QuickSpec {
             var data: Data?
             var credentials: Credentials?
             var token: SessionToken?
+            var date: Date?
             
-            it("should eventually return a response") {
-                anonymous
-                    .request(.post)
-                    .response{ (exposureResponse: ExposureResponse<Credentials>) in
-                        request = exposureResponse.request
-                        response = exposureResponse.response
-                        data = exposureResponse.data
-                        credentials = exposureResponse.value
-                        token = credentials?.sessionToken
+            beforeEach {
+                request = nil
+                response = nil
+                data = nil
+                credentials = nil
+                token = nil
+                date = nil
+            }
+            /*
+            context("Success") {
+                beforeEach {
+                    print(expectedJson)
+                    
+                    self.stub(uri(anonymous.endpointUrl), json(expectedJson))
+                    
+                    anonymous
+                        .request(.post)
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                    }
                 }
                 
-                expect(request).toEventuallyNot(beNil())
-                expect(response).toEventuallyNot(beNil())
-                expect(data).toEventuallyNot(beNil())
-                expect(credentials).toEventuallyNot(beNil())
-                expect(token).toEventuallyNot(beNil())
-            }
-            
+                it("should eventually return a response") {
+                    
+                    expect(request).toEventuallyNot(beNil())
+                    expect(response).toEventuallyNot(beNil())
+                    expect(data).toEventuallyNot(beNil())
+                    expect(credentials).toEventuallyNot(beNil())
+                    expect(token).toEventuallyNot(beNil())
+                    expect(date).toEventuallyNot(beNil())
+                    
+                    expect(credentials!.accountId).toEventually(equal(expectedAccountId))
+                    expect(credentials!.accountStatus).toEventually(equal(expectedAccountStatus))
+                    expect(credentials!.crmToken).toEventually(equal(expectedCrmToken))
+                    
+                    expect(Date.utcFormatter().string(from: date!)).toEventually(equal(Date.utcFormatter().string(from: expectedExpirationDate)))
+                    
+                    expect(token!.value).toEventually(equal(expectedSessionToken))
+                }
+            }*/
+            /*
             it("should eventually return an error on invalid endpoint") {
                 let invalidEnv = Environment(baseUrl: base, customer: "", businessUnit: "")
                 let invalidAnonymous = Anonymous(environment: invalidEnv)
@@ -76,7 +121,7 @@ class AnonymousSpec: QuickSpec {
                 }
                 
                 expect(error).toEventuallyNot(beNil())
-            }
+            }*/
         }
     }
 }

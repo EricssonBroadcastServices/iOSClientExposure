@@ -49,10 +49,13 @@ extension Credentials: ExposureConvertible {
     public func toJson() -> JSON {
         var json: [String: Any] = [:]
         if let sessionToken = sessionToken { json[JSONKeys.sessionToken.rawValue] = sessionToken.value }
-        if let crmToken = sessionToken { json[JSONKeys.crmToken.rawValue] = crmToken }
-        if let accountId = sessionToken { json[JSONKeys.accountId.rawValue] = accountId }
-        if let expiration = sessionToken { json[JSONKeys.expiration.rawValue] = expiration }
-        if let accountStatus = sessionToken { json[JSONKeys.accountStatus.rawValue] = accountStatus }
+        if let crmToken = crmToken { json[JSONKeys.crmToken.rawValue] = crmToken }
+        if let accountId = accountId { json[JSONKeys.accountId.rawValue] = accountId }
+        if let expiration = expiration {
+            let expirationString = Date.utcFormatter().string(from: expiration)
+            json[JSONKeys.expiration.rawValue] = expirationString
+        }
+        if let accountStatus = accountStatus { json[JSONKeys.accountStatus.rawValue] = accountStatus }
         return json
     }
 }
