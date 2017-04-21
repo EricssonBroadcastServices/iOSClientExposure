@@ -135,9 +135,11 @@ class AnonymousSpec: QuickSpec {
                             date = credentials?.expiration
                             error = exposureResponse.error
                             
-                            let json = JSON(data).dictionary
-                            httpCode = json?["httpCode"]?.int
-                            message = json?["message"]?.string
+                            if let data = data {
+                                let json = JSON(data).dictionary
+                                httpCode = json?["httpCode"]?.int
+                                message = json?["message"]?.string
+                            }
                     }
                 }
                 
