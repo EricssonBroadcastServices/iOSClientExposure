@@ -30,12 +30,13 @@ extension DataRequest {
                 return .failure(ExposureError.serialization(reason: .jsonSerialization(error: result.error!)))
             }
             
-            guard let json = SwiftyJSON.JSON(jsonObject).dictionary else {
-                return .failure(ExposureError.serialization(reason: .jsonSerialization(error: SwiftyJSON.JSON(jsonObject).error!)))
+            
+            guard let jsonDict = SwiftyJSON.JSON(jsonObject).dictionaryObject else {
+                return .failure(ExposureError.serialization(reason: .invalidTopLevelJson(json: jsonObject)))
             }
             
-            guard let object = Object(json: json) else {
-                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: json)))
+            guard let object = Object(json: jsonDict) else {
+                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: jsonDict)))
             }
             return .success(object)
         }

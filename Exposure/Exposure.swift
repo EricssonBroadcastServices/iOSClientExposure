@@ -9,14 +9,12 @@
 import Foundation
 import Alamofire
 
-public typealias JSON = [String: Any]
-
 public protocol ExposureConvertible {
-    init?(json: JSON)
+    init?(json: Any)
 }
 
 public protocol JSONEncodable {
-    func toJSON() -> JSON
+    func toJSON() -> [String: Any]
 }
 
 public protocol Exposure {
@@ -52,7 +50,7 @@ let sessionManager: SessionManager = {
 }()
 
 // MARK: - REST API
-extension Exposure where Parameters == JSON, Headers == HTTPHeaders? {
+extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
     
     public func request(_ method: HTTPMethod) -> ExposureRequest {
         let dataRequest = sessionManager
@@ -65,7 +63,7 @@ extension Exposure where Parameters == JSON, Headers == HTTPHeaders? {
     }
 }
 
-extension Exposure where Parameters == JSON?, Headers == HTTPHeaders? {
+extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
     public func request(_ method: HTTPMethod) -> ExposureRequest {
         if let params = parameters {
             let dataRequest = sessionManager
@@ -83,33 +81,5 @@ extension Exposure where Parameters == JSON?, Headers == HTTPHeaders? {
                          headers: headers)
             return ExposureRequest(dataRequest: dataRequest)
         }
-    }
-}
-
-// MARK: Temporary testing
-func test(env: Environment) {
-    Login(username: "blixtuser1",
-          password: "blixtuser1",
-          environment: env)
-        .request(.post)
-        .validate()
-        .mapError{ ExposureError.generalError(error: $0.0) }
-        .response{ (response: ExposureResponse<Credentials>) in
-            
-    }
-}
-
-func register(credentials: Credentials, in env: Environment) {
-    guard let sessionToken = credentials.sessionToken else { return }
-    
-    let playRequest = PlayRequest(drm: .edrm, format: .hls)
-    PlayVod(assetId: "testAsset",
-            playRequest: playRequest,
-            environment: env,
-            sessionToken: sessionToken)
-        .request(.post)
-        .validate(statusCode: 200..<299)
-        .response{ (response: ExposureResponse<PlaybackEntitlement>) in
-            
     }
 }

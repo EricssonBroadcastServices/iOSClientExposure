@@ -69,7 +69,7 @@ public struct DeviceInfo {
 }
 
 extension DeviceInfo: JSONEncodable {
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String: Any] {
         var json: [String: Any] = [:]
         
         json[JSONKeys.device.rawValue] = device.toJSON()
@@ -89,7 +89,7 @@ extension DeviceInfo: JSONEncodable {
 }
 
 extension DeviceInfo.Device: JSONEncodable {
-    public func toJSON() -> JSON {
+    public func toJSON() -> [String: Any] {
         var json: [String: Any] = [
             JSONKeys.height.rawValue: height,
             JSONKeys.width.rawValue: width,

@@ -21,7 +21,7 @@ public struct FetchServerTime: Exposure {
         return environment.apiUrl + "/time"
     }
     
-    public var parameters: JSON? {
+    public var parameters: [String: Any]? {
         return nil
     }
     

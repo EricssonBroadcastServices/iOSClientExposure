@@ -28,7 +28,7 @@ public struct Login: Exposure {
         return environment.apiUrl + "/auth/login"
     }
     
-    public var parameters: JSON {
+    public var parameters: [String: Any] {
         var json = deviceInfo.toJSON()
         
         json[JSONKeys.username.rawValue] = username

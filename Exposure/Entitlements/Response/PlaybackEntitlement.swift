@@ -53,7 +53,7 @@ public struct PlaybackEntitlement {
 }
 
 extension PlaybackEntitlement: ExposureConvertible {
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
         playToken = actualJSON[JSONKeys.playToken.rawValue].string
         edrm = EDRMConfiguration(json: actualJSON[JSONKeys.edrm.rawValue].dictionaryObject ?? [:])

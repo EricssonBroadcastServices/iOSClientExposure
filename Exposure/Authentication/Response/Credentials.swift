@@ -26,33 +26,39 @@ public struct Credentials {
 }
 
 extension Credentials: ExposureConvertible {
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJson = SwiftyJSON.JSON(json)
+        guard let jSessionToken = SessionToken(value: actualJson[JSONKeys.sessionToken.rawValue].string) else { return nil }
         
-        sessionToken = SessionToken(value: actualJson[JSONKeys.sessionToken.rawValue].string)
+        sessionToken = jSessionToken
         
         crmToken = actualJson[JSONKeys.crmToken.rawValue].string
         accountId = actualJson[JSONKeys.accountId.rawValue].string
+        accountStatus = actualJson[JSONKeys.accountStatus.rawValue].string
         
-        if let jExpiration = actualJson[JSONKeys.expiration.rawValue].string {
+        let jExpiration = actualJson[JSONKeys.expiration.rawValue].string
+        if jExpiration != nil {
             expiration = Date
                 .utcFormatter()
-                .date(from: jExpiration)
+                .date(from: jExpiration!)
         }
         else {
             expiration = nil
         }
         
-        accountStatus = actualJson[JSONKeys.accountStatus.rawValue].string
+        
     }
     
-    public func toJson() -> JSON {
+    public func toJson() -> [String: Any] {
         var json: [String: Any] = [:]
         if let sessionToken = sessionToken { json[JSONKeys.sessionToken.rawValue] = sessionToken.value }
-        if let crmToken = sessionToken { json[JSONKeys.crmToken.rawValue] = crmToken }
-        if let accountId = sessionToken { json[JSONKeys.accountId.rawValue] = accountId }
-        if let expiration = sessionToken { json[JSONKeys.expiration.rawValue] = expiration }
-        if let accountStatus = sessionToken { json[JSONKeys.accountStatus.rawValue] = accountStatus }
+        if let crmToken = crmToken { json[JSONKeys.crmToken.rawValue] = crmToken }
+        if let accountId = accountId { json[JSONKeys.accountId.rawValue] = accountId }
+        if let expiration = expiration {
+            let expirationString = Date.utcFormatter().string(from: expiration)
+            json[JSONKeys.expiration.rawValue] = expirationString
+        }
+        if let accountStatus = accountStatus { json[JSONKeys.accountStatus.rawValue] = accountStatus }
         return json
     }
 }

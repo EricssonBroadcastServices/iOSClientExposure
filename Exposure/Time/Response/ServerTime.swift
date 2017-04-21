@@ -14,7 +14,7 @@ public struct ServerTime {
 }
 
 extension ServerTime: ExposureConvertible {
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJson = SwiftyJSON.JSON(json)
         
         epochMillis = actualJson[JSONKeys.epochMillis.rawValue].uInt64

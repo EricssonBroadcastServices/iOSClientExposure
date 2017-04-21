@@ -4,19 +4,23 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "95438028B10BBB846574013D29F154A00556A9D1" : 9223372036854775807,
+    "6C25B371DC66ADF4587F56D8CF85DD31480F6F3F" : 9223372036854775807,
     "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : 9223372036854775807,
-    "214A69DBE68449124238BBE07F858F4905887B1B" : 9223372036854775807,
+    "95438028B10BBB846574013D29F154A00556A9D1" : 9223372036854775807,
+    "67620B5EFA902936DF04070AF595B76AB0333747" : 9223372036854775807,
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : 9223372036854775807,
-    "67620B5EFA902936DF04070AF595B76AB0333747" : 9223372036854775807
+    "214A69DBE68449124238BBE07F858F4905887B1B" : 9223372036854775807,
+    "2202450528CFA50DD806F0340B3987713E89BFB6" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BFDE0505-122B-4EB9-910F-4DB6639E2D0F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/Externals\/Nimble\/",
+    "6C25B371DC66ADF4587F56D8CF85DD31480F6F3F" : "iOSClientExposure\/Carthage\/Checkouts\/Mockingjay\/",
     "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/",
-    "214A69DBE68449124238BBE07F858F4905887B1B" : "iOSClientExposure\/",
+    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/Externals\/Nimble\/",
+    "67620B5EFA902936DF04070AF595B76AB0333747" : "iOSClientExposure\/Carthage\/Checkouts\/Alamofire\/",
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "iOSClientExposure\/Carthage\/Checkouts\/SwiftyJSON\/",
-    "67620B5EFA902936DF04070AF595B76AB0333747" : "iOSClientExposure\/Carthage\/Checkouts\/Alamofire\/"
+    "214A69DBE68449124238BBE07F858F4905887B1B" : "iOSClientExposure\/",
+    "2202450528CFA50DD806F0340B3987713E89BFB6" : "iOSClientExposure\/Carthage\/Checkouts\/Mockingjay\/URITemplate\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Exposure",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -28,9 +32,19 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "214A69DBE68449124238BBE07F858F4905887B1B"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kylef\/URITemplate.swift",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2202450528CFA50DD806F0340B3987713E89BFB6"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/github.com\/Alamofire\/Alamofire.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "67620B5EFA902936DF04070AF595B76AB0333747"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/github.com\/kylef\/Mockingjay.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "6C25B371DC66ADF4587F56D8CF85DD31480F6F3F"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Quick\/Nimble.git",

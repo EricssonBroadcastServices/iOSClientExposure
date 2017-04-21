@@ -13,7 +13,7 @@ public struct ExposureResponseMessage: ExposureConvertible {
     public let httpCode: Int
     public let message: String
     
-    public init?(json: JSON) {
+    public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
         guard let httpCode = actualJSON["httpCode"].int,
             let message = actualJSON["message"].string else { return nil }
