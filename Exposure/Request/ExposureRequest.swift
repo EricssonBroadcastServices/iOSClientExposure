@@ -17,7 +17,8 @@ public class ExposureRequest {
                   mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
         if let data = data {
             // Handle status code errors from Exposure
-            if let responseBody = SwiftyJSON.JSON(data: data).dictionaryObject, let exposureResponse = ExposureResponseMessage(json: responseBody) {
+            let responseBody = SwiftyJSON.JSON(data: data).object
+            if let exposureResponse = ExposureResponseMessage(json: responseBody) {
                 return ExposureError.exposureResponse(reason: exposureResponse)
             }
         }

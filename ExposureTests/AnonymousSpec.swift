@@ -157,7 +157,7 @@ class AnonymousSpec: QuickSpec {
                 }
             }
             
-            context("Failure with invalid environment using validate()") {
+            context("Failure with invalid status code in response using validate()") {
                 let exposureResponse = ExposureResponseMessage(json: errorJson)!
                 beforeEach {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
@@ -181,6 +181,59 @@ class AnonymousSpec: QuickSpec {
                     expect(credentials).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
+                }
+            }
+            
+            context("Failure with invalid status code in response using validate(statusCode: 200..<299)") {
+                let exposureResponse = ExposureResponseMessage(json: errorJson)!
+                beforeEach {
+                    self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
+                    
+                    invalidAnonymous
+                        .request(.post)
+                        .validate(statusCode: 200..<299)
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                            error = exposureResponse.error
+                    }
+                }
+                
+                it("should throw an exposureResponse error when using validate(statusCode: 200..<299)") {
+                    expect(data).toEventuallyNot(beNil())
+                    expect(credentials).toEventually(beNil())
+                    expect(error).toEventuallyNot(beNil())
+                    expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
+                }
+            }
+            
+            context("Success with valid status code in response using validate(statusCode: 403..<405)") {
+                beforeEach {
+                    self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
+                    
+                    invalidAnonymous
+                        .request(.post)
+                        .validate(statusCode: 403..<405)
+                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                            request = exposureResponse.request
+                            response = exposureResponse.response
+                            data = exposureResponse.data
+                            credentials = exposureResponse.value
+                            token = credentials?.sessionToken
+                            date = credentials?.expiration
+                            error = exposureResponse.error
+                    }
+                }
+                
+                it("should throw an serialization error with valid status code") {
+                    expect(data).toEventuallyNot(beNil())
+                    expect(credentials).toEventually(beNil())
+                    expect(error).toEventuallyNot(beNil())
+                    expect(error).toEventually(matchError(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: errorJson))))
                 }
             }
         }
