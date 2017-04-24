@@ -19,11 +19,8 @@ class SessionTokenSpec: QuickSpec {
         describe("AuthorizationHeaders") {
             it("should produce authorization headers") {
                 let token = SessionToken(value: "TOKEN")
-                let header = token?.authorizationHeader
-                
-                expect(header).toNot(beNil())
-                
-                let value:String? = header!["Authorization"]
+                let header = token.authorizationHeader
+                let value:String? = header["Authorization"]
                 
                 expect(value).toNot(beNil())
                 expect(value!).to(equal("Bearer "+"TOKEN"))
