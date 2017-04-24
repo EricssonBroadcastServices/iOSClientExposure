@@ -16,6 +16,10 @@ public struct SessionToken {
         return ["Authorization": "Bearer " + value]
     }
     
+    public init(value: String) {
+        self.value = value
+    }
+    
     public init?(value: String?) {
         guard let val = value else {
             return nil

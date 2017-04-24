@@ -19,10 +19,11 @@ public struct EDRMConfiguration {
 extension EDRMConfiguration: ExposureConvertible {
     public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
-        ownerId = actualJSON[JSONKeys.ownerId.rawValue].string
-        userToken = actualJSON[JSONKeys.userToken.rawValue].string
-        requestUrl = actualJSON[JSONKeys.requestUrl.rawValue].string
-        adParameter = actualJSON[JSONKeys.adParameter.rawValue].string
+        guard let ownerId = actualJSON[JSONKeys.ownerId.rawValue].string, let userToken = actualJSON[JSONKeys.userToken.rawValue].string, let requestUrl = actualJSON[JSONKeys.requestUrl.rawValue].string, let adParameter = actualJSON[JSONKeys.adParameter.rawValue].string else { return nil }
+        self.ownerId = ownerId
+        self.userToken = userToken
+        self.requestUrl = requestUrl
+        self.adParameter = adParameter
     }
     
     internal enum JSONKeys: String {

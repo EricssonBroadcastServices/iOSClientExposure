@@ -18,7 +18,7 @@ public struct Credentials {
         case accountStatus = "accountStatus"
     }
     
-    public let sessionToken: SessionToken?
+    public let sessionToken: SessionToken
     public let crmToken: String?
     public let accountId: String?
     public let expiration: Date?
@@ -51,7 +51,7 @@ extension Credentials: ExposureConvertible {
     
     public func toJson() -> [String: Any] {
         var json: [String: Any] = [:]
-        if let sessionToken = sessionToken { json[JSONKeys.sessionToken.rawValue] = sessionToken.value }
+        json[JSONKeys.sessionToken.rawValue] = sessionToken.value
         if let crmToken = crmToken { json[JSONKeys.crmToken.rawValue] = crmToken }
         if let accountId = accountId { json[JSONKeys.accountId.rawValue] = accountId }
         if let expiration = expiration {

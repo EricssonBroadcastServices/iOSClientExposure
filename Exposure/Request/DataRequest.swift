@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 extension DataRequest {
     @discardableResult
@@ -30,13 +29,8 @@ extension DataRequest {
                 return .failure(ExposureError.serialization(reason: .jsonSerialization(error: result.error!)))
             }
             
-            
-            guard let jsonDict = SwiftyJSON.JSON(jsonObject).dictionaryObject else {
-                return .failure(ExposureError.serialization(reason: .invalidTopLevelJson(json: jsonObject)))
-            }
-            
-            guard let object = Object(json: jsonDict) else {
-                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: jsonDict)))
+            guard let object = Object(json: jsonObject) else {
+                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: jsonObject)))
             }
             return .success(object)
         }
