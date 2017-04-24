@@ -11,7 +11,6 @@ import Nimble
 
 @testable import Exposure
 
-
 class PlayRequestSpec: QuickSpec {
     override func spec() {
         super.spec()

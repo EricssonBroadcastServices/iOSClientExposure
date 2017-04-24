@@ -15,6 +15,8 @@
 		7693EDCC1EADED5C00421551 /* EDRMConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */; };
 		7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDCD1EADEE9300421551 /* ExposureSpec.swift */; };
 		7693EDD01EADF30300421551 /* PlayRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */; };
+		7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDD31EADF90100421551 /* PlayVodSpec.swift */; };
+		7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76A842C21EA7604F00BDAF2C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 76A842C11EA7604F00BDAF2C /* Cartfile */; };
@@ -70,6 +72,8 @@
 		7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EDRMConfigurationSpec.swift; sourceTree = "<group>"; };
 		7693EDCD1EADEE9300421551 /* ExposureSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureSpec.swift; sourceTree = "<group>"; };
 		7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayRequestSpec.swift; sourceTree = "<group>"; };
+		7693EDD31EADF90100421551 /* PlayVodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVodSpec.swift; sourceTree = "<group>"; };
+		7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementSpec.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
 		76A842AB1EA75EC900BDAF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -188,6 +192,8 @@
 				7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */,
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */,
+				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
+				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -480,9 +486,11 @@
 				76BBFBC31EA8FA8C001DBDDB /* AnonymousSpec.swift in Sources */,
 				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
 				7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */,
+				7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */,
 				7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */,
 				7693EDCA1EADEB7300421551 /* CredentialsSpec.swift in Sources */,
 				7693EDCC1EADED5C00421551 /* EDRMConfigurationSpec.swift in Sources */,
+				7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */,
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
 				76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */,
 			);
