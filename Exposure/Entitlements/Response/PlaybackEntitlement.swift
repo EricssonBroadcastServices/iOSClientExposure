@@ -31,39 +31,83 @@ public struct PlaybackEntitlement {
     public let airplayBlocked: Bool? // If airplay is blocked
     public let mdnRequestRouterUrl: String? // MDN Request Router Url
     
-    public enum ExpirationReason: String {
-        case success = "SUCCESS"
-        case notEntitled = "NOT_ENTITLED"
-        case geoBlocked = "GEO_BLOCKED"
-        case downloadBlocked = "DOWNLOAD_BLOCKED"
-        case deviceBlocked = "DEVICE_BLOCKED"
-        case licenseExpired = "LICENSE_EXPIRED"
-        case notAvailableInFormat = "NOT_AVAILABLE_IN_FORMAT"
-        case concurrentStreamsLimitReached = "CONCURRENT_STREAMS_LIMIT_REACHED"
-        case notEnabled = "NOT_ENABLED"
-        case gapInEPG = "GAP_IN_EPG"
-        case epgPlayMaxHours = "EPG_PLAY_MAX_HOURS"
+    public enum ExpirationReason {
+        case success
+        case notEntitled
+        case geoBlocked
+        case downloadBlocked
+        case deviceBlocked
+        case licenseExpired
+        case notAvailableInFormat
+        case concurrentStreamsLimitReached
+        case notEnabled
+        case gapInEPG
+        case epgPlayMaxHours
+        case other(reason: String)
+        
+        public init?(string: String?) {
+            guard let value = string else { return nil }
+            self = ExpirationReason(string: value)
+        }
+        
+        public init(string: String) {
+            switch string {
+            case "SUCCESS": self = .success
+            case "NOT_ENTITLED": self = .notEntitled
+            case "GEO_BLOCKED": self = .geoBlocked
+            case "DOWNLOAD_BLOCKED": self = .downloadBlocked
+            case "DEVICE_BLOCKED": self = .deviceBlocked
+            case "LICENSE_EXPIRED": self = .licenseExpired
+            case "NOT_AVAILABLE_IN_FORMAT": self = .notAvailableInFormat
+            case "CONCURRENT_STREAMS_LIMIT_REACHED": self = .concurrentStreamsLimitReached
+            case "NOT_ENABLED": self = .notEnabled
+            case "GAP_IN_EPG": self = .gapInEPG
+            case "EPG_PLAY_MAX_HOURS": self = .epgPlayMaxHours
+            default: self = .other(reason: string)
+            }
+        }
     }
     
-    public enum EntitlementType: String {
-        case tvod = "TVOD"
-        case svod = "SVOD"
-        case fvod = "FVOD"
+    public enum EntitlementType {
+        case tvod
+        case svod
+        case fvod
+        case other(type: String)
+        
+        
+        public init?(string: String?) {
+            guard let value = string else { return nil }
+            self = EntitlementType(string: value)
+        }
+        
+        public init(string: String) {
+            switch string {
+            case "TVOD": self = .tvod
+            case "SVOD": self = .svod
+            case "FVOD": self = .fvod
+            default: self = .other(type: string)
+            }
+        }
     }
 }
 
 extension PlaybackEntitlement: ExposureConvertible {
     public init?(json: Any) {
         let actualJSON = SwiftyJSON.JSON(json)
+        
         playToken = actualJSON[JSONKeys.playToken.rawValue].string
+        
         edrm = EDRMConfiguration(json: actualJSON[JSONKeys.edrm.rawValue].dictionaryObject ?? [:])
         fairplay = FairplayConfiguration(json: actualJSON[JSONKeys.fairplay.rawValue].dictionaryObject ?? [:])
+        
         mediaLocator = actualJSON[JSONKeys.mediaLocator.rawValue].string
         licenseExpiration = actualJSON[JSONKeys.licenseExpiration.rawValue].string
-        licenseExpirationReason = ExpirationReason(rawValue: actualJSON[JSONKeys.licenseExpirationReason.rawValue].string ?? "")
+        licenseExpirationReason = ExpirationReason(string: actualJSON[JSONKeys.licenseExpirationReason.rawValue].string)
         licenseActivation = actualJSON[JSONKeys.licenseActivation.rawValue].string
+        
         playTokenExpiration = actualJSON[JSONKeys.playTokenExpiration.rawValue].string
-        entitlementType = EntitlementType(rawValue: actualJSON[JSONKeys.entitlementType.rawValue].string ?? "")
+        entitlementType = EntitlementType(string: actualJSON[JSONKeys.entitlementType.rawValue].string)
+        
         live = actualJSON[JSONKeys.live.rawValue].bool
         playSessionId = actualJSON[JSONKeys.playSessionId.rawValue].string
         ffEnabled = actualJSON[JSONKeys.ffEnabled.rawValue].bool
