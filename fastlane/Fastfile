@@ -16,62 +16,96 @@ fastlane_version "2.28.7"
 default_platform :ios
 
 platform :ios do
-  before_all do
-    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+    before_all do
+        # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+        
+        #updateDependencies
+    end
     
-    carthage(
-             command: "update",
-             platform: "iOS",
-             use_submodules: true,
-             use_ssh: true,
-             use_binaries: false
+    
+    desc "Checkout latest dependencies"
+    private_lane :updateDependencies do
+        carthage(
+                 command: "update",
+                 platform: "iOS",
+                 use_submodules: true,
+                 use_ssh: true,
+                 use_binaries: false
+                 )
+    end
+    
+    
+    desc "Unit Testing for master delivery"
+    lane :deliverToMaster do
+        ensure_git_branch(branch: "EMP-9395")
+        
+        ensure_git_status_clean
+        
+        runUnitTests
+        
+        commit_version_bump
+    end
+    
+    
+    desc "Runs all the tests"
+    lane :runUnitTests do
+        
+        scan(
+             workspace: "Exposure.xcworkspace",
+             scheme: "Exposure"
              )
-  end
-
-  desc "Runs all the tests"
-  lane :test do
-      scan(
-           workspace: "Exposure.xcworkspace",
-           scheme: "Exposure"
-           )
-  end
-
-  desc "Submit a new Beta Build to Apple TestFlight"
-  desc "This will also make sure the profile is up to date"
-  lane :beta do
-    # match(type: "appstore") # more information: https://codesigning.guide
-    gym(scheme: "Exposure") # Build your app - more options available
-    # pilot
-
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
-  end
-
-# desc "Deploy a new version to the App Store"
-# lane :release do
+             
+        UI.success("====> TESTING DONE")
+    end
+    
+    
+    private_lane bump_version do
+        new_build_number = increment_build_number
+        commit_version_bump(
+                            message: "Build number bumped: {new_build_number}"
+                            xcodeproj: "Exposure.xcodeproj"
+                            )
+    end
+    
+    desc "Submit a new Beta Build to Apple TestFlight"
+    desc "This will also make sure the profile is up to date"
+    lane :beta do
+        # match(type: "appstore") # more information: https://codesigning.guide
+        gym(scheme: "Exposure") # Build your app - more options available
+        # pilot
+        
+        # sh "your_script.sh"
+        # You can also use other beta testing services here (run `fastlane actions`)
+    end
+    
+    # desc "Deploy a new version to the App Store"
+    # lane :release do
     # match(type: "appstore")
     # snapshot
     # gym(scheme: "Exposure") # Build your app - more options available
     # deliver(force: true)
     # frameit
     # end
-
-  # You can define as many lanes as you want
-
-  after_all do |lane|
-    # This block is called, only if the executed lane was successful
-
-    # slack(
-    #   message: "Successfully deployed new App Update."
-    # )
-  end
-
-  error do |lane, exception|
-    # slack(
-    #   message: exception.message,
-    #   success: false
-    # )
-  end
+    
+    # You can define as many lanes as you want
+    
+    after_all do |lane|
+        # This block is called, only if the executed lane was successful
+        
+        # slack(
+        #   message: "Successfully deployed new App Update."
+        # )
+    end
+    
+    error do |lane, exception|
+        
+        #slack(
+        #   message: exception.message,
+        #   success: false
+        # )
+        
+        UI.error("====> ERROR")
+    end
 end
 
 

@@ -25,7 +25,7 @@ class EnvironmentSpec: QuickSpec {
             }
             
             it("should build a correct apiURL") {
-                expect(env.apiUrl).to(equal(base+basePath))
+                expect(env.apiUrl).to(equal(base+basePath+"NOT CORRECT"))
             }
         }
     }
