@@ -61,9 +61,9 @@ platform :ios do
     
     private_lane :bump_build_number do
         new_build_number = increment_build_number(xcodeproj: "Exposure.xcodeproj")
-        UI.message("Build: {new_build_number}")
+        UI.message("Build: #{new_build_number}")
         commit_version_bump(
-                            message: "Build number bumped: {new_build_number}",
+                            message: "Build number bumped: #{new_build_number}",
                             xcodeproj: "Exposure.xcodeproj"
                             )
     end
