@@ -35,15 +35,17 @@ platform :ios do
     end
     
     
-    desc "Unit Testing for master delivery"
-    lane :deliverToMaster do
-        ensure_git_branch(branch: "EMP-9395")
+    desc "Bumps build number and runs unit tests on each push to development branch"
+    desc "If successful, "
+    lane :manage do
+        ensure_git_branch(branch: "development")
         
         #ensure_git_status_clean
         
+        bump_build_number
+        
         runUnitTests
         
-        bump_build_number
     end
     
     
@@ -59,6 +61,8 @@ platform :ios do
     end
     
     
+    # Private lanes
+    
     private_lane :bump_build_number do
         new_build_number = increment_build_number(xcodeproj: "Exposure.xcodeproj")
         UI.message("Build: #{new_build_number}")
@@ -68,27 +72,6 @@ platform :ios do
                             )
     end
     
-    desc "Submit a new Beta Build to Apple TestFlight"
-    desc "This will also make sure the profile is up to date"
-    lane :beta do
-        # match(type: "appstore") # more information: https://codesigning.guide
-        gym(scheme: "Exposure") # Build your app - more options available
-        # pilot
-        
-        # sh "your_script.sh"
-        # You can also use other beta testing services here (run `fastlane actions`)
-    end
-    
-    # desc "Deploy a new version to the App Store"
-    # lane :release do
-    # match(type: "appstore")
-    # snapshot
-    # gym(scheme: "Exposure") # Build your app - more options available
-    # deliver(force: true)
-    # frameit
-    # end
-    
-    # You can define as many lanes as you want
     
     after_all do |lane|
         # This block is called, only if the executed lane was successful
