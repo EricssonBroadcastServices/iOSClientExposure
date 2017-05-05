@@ -1,8 +1,0 @@
-node {
-    stage('Testing') {
-        sh 'echo HELLO'
-    }
-    stage('SecondStage') {
-        sh 'echo Another stage'
-    }
-}
