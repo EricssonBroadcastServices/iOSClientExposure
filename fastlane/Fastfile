@@ -17,11 +17,14 @@ default_platform :ios
 
 platform :ios do
     before_all do
-        update_dependencies
+        
     end
     
     
     desc "Checkout latest dependencies"
+    desc "Note: This will update Cartfile.resolved if dependencies have changed."
+    desc "Ensuring a clean git status after update_dependencies is therefore not possible"
+    desc "under certain circumstances"
     private_lane :update_dependencies do
         carthage(
                  command: "update",
@@ -37,13 +40,13 @@ platform :ios do
     desc "If successful, "
     lane :development do
         ensure_git_branch(branch: "development")
-        
         ensure_git_status_clean
+        
+        update_dependencies
         
         bump_build_number
         
         run_unit_tests
-        
     end
     
     
