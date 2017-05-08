@@ -33,6 +33,7 @@ platform :ios do
         
         run_unit_tests
         
+        clean_build_artifacts
         push_to_git_remote
     end
     
