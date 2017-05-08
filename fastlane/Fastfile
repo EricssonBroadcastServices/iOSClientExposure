@@ -17,9 +17,9 @@ default_platform :ios
 
 platform :ios do
     before_all do
-        #ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
+        ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
         
-        ##update_dependencies
+        #update_dependencies
     end
     
     
@@ -44,13 +44,13 @@ platform :ios do
         
         #bump_build_number
         
-        runUnitTests
+        run_unit_tests
         
     end
     
     
     desc "Runs all the tests"
-    lane :runUnitTests do
+    lane :run_unit_tests do
         
         scan(
              workspace: "Exposure.xcworkspace",
@@ -82,17 +82,17 @@ platform :ios do
         
         current_build_number = get_build_number
         
-         slack(
-               message: "Build #{current_build_number} succesful!"
-               )
+        slack(
+              message: "Build #{current_build_number} succesful!"
+              )
     end
     
     error do |lane, exception|
         
-        #slack(
-        #      message: exception.message,
-        #      success: false
-        #      )
+        slack(
+              message: exception.message,
+              success: false
+              )
         
         UI.error("====> ERROR")
     end
