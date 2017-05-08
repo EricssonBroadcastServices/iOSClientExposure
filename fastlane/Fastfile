@@ -80,17 +80,17 @@ platform :ios do
         
         current_build_number = get_build_number
         
-        slack(
-              message: "Build #{current_build_number} succesful!"
-              )
+        #slack(
+        #      message: "Build #{current_build_number} succesful!"
+        #      )
     end
     
     error do |lane, exception|
         
-        slack(
-              message: exception.message,
-              success: false
-              )
+        #slack(
+        #      message: exception.message,
+        #      success: false
+        #      )
         
         UI.error("====> ERROR")
     end
