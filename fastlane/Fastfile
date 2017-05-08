@@ -26,23 +26,16 @@ platform :ios do
     lane :development do
         ensure_git_branch(branch: "development")
         ensure_git_status_clean
-        Actions.sh('git status')
         
         #update_dependencies
         
         bump_build_number
         
-        Actions.sh('git status')
         run_unit_tests
         
-        Actions.sh('git status')
         clean_build_artifacts
         
-        Actions.sh('git status')
-        push_to_git_remote(
-                           local_branch: 'development',
-                           remote_branch: 'development'
-                           )
+        push_to_git_remote
     end
     
     
@@ -89,17 +82,17 @@ platform :ios do
         
         current_build_number = get_build_number
         
-        #slack(
-        #      message: "Build #{current_build_number} succesful!"
-        #      )
+        slack(
+              message: "Build #{current_build_number} succesful!"
+              )
     end
     
     error do |lane, exception|
         
-        #slack(
-        #      message: exception.message,
-        #      success: false
-        #      )
+        slack(
+              message: exception.message,
+              success: false
+              )
         
         UI.error("====> ERROR")
     end
