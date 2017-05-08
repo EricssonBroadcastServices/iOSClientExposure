@@ -83,6 +83,8 @@ platform :ios do
     desc "in the Players channel on Slack"
     lane :notify_slack_dev_success do
         current_build_number = get_build_number
+        current_time = Time.now.to_f
+        UI.message(current_time)
         slack(
               use_webhook_configured_username_and_icon: true,
               default_payloads: [],
@@ -91,7 +93,7 @@ platform :ios do
                     color: "good",
                     text: "Temporary placeholder for change log",
                     footer: "EMP dev",
-                    ts: 123456789,
+                    ts: current_time,
                 }
               )
     end
