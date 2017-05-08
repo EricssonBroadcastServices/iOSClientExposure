@@ -17,14 +17,14 @@ default_platform :ios
 
 platform :ios do
     before_all do
-        # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+        #ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
         
-        #updateDependencies
+        update_dependencies
     end
     
     
     desc "Checkout latest dependencies"
-    private_lane :updateDependencies do
+    private_lane :update_dependencies do
         carthage(
                  command: "update",
                  platform: "iOS",
@@ -37,12 +37,12 @@ platform :ios do
     
     desc "Bumps build number and runs unit tests on each push to development branch"
     desc "If successful, "
-    lane :manage do
-        ensure_git_branch(branch: "development")
+    lane :development do
+        ensure_git_branch(branch: "EMP-9396")
         
         #ensure_git_status_clean
         
-        bump_build_number
+        #bump_build_number
         
         runUnitTests
         
@@ -73,20 +73,26 @@ platform :ios do
     end
     
     
+    private_lane :internal_beta do
+        
+    end
+    
     after_all do |lane|
         # This block is called, only if the executed lane was successful
         
-        # slack(
-        #   message: "Successfully deployed new App Update."
-        # )
+        current_build_number = get_build_number
+        
+         slack(
+               message: "Build #{current_build_number} succesful!"
+               )
     end
     
     error do |lane, exception|
         
         #slack(
-        #   message: exception.message,
-        #   success: false
-        # )
+        #      message: exception.message,
+        #      success: false
+        #      )
         
         UI.error("====> ERROR")
     end
