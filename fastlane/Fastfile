@@ -34,7 +34,12 @@ platform :ios do
         run_unit_tests
         
         clean_build_artifacts
-        push_to_git_remote
+        
+        Actions.sh('git status')
+        push_to_git_remote(
+                           local_branch: 'development',
+                           remote_branch: 'development'
+                           )
     end
     
     
