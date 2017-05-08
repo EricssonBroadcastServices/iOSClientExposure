@@ -21,13 +21,13 @@ platform :ios do
     end
     
     
+    
     desc "Bumps build number and runs unit tests on each push to development branch"
-    desc "If successful, "
+    desc "If successful, pushes the bumped version to git"
     lane :development do
         ensure_git_branch(branch: "development")
         ensure_git_status_clean
-        
-        #update_dependencies
+        update_dependencies
         
         bump_build_number
         
@@ -36,6 +36,8 @@ platform :ios do
         clean_build_artifacts
         
         push_to_git_remote
+        
+        notify_slack_dev_success
     end
     
     
@@ -49,6 +51,7 @@ platform :ios do
              
         UI.success("====> TESTING DONE")
     end
+    
     
     
     # Private lanes
@@ -76,15 +79,26 @@ platform :ios do
                  )
     end
     
+    desc "Posts a success notification for development integration"
+    desc "in the Players channel on Slack"
+    lane :notify_slack_dev_success do
+        current_build_number = get_build_number
+        slack(
+              use_webhook_configured_username_and_icon: true,
+              default_payloads: [],
+              attachment_properties: {
+                    pretext: "Exposure build #{current_build_number} succesful!",
+                    color: "good",
+                    text: "Temporary placeholder for change log",
+                    footer: "EMP dev",
+                    ts: 123456789,
+                }
+              )
+    end
     
     after_all do |lane|
         # This block is called, only if the executed lane was successful
         
-        current_build_number = get_build_number
-        
-        slack(
-              message: "Build #{current_build_number} succesful!"
-              )
     end
     
     error do |lane, exception|
