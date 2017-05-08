@@ -27,7 +27,7 @@ platform :ios do
         ensure_git_branch(branch: "development")
         ensure_git_status_clean
         
-        update_dependencies
+        #update_dependencies
         
         bump_build_number
         
