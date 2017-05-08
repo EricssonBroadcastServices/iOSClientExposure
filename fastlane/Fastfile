@@ -17,9 +17,7 @@ default_platform :ios
 
 platform :ios do
     before_all do
-        ENV["SLACK_URL"] = "https://hooks.slack.com/services/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"
-        
-        #update_dependencies
+        update_dependencies
     end
     
     
@@ -38,11 +36,11 @@ platform :ios do
     desc "Bumps build number and runs unit tests on each push to development branch"
     desc "If successful, "
     lane :development do
-        ensure_git_branch(branch: "EMP-9396")
+        ensure_git_branch(branch: "development")
         
-        #ensure_git_status_clean
+        ensure_git_status_clean
         
-        #bump_build_number
+        bump_build_number
         
         run_unit_tests
         
