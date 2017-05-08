@@ -21,21 +21,6 @@ platform :ios do
     end
     
     
-    desc "Checkout latest dependencies"
-    desc "Note: This will update Cartfile.resolved if dependencies have changed."
-    desc "Ensuring a clean git status after update_dependencies is therefore not possible"
-    desc "under certain circumstances"
-    private_lane :update_dependencies do
-        carthage(
-                 command: "update",
-                 platform: "iOS",
-                 use_submodules: true,
-                 use_ssh: true,
-                 use_binaries: false
-                 )
-    end
-    
-    
     desc "Bumps build number and runs unit tests on each push to development branch"
     desc "If successful, "
     lane :development do
@@ -47,6 +32,8 @@ platform :ios do
         bump_build_number
         
         run_unit_tests
+        
+        push_to_git_remote
     end
     
     
@@ -73,10 +60,20 @@ platform :ios do
                             )
     end
     
-    
-    private_lane :internal_beta do
-        
+    desc "Checkout latest dependencies"
+    desc "Note: This will update Cartfile.resolved if dependencies have changed."
+    desc "Ensuring a clean git status after update_dependencies is therefore not possible"
+    desc "under certain circumstances"
+    private_lane :update_dependencies do
+        carthage(
+                 command: "update",
+                 platform: "iOS",
+                 use_submodules: true,
+                 use_ssh: true,
+                 use_binaries: false
+                 )
     end
+    
     
     after_all do |lane|
         # This block is called, only if the executed lane was successful
