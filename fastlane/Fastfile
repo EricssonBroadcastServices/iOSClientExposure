@@ -26,13 +26,16 @@ platform :ios do
     lane :development do
         ensure_git_branch(branch: "development")
         ensure_git_status_clean
+        Actions.sh('git status')
         
         #update_dependencies
         
         bump_build_number
         
+        Actions.sh('git status')
         run_unit_tests
         
+        Actions.sh('git status')
         clean_build_artifacts
         
         Actions.sh('git status')
