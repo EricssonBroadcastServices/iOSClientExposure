@@ -60,18 +60,14 @@ class AnonymousSpec: QuickSpec {
             var request: URLRequest?
             var response: URLResponse?
             var data: Data?
-            var credentials: Credentials?
             var token: SessionToken?
-            var date: Date?
             var error: Error?
             
             beforeEach {
                 request = nil
                 response = nil
                 data = nil
-                credentials = nil
                 token = nil
-                date = nil
                 error = nil
             }
             
@@ -81,13 +77,11 @@ class AnonymousSpec: QuickSpec {
                     
                     anonymous
                         .request(.post)
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
                             data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
+                            token = exposureResponse.value
                             error = exposureResponse.error
                     }
                 }
@@ -97,16 +91,9 @@ class AnonymousSpec: QuickSpec {
                     expect(request).toEventuallyNot(beNil())
                     expect(response).toEventuallyNot(beNil())
                     expect(data).toEventuallyNot(beNil())
-                    expect(credentials).toEventuallyNot(beNil())
                     expect(token).toEventuallyNot(beNil())
-                    expect(date).toEventuallyNot(beNil())
                     expect(error).toEventually(beNil())
                     
-                    expect(credentials!.accountId).toEventually(equal(expectedAccountId))
-                    expect(credentials!.accountStatus).toEventually(equal(expectedAccountStatus))
-                    expect(credentials!.crmToken).toEventually(equal(expectedCrmToken))
-                    
-                    expect(Date.utcFormatter().string(from: date!)).toEventually(equal(Date.utcFormatter().string(from: expectedExpirationDate)))
                     expect(token!.value).toEventually(equal(expectedSessionToken))
                 }
             }
@@ -126,13 +113,11 @@ class AnonymousSpec: QuickSpec {
                     
                     invalidAnonymous
                         .request(.post)
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
                             data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
+                            token = exposureResponse.value
                             error = exposureResponse.error
                             
                             if let data = data {
@@ -148,7 +133,7 @@ class AnonymousSpec: QuickSpec {
                     expect(httpCode).toEventuallyNot(beNil())
                     expect(message).toEventuallyNot(beNil())
                     
-                    expect(credentials).toEventually(beNil())
+                    expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))))
                     
@@ -165,20 +150,18 @@ class AnonymousSpec: QuickSpec {
                     invalidAnonymous
                         .request(.post)
                         .validate()
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
                             data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
+                            token = exposureResponse.value
                             error = exposureResponse.error
                     }
                 }
                 
                 it("should throw an exposureResponse error when using validate()") {
                     expect(data).toEventuallyNot(beNil())
-                    expect(credentials).toEventually(beNil())
+                    expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
                 }
@@ -192,20 +175,18 @@ class AnonymousSpec: QuickSpec {
                     invalidAnonymous
                         .request(.post)
                         .validate(statusCode: 200..<299)
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
                             data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
+                            token = exposureResponse.value
                             error = exposureResponse.error
                     }
                 }
                 
                 it("should throw an exposureResponse error when using validate(statusCode: 200..<299)") {
                     expect(data).toEventuallyNot(beNil())
-                    expect(credentials).toEventually(beNil())
+                    expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
                 }
@@ -218,20 +199,18 @@ class AnonymousSpec: QuickSpec {
                     invalidAnonymous
                         .request(.post)
                         .validate(statusCode: 403..<405)
-                        .response{ (exposureResponse: ExposureResponse<Credentials>) in
+                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
                             data = exposureResponse.data
-                            credentials = exposureResponse.value
-                            token = credentials?.sessionToken
-                            date = credentials?.expiration
+                            token = exposureResponse.value
                             error = exposureResponse.error
                     }
                 }
                 
                 it("should throw an serialization error with valid status code") {
                     expect(data).toEventuallyNot(beNil())
-                    expect(credentials).toEventually(beNil())
+                    expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: errorJson))))
                 }
