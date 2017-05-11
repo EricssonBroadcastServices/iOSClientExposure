@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Anonymous: Exposure {
-    public typealias Response = Credentials
+    public typealias Response = SessionToken
     
     public let deviceInfo: DeviceInfo = DeviceInfo()
     public let environment: Environment
