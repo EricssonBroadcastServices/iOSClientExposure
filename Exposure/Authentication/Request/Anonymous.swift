@@ -9,10 +9,14 @@
 import Foundation
 
 public struct Anonymous: Exposure {
-    public typealias Response = Credentials
+    public typealias Response = SessionToken
     
     public let deviceInfo: DeviceInfo = DeviceInfo()
     public let environment: Environment
+    
+    public init(environment: Environment) {
+        self.environment = environment
+    }
     
     public var endpointUrl: String {
         return environment.apiUrl + "/auth/anonymous"

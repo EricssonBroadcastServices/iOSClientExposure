@@ -7,8 +7,13 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public struct SessionToken {
+    fileprivate enum JSONKeys: String {
+        case sessionToken = "sessionToken"
+    }
+    
     public let value: String
     
     
@@ -25,5 +30,13 @@ public struct SessionToken {
             return nil
         }
         self.value = val
+    }
+}
+
+extension SessionToken: ExposureConvertible {
+    public init?(json: Any) {
+        let actualJson = SwiftyJSON.JSON(json)
+        guard let jSessionToken = actualJson[JSONKeys.sessionToken.rawValue].string else { return nil }
+        value = jSessionToken
     }
 }
