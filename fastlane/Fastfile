@@ -20,14 +20,12 @@ platform :ios do
         
     end
     
-    
-    
     desc "Bumps build number and runs unit tests on each push to development branch"
     desc "If successful, pushes the bumped version to git"
     lane :development do
-        ensure_git_branch(branch: "development")
+        ensure_git_branch(branch: ENV["DEVELOPMENT_BRANCH"])
         ensure_git_status_clean
-        update_dependencies
+        checkout_dependencies
         
         bump_build_number
         
@@ -45,37 +43,34 @@ platform :ios do
     lane :run_unit_tests do
         
         scan(
-             workspace: "Exposure.xcworkspace",
-             scheme: "Exposure"
+             workspace: ENV["UNIT_TEST_WORKSPACE"],
+             scheme: ENV["UNIT_TEST_SCHEME"]
              )
              
-        UI.success("====> TESTING DONE")
+             UI.success("====> TESTING DONE")
     end
-    
     
     
     # Private lanes
     
     private_lane :bump_build_number do
-        new_build_number = increment_build_number(xcodeproj: "Exposure.xcodeproj")
+        new_build_number = increment_build_number(xcodeproj: ENV["XCODE_PROJECT"])
         UI.message("Build: #{new_build_number}")
         commit_version_bump(
                             message: "Build number bumped: #{new_build_number}",
-                            xcodeproj: "Exposure.xcodeproj"
+                            xcodeproj: ENV["XCODE_PROJECT"]
                             )
     end
     
-    desc "Checkout latest dependencies"
-    desc "Note: This will update Cartfile.resolved if dependencies have changed."
-    desc "Ensuring a clean git status after update_dependencies is therefore not possible"
-    desc "under certain circumstances"
-    private_lane :update_dependencies do
+    desc "Checkout latest dependencies as declared in Cartfile.resolved"
+    private_lane :checkout_dependencies do
         carthage(
-                 command: "update",
+                 command: "bootstrap",
                  platform: "iOS",
                  use_submodules: true,
                  use_ssh: true,
-                 use_binaries: false
+                 use_binaries: false,
+                 no_build: true
                  )
     end
     
@@ -84,15 +79,17 @@ platform :ios do
     lane :notify_slack_dev_success do
         current_build_number = get_build_number
         current_time = Time.now.to_f
+        project_name = ENV["PROJECT_TITLE"]
+        
         UI.message(current_time)
         slack(
               use_webhook_configured_username_and_icon: true,
               default_payloads: [],
               attachment_properties: {
-                    pretext: "Exposure build #{current_build_number} succesful!",
+                    pretext: "#{project_name} build #{current_build_number} succesful!",
                     color: "good",
                     text: "Temporary placeholder for change log",
-                    footer: "EMP dev",
+                    footer: ENV["DEV_TEAM_NAME"],
                     ts: current_time,
                 }
               )
@@ -109,8 +106,8 @@ platform :ios do
               message: exception.message,
               success: false
               )
-        
-        UI.error("====> ERROR")
+              
+              UI.error("====> ERROR")
     end
 end
 
