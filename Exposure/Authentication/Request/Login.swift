@@ -48,3 +48,9 @@ public struct Login: Exposure {
         case rememberMe = "rememberMe"
     }
 }
+
+extension Login {
+    func request() -> ExposureRequest {
+        return request(.post)
+    }
+}

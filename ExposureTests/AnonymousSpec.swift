@@ -76,7 +76,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(anonymous.endpointUrl), json(expectedJson))
                     
                     anonymous
-                        .request(.post)
+                        .request()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
@@ -112,7 +112,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
@@ -148,7 +148,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
@@ -173,7 +173,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate(statusCode: 200..<299)
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
@@ -197,7 +197,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate(statusCode: 403..<405)
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request

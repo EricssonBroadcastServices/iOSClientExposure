@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public struct PlayVod: Exposure {
     public typealias Response = PlaybackEntitlement
@@ -33,5 +34,11 @@ public struct PlayVod: Exposure {
     
     public var headers: [String: String]? {
         return sessionToken.authorizationHeader
+    }
+}
+
+extension PlayVod {
+    public func request() -> ExposureRequest {
+        return request(.post)
     }
 }

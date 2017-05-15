@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public struct FetchAsset {
     public let environment: Environment
@@ -41,5 +42,11 @@ public struct FetchAssetById: Exposure {
     internal init(environment: Environment, assetId: String) {
         self.environment = environment
         self.assetId = assetId
+    }
+}
+
+extension FetchAssetById {
+    public func request() -> ExposureRequest {
+        return request(.get, encoding: URLEncoding.default)
     }
 }
