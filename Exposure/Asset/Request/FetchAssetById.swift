@@ -17,7 +17,7 @@ public struct FetchAssetById: Exposure {
     }
     
     public var parameters: [String: Any] {
-        return [:]
+        return query.toQueryParams
     }
     
     public var headers: [String: String]? {
@@ -26,19 +26,26 @@ public struct FetchAssetById: Exposure {
     
     internal let query: Query
     
+    public let environment: Environment
+    public let assetId: String
+    
+    internal init(environment: Environment, assetId: String) {
+        self.environment = environment
+        self.assetId = assetId
+        self.query = Query()
+    }
+}
+
+// MARK: - Query
+extension FetchAssetById {
     
     // MARK: Seasons
     public var seasonsIncluded: Bool {
-        get {
-            switch query.seasons {
-            case .none: return false
-            default: return true
-            }
-        }
+        return query.seasons.seasonsIncluded
     }
     
     // Set to true to include seasons for the asset in the response. Only applicable if the asset is a tv show.
-    public func include(seasons value: Bool) -> FetchAssetById {
+    public func filter(seasons value: Bool) -> FetchAssetById {
         // Only process if value changes
         guard seasonsIncluded != value else { return self }
         
@@ -61,16 +68,11 @@ public struct FetchAssetById: Exposure {
     }
     
     public var episodesIncluded: Bool {
-        get {
-            switch query.seasons {
-            case .episodes: return true
-            default: return false
-            }
-        }
+        return query.seasons.episodesIncluded
     }
     
     // Set to true to include episodes for the asset in the response. Only applicable if the asset is a tv show. Setting this to true will cause seasons to be includeSeasons true.
-    public func include(episodes value: Bool) -> FetchAssetById {
+    public func filter(episodes value: Bool) -> FetchAssetById {
         // Only process if value changes
         guard episodesIncluded != value else { return self }
         
@@ -87,6 +89,12 @@ public struct FetchAssetById: Exposure {
     }
     
     // MARK: Fields
+    public enum FieldSet: String {
+        case none = "NONE"
+        case partial = "PARTIAL"
+        case all = "ALL"
+    }
+    
     public var fieldSet: FieldSet {
         return query.fieldSet
     }
@@ -101,7 +109,7 @@ public struct FetchAssetById: Exposure {
         return query.includedFields
     }
     // The set of fields to include by default.
-    public func include(fields: [String]) -> FetchAssetById {
+    public func filter(includedFields fields: [String]) -> FetchAssetById {
         let query = Query(with: self.query, includedFields: fields)
         return FetchAssetById(request: self, query: query)
     }
@@ -110,12 +118,12 @@ public struct FetchAssetById: Exposure {
         return query.excludedFields
     }
     // List of fields to remove from the response.
-    public func exclude(fields: [String]) -> FetchAssetById {
+    public func filter(excludedFields fields: [String]) -> FetchAssetById {
         let query = Query(with: self.query, excludedFields: fields)
         return FetchAssetById(request: self, query: query)
     }
     
-    //
+    // MARK: Published
     public var onlyPublished: Bool {
         return query.onlyPublished
     }
@@ -123,30 +131,33 @@ public struct FetchAssetById: Exposure {
         let query = Query(with: self.query, onlyPublished: onlyPublished)
         return FetchAssetById(request: self, query: query)
     }
-    
-    public let environment: Environment
-    public let assetId: String
-    
-    internal init(environment: Environment, assetId: String) {
-        self.environment = environment
-        self.assetId = assetId
-        self.query = Query()
-    }
 }
 
-// MARK: - Query
+// MARK: Internal Query
 extension FetchAssetById {
-    public enum FieldSet {
-        case none
-        case partial
-        case all
-    }
-    
     internal struct Query {
         internal enum IncludeSeasons {
             case none
             case seasons
             case episodes
+            
+            var episodesIncluded: Bool {
+                get {
+                    switch self {
+                    case .episodes: return true
+                    default: return false
+                    }
+                }
+            }
+            
+            var seasonsIncluded: Bool {
+                get {
+                    switch self {
+                    case .none: return false
+                    default: return true
+                    }
+                }
+            }
         }
         
         internal let seasons: IncludeSeasons
@@ -170,6 +181,27 @@ extension FetchAssetById {
             self.excludedFields = excludedFields ?? query.excludedFields
             self.onlyPublished = onlyPublished == query.onlyPublished
         }
+        
+        
+        internal enum Keys: String {
+            case includeEpisodes = "includeEpisodes"
+            case includeSeasons = "includeSeasons"
+            case fieldSet = "fieldSet"
+            case excludeFields = "excludeFields"
+            case includeFields = "includeFields"
+            case onlyPublished = "onlyPublished"
+        }
+        
+        internal var toQueryParams: [String: Any] {
+            return [
+                Keys.includeEpisodes.rawValue: seasons.episodesIncluded,
+                Keys.includeSeasons.rawValue: seasons.seasonsIncluded,
+                Keys.fieldSet.rawValue: fieldSet.rawValue,
+                Keys.excludeFields.rawValue: excludedFields.joined(separator: ","),
+                Keys.includeFields.rawValue: includedFields.joined(separator: ","),
+                Keys.onlyPublished.rawValue: onlyPublished
+            ]
+        }
     }
     
     internal init(request: FetchAssetById, query: Query) {
@@ -184,4 +216,5 @@ extension FetchAssetById {
     public func request() -> ExposureRequest {
         return request(.get, encoding: URLEncoding.default)
     }
+    
 }
