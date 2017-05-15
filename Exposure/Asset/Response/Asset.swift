@@ -7,13 +7,146 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public struct Asset: ExposureConvertible {
+public struct Asset {
+    public let created: String?
+    public let changed: String?
+    public let assetId: String?
+    public let type: AssetType?
+    public let localized: [LocalizedData]?
+    public let tags: [Tag]?
+    public let publications: [Publication]?
     
+    public let episode: String?
+    public let season: String?
+    public let seasonId: String?
+    public let seasons: [Season]?
+    public let participants: [Person]?
+    public let productionYear: Int?
+    public let popularityScores: [String: Any]?
+    public let releaseDate: String?
+    public let originalTitle: String?
+    
+    public let live: Bool?
+    public let productionCountries: [String]?
+    public let subtitles: [String]?
+    public let audioTracks: [String]?
+    public let spokenLanguages: [String]?
+    public let medias: [Media]?
+    public let parentalRatings: [ParentalRating]?
+    
+    public let linkedEntities: [LinkedEntity]?
+    public let runtime: Int? // The duration of the asset in seconds.,
+    public let tvShowId: String?
+    public let expires: String?
+    public let customData: [String: Any]?
+    public let externalReferences: [ExternalReference]?
+    public let rating: Float?
+    
+}
+
+// MARK: - ExposureConvertible
+extension Asset: ExposureConvertible {
     public init?(json: Any) {
+        let actualJson = JSON(json)
+        created = actualJson[JSONKeys.created.rawValue].string
+        changed = actualJson[JSONKeys.changed.rawValue].string
+        assetId = actualJson[JSONKeys.assetId.rawValue].string
+        type = AssetType(string: actualJson[JSONKeys.type.rawValue].string)
+        localized = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ LocalizedData(json: $0) }
+        tags = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ Tag(json: $0) }
+        publications = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ Publication(json: $0) }
+        
+        episode = actualJson[JSONKeys.episode.rawValue].string
+        season = actualJson[JSONKeys.season.rawValue].string
+        seasonId = actualJson[JSONKeys.seasonId.rawValue].string
+        seasons = actualJson[JSONKeys.seasons.rawValue].array?.flatMap{ Season(json: $0) }
+        participants = actualJson[JSONKeys.participants.rawValue].array?.flatMap{ Person(json: $0) }
+        productionYear = actualJson[JSONKeys.productionYear.rawValue].int
+        popularityScores = actualJson[JSONKeys.popularityScores.rawValue].dictionaryObject
+        releaseDate = actualJson[JSONKeys.releaseDate.rawValue].string
+        originalTitle = actualJson[JSONKeys.originalTitle.rawValue].string
+        
+        live = actualJson[JSONKeys.live.rawValue].bool
+        productionCountries = actualJson[JSONKeys.productionCountries.rawValue].array?.flatMap{ $0.string }
+        subtitles = actualJson[JSONKeys.subtitles.rawValue].array?.flatMap{ $0.string }
+        audioTracks = actualJson[JSONKeys.audioTracks.rawValue].array?.flatMap{ $0.string }
+        spokenLanguages = actualJson[JSONKeys.spokenLanguages.rawValue].array?.flatMap{ $0.string }
+        medias = actualJson[JSONKeys.medias.rawValue].array?.flatMap{ Media(json: $0) }
+        parentalRatings = actualJson[JSONKeys.parentalRatings.rawValue].array?.flatMap{ ParentalRating(json: $0) }
+        
+        linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].array?.flatMap{ LinkedEntity(json: $0) }
+        runtime = actualJson[JSONKeys.runtime.rawValue].int
+        tvShowId = actualJson[JSONKeys.tvShowId.rawValue].string
+        expires = actualJson[JSONKeys.expires.rawValue].string
+        customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
+        externalReferences = actualJson[JSONKeys.externalReferences.rawValue].array?.flatMap{ ExternalReference(json: $0) }
+        rating = actualJson[JSONKeys.rating.rawValue].float
     }
     
     internal enum JSONKeys: String {
-        case temp = "temp"
+        case created = "created"
+        case changed = "changed"
+        case assetId = "assetId"
+        case type = "type"
+        case localized = "localized"
+        case tags = "tags"
+        case publications = "publications"
+        case episode = "episode"
+        case season = "season"
+        case seasonId = "seasonId"
+        case seasons = "seasons"
+        case participants = "participants"
+        case productionYear = "productionYear"
+        case popularityScores = "popularityScores"
+        case releaseDate = "releaseDate"
+        case originalTitle = "originalTitle"
+        case live = "live"
+        case productionCountries = "productionCountries"
+        case subtitles = "subtitles"
+        case audioTracks = "audioTracks"
+        case spokenLanguages = "spokenLanguages"
+        case medias = "medias"
+        case parentalRatings = "parentalRatings"
+        case linkedEntities = "linkedEntities"
+        case runtime = "runtime" // The duration of the asset in seconds.,
+        case tvShowId = "tvShowId"
+        case expires = "expires"
+        case customData = "customData"
+        case externalReferences = "externalReferences"
+        case rating = "rating"
+    }
+}
+
+extension Asset {
+    public enum AssetType {
+        case movie
+        case tvShow
+        case episode
+        case clip
+        case tvChannel
+        case ad
+        case liveEvent
+        case other(type: String)
+        
+        internal init?(string: String?) {
+            guard let value = string else { return nil }
+            self = AssetType(string: value)
+        }
+        
+        internal init(string: String) {
+            switch string {
+            case "MOVIE": self = .movie
+            case "TV_SHOW": self = .tvShow
+            case "EPISODE": self = .episode
+            case "CLIP": self = .clip
+            case "TV_CHANNEL": self = .tvChannel
+            case "AD": self = .ad
+            case "LIVE_EVENT": self = .liveEvent
+            case "OTHER": self = .other(type: "OTHER")
+            default: self = .other(type: string)
+            }
+        }
     }
 }
