@@ -10,6 +10,8 @@
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
 		7667AEBA1EC1C44100C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AEB91EC1C44100C308FC /* .env */; };
+		766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB641EC9822B00EBEC53 /* Asset.swift */; };
+		766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB661EC9829200EBEC53 /* FetchAsset.swift */; };
 		7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */; };
 		7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDC11EAA513000421551 /* LoginSpec.swift */; };
 		7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */; };
@@ -70,6 +72,8 @@
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AEB91EC1C44100C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .env; path = fastlane/.env; sourceTree = SOURCE_ROOT; };
+		766FBB641EC9822B00EBEC53 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
+		766FBB661EC9829200EBEC53 /* FetchAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAsset.swift; sourceTree = "<group>"; };
 		7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FairplayConfigurationSpec.swift; sourceTree = "<group>"; };
 		7693EDC11EAA513000421551 /* LoginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSpec.swift; sourceTree = "<group>"; };
 		7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchServerTimeSpec.swift; sourceTree = "<group>"; };
@@ -154,6 +158,39 @@
 			name = fastlane;
 			sourceTree = "<group>";
 		};
+		766FBB5E1EC9816700EBEC53 /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				766FBB5F1EC9819600EBEC53 /* Parameters */,
+				766FBB601EC9819600EBEC53 /* Request */,
+				766FBB611EC9819600EBEC53 /* Response */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
+		766FBB5F1EC9819600EBEC53 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		766FBB601EC9819600EBEC53 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				766FBB661EC9829200EBEC53 /* FetchAsset.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		766FBB611EC9819600EBEC53 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				766FBB641EC9822B00EBEC53 /* Asset.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		76A8429D1EA75EC900BDAF2C = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +219,7 @@
 				76BBFB751EA8C039001DBDDB /* Cartfile.resolved */,
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
+				766FBB5E1EC9816700EBEC53 /* Asset */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
 				76A842D21EA7667D00BDAF2C /* Entitlements */,
 				76A842DB1EA7667D00BDAF2C /* Exposure.swift */,
@@ -481,12 +519,14 @@
 				76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */,
 				76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */,
 				76A842F21EA7667D00BDAF2C /* EDRMConfiguration.swift in Sources */,
+				766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */,
 				76A842EF1EA7667D00BDAF2C /* SessionToken.swift in Sources */,
 				76A842F71EA7667D00BDAF2C /* DataRequest.swift in Sources */,
 				76A842F41EA7667D00BDAF2C /* PlaybackEntitlement.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				76A842F91EA7667D00BDAF2C /* Date+Extensions.swift in Sources */,
 				76A842F81EA7667D00BDAF2C /* ExposureRequest.swift in Sources */,
+				766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */,
 				76A842F51EA7667D00BDAF2C /* Exposure.swift in Sources */,
 				76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */,
 				76A842F31EA7667D00BDAF2C /* FairplayConfiguration.swift in Sources */,
