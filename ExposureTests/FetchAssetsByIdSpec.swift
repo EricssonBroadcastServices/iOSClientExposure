@@ -25,12 +25,24 @@ class FetchAssetByIdSpec: QuickSpec {
         
         let assetId = "VU-21702_qwerty"
         
+        let t = FetchAsset(environment: env)
+            .filter(assetId: assetId)
+            .filter(seasons: true)
+            .request()
+            .response { (data: ExposureResponse<Asset>) in
+                if let value = data.value {
+                    
+                    print(value)
+                    
+                }
+                else {
+                    print(data.error)
+                }
+        }
+        
         describe("FetchAssetById") {
             it("should init with complete json") {
-                FetchAsset(environment: env)
-                    .filter(assetId: assetId)
-                    .filter(seasons: true)
-                    .request()
+                
             }
         }
     }

@@ -29,7 +29,8 @@ extension Asset {
             tinyDescription = actualJson[JSONKeys.tinyDescription.rawValue].string
             shortDescription = actualJson[JSONKeys.shortDescription.rawValue].string
             longDescription = actualJson[JSONKeys.longDescription.rawValue].string
-            images = actualJson[JSONKeys.locale.rawValue].array?.flatMap{ Image(json: $0) }
+            
+            images = actualJson[JSONKeys.images.rawValue].arrayObject?.flatMap{ Image(json: $0) }
         }
         
         internal enum JSONKeys: String {

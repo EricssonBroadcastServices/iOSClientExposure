@@ -54,15 +54,16 @@ extension Asset: ExposureConvertible {
         changed = actualJson[JSONKeys.changed.rawValue].string
         assetId = actualJson[JSONKeys.assetId.rawValue].string
         type = AssetType(string: actualJson[JSONKeys.type.rawValue].string)
-        localized = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ LocalizedData(json: $0) }
-        tags = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ Tag(json: $0) }
-        publications = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ Publication(json: $0) }
+        
+        localized = actualJson[JSONKeys.localized.rawValue].arrayObject?.flatMap{ LocalizedData(json: $0) }
+        tags = actualJson[JSONKeys.tags.rawValue].arrayObject?.flatMap{ Tag(json: $0) }
+        publications = actualJson[JSONKeys.publications.rawValue].arrayObject?.flatMap{ Publication(json: $0) }
         
         episode = actualJson[JSONKeys.episode.rawValue].string
         season = actualJson[JSONKeys.season.rawValue].string
         seasonId = actualJson[JSONKeys.seasonId.rawValue].string
-        seasons = actualJson[JSONKeys.seasons.rawValue].array?.flatMap{ Season(json: $0) }
-        participants = actualJson[JSONKeys.participants.rawValue].array?.flatMap{ Person(json: $0) }
+        seasons = actualJson[JSONKeys.seasons.rawValue].arrayObject?.flatMap{ Season(json: $0) }
+        participants = actualJson[JSONKeys.participants.rawValue].arrayObject?.flatMap{ Person(json: $0) }
         productionYear = actualJson[JSONKeys.productionYear.rawValue].int
         popularityScores = actualJson[JSONKeys.popularityScores.rawValue].dictionaryObject
         releaseDate = actualJson[JSONKeys.releaseDate.rawValue].string
@@ -73,15 +74,15 @@ extension Asset: ExposureConvertible {
         subtitles = actualJson[JSONKeys.subtitles.rawValue].array?.flatMap{ $0.string }
         audioTracks = actualJson[JSONKeys.audioTracks.rawValue].array?.flatMap{ $0.string }
         spokenLanguages = actualJson[JSONKeys.spokenLanguages.rawValue].array?.flatMap{ $0.string }
-        medias = actualJson[JSONKeys.medias.rawValue].array?.flatMap{ Media(json: $0) }
-        parentalRatings = actualJson[JSONKeys.parentalRatings.rawValue].array?.flatMap{ ParentalRating(json: $0) }
+        medias = actualJson[JSONKeys.medias.rawValue].arrayObject?.flatMap{ Media(json: $0) }
+        parentalRatings = actualJson[JSONKeys.parentalRatings.rawValue].arrayObject?.flatMap{ ParentalRating(json: $0) }
         
-        linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].array?.flatMap{ LinkedEntity(json: $0) }
+        linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].arrayObject?.flatMap{ LinkedEntity(json: $0) }
         runtime = actualJson[JSONKeys.runtime.rawValue].int
         tvShowId = actualJson[JSONKeys.tvShowId.rawValue].string
         expires = actualJson[JSONKeys.expires.rawValue].string
         customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
-        externalReferences = actualJson[JSONKeys.externalReferences.rawValue].array?.flatMap{ ExternalReference(json: $0) }
+        externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
         rating = actualJson[JSONKeys.rating.rawValue].float
     }
     

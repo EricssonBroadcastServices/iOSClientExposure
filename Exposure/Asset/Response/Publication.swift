@@ -38,7 +38,7 @@ extension Asset {
             
             customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
             rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue])
-            devices = actualJson[JSONKeys.devices.rawValue].array?.flatMap{ DeviceRights(json: $0) }
+            devices = actualJson[JSONKeys.devices.rawValue].arrayObject?.flatMap{ DeviceRights(json: $0) }
         }
         
         internal enum JSONKeys: String {

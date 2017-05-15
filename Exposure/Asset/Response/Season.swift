@@ -40,22 +40,22 @@ extension Asset {
             changed = actualJson[JSONKeys.changed.rawValue].string
             season = actualJson[JSONKeys.season.rawValue].string
             
-            tags = actualJson[JSONKeys.tags.rawValue].array?.flatMap{ Tag(json: $0) }
-            localized = actualJson[JSONKeys.localized.rawValue].array?.flatMap{ LocalizedData(json: $0) }
+            tags = actualJson[JSONKeys.tags.rawValue].arrayObject?.flatMap{ Tag(json: $0) }
+            localized = actualJson[JSONKeys.localized.rawValue].arrayObject?.flatMap{ LocalizedData(json: $0) }
             
             tvShowId = actualJson[JSONKeys.tvShowId.rawValue].string
             seasonId = actualJson[JSONKeys.seasonId.rawValue].string
             episodeCount = actualJson[JSONKeys.episodeCount.rawValue].int
             
-            episodes = actualJson[JSONKeys.episodes.rawValue].array?.flatMap{ Asset(json: $0) }
+            episodes = actualJson[JSONKeys.episodes.rawValue].arrayObject?.flatMap{ Asset(json: $0) }
             
             publishedDate = actualJson[JSONKeys.publishedDate.rawValue].string
             availableDate = actualJson[JSONKeys.availableDate.rawValue].string
             startYear = actualJson[JSONKeys.startYear.rawValue].int
             endYear = actualJson[JSONKeys.endYear.rawValue].int
             
-            linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].array?.flatMap{ LinkedEntity(json: $0) }
-            externalReferences = actualJson[JSONKeys.externalReferences.rawValue].array?.flatMap{ ExternalReference(json: $0) }
+            linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].arrayObject?.flatMap{ LinkedEntity(json: $0) }
+            externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
             customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
         }
         
