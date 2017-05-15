@@ -63,6 +63,7 @@ extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
     }
 }
 
+
 extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
     internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         if let params = parameters {
