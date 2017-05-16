@@ -20,6 +20,8 @@ extension Asset {
             locator = actualJson[JSONKeys.locator.rawValue].string
             type = actualJson[JSONKeys.type.rawValue].string
             value = actualJson[JSONKeys.value.rawValue].string
+            
+            if locator == nil && type == nil && value == nil { return nil }
         }
         
         internal enum JSONKeys: String {

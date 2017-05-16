@@ -20,6 +20,8 @@ extension Asset {
             personId = actualJson[JSONKeys.personId.rawValue].string
             name = actualJson[JSONKeys.name.rawValue].string
             function = actualJson[JSONKeys.function.rawValue].string
+            
+            if personId == nil && name == nil && function == nil { return nil }
         }
         
         internal enum JSONKeys: String {
