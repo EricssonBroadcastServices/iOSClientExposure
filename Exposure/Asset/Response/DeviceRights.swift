@@ -55,7 +55,11 @@ extension Asset {
             manufacturer = actualJson[JSONKeys.manufacturer.rawValue].string
             os = actualJson[JSONKeys.os.rawValue].string
             osVersion = actualJson[JSONKeys.osVersion.rawValue].string
-            rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue])
+            
+            rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue].object)
+            
+            if type == nil && model == nil && manufacturer == nil
+                && os == nil && osVersion == nil && rights == nil { return nil }
         }
         
         internal enum JSONKeys: String {
