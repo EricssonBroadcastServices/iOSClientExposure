@@ -80,6 +80,17 @@ extension Asset {
             
             downloadMaxSecondsAfterDownload = actualJson[JSONKeys.downloadMaxSecondsAfterDownload.rawValue].int
             downloadMaxSecondsAfterPlay = actualJson[JSONKeys.downloadMaxSecondsAfterPlay.rawValue].int
+            
+            if minBitrate == nil && maxBitrate == nil && maxResHeight == nil && maxResWidth == nil
+                && playCount == nil && maxFileSize == nil && activation == nil && expiration == nil
+                && maxAds == nil && wifiBlocked == nil && threeGBlocked == nil && fourGBlocked == nil
+                && HDMIBlocked == nil && airplayBlocked == nil && downloadBlocked == nil && streamingBlocked == nil
+                && analyticsEnabled == nil && sessionShiftEnabled == nil && rwEnabled == nil
+                && ffEnabled == nil  && amcDebugLogEnabled == nil && locationEnabled == nil
+                && minPlayPosition == nil && maxPlayPosition == nil && jailbrokenBlocked == nil
+                && downloadMaxSecondsAfterDownload == nil && downloadMaxSecondsAfterPlay == nil {
+                return nil
+            }
         }
         
         internal enum JSONKeys: String {

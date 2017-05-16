@@ -20,6 +20,8 @@ extension Asset {
             entityId = actualJson[JSONKeys.entityId.rawValue].string
             linkType = actualJson[JSONKeys.linkType.rawValue].string
             entityType = actualJson[JSONKeys.entityType.rawValue].string
+            
+            if entityId == nil && linkType == nil && entityType == nil { return nil }
         }
         
         internal enum JSONKeys: String {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */; };
+		761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */; };
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
 		7667AEBA1EC1C44100C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AEB91EC1C44100C308FC /* .env */; };
@@ -90,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetRightsSpec.swift; sourceTree = "<group>"; };
+		761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedEntitySpec.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AEB91EC1C44100C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .env; path = fastlane/.env; sourceTree = SOURCE_ROOT; };
@@ -263,6 +267,8 @@
 				767030841ECB29080026CD70 /* MediaSpec.swift */,
 				767030861ECB2B1E0026CD70 /* PersonSpec.swift */,
 				767030881ECB2BEB0026CD70 /* ExternalReferenceSpec.swift */,
+				761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */,
+				761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */,
 			);
 			path = Asset;
 			sourceTree = "<group>";
@@ -637,6 +643,7 @@
 				7693EDD01EADF30300421551 /* PlayRequestSpec.swift in Sources */,
 				767030891ECB2BEB0026CD70 /* ExternalReferenceSpec.swift in Sources */,
 				7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */,
+				761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */,
 				76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */,
 				76BBFBC31EA8FA8C001DBDDB /* AnonymousSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
@@ -648,6 +655,7 @@
 				7693EDCA1EADEB7300421551 /* CredentialsSpec.swift in Sources */,
 				767030871ECB2B1E0026CD70 /* PersonSpec.swift in Sources */,
 				7693EDCC1EADED5C00421551 /* EDRMConfigurationSpec.swift in Sources */,
+				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
 				767030851ECB29080026CD70 /* MediaSpec.swift in Sources */,
 				766FBB701EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift in Sources */,
 				7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */,
