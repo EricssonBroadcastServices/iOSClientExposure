@@ -37,8 +37,14 @@ extension Asset {
             publicationId = actualJson[JSONKeys.publicationId.rawValue].string
             
             customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
-            rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue])
+            rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue].object)
             devices = actualJson[JSONKeys.devices.rawValue].arrayObject?.flatMap{ DeviceRights(json: $0) }
+            
+            if publicationDate == nil && fromDate == nil && toDate == nil
+            && countries == nil && services == nil && products == nil && publicationId == nil
+                && customData == nil && rights == nil && devices == nil {
+                    return nil
+            }
         }
         
         internal enum JSONKeys: String {

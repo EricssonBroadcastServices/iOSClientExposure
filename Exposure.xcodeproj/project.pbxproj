@@ -10,6 +10,7 @@
 		761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */; };
 		761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */; };
 		761336AF1ECB860300E316BF /* DeviceRightsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AE1ECB860300E316BF /* DeviceRightsSpec.swift */; };
+		761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B01ECB8D2E00E316BF /* PublicationSpec.swift */; };
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
 		7667AEBA1EC1C44100C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AEB91EC1C44100C308FC /* .env */; };
@@ -96,6 +97,7 @@
 		761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetRightsSpec.swift; sourceTree = "<group>"; };
 		761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedEntitySpec.swift; sourceTree = "<group>"; };
 		761336AE1ECB860300E316BF /* DeviceRightsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRightsSpec.swift; sourceTree = "<group>"; };
+		761336B01ECB8D2E00E316BF /* PublicationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicationSpec.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7667AEB91EC1C44100C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .env; path = fastlane/.env; sourceTree = SOURCE_ROOT; };
@@ -272,6 +274,7 @@
 				761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */,
 				761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */,
 				761336AE1ECB860300E316BF /* DeviceRightsSpec.swift */,
+				761336B01ECB8D2E00E316BF /* PublicationSpec.swift */,
 			);
 			path = Asset;
 			sourceTree = "<group>";
@@ -664,6 +667,7 @@
 				766FBB701EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift in Sources */,
 				7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */,
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
+				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
