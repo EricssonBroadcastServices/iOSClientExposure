@@ -32,6 +32,12 @@ extension Asset {
             durationMillis = actualJson[JSONKeys.durationMillis.rawValue].int
             programId = actualJson[JSONKeys.programId.rawValue].string
             status = actualJson[JSONKeys.status.rawValue].string
+            
+            if mediaId == nil && name == nil && drm == nil && format == nil
+                && height == nil && width == nil && durationMillis == nil
+                && programId == nil && status == nil {
+                return nil
+            }
         }
         
         internal enum JSONKeys: String {

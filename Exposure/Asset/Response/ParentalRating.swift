@@ -20,6 +20,8 @@ extension Asset {
             country = actualJson[JSONKeys.country.rawValue].string
             scheme = actualJson[JSONKeys.scheme.rawValue].string
             rating = actualJson[JSONKeys.rating.rawValue].string
+            
+            if country == nil && scheme == nil && rating == nil { return nil }
         }
         
         internal enum JSONKeys: String {

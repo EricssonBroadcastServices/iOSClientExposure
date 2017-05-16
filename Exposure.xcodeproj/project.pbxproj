@@ -27,6 +27,10 @@
 		766FBB841ECA2B6100EBEC53 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB831ECA2B6100EBEC53 /* Person.swift */; };
 		766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB851ECA2B7400EBEC53 /* Media.swift */; };
 		766FBB881ECA2B9800EBEC53 /* ParentalRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB871ECA2B9800EBEC53 /* ParentalRating.swift */; };
+		7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7670307E1ECB21150026CD70 /* TagsSpec.swift */; };
+		767030811ECB25E00026CD70 /* ImageSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767030801ECB25E00026CD70 /* ImageSpec.swift */; };
+		767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767030821ECB27DC0026CD70 /* ParentalRatingSpec.swift */; };
+		767030851ECB29080026CD70 /* MediaSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767030841ECB29080026CD70 /* MediaSpec.swift */; };
 		7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */; };
 		7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDC11EAA513000421551 /* LoginSpec.swift */; };
 		7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */; };
@@ -104,6 +108,10 @@
 		766FBB831ECA2B6100EBEC53 /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
 		766FBB851ECA2B7400EBEC53 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		766FBB871ECA2B9800EBEC53 /* ParentalRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentalRating.swift; sourceTree = "<group>"; };
+		7670307E1ECB21150026CD70 /* TagsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsSpec.swift; sourceTree = "<group>"; };
+		767030801ECB25E00026CD70 /* ImageSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageSpec.swift; sourceTree = "<group>"; };
+		767030821ECB27DC0026CD70 /* ParentalRatingSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentalRatingSpec.swift; sourceTree = "<group>"; };
+		767030841ECB29080026CD70 /* MediaSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaSpec.swift; sourceTree = "<group>"; };
 		7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FairplayConfigurationSpec.swift; sourceTree = "<group>"; };
 		7693EDC11EAA513000421551 /* LoginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSpec.swift; sourceTree = "<group>"; };
 		7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchServerTimeSpec.swift; sourceTree = "<group>"; };
@@ -242,6 +250,17 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		7670307D1ECB210C0026CD70 /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				7670307E1ECB21150026CD70 /* TagsSpec.swift */,
+				767030801ECB25E00026CD70 /* ImageSpec.swift */,
+				767030821ECB27DC0026CD70 /* ParentalRatingSpec.swift */,
+				767030841ECB29080026CD70 /* MediaSpec.swift */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
 		76A8429D1EA75EC900BDAF2C = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +321,7 @@
 				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
 				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
 				766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */,
+				7670307D1ECB210C0026CD70 /* Asset */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -609,14 +629,18 @@
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				7693EDC81EADE91300421551 /* SessionTokenSpec.swift in Sources */,
 				7693EDD01EADF30300421551 /* PlayRequestSpec.swift in Sources */,
+				7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */,
 				76BBFBBF1EA8F669001DBDDB /* DeviceInfoSpec.swift in Sources */,
 				76BBFBC31EA8FA8C001DBDDB /* AnonymousSpec.swift in Sources */,
+				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
 				7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */,
 				7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */,
 				7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */,
+				767030811ECB25E00026CD70 /* ImageSpec.swift in Sources */,
 				7693EDCA1EADEB7300421551 /* CredentialsSpec.swift in Sources */,
 				7693EDCC1EADED5C00421551 /* EDRMConfigurationSpec.swift in Sources */,
+				767030851ECB29080026CD70 /* MediaSpec.swift in Sources */,
 				766FBB701EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift in Sources */,
 				7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */,
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,

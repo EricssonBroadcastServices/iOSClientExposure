@@ -35,6 +35,8 @@ extension Asset {
             changed = actualJson[JSONKeys.changed.rawValue].string
             type = actualJson[JSONKeys.type.rawValue].string
             tagValues = actualJson[JSONKeys.tagValues.rawValue].arrayObject?.flatMap{ Values(json: $0) }
+            
+            if created == nil && changed == nil && type == nil && tagValues == nil { return nil }
         }
         
         internal enum JSONKeys: String {

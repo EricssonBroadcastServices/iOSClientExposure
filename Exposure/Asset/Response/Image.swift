@@ -25,6 +25,8 @@ extension Asset {
             width = actualJson[JSONKeys.width.rawValue].int
             orientation = Orientation(string: actualJson[JSONKeys.orientation.rawValue].string)
             type = actualJson[JSONKeys.type.rawValue].string
+            
+            if url == nil && height == nil && width == nil && orientation == nil && type == nil { return nil }
         }
         
         internal enum JSONKeys: String {
