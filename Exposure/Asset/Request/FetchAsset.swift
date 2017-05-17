@@ -18,9 +18,9 @@ extension FetchAsset {
                               assetId: assetId)
     }
     
-    //    public func list() -> FetchAssetList {
-    //
-    //    }
+    public func list() -> FetchAssetList {
+        return FetchAssetList(environment: environment)
+    }
 }
 
 
@@ -42,21 +42,21 @@ extension FilteredFields {
     }
     
     
-    public var fieldsIncluded: [String] {
+    public var fieldsIncluded: [String]? {
         return fieldsFilter.includedFields
     }
     // The set of fields to include by default.
-    public func include(fields: [String]) -> Self {
+    public func include(fields: [String]?) -> Self {
         var old = self
         old.fieldsFilter = FieldsFilter(with: self.fieldsFilter, includedFields: fields)
         return old
     }
     
-    public var fieldsExcluded: [String] {
+    public var fieldsExcluded: [String]? {
         return fieldsFilter.excludedFields
     }
     // List of fields to remove from the response.
-    public func exclude(fields: [String]) -> Self {
+    public func exclude(fields: [String]?) -> Self {
         var old = self
         old.fieldsFilter = FieldsFilter(with: self.fieldsFilter, excludedFields: fields)
         return old
@@ -72,16 +72,16 @@ public struct FieldsFilter {
     }
     
     internal let fieldSet: FieldSet
-    internal let includedFields: [String]
-    internal let excludedFields: [String]
+    internal let includedFields: [String]?
+    internal let excludedFields: [String]?
     
-    init(fieldSet: FieldSet = .all, includedFields: [String] = [], excludedFields: [String] = []) {
+    internal init(fieldSet: FieldSet = .all, includedFields: [String]? = nil, excludedFields: [String]? = nil) {
         self.fieldSet = fieldSet
         self.includedFields = includedFields
         self.excludedFields = excludedFields
     }
     
-    init(with filter: FieldsFilter, fieldSet: FieldSet? = nil, includedFields: [String]? = nil, excludedFields: [String]? = nil) {
+    internal init(with filter: FieldsFilter, fieldSet: FieldSet? = nil, includedFields: [String]? = nil, excludedFields: [String]? = nil) {
         self.fieldSet = fieldSet ?? filter.fieldSet
         self.includedFields = includedFields ?? filter.includedFields
         self.excludedFields = excludedFields ?? filter.excludedFields

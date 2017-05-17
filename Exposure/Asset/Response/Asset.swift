@@ -157,5 +157,19 @@ extension Asset {
             default: self = .other(type: string)
             }
         }
+        
+        internal var queryParam: String {
+            switch self {
+            case .movie: return "MOVIE"
+            case .tvShow: return "TV_SHOW"
+            case .episode: return "EPISODE"
+            case .clip: return "CLIP"
+            case .tvChannel: return "TV_CHANNEL"
+            case .ad: return "AD"
+            case .liveEvent: return "LIVE_EVENT"
+            case .other(type: _): return "OTHER"
+            default: return "OTHER"
+            }
+        }
     }
 }

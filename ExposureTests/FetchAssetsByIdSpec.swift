@@ -40,7 +40,13 @@ class FetchAssetByIdSpec: QuickSpec {
             }
             
             it("should generate paramters") {
-                let params = fetchReq.parameters
+                let params = fetchReq
+                    .include(fields: ["first"])
+                    .exclude(fields: ["notUsed"])
+                    .filter(includeSeasons: true)
+                    .filter(includeEpisodes: false)
+                    .parameters
+                
                 expect(params.count).to(equal(6))
                 
                 expect(params["includeEpisodes"]).toNot(beNil())
@@ -91,14 +97,14 @@ class FetchAssetByIdSpec: QuickSpec {
             }
             
             it("should include fields") {
-                expect(fetchReq.fieldsIncluded).to(beEmpty())
+                expect(fetchReq.fieldsIncluded).to(beNil())
                 let fields = ["ONE", "TWO"]
                 let withField = fetchReq.include(fields: fields)
                 expect(withField.fieldsIncluded).to(contain(fields))
             }
             
             it("should filter on excluded fields") {
-                expect(fetchReq.fieldsExcluded).to(beEmpty())
+                expect(fetchReq.fieldsExcluded).to(beNil())
                 let fields = ["ONE", "TWO"]
                 let withField = fetchReq.exclude(fields: fields)
                 expect(withField.fieldsExcluded).to(contain(fields))

@@ -53,14 +53,20 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         var params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
             Keys.fieldSet.rawValue: fieldsFilter.fieldSet.rawValue,
-            Keys.excludeFields.rawValue: fieldsFilter.excludedFields.joined(separator: ","),
-            Keys.includeFields.rawValue: fieldsFilter.includedFields.joined(separator: ","),
             Keys.pageSize.rawValue: pageFilter.size,
             Keys.pageNumber.rawValue: pageFilter.page
         ]
         
+        if let excluded = fieldsFilter.excludedFields, !excluded.isEmpty {
+            params[Keys.excludeFields.rawValue] = excluded.joined(separator: ",")
+        }
+        
+        if let included = fieldsFilter.includedFields, !included.isEmpty {
+            params[Keys.includeFields.rawValue] = included.joined(separator: ",")
+        }
+        
         if let assetType = query.assetType {
-            params[Keys.assetType.rawValue] = assetType
+            params[Keys.assetType.rawValue] = assetType.queryParam
         }
         return params
     }

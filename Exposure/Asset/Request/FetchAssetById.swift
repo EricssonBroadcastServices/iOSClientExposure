@@ -49,14 +49,28 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
     }
     
     internal var queryParams: [String: Any] {
-        return [
+        var params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
             Keys.fieldSet.rawValue: fieldsFilter.fieldSet.rawValue,
-            Keys.excludeFields.rawValue: fieldsFilter.excludedFields.joined(separator: ","),
-            Keys.includeFields.rawValue: fieldsFilter.includedFields.joined(separator: ","),
-            Keys.seasonsIncluded.rawValue: query.seasons.seasonsIncluded,
-            Keys.episodesIncluded.rawValue: query.seasons.episodesIncluded
         ]
+        
+        if let seasons = query.seasonsIncluded {
+            params[Keys.seasonsIncluded.rawValue] = seasons
+        }
+        
+        if let episodes = query.episodesIncluded {
+            params[Keys.episodesIncluded.rawValue] = episodes
+        }
+        
+        if let excluded = fieldsFilter.excludedFields, !excluded.isEmpty {
+            params[Keys.excludeFields.rawValue] = excluded.joined(separator: ",")
+        }
+        
+        if let included = fieldsFilter.includedFields, !included.isEmpty {
+            params[Keys.includeFields.rawValue] = included.joined(separator: ",")
+        }
+        
+        return params
     }
 }
 
@@ -66,49 +80,25 @@ extension FetchAssetById {
     
     // MARK: Seasons
     public var seasonsIncluded: Bool {
-        return query.seasons.seasonsIncluded
+        return query.seasonsIncluded ?? false
     }
     
     // Set to true to include seasons for the asset in the response. Only applicable if the asset is a tv show.
     public func filter(includeSeasons value: Bool) -> FetchAssetById {
-        // Only process if value changes
-        guard seasonsIncluded != value else { return self }
-        
-        if !value {
-            // Turning off seasons turns off episodes as well
-            var old = self
-            old.query = Query(seasons: .neither)
-            return old
-        }
-        else {
-            // Activate seasons
-            var old = self
-            old.query = Query(seasons: .seasons)
-            return old
-        }
+        var old = self
+        old.query = Query(seasons: value, episodes: query.episodesIncluded)
+        return old
     }
     
     public var episodesIncluded: Bool {
-        return query.seasons.episodesIncluded
+        return query.episodesIncluded ?? false
     }
     
     // Set to true to include episodes for the asset in the response. Only applicable if the asset is a tv show. Setting this to true will cause seasons to be includeSeasons true.
     public func filter(includeEpisodes value: Bool) -> FetchAssetById {
-        // Only process if value changes
-        guard episodesIncluded != value else { return self }
-        
-        if value {
-            // Turning on Episodes turns on Seasons as well
-            var old = self
-            old.query = Query(seasons: .episodes)
-            return old
-        }
-        else {
-            // Turn off Episodes, but keep seasons active
-            var old = self
-            old.query = Query(seasons: .seasons)
-            return old
-        }
+        var old = self
+        old.query = Query(seasons: query.seasonsIncluded, episodes: value)
+        return old
     }
     
 }
@@ -116,34 +106,12 @@ extension FetchAssetById {
 // MARK: Internal Query
 extension FetchAssetById {
     internal struct Query {
-        internal enum IncludeSeasons {
-            case neither
-            case seasons
-            case episodes
-            
-            var episodesIncluded: Bool {
-                get {
-                    switch self {
-                    case .episodes: return true
-                    default: return false
-                    }
-                }
-            }
-            
-            var seasonsIncluded: Bool {
-                get {
-                    switch self {
-                    case .neither: return false
-                    default: return true
-                    }
-                }
-            }
-        }
+        internal let episodesIncluded: Bool?
+        internal let seasonsIncluded: Bool?
         
-        internal let seasons: IncludeSeasons
-        
-        internal init(seasons: IncludeSeasons = .seasons) {
-            self.seasons = seasons
+        internal init(seasons: Bool? = nil, episodes: Bool? = nil) {
+            self.seasonsIncluded = seasons
+            self.episodesIncluded = episodes
         }
     }
     
