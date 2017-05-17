@@ -8,10 +8,11 @@
 
 import Foundation
 
-public struct FetchAssetList: FilteredFields, FilteredPublish {//: Exposure {
+public struct FetchAssetList: FilteredFields, FilteredPublish, PageableResponse {//: Exposure {
     
     public var fieldsFilter: FieldsFilter
     public var publishFilter: PublishFilter
+    public var pageFilter: PageFilter
     
     public let environment: Environment
     internal var query: Query
@@ -21,6 +22,7 @@ public struct FetchAssetList: FilteredFields, FilteredPublish {//: Exposure {
         self.environment = environment
         self.fieldsFilter = FieldsFilter()
         self.publishFilter = PublishFilter()
+        self.pageFilter = PageFilter()
         self.query = Query()
     }
 }
