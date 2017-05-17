@@ -55,15 +55,9 @@ extension FetchAssetById {
             return FetchAssetById(request: self, query: query)
         }
         else {
-            if episodesIncluded {
-                // Turning on seasons while episodes is allready on does nothing
-                return self
-            }
-            else {
-                // Activate seasons
-                let query = Query(with: self.query, seasons: .seasons)
-                return FetchAssetById(request: self, query: query)
-            }
+            // Activate seasons
+            let query = Query(with: self.query, seasons: .seasons)
+            return FetchAssetById(request: self, query: query)
         }
     }
     
@@ -90,7 +84,7 @@ extension FetchAssetById {
     
     // MARK: Fields
     public enum FieldSet: String {
-        case none = "NONE"
+        case empty = "NONE"
         case partial = "PARTIAL"
         case all = "ALL"
     }
@@ -100,7 +94,7 @@ extension FetchAssetById {
     }
     
     public func filter(includeFieldSet: FieldSet) -> FetchAssetById {
-        let query = Query(with: self.query, fieldSet: fieldSet)
+        let query = Query(with: self.query, fieldSet: includeFieldSet)
         return FetchAssetById(request: self, query: query)
     }
     
