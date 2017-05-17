@@ -36,6 +36,43 @@ public struct FetchAssetById: Exposure {
     }
 }
 
+// MARK: - Fields
+extension FetchAssetById {
+    public enum FieldSet: String {
+        case empty = "NONE"
+        case partial = "PARTIAL"
+        case all = "ALL"
+    }
+    
+    public var fieldSet: FieldSet {
+        return query.fieldSet
+    }
+    
+    public func use(fieldSet: FieldSet) -> FetchAssetById {
+        let query = Query(with: self.query, fieldSet: fieldSet)
+        return FetchAssetById(request: self, query: query)
+    }
+    
+    
+    public var fieldsIncluded: [String] {
+        return query.includedFields
+    }
+    // The set of fields to include by default.
+    public func include(fields: [String]) -> FetchAssetById {
+        let query = Query(with: self.query, includedFields: fields)
+        return FetchAssetById(request: self, query: query)
+    }
+    
+    public var fieldsExcluded: [String] {
+        return query.excludedFields
+    }
+    // List of fields to remove from the response.
+    public func exclude(fields: [String]) -> FetchAssetById {
+        let query = Query(with: self.query, excludedFields: fields)
+        return FetchAssetById(request: self, query: query)
+    }
+}
+
 // MARK: - Query
 extension FetchAssetById {
     
@@ -80,41 +117,6 @@ extension FetchAssetById {
             let query = Query(with: self.query, seasons: .seasons)
             return FetchAssetById(request: self, query: query)
         }
-    }
-    
-    // MARK: Fields
-    public enum FieldSet: String {
-        case empty = "NONE"
-        case partial = "PARTIAL"
-        case all = "ALL"
-    }
-    
-    public var fieldSet: FieldSet {
-        return query.fieldSet
-    }
-    
-    public func filter(includeFieldSet: FieldSet) -> FetchAssetById {
-        let query = Query(with: self.query, fieldSet: includeFieldSet)
-        return FetchAssetById(request: self, query: query)
-    }
-    
-    
-    public var fieldsIncluded: [String] {
-        return query.includedFields
-    }
-    // The set of fields to include by default.
-    public func filter(includeFields fields: [String]) -> FetchAssetById {
-        let query = Query(with: self.query, includedFields: fields)
-        return FetchAssetById(request: self, query: query)
-    }
-    
-    public var fieldsExcluded: [String] {
-        return query.excludedFields
-    }
-    // List of fields to remove from the response.
-    public func filter(excludeFields fields: [String]) -> FetchAssetById {
-        let query = Query(with: self.query, excludedFields: fields)
-        return FetchAssetById(request: self, query: query)
     }
     
     // MARK: Published

@@ -80,27 +80,27 @@ class FetchAssetByIdSpec: QuickSpec {
                 expect(sameValueSeasons.episodesIncluded).to(beTrue())
             }
             
-            it("should filter on fieldSets") {
-                let empty = fetchReq.filter(includeFieldSet: .empty)
-                let partial = empty.filter(includeFieldSet: .partial)
-                let all = empty.filter(includeFieldSet: .all)
+            it("should include fieldSets") {
+                let empty = fetchReq.use(fieldSet: .empty)
+                let partial = empty.use(fieldSet: .partial)
+                let all = empty.use(fieldSet: .all)
                 
                 expect(self.compare(field: empty.fieldSet, to: .empty)).to(beTrue())
                 expect(self.compare(field: partial.fieldSet, to: .partial)).to(beTrue())
                 expect(self.compare(field: all.fieldSet, to: .all)).to(beTrue())
             }
             
-            it("should filter on included fields") {
+            it("should include fields") {
                 expect(fetchReq.fieldsIncluded).to(beEmpty())
                 let fields = ["ONE", "TWO"]
-                let withField = fetchReq.filter(includeFields: fields)
+                let withField = fetchReq.include(fields: fields)
                 expect(withField.fieldsIncluded).to(contain(fields))
             }
             
             it("should filter on excluded fields") {
                 expect(fetchReq.fieldsExcluded).to(beEmpty())
                 let fields = ["ONE", "TWO"]
-                let withField = fetchReq.filter(excludeFields: fields)
+                let withField = fetchReq.exclude(fields: fields)
                 expect(withField.fieldsExcluded).to(contain(fields))
             }
             

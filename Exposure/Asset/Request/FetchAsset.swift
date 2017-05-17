@@ -18,7 +18,7 @@ extension FetchAsset {
                               assetId: assetId)
     }
     
-    public func list() -> FetchAssetList {
-        
-    }
+//    public func list() -> FetchAssetList {
+//        
+//    }
 }
