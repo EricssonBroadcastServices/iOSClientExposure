@@ -39,7 +39,6 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
         self.query = Query()
     }
     
-    
     internal enum Keys: String {
         case onlyPublished = "onlyPublished"
         case fieldSet = "fieldSet"

@@ -8,7 +8,20 @@
 
 import Foundation
 
-public struct FetchAssetList: FilteredFields, FilteredPublish, PageableResponse {//: Exposure {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse {
+    public typealias Response = AssetList
+    
+    public var endpointUrl: String {
+        return environment.apiUrl + "/content/asset"
+    }
+    
+    public var parameters: [String: Any] {
+        return queryParams
+    }
+    
+    public var headers: [String: String]? {
+        return nil
+    }
     
     public var fieldsFilter: FieldsFilter
     public var publishFilter: PublishFilter
@@ -25,6 +38,32 @@ public struct FetchAssetList: FilteredFields, FilteredPublish, PageableResponse 
         self.pageFilter = PageFilter()
         self.query = Query()
     }
+    
+    internal enum Keys: String {
+        case onlyPublished = "onlyPublished"
+        case fieldSet = "fieldSet"
+        case excludeFields = "excludeFields"
+        case includeFields = "includeFields"
+        case pageSize = "pageSize"
+        case pageNumber = "pageNumber"
+        case assetType = "assetType"
+    }
+    
+    internal var queryParams: [String: Any] {
+        var params:[String: Any] = [
+            Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
+            Keys.fieldSet.rawValue: fieldsFilter.fieldSet.rawValue,
+            Keys.excludeFields.rawValue: fieldsFilter.excludedFields.joined(separator: ","),
+            Keys.includeFields.rawValue: fieldsFilter.includedFields.joined(separator: ","),
+            Keys.pageSize.rawValue: pageFilter.size,
+            Keys.pageNumber.rawValue: pageFilter.page
+        ]
+        
+        if let assetType = query.assetType {
+            params[Keys.assetType.rawValue] = assetType
+        }
+        return params
+    }
 }
 
 // MARK: - Query
@@ -32,32 +71,24 @@ extension FetchAssetList {
     public typealias AssetType = Asset.AssetType
     
     // MARK: AssetType
-    public var assetTypes: [AssetType] {
-        return query.assetTypes
-    }
-    
-    public func filter(on assetTypes: [AssetType]) -> FetchAssetList {
-        var old = self
-        old.query = Query(with: self.query, assetTypes: assetTypes)
-        return self
+    public var assetType: AssetType? {
+        return query.assetType
     }
     
     public func filter(on assetType: AssetType) -> FetchAssetList {
-        return filter(on: [assetType])
+        var old = self
+        old.query = Query(assetType: assetType)
+        return self
     }
 }
 
 // MARK: - Internal Query
 extension FetchAssetList {
     internal struct Query {
-        internal let assetTypes: [AssetType]
+        internal let assetType: AssetType?
         
-        init(assetTypes: [AssetType] = []) {
-            self.assetTypes = assetTypes
-        }
-        
-        init(with query: Query, assetTypes: [AssetType]? = nil) {
-            self.assetTypes = assetTypes ?? query.assetTypes
+        init(assetType: AssetType? = nil) {
+            self.assetType = assetType
         }
     }
 }
