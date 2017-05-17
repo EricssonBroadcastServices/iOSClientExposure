@@ -17,4 +17,8 @@ extension FetchAsset {
         return FetchAssetById(environment: environment,
                               assetId: assetId)
     }
+    
+    public func list() -> FetchAssetList {
+        
+    }
 }
