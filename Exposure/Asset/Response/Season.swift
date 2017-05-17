@@ -57,6 +57,10 @@ extension Asset {
             linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].arrayObject?.flatMap{ LinkedEntity(json: $0) }
             externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
             customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
+            
+            if created == nil && changed == nil && season == nil && tags == nil && localized == nil && tvShowId == nil && seasonId == nil
+                && episodeCount == nil && episodes == nil && publishedDate == nil && availableDate == nil && startYear == nil
+                && endYear == nil && linkedEntities == nil && externalReferences == nil && customData == nil { return nil }
         }
         
         internal enum JSONKeys: String {

@@ -84,6 +84,14 @@ extension Asset: ExposureConvertible {
         customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
         externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
         rating = actualJson[JSONKeys.rating.rawValue].float
+        
+        if (created == nil && changed == nil && assetId == nil && type == nil && localized == nil && tags == nil && publications == nil)
+        && (episode == nil && season == nil && seasonId == nil && seasons == nil && participants == nil && productionYear == nil)
+        && (popularityScores == nil && releaseDate == nil && originalTitle == nil && live == nil && productionCountries == nil && subtitles == nil)
+        && (audioTracks == nil && spokenLanguages == nil && medias == nil && parentalRatings == nil && linkedEntities == nil && runtime == nil)
+        && (tvShowId == nil && expires == nil && customData == nil && externalReferences == nil && rating == nil) {
+            return nil
+        }
     }
     
     internal enum JSONKeys: String {
