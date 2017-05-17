@@ -45,13 +45,13 @@ extension FetchAssetById {
     }
     
     // Set to true to include seasons for the asset in the response. Only applicable if the asset is a tv show.
-    public func filter(seasons value: Bool) -> FetchAssetById {
+    public func filter(includeSeasons value: Bool) -> FetchAssetById {
         // Only process if value changes
         guard seasonsIncluded != value else { return self }
         
         if !value {
             // Turning off seasons turns off episodes as well
-            let query = Query(with: self.query, seasons: .none)
+            let query = Query(with: self.query, seasons: .neither)
             return FetchAssetById(request: self, query: query)
         }
         else {
@@ -72,7 +72,7 @@ extension FetchAssetById {
     }
     
     // Set to true to include episodes for the asset in the response. Only applicable if the asset is a tv show. Setting this to true will cause seasons to be includeSeasons true.
-    public func filter(episodes value: Bool) -> FetchAssetById {
+    public func filter(includeEpisodes value: Bool) -> FetchAssetById {
         // Only process if value changes
         guard episodesIncluded != value else { return self }
         
@@ -99,7 +99,7 @@ extension FetchAssetById {
         return query.fieldSet
     }
     
-    public func filter(fieldSet: FieldSet) -> FetchAssetById {
+    public func filter(includeFieldSet: FieldSet) -> FetchAssetById {
         let query = Query(with: self.query, fieldSet: fieldSet)
         return FetchAssetById(request: self, query: query)
     }
@@ -109,7 +109,7 @@ extension FetchAssetById {
         return query.includedFields
     }
     // The set of fields to include by default.
-    public func filter(includedFields fields: [String]) -> FetchAssetById {
+    public func filter(includeFields fields: [String]) -> FetchAssetById {
         let query = Query(with: self.query, includedFields: fields)
         return FetchAssetById(request: self, query: query)
     }
@@ -118,7 +118,7 @@ extension FetchAssetById {
         return query.excludedFields
     }
     // List of fields to remove from the response.
-    public func filter(excludedFields fields: [String]) -> FetchAssetById {
+    public func filter(excludeFields fields: [String]) -> FetchAssetById {
         let query = Query(with: self.query, excludedFields: fields)
         return FetchAssetById(request: self, query: query)
     }
@@ -137,7 +137,7 @@ extension FetchAssetById {
 extension FetchAssetById {
     internal struct Query {
         internal enum IncludeSeasons {
-            case none
+            case neither
             case seasons
             case episodes
             
@@ -153,7 +153,7 @@ extension FetchAssetById {
             var seasonsIncluded: Bool {
                 get {
                     switch self {
-                    case .none: return false
+                    case .neither: return false
                     default: return true
                     }
                 }

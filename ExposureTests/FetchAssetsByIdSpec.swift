@@ -26,10 +26,26 @@ class FetchAssetByIdSpec: QuickSpec {
         
         let assetResponse = AssetSpec.AssetJSON.valid()
         
-        let t = Asset(json: assetResponse)
-        
-        let fetchReq = FetchAsset(environment: env).filter(assetId: AssetSpec.AssetJSON.assetId)
+        let fetchAsset = FetchAsset(environment: env)
+        let fetchReq = fetchAsset.filter(assetId: AssetSpec.AssetJSON.assetId)
        
+        describe("Query params") {
+            it("should record query params correctly") {
+                let noSeasons = fetchReq.filter(includeSeasons: false)
+                let onlySeasons = noSeasons.filter(includeSeasons: true)
+                let seasonsAndEpisodes = onlySeasons.filter(includeEpisodes: true)
+                
+                expect(noSeasons.seasonsIncluded).to(beFalse())
+                expect(noSeasons.episodesIncluded).to(beFalse())
+                
+                expect(onlySeasons.seasonsIncluded).to(beTrue())
+                expect(onlySeasons.episodesIncluded).to(beFalse())
+                
+                expect(seasonsAndEpisodes.seasonsIncluded).to(beTrue())
+                expect(seasonsAndEpisodes.episodesIncluded).to(beTrue())
+            }
+        }
+        
         describe("FetchAssetById Response") {
             var request: URLRequest?
             var response: URLResponse?
