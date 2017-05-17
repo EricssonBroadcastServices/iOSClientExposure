@@ -10,6 +10,7 @@ import Foundation
 
 import Quick
 import Nimble
+import Mockingjay
 
 @testable import Exposure
 
@@ -23,26 +24,42 @@ class FetchAssetByIdSpec: QuickSpec {
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
-        let assetId = "players_test_asset_ADS_Ocean_009_qwerty"//"VU-21702_qwerty"
-        /*
-        let t = FetchAsset(environment: env)
-            .filter(assetId: assetId)
-            .filter(seasons: true)
-            .request()
-            .response { (data: ExposureResponse<Asset>) in
-                if let value = data.value {
-                    
-                    print(value)
-                    
-                }
-                else {
-                    print(data.error)
-                }
-        }*/
+        let assetResponse = AssetSpec.AssetJSON.valid()
         
-        describe("FetchAssetById") {
-            it("should init with complete json") {
+        let t = Asset(json: assetResponse)
+        
+        let fetchReq = FetchAsset(environment: env).filter(assetId: AssetSpec.AssetJSON.assetId)
+       
+        describe("FetchAssetById Response") {
+            var request: URLRequest?
+            var response: URLResponse?
+            var data: Data?
+            var asset: Asset?
+            var error: Error?
+            
+            self.stub(uri(fetchReq.endpointUrl), json(assetResponse))
                 
+            FetchAsset(environment: env)
+                .filter(assetId: AssetSpec.AssetJSON.assetId)
+                .request()
+                .response{ (exposureResponse: ExposureResponse<Asset>) in
+                    print("===================")
+                    request = exposureResponse.request
+                    response = exposureResponse.response
+                    data = exposureResponse.data
+                    asset = exposureResponse.value
+                    error = exposureResponse.error
+            }
+            
+            it("should eventually return a response") {
+                
+                expect(request).toEventuallyNot(beNil())
+                expect(response).toEventuallyNot(beNil())
+                expect(data).toEventuallyNot(beNil())
+                expect(asset).toEventuallyNot(beNil())
+                expect(error).toEventually(beNil())
+                
+                expect(asset!.assetId).toEventually(equal(AssetSpec.AssetJSON.assetId))
             }
         }
     }
