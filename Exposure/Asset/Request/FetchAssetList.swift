@@ -8,10 +8,21 @@
 
 import Foundation
 
-public struct FetchAssetList {//: Exposure {
+public struct FetchAssetList: FilteredFields, FilteredPublish {//: Exposure {
+    
+    public var fieldsFilter: FieldsFilter
+    public var publishFilter: PublishFilter
+    
+    public let environment: Environment
+    internal var query: Query
     
     
-    internal let query: Query
+    internal init(environment: Environment) {
+        self.environment = environment
+        self.fieldsFilter = FieldsFilter()
+        self.publishFilter = PublishFilter()
+        self.query = Query()
+    }
 }
 
 // MARK: - Query
@@ -24,8 +35,9 @@ extension FetchAssetList {
     }
     
     public func filter(on assetTypes: [AssetType]) -> FetchAssetList {
-        let query = Query(with: self.query, assetTypes: assetTypes)
-        return FetchAssetList(request: self, query: query)
+        var old = self
+        old.query = Query(with: self.query, assetTypes: assetTypes)
+        return self
     }
     
     public func filter(on assetType: AssetType) -> FetchAssetList {
@@ -45,10 +57,5 @@ extension FetchAssetList {
         init(with query: Query, assetTypes: [AssetType]? = nil) {
             self.assetTypes = assetTypes ?? query.assetTypes
         }
-    }
-    
-    internal init(request: FetchAssetList, query: Query) {
-        //self.environment = request.environment
-        self.query = query
     }
 }

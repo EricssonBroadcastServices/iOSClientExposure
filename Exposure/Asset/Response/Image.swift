@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 
+
 extension Asset {
     public struct Image {
         public let url: String?
