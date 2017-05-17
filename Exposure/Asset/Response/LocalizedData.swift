@@ -31,6 +31,9 @@ extension Asset {
             longDescription = actualJson[JSONKeys.longDescription.rawValue].string
             
             images = actualJson[JSONKeys.images.rawValue].arrayObject?.flatMap{ Image(json: $0) }
+            
+            if locale == nil && title == nil && sortingTitle == nil && description == nil
+                && tinyDescription == nil && shortDescription == nil && longDescription == nil && images == nil { return nil }
         }
         
         internal enum JSONKeys: String {
