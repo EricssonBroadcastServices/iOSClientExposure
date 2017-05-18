@@ -86,6 +86,9 @@
 		76BBFBCF1EAA0A8A001DBDDB /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFBCE1EAA0A8A001DBDDB /* Mockingjay.framework */; };
 		76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */; };
 		76DE9AC41ECCF99400D86C43 /* AssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9AC31ECCF99400D86C43 /* AssetList.swift */; };
+		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
+		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
+		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +185,9 @@
 		76BBFBCE1EAA0A8A001DBDDB /* Mockingjay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mockingjay.framework; path = Carthage/Checkouts/Mockingjay/build/Debug/Mockingjay.framework; sourceTree = "<group>"; };
 		76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureResponseMessage.swift; sourceTree = "<group>"; };
 		76DE9AC31ECCF99400D86C43 /* AssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetList.swift; sourceTree = "<group>"; };
+		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
+		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
+		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,18 +227,11 @@
 		766FBB5E1EC9816700EBEC53 /* Asset */ = {
 			isa = PBXGroup;
 			children = (
-				766FBB5F1EC9819600EBEC53 /* Parameters */,
+				76DE9AC91ECD78FE00D86C43 /* Parameters */,
 				766FBB601EC9819600EBEC53 /* Request */,
 				766FBB611EC9819600EBEC53 /* Response */,
 			);
 			path = Asset;
-			sourceTree = "<group>";
-		};
-		766FBB5F1EC9819600EBEC53 /* Parameters */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Parameters;
 			sourceTree = "<group>";
 		};
 		766FBB601EC9819600EBEC53 /* Request */ = {
@@ -497,6 +496,16 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		76DE9AC91ECD78FE00D86C43 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */,
+				76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */,
+				76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */,
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -626,6 +635,7 @@
 				76A842FA1EA7667D00BDAF2C /* ExposureError.swift in Sources */,
 				76DE9AC41ECCF99400D86C43 /* AssetList.swift in Sources */,
 				76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */,
+				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */,
@@ -642,9 +652,11 @@
 				766FBB6E1EC9A96500EBEC53 /* FetchAssetById.swift in Sources */,
 				766FBB881ECA2B9800EBEC53 /* ParentalRating.swift in Sources */,
 				766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */,
+				76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */,
 				766FBB741ECA2A4600EBEC53 /* Image.swift in Sources */,
 				766FBB721ECA2A1B00EBEC53 /* LocalizedData.swift in Sources */,
 				76A842F51EA7667D00BDAF2C /* Exposure.swift in Sources */,
+				76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */,
 				766FBB7A1ECA2AB500EBEC53 /* AssetRights.swift in Sources */,
 				76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */,
 				766FBB821ECA2B3D00EBEC53 /* ExternalReference.swift in Sources */,
