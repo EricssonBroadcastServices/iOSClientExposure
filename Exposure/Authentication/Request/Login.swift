@@ -50,7 +50,7 @@ public struct Login: Exposure {
 }
 
 extension Login {
-    func request() -> ExposureRequest {
+    public func request() -> ExposureRequest {
         return request(.post)
     }
 }

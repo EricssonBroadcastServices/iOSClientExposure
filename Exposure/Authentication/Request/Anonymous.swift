@@ -33,7 +33,7 @@ public struct Anonymous: Exposure {
 }
 
 extension Anonymous {
-    func request() -> ExposureRequest {
+    public func request() -> ExposureRequest {
         return request(.post)
     }
 }
