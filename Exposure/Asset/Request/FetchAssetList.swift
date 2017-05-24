@@ -84,7 +84,7 @@ extension FetchAssetList {
     public func filter(on assetType: AssetType) -> FetchAssetList {
         var old = self
         old.query = Query(assetType: assetType)
-        return self
+        return old
     }
 }
 
