@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class TagsSpec: QuickSpec {
-    
-    typealias Tag = Asset.Tag
-    
     override func spec() {
         super.spec()
         

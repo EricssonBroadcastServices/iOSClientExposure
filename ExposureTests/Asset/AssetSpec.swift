@@ -14,7 +14,6 @@ import Nimble
 @testable import Exposure
 
 class AssetSpec: QuickSpec {
-    
     override func spec() {
         super.spec()
         

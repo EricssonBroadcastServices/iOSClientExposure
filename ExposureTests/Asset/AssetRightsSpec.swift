@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class AssetRightsSpec: QuickSpec {
-    
-    typealias AssetRights = Asset.AssetRights
-    
     override func spec() {
         super.spec()
         

@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class MediaSpec: QuickSpec {
-    
-    typealias Media = Asset.Media
-    
     override func spec() {
         super.spec()
         

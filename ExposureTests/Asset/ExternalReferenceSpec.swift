@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class ExternalReferenceSpec: QuickSpec {
-    
-    typealias ExternalReference = Asset.ExternalReference
-    
     override func spec() {
         super.spec()
         

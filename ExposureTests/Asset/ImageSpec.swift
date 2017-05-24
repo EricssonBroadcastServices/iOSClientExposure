@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class ImageSpec: QuickSpec {
-    
-    typealias Image = Asset.Image
-    
     override func spec() {
         super.spec()
         

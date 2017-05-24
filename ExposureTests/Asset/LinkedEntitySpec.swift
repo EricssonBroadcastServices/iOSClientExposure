@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class LinkedEntitySpec: QuickSpec {
-    
-    typealias LinkedEntity = Asset.LinkedEntity
-    
     override func spec() {
         super.spec()
         

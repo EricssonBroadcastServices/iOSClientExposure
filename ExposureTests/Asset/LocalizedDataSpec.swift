@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class LocalizedDataSpec: QuickSpec {
-    
-    typealias LocalizedData = Asset.LocalizedData
-    
     override func spec() {
         super.spec()
         

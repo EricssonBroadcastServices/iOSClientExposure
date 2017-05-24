@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class ParentalRatingSpec: QuickSpec {
-    
-    typealias ParentalRating = Asset.ParentalRating
-    
     override func spec() {
         super.spec()
         

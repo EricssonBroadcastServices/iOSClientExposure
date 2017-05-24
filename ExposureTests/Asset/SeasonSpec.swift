@@ -14,9 +14,6 @@ import Nimble
 @testable import Exposure
 
 class SeasonSpec: QuickSpec {
-    
-    typealias Season = Asset.Season
-    
     override func spec() {
         super.spec()
         
