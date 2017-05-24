@@ -32,7 +32,7 @@ class AssetSpec: QuickSpec {
                 expect(value!.episode).toNot(beNil())
                 expect(value!.season).toNot(beNil())
                 expect(value!.seasonId).toNot(beNil())
-//                expect(value!.seasons).toNot(beNil())
+                expect(value!.seasons).toNot(beNil())
                 expect(value!.participants).toNot(beNil())
                 expect(value!.productionYear).toNot(beNil())
                 expect(value!.popularityScores).toNot(beNil())
