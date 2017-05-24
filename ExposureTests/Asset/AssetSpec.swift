@@ -14,6 +14,8 @@ import Nimble
 @testable import Exposure
 
 class AssetSpec: QuickSpec {
+    
+    typealias AssetType = Asset.AssetType
     override func spec() {
         super.spec()
         
@@ -64,6 +66,30 @@ class AssetSpec: QuickSpec {
                 let value = Asset(json: AssetJSON.empty())
                 
                 expect(value).to(beNil())
+            }
+        }
+        
+        describe("AssetType") {
+            it("should init correctly") {
+                let movie = AssetType(string: "MOVIE")
+                let tvShow = AssetType(string: "TV_SHOW")
+                let episode = AssetType(string: "EPISODE")
+                let clip = AssetType(string: "CLIP")
+                let tvChannel = AssetType(string: "TV_CHANNEL")
+                let ad = AssetType(string: "AD")
+                let liveEvent = AssetType(string: "LIVE_EVENT")
+                let other = AssetType(string: "OTHER")
+                let otherText = AssetType(string: "otherText")
+                
+                expect(movie.queryParam).to(equal("MOVIE"))
+                expect(tvShow.queryParam).to(equal("TV_SHOW"))
+                expect(episode.queryParam).to(equal("EPISODE"))
+                expect(clip.queryParam).to(equal("CLIP"))
+                expect(tvChannel.queryParam).to(equal("TV_CHANNEL"))
+                expect(ad.queryParam).to(equal("AD"))
+                expect(liveEvent.queryParam).to(equal("LIVE_EVENT"))
+                expect(other.queryParam).to(equal("OTHER"))
+                expect(otherText.queryParam).to(equal("OTHER"))
             }
         }
     }

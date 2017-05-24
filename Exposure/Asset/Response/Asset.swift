@@ -153,7 +153,7 @@ extension Asset {
             case "TV_CHANNEL": self = .tvChannel
             case "AD": self = .ad
             case "LIVE_EVENT": self = .liveEvent
-            case "OTHER": self = .other(type: "OTHER")
+            case "OTHER": self = .other(type: string)
             default: self = .other(type: string)
             }
         }
