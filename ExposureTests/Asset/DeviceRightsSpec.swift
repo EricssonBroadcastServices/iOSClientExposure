@@ -14,8 +14,6 @@ import Nimble
 @testable import Exposure
 
 class DeviceRightsSpec: QuickSpec {
-    typealias DeviceRightsType = DeviceRights.DeviceRightsType
-    
     override func spec() {
         super.spec()
         
@@ -63,32 +61,32 @@ class DeviceRightsSpec: QuickSpec {
             }
         }
         
-        describe("DeviceRightsType") {
+        describe("DeviceType") {
             it("should init properly") {
-                let web = DeviceRightsType(string: "WEB")
-                let mobile = DeviceRightsType(string: "MOBILE")
-                let tablet = DeviceRightsType(string: "TABLET")
-                let appleTv = DeviceRightsType(string: "APPLE_TV")
-                let smartTv = DeviceRightsType(string: "SMART_TV")
-                let console = DeviceRightsType(string: "CONSOLE")
-                let stb = DeviceRightsType(string: "STB")
-                let other = DeviceRightsType(string: "Unkown or new type")
+                let web = DeviceType(string: "WEB")
+                let mobile = DeviceType(string: "MOBILE")
+                let tablet = DeviceType(string: "TABLET")
+                let appleTv = DeviceType(string: "APPLE_TV")
+                let smartTv = DeviceType(string: "SMART_TV")
+                let console = DeviceType(string: "CONSOLE")
+                let stb = DeviceType(string: "STB")
+                let other = DeviceType(string: "Unkown or new type")
                 
-                expect(self.test(value: web, against: DeviceRightsType.web)).to(beTrue())
-                expect(self.test(value: mobile, against: DeviceRightsType.mobile)).to(beTrue())
-                expect(self.test(value: tablet, against: DeviceRightsType.tablet)).to(beTrue())
-                expect(self.test(value: appleTv, against: DeviceRightsType.appleTv)).to(beTrue())
-                expect(self.test(value: smartTv, against: DeviceRightsType.smartTv)).to(beTrue())
-                expect(self.test(value: console, against: DeviceRightsType.console)).to(beTrue())
-                expect(self.test(value: stb, against: DeviceRightsType.stb)).to(beTrue())
-                expect(self.test(value: other, against: DeviceRightsType.other(string: "Unkown or new type"))).to(beTrue())
-                expect(self.test(value: other, against: DeviceRightsType.other(string: "Not Matching"))).to(beFalse())
+                expect(self.test(value: web, against: DeviceType.web)).to(beTrue())
+                expect(self.test(value: mobile, against: DeviceType.mobile)).to(beTrue())
+                expect(self.test(value: tablet, against: DeviceType.tablet)).to(beTrue())
+                expect(self.test(value: appleTv, against: DeviceType.appleTv)).to(beTrue())
+                expect(self.test(value: smartTv, against: DeviceType.smartTv)).to(beTrue())
+                expect(self.test(value: console, against: DeviceType.console)).to(beTrue())
+                expect(self.test(value: stb, against: DeviceType.stb)).to(beTrue())
+                expect(self.test(value: other, against: DeviceType.other(string: "Unkown or new type"))).to(beTrue())
+                expect(self.test(value: other, against: DeviceType.other(string: "Not Matching"))).to(beFalse())
                 
             }
         }
     }
     
-    func test(value: DeviceRightsType, against: DeviceRightsType) -> Bool {
+    func test(value: DeviceType, against: DeviceType) -> Bool {
         switch (value, against) {
         case (.web, .web): return true
         case (.mobile, .mobile): return true

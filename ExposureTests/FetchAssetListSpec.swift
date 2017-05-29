@@ -46,9 +46,10 @@ class FetchAssetListSpec: QuickSpec {
                     .filter(onlyPublished: true)
                     .show(page: 1, spanning: 10)
                     .filter(on: .episode)
+                    .filter(on: .mobile)
                     .parameters
                 
-                expect(params.count).to(equal(7))
+                expect(params.count).to(equal(8))
                 
                 expect(params["onlyPublished"]).toNot(beNil())
                 expect(params["fieldSet"]).toNot(beNil())
@@ -57,6 +58,7 @@ class FetchAssetListSpec: QuickSpec {
                 expect(params["pageSize"]).toNot(beNil())
                 expect(params["pageNumber"]).toNot(beNil())
                 expect(params["assetType"]).toNot(beNil())
+                expect(params["deviceType"]).toNot(beNil())
             }
         }
         
