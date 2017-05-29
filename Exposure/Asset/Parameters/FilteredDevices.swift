@@ -8,22 +8,27 @@
 
 import Foundation
 
-/*public protocol FilteredDevices {
-    typealias DeviceType = <#type expression#>
-    var publishFilter: DeviceFilter { get set }
+public protocol FilteredDevices {
+    var deviceFilter: DeviceFilter { get set }
 }
 
 extension FilteredDevices {
     // MARK: Published
-    public var devicesIncluded:
+    public var deviceIncluded: DeviceType? {
+        return deviceFilter.deviceType
+    }
     
-    public func filter(onlyPublished: Bool) -> Self {
+    public func filter(on deviceType: DeviceType?) -> Self {
         var old = self
-        old.publishFilter = DeviceFilter//(onlyPublished: onlyPublished)
+        old.deviceFilter = DeviceFilter(deviceType: deviceType)
         return old
     }
 }
 
 public struct DeviceFilter {
+    internal let deviceType: DeviceType?
     
-}*/
+    internal init(deviceType: DeviceType?) {
+        self.deviceType = deviceType
+    }
+}
