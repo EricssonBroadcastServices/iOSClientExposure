@@ -13,49 +13,50 @@ public protocol SortedResponse {
 }
 
 extension SortedResponse {
-    public func sort(on descriptors: [SortDescriptor]) -> Self {
+    public var sortDescriptors: [SortDescriptor]? {
+        return sortDescription.descriptors
+    }
+    
+    public func sort(on descriptors: [SortDescriptor]?) -> Self {
         var old = self
         old.sortDescription = SortDescription(descriptors: descriptors)
         return old
     }
     
     public func sort(on descriptor: SortDescriptor) -> Self {
-        var old = self
-        old.sortDescription = SortDescription(descriptors: [descriptor])
-        return old
+        return sort(on: [descriptor])
     }
     
     public func sort(on key: String, ascending: Bool = true) -> Self {
-        let descriptor = SortDescriptor(key: key, ascending: ascending)
-        var old = self
-        old.sortDescription = SortDescription(descriptors: [descriptor])
-        return old
+        return sort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
 }
 
 extension SortedResponse {
     public func thenSort(on descriptors: [SortDescriptor]) -> Self {
-        var old = self
-        old.sortDescription = SortDescription(descriptors: sortDescription.descriptors+descriptors)
-        return old
+        if let previous = sortDescriptors {
+            return sort(on: previous+descriptors)
+        }
+        else {
+            return sort(on: descriptors)
+        }
     }
     
     public func thenSort(on descriptor: SortDescriptor) -> Self {
-        var old = self
-        old.sortDescription = SortDescription(descriptors: sortDescription.descriptors+descriptor)
-        return old
+        return thenSort(on: [descriptor])
     }
     
     public func thenSort(on key: String, ascending: Bool = true) -> Self {
-        let descriptor = SortDescriptor(key: key, ascending: ascending)
-        var old = self
-        old.sortDescription = SortDescription(descriptors: sortDescription.descriptors+descriptor)
-        return old
+        return thenSort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
 }
 
 public struct SortDescription {
-    internal let descriptors: [SortDescriptor]
+    internal let descriptors: [SortDescriptor]?
+    
+    internal init(descriptors: [SortDescriptor]? = nil) {
+        self.descriptors = descriptors
+    }
 }
 
 public struct SortDescriptor {

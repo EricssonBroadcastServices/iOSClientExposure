@@ -28,6 +28,8 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var pageFilter: PageFilter
     public var deviceFilter: DeviceFilter
     
+    public var sortDescription: SortDescription
+    
     public let environment: Environment
     internal var query: Query
     
@@ -38,6 +40,9 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.publishFilter = PublishFilter()
         self.pageFilter = PageFilter()
         self.deviceFilter = DeviceFilter()
+        
+        self.sortDescription = SortDescription()
+        
         self.query = Query()
     }
     
@@ -50,6 +55,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         case pageNumber = "pageNumber"
         case assetType = "assetType"
         case deviceType = "deviceType"
+        case sort = "sort"
     }
     
     internal var queryParams: [String: Any] {
@@ -61,10 +67,12 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         ]
         
         if let excluded = fieldsFilter.excludedFields, !excluded.isEmpty {
+            // Query string is keys separated by ","
             params[Keys.excludeFields.rawValue] = excluded.joined(separator: ",")
         }
         
         if let included = fieldsFilter.includedFields, !included.isEmpty {
+            // Query string is keys separated by ","
             params[Keys.includeFields.rawValue] = included.joined(separator: ",")
         }
         
@@ -75,6 +83,15 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         if let assetType = query.assetType {
             params[Keys.assetType.rawValue] = assetType.queryParam
         }
+        
+        if let sort = sortDescription.descriptors {
+            // Query string is keys separated by ",".
+            // Any descending key should include a "-" sign as a prefix.
+            params[Keys.sort.rawValue] = sort
+                .map{ $0.ascending ? "" : "-" + $0.key }
+                .joined(separator: ",")
+        }
+        
         return params
     }
 }
