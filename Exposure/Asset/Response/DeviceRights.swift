@@ -10,36 +10,8 @@ import Foundation
 import SwiftyJSON
 
 public struct DeviceRights {
-    public enum DeviceRightsType {
-        case web
-        case mobile
-        case tablet
-        case appleTv
-        case smartTv
-        case console
-        case stb
-        case other(string: String)
-        
-        internal init?(string: String?) {
-            guard let value = string else { return nil }
-            self = DeviceRightsType(string: value)
-        }
-        
-        internal init(string: String) {
-            switch string {
-            case "WEB": self = .web
-            case "MOBILE": self = .mobile
-            case "TABLET": self = .tablet
-            case "APPLE_TV": self = .appleTv
-            case "SMART_TV": self = .smartTv
-            case "CONSOLE": self = .console
-            case "STB": self = .stb
-            default: self = .other(string: string)
-            }
-        }
-    }
     
-    public let type: DeviceRightsType?
+    public let type: DeviceType?
     public let model: String?
     public let manufacturer: String?
     public let os: String?
@@ -49,7 +21,7 @@ public struct DeviceRights {
     
     public init?(json: Any) {
         let actualJson = JSON(json)
-        type = DeviceRightsType(string: actualJson[JSONKeys.type.rawValue].string)
+        type = DeviceType(string: actualJson[JSONKeys.type.rawValue].string)
         model = actualJson[JSONKeys.model.rawValue].string
         manufacturer = actualJson[JSONKeys.manufacturer.rawValue].string
         os = actualJson[JSONKeys.os.rawValue].string
