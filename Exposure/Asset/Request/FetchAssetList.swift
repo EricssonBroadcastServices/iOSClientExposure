@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices {
     public typealias Response = AssetList
     
     public var endpointUrl: String {
@@ -26,6 +26,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var fieldsFilter: FieldsFilter
     public var publishFilter: PublishFilter
     public var pageFilter: PageFilter
+    public var deviceFilter: DeviceFilter
     
     public let environment: Environment
     internal var query: Query
@@ -36,6 +37,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.fieldsFilter = FieldsFilter()
         self.publishFilter = PublishFilter()
         self.pageFilter = PageFilter()
+        self.deviceFilter = DeviceFilter()
         self.query = Query()
     }
     
@@ -47,6 +49,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         case pageSize = "pageSize"
         case pageNumber = "pageNumber"
         case assetType = "assetType"
+        case deviceType = "deviceType"
     }
     
     internal var queryParams: [String: Any] {
@@ -63,6 +66,10 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         
         if let included = fieldsFilter.includedFields, !included.isEmpty {
             params[Keys.includeFields.rawValue] = included.joined(separator: ",")
+        }
+        
+        if let deviceType = deviceFilter.deviceType {
+            params[Keys.deviceType.rawValue] = deviceType.queryParam
         }
         
         if let assetType = query.assetType {

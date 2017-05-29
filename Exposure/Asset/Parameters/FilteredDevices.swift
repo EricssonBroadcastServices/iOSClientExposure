@@ -28,7 +28,7 @@ extension FilteredDevices {
 public struct DeviceFilter {
     internal let deviceType: DeviceType?
     
-    internal init(deviceType: DeviceType?) {
+    internal init(deviceType: DeviceType? = nil) {
         self.deviceType = deviceType
     }
 }
