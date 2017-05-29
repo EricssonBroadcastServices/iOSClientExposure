@@ -20,3 +20,11 @@ extension Sequence where Self.Iterator.Element: Hashable {
         return a.subtract(b)
     }
 }
+
+extension Array {
+    static func + (lhs: [Element], rhs: Element) -> [Element] {
+        var old = lhs
+        old.append(rhs)
+        return old
+    }
+}
