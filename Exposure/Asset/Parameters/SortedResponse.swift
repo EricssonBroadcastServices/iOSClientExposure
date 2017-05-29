@@ -33,6 +33,11 @@ extension SortedResponse {
     public func sort(on key: String, ascending: Bool = true) -> Self {
         return sort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
+    
+    /// Note: Replaces any currently active SortDescriptors with 'keys' (using ascending sort order). Specifying a '-' prefix to a 'key' ensures descending sort order.
+    public func sort(on keys: [String]) -> Self {
+        return sort(on: keys.flatMap{ SortDescriptor(regex: $0)} )
+    }
 }
 
 extension SortedResponse {
@@ -55,6 +60,11 @@ extension SortedResponse {
     public func thenSort(on key: String, ascending: Bool = true) -> Self {
         return thenSort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
+    
+    /// Note: Adds 'keys' (using ascending sort order) tp currently active SortDescriptors. Specifying a '-' prefix to a 'key' ensures descending sort order.
+    public func thenSort(on keys: [String]) -> Self {
+        return thenSort(on: keys.flatMap{ SortDescriptor(regex: $0)} )
+    }
 }
 
 public struct SortDescription {
@@ -72,5 +82,20 @@ public struct SortDescriptor {
     public init(key: String, ascending: Bool = true) {
         self.key = key
         self.ascending = ascending
+    }
+    
+    internal init?(regex: String) {
+        guard regex.characters.count > 0 else { return nil }
+        if regex.hasPrefix("-") {
+            let index = regex.index(regex.startIndex, offsetBy: 1)
+            let substring = regex.substring(from: index)
+            guard substring.characters.count > 0 else { return nil }
+            self.key = substring
+            self.ascending = false
+        }
+        else {
+            self.key = regex
+            self.ascending = true
+        }
     }
 }
