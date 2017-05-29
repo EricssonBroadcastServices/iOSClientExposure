@@ -40,23 +40,22 @@ class DeviceInfoSpec: QuickSpec {
                 expect(manufacturer).toNot(beNil())
                 expect(type).toNot(beNil())
             }
-            
-            describe("DeviceType") {
-                it("should initialize with valid models") {
-                    let appleTV = DeviceInfo.DeviceType(model: "AppleTv")
-                    let iPad = DeviceInfo.DeviceType(model: "iPad")
-                    let iPhone = DeviceInfo.DeviceType(model: "iPhone")
-                    
-                    expect(appleTV).to(equal(DeviceInfo.DeviceType.appleTV))
-                    expect(iPad).to(equal(DeviceInfo.DeviceType.tablet))
-                    expect(iPhone).to(equal(DeviceInfo.DeviceType.mobile))
-                }
+        }
+        describe("DeviceType") {
+            it("should initialize with valid models") {
+                let appleTV = DeviceInfo.DeviceType(model: "AppleTv")
+                let iPad = DeviceInfo.DeviceType(model: "iPad")
+                let iPhone = DeviceInfo.DeviceType(model: "iPhone")
                 
-                it("should default to mobile for unknown devices") {
-                    let unknown = DeviceInfo.DeviceType(model: "unknown")
-                    
-                    expect(unknown).to(equal(DeviceInfo.DeviceType.mobile))
-                }
+                expect(appleTV).to(equal(DeviceInfo.DeviceType.appleTV))
+                expect(iPad).to(equal(DeviceInfo.DeviceType.tablet))
+                expect(iPhone).to(equal(DeviceInfo.DeviceType.mobile))
+            }
+            
+            it("should default to mobile for unknown devices") {
+                let unknown = DeviceInfo.DeviceType(model: "unknown")
+                
+                expect(unknown).to(equal(DeviceInfo.DeviceType.mobile))
             }
         }
     }
