@@ -24,7 +24,8 @@ class AnonymousSpec: QuickSpec {
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
-        let anonymous = Anonymous(environment: env)
+        let anonymous = Authenticate(environment: env)
+            .anonymous()
         
         let expectedSessionToken = "sessionToken"
         let expectedCrmToken = "crmToken"

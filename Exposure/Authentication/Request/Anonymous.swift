@@ -15,7 +15,7 @@ public struct Anonymous: Exposure {
     public let deviceInfo: DeviceInfo = DeviceInfo()
     public let environment: Environment
     
-    public init(environment: Environment) {
+    internal init(environment: Environment) {
         self.environment = environment
     }
     

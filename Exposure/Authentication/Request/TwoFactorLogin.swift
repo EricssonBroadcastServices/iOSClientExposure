@@ -1,31 +1,33 @@
 //
-//  Login.swift
+//  TwoFactorLogin.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-03-20.
+//  Created by Fredrik Sjöberg on 2017-05-29.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 
-public struct Login: Exposure {
+public struct TwoFactorLogin: Exposure {
     public typealias Response = Credentials
     
     public let username: String
     public let password: String
+    public let twoFactor: String
     public let rememberMe: Bool
     public let deviceInfo: DeviceInfo = DeviceInfo()
     public let environment: Environment
     
-    internal init(username: String, password: String, rememberMe: Bool = false, environment: Environment) {
+    internal init(username: String, password: String, twoFactor: String, rememberMe: Bool = false, environment: Environment) {
         self.username = username
         self.password = password
+        self.twoFactor = twoFactor
         self.rememberMe = rememberMe
         self.environment = environment
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/auth/login"
+        return environment.apiUrl + "/auth/twofactorlogin"
     }
     
     public var parameters: [String: Any] {
@@ -33,6 +35,7 @@ public struct Login: Exposure {
         
         json[JSONKeys.username.rawValue] = username
         json[JSONKeys.password.rawValue] = password
+        json[JSONKeys.twoFactor.rawValue] = twoFactor
         json[JSONKeys.rememberMe.rawValue] = rememberMe
         
         return json
@@ -46,15 +49,6 @@ public struct Login: Exposure {
         case username = "username"
         case password = "password"
         case rememberMe = "rememberMe"
-    }
-}
-
-extension Login {
-    public func request() -> ExposureRequest {
-        return request(.post)
-    }
-    
-    public func twoFactor(token: String) -> TwoFactorLogin {
-        return TwoFactorLogin(username: username, password: password, twoFactor: token, rememberMe: rememberMe, environment: environment)
+        case twoFactor = "totp"
     }
 }
