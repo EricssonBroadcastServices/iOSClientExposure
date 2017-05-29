@@ -94,6 +94,23 @@ class FetchAssetListSpec: QuickSpec {
                 
                 expect(reset.sortDescriptors).toNot(beNil())
                 expect(reset.sortDescriptors!.count).to(equal(1))
+                
+                let regex = fetchList
+                    .sort(on: ["first","-second","-third"])
+                    .thenSort(on: ["fourth"])
+                expect(regex.sortDescriptors).toNot(beNil())
+                expect(regex.sortDescriptors!.count).to(equal(4))
+                
+                let startEmpty = fetchList
+                    .thenSort(on: SortDescriptor(key: "first"))
+                expect(startEmpty.sortDescriptors).toNot(beNil())
+                expect(startEmpty.sortDescriptors!.count).to(equal(1))
+                
+                let faultyRegex = fetchList
+                    .sort(on: SortDescriptor(key: "first"))
+                    .thenSort(on: ["-","","-correct"])
+                expect(faultyRegex.sortDescriptors).toNot(beNil())
+                expect(faultyRegex.sortDescriptors!.count).to(equal(2))
             }
         }
     }
