@@ -17,22 +17,26 @@ extension SortedResponse {
         return sortDescription.descriptors
     }
     
+    /// Note: Replaces any currently active SortDescriptors 'descriptors'
     public func sort(on descriptors: [SortDescriptor]?) -> Self {
         var old = self
         old.sortDescription = SortDescription(descriptors: descriptors)
         return old
     }
     
+    /// Note: Replaces any currently active SortDescriptors with 'descriptor'
     public func sort(on descriptor: SortDescriptor) -> Self {
         return sort(on: [descriptor])
     }
     
+    /// Note: Replaces any currently active SortDescriptors with 'key'
     public func sort(on key: String, ascending: Bool = true) -> Self {
         return sort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
 }
 
 extension SortedResponse {
+    /// Note: Adds 'descriptors' to currently active SortDescriptors
     public func thenSort(on descriptors: [SortDescriptor]) -> Self {
         if let previous = sortDescriptors {
             return sort(on: previous+descriptors)
@@ -42,10 +46,12 @@ extension SortedResponse {
         }
     }
     
+    /// Note: Adds 'descriptor' to currently active SortDescriptors
     public func thenSort(on descriptor: SortDescriptor) -> Self {
         return thenSort(on: [descriptor])
     }
     
+    /// Note: Adds 'key' to currently active SortDescriptors
     public func thenSort(on key: String, ascending: Bool = true) -> Self {
         return thenSort(on: [SortDescriptor(key: key, ascending: ascending)])
     }
