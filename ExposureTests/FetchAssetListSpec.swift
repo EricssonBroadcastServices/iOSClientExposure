@@ -48,9 +48,12 @@ class FetchAssetListSpec: QuickSpec {
                     .filter(on: .episode)
                     .filter(on: .mobile)
                     .sort(on: "test")
+                    .elasticSearch(query: "type:(TV_CHANNEL MOVIE)")
+                    .elasticSearch(deviceQuery: "publications.devices.os:IOS")
+                    .elasticSearch(publicationQuery: "publications.countries:ALL")
                     .parameters
                 
-                expect(params.count).to(equal(9))
+                expect(params.count).to(equal(12))
                 
                 expect(params["onlyPublished"]).toNot(beNil())
                 expect(params["fieldSet"]).toNot(beNil())
@@ -61,6 +64,9 @@ class FetchAssetListSpec: QuickSpec {
                 expect(params["assetType"]).toNot(beNil())
                 expect(params["deviceType"]).toNot(beNil())
                 expect(params["sort"]).toNot(beNil())
+                expect(params["query"]).toNot(beNil())
+                expect(params["deviceQuery"]).toNot(beNil())
+                expect(params["publicationQuery"]).toNot(beNil())
             }
         }
         
