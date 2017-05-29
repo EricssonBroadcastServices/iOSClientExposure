@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse {
     public typealias Response = AssetList
     
     public var endpointUrl: String {

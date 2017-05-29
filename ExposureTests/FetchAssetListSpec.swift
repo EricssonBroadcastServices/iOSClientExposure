@@ -47,9 +47,10 @@ class FetchAssetListSpec: QuickSpec {
                     .show(page: 1, spanning: 10)
                     .filter(on: .episode)
                     .filter(on: .mobile)
+                    .sort(on: "test")
                     .parameters
                 
-                expect(params.count).to(equal(8))
+                expect(params.count).to(equal(9))
                 
                 expect(params["onlyPublished"]).toNot(beNil())
                 expect(params["fieldSet"]).toNot(beNil())
@@ -59,6 +60,7 @@ class FetchAssetListSpec: QuickSpec {
                 expect(params["pageNumber"]).toNot(beNil())
                 expect(params["assetType"]).toNot(beNil())
                 expect(params["deviceType"]).toNot(beNil())
+                expect(params["sort"]).toNot(beNil())
             }
         }
         
@@ -73,6 +75,25 @@ class FetchAssetListSpec: QuickSpec {
                 
                 expect(modified.pageNumber).to(equal(2))
                 expect(modified.pageSize).to(equal(10))
+            }
+        }
+        
+        describe("SortedResponse") {
+            it("should store sort params") {
+                let sorted = fetchList
+                    .sort(on: "first")
+                    .thenSort(on: "second", ascending: false)
+                    .thenSort(on: SortDescriptor(key: "third"))
+                
+                expect(sorted.sortDescriptors).toNot(beNil())
+                expect(sorted.sortDescriptors!.count).to(equal(3))
+                
+                let reset = sorted
+                    .thenSort(on: [SortDescriptor(key: "fourth")])
+                    .sort(on: "fifth")
+                
+                expect(reset.sortDescriptors).toNot(beNil())
+                expect(reset.sortDescriptors!.count).to(equal(1))
             }
         }
     }
