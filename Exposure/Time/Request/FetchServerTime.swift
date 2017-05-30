@@ -29,3 +29,9 @@ public struct FetchServerTime: Exposure {
         return nil
     }
 }
+
+extension FetchServerTime {
+    public func request() -> ExposureRequest {
+        return request(.get)
+    }
+}

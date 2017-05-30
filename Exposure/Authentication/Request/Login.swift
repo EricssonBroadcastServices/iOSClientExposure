@@ -50,6 +50,10 @@ public struct Login: Exposure {
 }
 
 extension Login {
+    public func request() -> ExposureRequest {
+        return request(.post)
+    }
+    
     public func twoFactor(token: String) -> TwoFactorLogin {
         return TwoFactorLogin(username: username, password: password, twoFactor: token, rememberMe: rememberMe, environment: environment)
     }
