@@ -49,7 +49,7 @@ class FetchServerTimeSpec: QuickSpec {
             ]
             
             var serverTime: ServerTime?
-            var error: Error?
+            var error: ExposureError?
             
             beforeEach {
                 serverTime = nil

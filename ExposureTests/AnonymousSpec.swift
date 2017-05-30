@@ -62,7 +62,7 @@ class AnonymousSpec: QuickSpec {
             var response: URLResponse?
             var data: Data?
             var token: SessionToken?
-            var error: Error?
+            var error: ExposureError?
             
             beforeEach {
                 request = nil
@@ -136,7 +136,8 @@ class AnonymousSpec: QuickSpec {
                     
                     expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))))
+                    let expectedError = ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))
+                    expect(error).toEventually(matchError(expectedError))
                     
                     expect(httpCode).toEventually(equal(404))
                     expect(message).toEventually(equal("UNKNOWN_BUSINESS_UNIT"))
@@ -164,7 +165,9 @@ class AnonymousSpec: QuickSpec {
                     expect(data).toEventuallyNot(beNil())
                     expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
+                    let expectedError = ExposureError.exposureResponse(reason: exposureResponse)
+                    expect(error).toEventually(matchError(expectedError))
+                    expect(error!.localizedDescription).toEventually(equal(expectedError.localizedDescription))
                 }
             }
             
