@@ -23,6 +23,14 @@ public struct Credentials {
     public let accountId: String?
     public let expiration: Date?
     public let accountStatus: String?
+    
+    public init(sessionToken: SessionToken, crmToken: String?, accountId: String?, expiration: Date?, accountStatus: String?) {
+        self.sessionToken = sessionToken
+        self.crmToken = crmToken
+        self.accountId = accountId
+        self.expiration = expiration
+        self.accountStatus = accountStatus
+    }
 }
 
 extension Credentials: ExposureConvertible {
