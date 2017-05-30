@@ -24,7 +24,8 @@ class AnonymousSpec: QuickSpec {
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
-        let anonymous = Anonymous(environment: env)
+        let anonymous = Authenticate(environment: env)
+            .anonymous()
         
         let expectedSessionToken = "sessionToken"
         let expectedCrmToken = "crmToken"
@@ -61,7 +62,7 @@ class AnonymousSpec: QuickSpec {
             var response: URLResponse?
             var data: Data?
             var token: SessionToken?
-            var error: Error?
+            var error: ExposureError?
             
             beforeEach {
                 request = nil
@@ -76,7 +77,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(anonymous.endpointUrl), json(expectedJson))
                     
                     anonymous
-                        .request(.post)
+                        .request()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
@@ -112,7 +113,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
                             response = exposureResponse.response
@@ -135,7 +136,8 @@ class AnonymousSpec: QuickSpec {
                     
                     expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))))
+                    let expectedError = ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "Unable to serialize object", json: errorJson))
+                    expect(error).toEventually(matchError(expectedError))
                     
                     expect(httpCode).toEventually(equal(404))
                     expect(message).toEventually(equal("UNKNOWN_BUSINESS_UNIT"))
@@ -148,7 +150,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate()
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
@@ -163,7 +165,9 @@ class AnonymousSpec: QuickSpec {
                     expect(data).toEventuallyNot(beNil())
                     expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
-                    expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
+                    let expectedError = ExposureError.exposureResponse(reason: exposureResponse)
+                    expect(error).toEventually(matchError(expectedError))
+                    expect(error!.localizedDescription).toEventually(equal(expectedError.localizedDescription))
                 }
             }
             
@@ -173,7 +177,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate(statusCode: 200..<299)
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request
@@ -197,7 +201,7 @@ class AnonymousSpec: QuickSpec {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
                     
                     invalidAnonymous
-                        .request(.post)
+                        .request()
                         .validate(statusCode: 403..<405)
                         .response{ (exposureResponse: ExposureResponse<SessionToken>) in
                             request = exposureResponse.request

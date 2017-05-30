@@ -52,25 +52,26 @@ let sessionManager: SessionManager = {
 // MARK: - REST API
 extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
     
-    public func request(_ method: HTTPMethod) -> ExposureRequest {
+    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         let dataRequest = sessionManager
             .request(endpointUrl,
                      method: method.alamofireMethod,
                      parameters: parameters,
-                     encoding: JSONEncoding.default,
+                     encoding: encoding,
                      headers: headers)
         return ExposureRequest(dataRequest: dataRequest)
     }
 }
 
+
 extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
-    public func request(_ method: HTTPMethod) -> ExposureRequest {
+    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         if let params = parameters {
             let dataRequest = sessionManager
                 .request(endpointUrl,
                          method: method.alamofireMethod,
                          parameters: params,
-                         encoding: JSONEncoding.default,
+                         encoding: encoding,
                          headers: headers)
             return ExposureRequest(dataRequest: dataRequest)
         }

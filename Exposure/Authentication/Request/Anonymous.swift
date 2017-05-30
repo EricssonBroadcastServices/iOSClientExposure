@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 public struct Anonymous: Exposure {
     public typealias Response = SessionToken
@@ -14,7 +15,7 @@ public struct Anonymous: Exposure {
     public let deviceInfo: DeviceInfo = DeviceInfo()
     public let environment: Environment
     
-    public init(environment: Environment) {
+    internal init(environment: Environment) {
         self.environment = environment
     }
     
@@ -28,5 +29,11 @@ public struct Anonymous: Exposure {
     
     public var headers: [String: String]? {
         return nil
+    }
+}
+
+extension Anonymous {
+    public func request() -> ExposureRequest {
+        return request(.post)
     }
 }

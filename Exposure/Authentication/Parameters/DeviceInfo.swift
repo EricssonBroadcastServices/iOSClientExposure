@@ -9,8 +9,8 @@
 import Foundation
 
 extension UIDevice {
-    public static func deviceType() -> DeviceInfo.DeviceType {
-        return DeviceInfo.DeviceType(model: current.model)
+    public static func deviceType() -> DeviceType {
+        return DeviceType(model: current.model)
     }
 }
 public struct DeviceInfo {
@@ -95,7 +95,7 @@ extension DeviceInfo.Device: JSONEncodable {
             JSONKeys.model.rawValue: model,
             JSONKeys.os.rawValue: os,
             JSONKeys.manufacturer.rawValue: manufacturer,
-            JSONKeys.type.rawValue: type.rawValue
+            JSONKeys.type.rawValue: type.queryParam
         ]
         
         if let name = name { json[JSONKeys.name.rawValue] = name }
@@ -113,22 +113,5 @@ extension DeviceInfo.Device: JSONEncodable {
         case type = "type"
         case name = "name"
         case osVersion = "osVersion"
-    }
-}
-
-extension DeviceInfo {
-    public enum DeviceType: String {
-        case mobile = "MOBILE"
-        case tablet = "TABLET"
-        case appleTV = "APPLE_TV"
-        
-        init(model: String) {
-            switch model {
-            case "iPhone": self = .mobile
-            case "iPad": self = .tablet
-            case "AppleTv": self = .appleTV
-            default: self = .mobile
-            }
-        }
     }
 }

@@ -45,12 +45,12 @@ public struct PlaybackEntitlement {
         case epgPlayMaxHours
         case other(reason: String)
         
-        public init?(string: String?) {
+        internal init?(string: String?) {
             guard let value = string else { return nil }
             self = ExpirationReason(string: value)
         }
         
-        public init(string: String) {
+        internal init(string: String) {
             switch string {
             case "SUCCESS": self = .success
             case "NOT_ENTITLED": self = .notEntitled
@@ -75,12 +75,12 @@ public struct PlaybackEntitlement {
         case other(type: String)
         
         
-        public init?(string: String?) {
+        internal init?(string: String?) {
             guard let value = string else { return nil }
             self = EntitlementType(string: value)
         }
         
-        public init(string: String) {
+        internal init(string: String) {
             switch string {
             case "TVOD": self = .tvod
             case "SVOD": self = .svod

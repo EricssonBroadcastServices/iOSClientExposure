@@ -27,6 +27,13 @@ struct ExposureTestRequest: Exposure {
     }
 }
 
+extension ExposureTestRequest {
+    func request() -> ExposureRequest {
+        return request(.get)
+    }
+}
+
+
 class ExposureSpec: QuickSpec {
     override func spec() {
         super.spec()
@@ -34,7 +41,7 @@ class ExposureSpec: QuickSpec {
         describe("Exposure") {
             it("should forward optional parameters") {
                 let request = ExposureTestRequest()
-                    .request(.get)
+                    .request()
                 
                 let urlRequest = request.dataRequest.request
                 expect(urlRequest).toNot(beNil())

@@ -49,7 +49,7 @@ class FetchServerTimeSpec: QuickSpec {
             ]
             
             var serverTime: ServerTime?
-            var error: Error?
+            var error: ExposureError?
             
             beforeEach {
                 serverTime = nil
@@ -62,7 +62,7 @@ class FetchServerTimeSpec: QuickSpec {
                     self.stub(uri(fetch.endpointUrl), json(expectedJson))
                     
                     fetch
-                        .request(.post)
+                        .request()
                         .response{ (exposureResponse: ExposureResponse<ServerTime>) in
                             serverTime = exposureResponse.value
                             error = exposureResponse.error
@@ -87,7 +87,7 @@ class FetchServerTimeSpec: QuickSpec {
                     self.stub(uri(fetch.endpointUrl), json(expectedJson, status: 404))
                     
                     fetch
-                        .request(.post)
+                        .request()
                         .mapError{ (_, _) in
                             return ExposureError.generalError(error: MapErrorTestError.expectedMappedError)
                         }
@@ -109,7 +109,7 @@ class FetchServerTimeSpec: QuickSpec {
                     self.stub(uri(fetch.endpointUrl), json(expectedJson))
                     
                     fetch
-                        .request(.post)
+                        .request()
                         .validate(contentType: ["application/json"])
                         .response{ (exposureResponse: ExposureResponse<ServerTime>) in
                             serverTime = exposureResponse.value
