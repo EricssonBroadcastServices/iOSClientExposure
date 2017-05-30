@@ -21,3 +21,9 @@ public struct ExposureResponseMessage: ExposureConvertible {
         self.message = message
     }
 }
+
+extension ExposureResponseMessage {
+    public var localizedDescription: String {
+        return "Exposure response returned httpCode: [\(httpCode)] with message: \(message)"
+    }
+}

@@ -28,7 +28,15 @@ public struct ExposureResponse<Value: ExposureConvertible> {
         return dataResponse.value
     }
     
-    public var error: Error? {
-        return dataResponse.error
+    public var error: ExposureError? {
+        if let exposureError = dataResponse.error as? ExposureError {
+            return exposureError
+        }
+        else if let generalError = dataResponse.error {
+            return ExposureError.generalError(error: generalError)
+        }
+        else {
+            return nil
+        }
     }
 }
