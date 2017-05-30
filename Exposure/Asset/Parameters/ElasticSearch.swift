@@ -8,17 +8,32 @@
 
 import Foundation
 
-/*public protocol ElasticSearch {
-    var elasticSearchFilter: ElasticSearchQuery { get set }
+public protocol ElasticSearch {
+    var elasticSearchQuery: ElasticSearchQuery { get set }
 }
 
 extension ElasticSearch {
     /// https://www.elastic.co/guide/en/elasticsearch/reference/1.7/query-dsl-query-string-query.html
-    public func query(with string: String) -> Self {
-        
+    public var elasticSearchString: String? {
+        return elasticSearchQuery.query
+    }
+    
+    /// Will replace any currently active query
+    ///
+    /// The optional query to filter by. In the elasticsearch query string query format, I.E: "tags.genres:action AND localized.en-us.title:armageddon"
+    ///
+    /// https://www.elastic.co/guide/en/elasticsearch/reference/1.7/query-dsl-query-string-query.html
+    public func elasticSearch(query string: String?) -> Self {
+        var old = self
+        old.elasticSearchQuery = ElasticSearchQuery(query: string)
+        return old
     }
 }
 
 public struct ElasticSearchQuery {
-    public let query: String
-}*/
+    public let query: String?
+    
+    internal init(query: String? = nil) {
+        self.query = query
+    }
+}

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch {
     public typealias Response = AssetList
     
     public var endpointUrl: String {
@@ -27,11 +27,12 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var publishFilter: PublishFilter
     public var pageFilter: PageFilter
     public var deviceFilter: DeviceFilter
+    public var elasticSearchQuery: ElasticSearchQuery
     
     public var sortDescription: SortDescription
     
     public let environment: Environment
-    internal var query: Query
+    internal var internalQuery: Query
     
     
     internal init(environment: Environment) {
@@ -40,10 +41,11 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.publishFilter = PublishFilter()
         self.pageFilter = PageFilter()
         self.deviceFilter = DeviceFilter()
+        self.elasticSearchQuery = ElasticSearchQuery()
         
         self.sortDescription = SortDescription()
         
-        self.query = Query()
+        self.internalQuery = Query()
     }
     
     internal enum Keys: String {
@@ -56,6 +58,9 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         case assetType = "assetType"
         case deviceType = "deviceType"
         case sort = "sort"
+        case query = "query"
+        case deviceQuery = "deviceQuery"
+        case publicationQuery = "publicationQuery"
     }
     
     internal var queryParams: [String: Any] {
@@ -80,7 +85,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
             params[Keys.deviceType.rawValue] = deviceType.queryParam
         }
         
-        if let assetType = query.assetType {
+        if let assetType = internalQuery.assetType {
             params[Keys.assetType.rawValue] = assetType.queryParam
         }
         
@@ -90,6 +95,18 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
             params[Keys.sort.rawValue] = sort
                 .map{ $0.ascending ? "" : "-" + $0.key }
                 .joined(separator: ",")
+        }
+        
+        if let querySearch = elasticSearchQuery.query {
+            params[Keys.query.rawValue] = querySearch
+        }
+        
+        if let deviceQuery = internalQuery.deviceQuery {
+            params[Keys.deviceQuery.rawValue] = deviceQuery
+        }
+        
+        if let publicationQuery = internalQuery.publicationQuery {
+            params[Keys.publicationQuery.rawValue] = publicationQuery
         }
         
         return params
@@ -102,12 +119,36 @@ extension FetchAssetList {
     
     // MARK: AssetType
     public var assetType: AssetType? {
-        return query.assetType
+        return internalQuery.assetType
     }
     
     public func filter(on assetType: AssetType) -> FetchAssetList {
         var old = self
-        old.query = Query(assetType: assetType)
+        old.internalQuery = Query(previous: internalQuery, assetType: assetType)
+        return old
+    }
+    
+    // MARK: Device Query
+    public var deviceQuery: String? {
+        return internalQuery.deviceQuery
+    }
+    
+    /// The optional query to filter by in fields nested under publications.devices. In the elasticsearch query string query format, I.E: "publications.devices.rights.threeGBlocked:false AND publications.devices.os:IOS"
+    public func elasticSearch(deviceQuery string: String?) -> FetchAssetList {
+        var old = self
+        old.internalQuery = Query(previous: internalQuery, deviceQuery: string)
+        return old
+    }
+    
+    // MARK: Publication Query
+    public var publicationQuery: String? {
+        return internalQuery.publicationQuery
+    }
+    
+    /// The optional query to filter by in fields nested under publications except publications.devices. In the elasticsearch query string query format, I.E: "publications.rights.wifiBlocked:true"
+    public func elasticSearch(publicationQuery string: String?) -> FetchAssetList {
+        var old = self
+        old.internalQuery = Query(previous: internalQuery, publicationQuery: string)
         return old
     }
 }
@@ -117,8 +158,19 @@ extension FetchAssetList {
     internal struct Query {
         internal let assetType: AssetType?
         
-        init(assetType: AssetType? = nil) {
+        internal let deviceQuery: String?
+        internal let publicationQuery: String?
+        
+        internal init(assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
             self.assetType = assetType
+            self.deviceQuery = deviceQuery
+            self.publicationQuery = publicationQuery
+        }
+        
+        internal init(previous: Query, assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
+            self.assetType = assetType ?? previous.assetType
+            self.deviceQuery = deviceQuery ?? previous.deviceQuery
+            self.publicationQuery = publicationQuery ?? previous.publicationQuery
         }
     }
 }
