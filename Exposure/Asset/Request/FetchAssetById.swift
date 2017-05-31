@@ -122,5 +122,4 @@ extension FetchAssetById {
     public func request() -> ExposureRequest {
         return request(.get, encoding: URLEncoding.default)
     }
-    
 }
