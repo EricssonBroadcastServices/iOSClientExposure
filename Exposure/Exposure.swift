@@ -27,22 +27,6 @@ public protocol Exposure {
     var headers: Headers { get }
 }
 
-public enum HTTPMethod {
-    case post
-    case put
-    case get
-    case delete
-    
-    internal var alamofireMethod: Alamofire.HTTPMethod {
-        switch self {
-        case .post: return .post
-        case .put: return .put
-        case .get: return .get
-        case .delete: return .delete
-        }
-    }
-}
-
 let sessionManager: SessionManager = {
     let configuration = URLSessionConfiguration.default
     configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -55,7 +39,7 @@ extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
     internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         let dataRequest = sessionManager
             .request(endpointUrl,
-                     method: method.alamofireMethod,
+                     method: method,
                      parameters: parameters,
                      encoding: encoding,
                      headers: headers)
@@ -69,7 +53,7 @@ extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
         if let params = parameters {
             let dataRequest = sessionManager
                 .request(endpointUrl,
-                         method: method.alamofireMethod,
+                         method: method,
                          parameters: params,
                          encoding: encoding,
                          headers: headers)
@@ -78,7 +62,7 @@ extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
         else {
             let dataRequest = sessionManager
                 .request(endpointUrl,
-                         method: method.alamofireMethod,
+                         method: method,
                          headers: headers)
             return ExposureRequest(dataRequest: dataRequest)
         }

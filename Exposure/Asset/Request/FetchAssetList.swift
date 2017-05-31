@@ -141,7 +141,7 @@ extension FetchAssetList {
     
     public func filter(onlyAssetIds: [String]?) -> FetchAssetList {
         var old = self
-        old.internalQuery = Query(previous: internalQuery, assetIds: assetIds)
+        old.internalQuery = Query(previous: internalQuery, assetIds: onlyAssetIds)
         return old
     }
     
@@ -196,11 +196,8 @@ extension FetchAssetList {
 }
 
 // MARK: - Request
-
-
-// MARK: - Request
 extension FetchAssetList {
     public func request() -> ExposureRequest {
-        return request(.get, encoding: URLEncoding.default)
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }

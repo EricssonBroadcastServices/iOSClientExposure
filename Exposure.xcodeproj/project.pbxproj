@@ -59,6 +59,7 @@
 		7693EDD01EADF30300421551 /* PlayRequestSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */; };
 		7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDD31EADF90100421551 /* PlayVodSpec.swift */; };
 		7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */; };
+		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76A842C21EA7604F00BDAF2C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 76A842C11EA7604F00BDAF2C /* Cartfile */; };
@@ -162,6 +163,7 @@
 		7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayRequestSpec.swift; sourceTree = "<group>"; };
 		7693EDD31EADF90100421551 /* PlayVodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVodSpec.swift; sourceTree = "<group>"; };
 		7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementSpec.swift; sourceTree = "<group>"; };
+		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
 		76A842AB1EA75EC900BDAF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -477,6 +479,7 @@
 			children = (
 				76A842DF1EA7667D00BDAF2C /* DataRequest.swift */,
 				76A842E01EA7667D00BDAF2C /* ExposureRequest.swift */,
+				76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -690,6 +693,7 @@
 				766FBB821ECA2B3D00EBEC53 /* ExternalReference.swift in Sources */,
 				76A842F31EA7667D00BDAF2C /* FairplayConfiguration.swift in Sources */,
 				766FBB7E1ECA2B1600EBEC53 /* Season.swift in Sources */,
+				76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */,
 				766FBB761ECA2A6F00EBEC53 /* Tag.swift in Sources */,
 				76A842F01EA7667D00BDAF2C /* PlayRequest.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
