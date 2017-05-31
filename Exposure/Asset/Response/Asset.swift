@@ -129,7 +129,7 @@ extension Asset: ExposureConvertible {
 }
 
 extension Asset {
-    public enum AssetType {
+    public enum AssetType: Equatable {
         case movie
         case tvShow
         case episode
@@ -169,6 +169,20 @@ extension Asset {
             case .liveEvent: return "LIVE_EVENT"
             case .other(type: _): return "OTHER"
             default: return "OTHER"
+            }
+        }
+        
+        public static func == (lhs: AssetType, rhs: AssetType) -> Bool {
+            switch (lhs, rhs) {
+            case (.movie, .movie): return true
+            case (.tvShow, .tvShow): return true
+            case (.episode, .episode): return true
+            case (.clip, .clip): return true
+            case (.tvChannel, .tvChannel): return true
+            case (.ad, .ad): return true
+            case (.liveEvent, .liveEvent): return true
+            case (.other(let l), .other(let r)): return l == r
+            default: return false
             }
         }
     }
