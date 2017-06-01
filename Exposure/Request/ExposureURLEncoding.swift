@@ -111,12 +111,12 @@ internal struct ExposureURLEncoding: ParameterEncoding {
             }
         } else if let value = value as? NSNumber {
             if value.isBool {
-                components.append((escape(key), escape((value.boolValue ? "1" : "0"))))
+                components.append((escape(key), escape((value.boolValue ? "true" : "false"))))
             } else {
                 components.append((escape(key), escape("\(value)")))
             }
         } else if let bool = value as? Bool {
-            components.append((escape(key), escape((bool ? "1" : "0"))))
+            components.append((escape(key), escape((bool ? "true" : "false"))))
         } else {
             components.append((escape(key), escape("\(value)")))
         }

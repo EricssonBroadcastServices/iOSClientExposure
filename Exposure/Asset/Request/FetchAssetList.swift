@@ -69,8 +69,8 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         var params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
             Keys.fieldSet.rawValue: fieldsFilter.fieldSet.rawValue,
-            Keys.pageSize.rawValue: pageFilter.size,
-            Keys.pageNumber.rawValue: pageFilter.page
+            Keys.pageNumber.rawValue: pageFilter.page,
+            Keys.pageSize.rawValue: pageFilter.size
         ]
         
         if let excluded = fieldsFilter.excludedFields, !excluded.isEmpty {
