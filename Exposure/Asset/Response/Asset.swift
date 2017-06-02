@@ -129,7 +129,7 @@ extension Asset: ExposureConvertible {
 }
 
 extension Asset {
-    public enum AssetType {
+    public enum AssetType: Equatable, Hashable {
         case movie
         case tvShow
         case episode
@@ -169,6 +169,17 @@ extension Asset {
             case .liveEvent: return "LIVE_EVENT"
             case .other(type: _): return "OTHER"
             default: return "OTHER"
+            }
+        }
+        
+        public static func == (lhs: AssetType, rhs: AssetType) -> Bool {
+            return lhs.hashValue == rhs.hashValue
+        }
+        
+        public var hashValue: Int {
+            switch self {
+            case .other(type: let value): return (queryParam+"_"+value).hashValue
+            default: return queryParam.hashValue
             }
         }
     }

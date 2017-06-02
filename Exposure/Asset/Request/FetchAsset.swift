@@ -10,6 +10,10 @@ import Foundation
 
 public struct FetchAsset {
     public let environment: Environment
+    
+    public init(environment: Environment) {
+        self.environment = environment
+    }
 }
 
 extension FetchAsset {

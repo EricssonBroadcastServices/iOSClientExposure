@@ -120,7 +120,6 @@ extension FetchAssetById {
 // MARK: - Request
 extension FetchAssetById {
     public func request() -> ExposureRequest {
-        return request(.get, encoding: URLEncoding.default)
+        return request(.get, encoding: ExposureURLEncoding.default)
     }
-    
 }
