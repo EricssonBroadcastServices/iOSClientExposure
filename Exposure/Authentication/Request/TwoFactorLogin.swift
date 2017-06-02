@@ -52,3 +52,9 @@ public struct TwoFactorLogin: Exposure {
         case twoFactor = "totp"
     }
 }
+
+extension TwoFactorLogin {
+    public func request() -> ExposureRequest {
+        return request(.post)
+    }
+}
