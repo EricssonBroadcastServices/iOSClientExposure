@@ -100,7 +100,7 @@ class AnonymousSpec: QuickSpec {
             }
             
             let invalidEnv = Environment(baseUrl: base, customer: "WrongCustomer", businessUnit: "WrongBusinessUnit")
-            let invalidAnonymous = Anonymous(environment: invalidEnv)
+            let invalidAnonymous = Authenticate(environment: env).anonymous()
             
             let errorJson: [String: Any] = [
                 "httpCode":404,
@@ -171,7 +171,7 @@ class AnonymousSpec: QuickSpec {
                 }
             }
             
-            context("Failure with invalid status code in response using validate(statusCode: 200..<299)") {
+            context("Failure with invalid status code in response using validate statusCode: 200..<299") {
                 let exposureResponse = ExposureResponseMessage(json: errorJson)!
                 beforeEach {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
@@ -188,7 +188,7 @@ class AnonymousSpec: QuickSpec {
                     }
                 }
                 
-                it("should throw an exposureResponse error when using validate(statusCode: 200..<299)") {
+                it("should throw an exposureResponse error when using validate statusCode: 200..<299") {
                     expect(data).toEventuallyNot(beNil())
                     expect(token).toEventually(beNil())
                     expect(error).toEventuallyNot(beNil())
