@@ -19,9 +19,28 @@ public struct Entitlement {
 }
 
 extension Entitlement {
+    /// If the entitlement checks pass, will return the information needed to initialize the 
+    /// player for the requested streaming format.
+    ///
+    /// Default streaming format is [drm:FAIRPLAY format:HLS]
     public func vod(assetId: String) -> PlayVod {
         return PlayVod(assetId: assetId,
                        environment: environment,
                        sessionToken: sessionToken)
     }
+    
+    /// Entitlements are set on program level, so this is shorthand for getting the epg 
+    /// and playing the currently live program. If the entitlement checks pass, will 
+    /// return the information needed to initialize the player for the requested streaming format.
+    ///
+    /// Default streaming format is [drm:FAIRPLAY format:HLS]
+    ///
+    /// If there is no current program live will return NOT_ENABLED.
+    public func live(channelId: String) -> PlayLive {
+        return PlayLive(channelId: channelId,
+                        environment: environment,
+                        sessionToken: sessionToken)
+    }
+    
+    
 }
