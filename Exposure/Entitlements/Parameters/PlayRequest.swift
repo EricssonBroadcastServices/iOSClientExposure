@@ -21,9 +21,10 @@ extension DRMRequest {
         return playRequest.drm
     }
     
-    public func drm(using value: DRM) {
+    public func use(drm value: DRM) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: value, format: format)
+        return old
     }
     
     // MARK: Format
@@ -31,9 +32,10 @@ extension DRMRequest {
         return playRequest.format
     }
     
-    public func format(using value: Format) {
+    public func use(format value: Format) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: drm, format: value)
+        return old
     }
 }
 
