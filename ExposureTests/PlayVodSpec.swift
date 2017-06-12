@@ -25,9 +25,10 @@ class PlayVodSpec: QuickSpec {
         let playVod = Entitlement(environment: env,
                                   sessionToken: sessionToken)
             .vod(assetId: assetId)
-            .use(drm: .fairplay)
+            .use(drm: .unencrypted)
+            .use(format: .hls)
         
-        describe("Anonymous") {
+        describe("PlayVod") {
             it("should have headers") {
                 expect(playVod.headers).toNot(beNil())
                 expect(playVod.headers!).to(equal(sessionToken.authorizationHeader))
@@ -41,6 +42,14 @@ class PlayVodSpec: QuickSpec {
             it("should generate paramters") {
                 let json = PlayRequest().toJSON()
                 expect(playVod.parameters.count).to(equal(json.count))
+            }
+            
+            it("should record DRM and format") {
+                let drm = playVod.drm
+                let format = playVod.format
+                
+                expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
+                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
             }
         }
     }
