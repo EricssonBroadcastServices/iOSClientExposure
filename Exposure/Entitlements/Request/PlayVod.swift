@@ -9,15 +9,16 @@
 import Foundation
 import Alamofire
 
-public struct PlayVod: Exposure {
+public struct PlayVod: Exposure, DRMRequest {
     public typealias Response = PlaybackEntitlement
     
     public let assetId: String
-    public let playRequest: PlayRequest
     public let environment: Environment
     public let sessionToken: SessionToken
     
-    public init(assetId: String, playRequest: PlayRequest, environment: Environment, sessionToken: SessionToken) {
+    public var playRequest: PlayRequest
+    
+    internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
         self.assetId = assetId
         self.playRequest = playRequest
         self.environment = environment
