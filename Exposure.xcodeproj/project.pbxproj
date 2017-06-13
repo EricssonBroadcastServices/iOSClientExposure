@@ -17,6 +17,7 @@
 		761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B81ECCD61B00E316BF /* FetchAssetList.swift */; };
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
+		7646D65B1EEFF292009E5C2B /* PlayLiveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */; };
 		764DEE221EEF13240047A179 /* Entitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764DEE211EEF13240047A179 /* Entitlement.swift */; };
 		764DEE241EEF2D070047A179 /* PlayLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764DEE231EEF2D070047A179 /* PlayLive.swift */; };
 		76529CF91ED6148B00318AE2 /* FetchAssetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */; };
@@ -123,6 +124,7 @@
 		761336B81ECCD61B00E316BF /* FetchAssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetList.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLiveSpec.swift; sourceTree = "<group>"; };
 		764DEE211EEF13240047A179 /* Entitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entitlement.swift; sourceTree = "<group>"; };
 		764DEE231EEF2D070047A179 /* PlayLive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLive.swift; sourceTree = "<group>"; };
 		76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetListSpec.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */,
 				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
+				7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */,
 				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
 				766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */,
 				76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */,
@@ -731,6 +734,7 @@
 				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
 				7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */,
 				7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */,
+				7646D65B1EEFF292009E5C2B /* PlayLiveSpec.swift in Sources */,
 				7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */,
 				767030811ECB25E00026CD70 /* ImageSpec.swift in Sources */,
 				7693EDCA1EADEB7300421551 /* CredentialsSpec.swift in Sources */,
