@@ -42,5 +42,14 @@ extension Entitlement {
                         sessionToken: sessionToken)
     }
     
-    
+    /// If the entitlement checks pass, will return the information needed to initialize the 
+    /// player for the requested streaming format.
+    ///
+    /// Default streaming format is [drm:FAIRPLAY format:HLS]
+    public func catchup(channelId: String, programId: String) -> PlayCatchup {
+        return PlayCatchup(channelId: channelId,
+                           programId: programId,
+                           environment: environment,
+                           sessionToken: sessionToken)
+    }
 }
