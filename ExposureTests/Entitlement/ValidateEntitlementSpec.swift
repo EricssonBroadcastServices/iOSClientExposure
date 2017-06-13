@@ -6,8 +6,6 @@
 //  Copyright © 2017 emp. All rights reserved.
 //
 
-import Foundation
-
 import Quick
 import Nimble
 
@@ -53,6 +51,18 @@ class ValidateEntitlementSpec: QuickSpec {
                 expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
                 expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
             }
+        }
+        
+        describe("EntitlementValidation") {
+            let json: [String: Any] = [
+                "status":"SUCCESS",
+                "paymentDone":false
+            ]
+            
+            let result = EntitlementValidation(json: json)
+            
+            expect(result?.status).toNot(beNil())
+            expect(result?.paymentDone).toNot(beNil())
         }
     }
 }
