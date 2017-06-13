@@ -52,4 +52,11 @@ extension Entitlement {
                            environment: environment,
                            sessionToken: sessionToken)
     }
+    
+    /// Checks if the user is entitled to the asset with assetId.
+    public func validate(assetId: String) -> ValidateEntitlement {
+        return ValidateEntitlement(assetId: assetId,
+                                   environment: environment,
+                                   sessionToken: sessionToken)
+    }
 }
