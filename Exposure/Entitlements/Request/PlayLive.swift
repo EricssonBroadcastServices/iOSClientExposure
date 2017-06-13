@@ -1,32 +1,31 @@
 //
-//  PlayVod.swift
+//  PlayLive.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-03-23.
+//  Created by Fredrik Sjöberg on 2017-06-12.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
-import Alamofire
 
-public struct PlayVod: Exposure, DRMRequest {
+public struct PlayLive: Exposure, DRMRequest {
     public typealias Response = PlaybackEntitlement
     
-    public let assetId: String
+    public let channelId: String
     public let environment: Environment
     public let sessionToken: SessionToken
     
     public var playRequest: PlayRequest
     
-    internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
-        self.assetId = assetId
+    internal init(channelId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
+        self.channelId = channelId
         self.playRequest = playRequest
         self.environment = environment
         self.sessionToken = sessionToken
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/entitlement/" + assetId + "/play"
+        return environment.apiUrl + "/entitlement/channel/" + channelId + "/play"
     }
     
     public var parameters: [String: Any] {
@@ -38,8 +37,15 @@ public struct PlayVod: Exposure, DRMRequest {
     }
 }
 
-extension PlayVod {
+extension PlayLive {
     public func request() -> ExposureRequest {
         return request(.post)
+    }
+    
+    public func catchup(programId: String) -> PlayCatchup {
+        return PlayCatchup(channelId: channelId,
+                           programId: programId,
+                           environment: environment,
+                           sessionToken: sessionToken)
     }
 }

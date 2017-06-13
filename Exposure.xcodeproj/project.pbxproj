@@ -17,6 +17,12 @@
 		761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B81ECCD61B00E316BF /* FetchAssetList.swift */; };
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
+		7646D65B1EEFF292009E5C2B /* PlayLiveSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */; };
+		7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */; };
+		7646D65F1EEFF5BE009E5C2B /* PlayCatchup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65E1EEFF5BE009E5C2B /* PlayCatchup.swift */; };
+		7646D6611EEFF75A009E5C2B /* PlayCatchupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */; };
+		764DEE221EEF13240047A179 /* Entitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764DEE211EEF13240047A179 /* Entitlement.swift */; };
+		764DEE241EEF2D070047A179 /* PlayLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764DEE231EEF2D070047A179 /* PlayLive.swift */; };
 		76529CF91ED6148B00318AE2 /* FetchAssetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */; };
 		76529CFB1EDBF2FE00318AE2 /* FilteredDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CFA1EDBF2FE00318AE2 /* FilteredDevices.swift */; };
 		76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CFC1EDBF61100318AE2 /* DeviceType.swift */; };
@@ -121,6 +127,12 @@
 		761336B81ECCD61B00E316BF /* FetchAssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetList.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLiveSpec.swift; sourceTree = "<group>"; };
+		7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureErrorSpec.swift; sourceTree = "<group>"; };
+		7646D65E1EEFF5BE009E5C2B /* PlayCatchup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCatchup.swift; sourceTree = "<group>"; };
+		7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCatchupSpec.swift; sourceTree = "<group>"; };
+		764DEE211EEF13240047A179 /* Entitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entitlement.swift; sourceTree = "<group>"; };
+		764DEE231EEF2D070047A179 /* PlayLive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLive.swift; sourceTree = "<group>"; };
 		76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetListSpec.swift; sourceTree = "<group>"; };
 		76529CFA1EDBF2FE00318AE2 /* FilteredDevices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredDevices.swift; sourceTree = "<group>"; };
 		76529CFC1EDBF61100318AE2 /* DeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
@@ -368,8 +380,11 @@
 				7693EDC91EADEB7300421551 /* CredentialsSpec.swift */,
 				7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */,
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
+				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
 				7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */,
 				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
+				7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */,
+				7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */,
 				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
 				766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */,
 				76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */,
@@ -451,7 +466,10 @@
 		76A842D51EA7667D00BDAF2C /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				764DEE211EEF13240047A179 /* Entitlement.swift */,
 				76A842D61EA7667D00BDAF2C /* PlayVod.swift */,
+				764DEE231EEF2D070047A179 /* PlayLive.swift */,
+				7646D65E1EEFF5BE009E5C2B /* PlayCatchup.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -655,7 +673,9 @@
 				76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */,
 				76A842ED1EA7667D00BDAF2C /* Login.swift in Sources */,
 				766FBB801ECA2B2B00EBEC53 /* LinkedEntity.swift in Sources */,
+				764DEE241EEF2D070047A179 /* PlayLive.swift in Sources */,
 				76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */,
+				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
 				76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */,
 				76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */,
 				766FBB7C1ECA2AD200EBEC53 /* DeviceRights.swift in Sources */,
@@ -667,6 +687,7 @@
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
+				7646D65F1EEFF5BE009E5C2B /* PlayCatchup.swift in Sources */,
 				76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */,
 				76529CFF1EDC23E100318AE2 /* Authenticate.swift in Sources */,
 				76A842F21EA7667D00BDAF2C /* EDRMConfiguration.swift in Sources */,
@@ -709,6 +730,7 @@
 			files = (
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				7693EDC81EADE91300421551 /* SessionTokenSpec.swift in Sources */,
+				7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */,
 				7693EDD01EADF30300421551 /* PlayRequestSpec.swift in Sources */,
 				767030891ECB2BEB0026CD70 /* ExternalReferenceSpec.swift in Sources */,
 				7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */,
@@ -723,6 +745,7 @@
 				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
 				7693EDC01EAA4BC400421551 /* FairplayConfigurationSpec.swift in Sources */,
 				7693EDD61EAE00FD00421551 /* PlaybackEntitlementSpec.swift in Sources */,
+				7646D65B1EEFF292009E5C2B /* PlayLiveSpec.swift in Sources */,
 				7693EDC21EAA513000421551 /* LoginSpec.swift in Sources */,
 				767030811ECB25E00026CD70 /* ImageSpec.swift in Sources */,
 				7693EDCA1EADEB7300421551 /* CredentialsSpec.swift in Sources */,
@@ -732,6 +755,7 @@
 				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
 				761336B51ECC31E800E316BF /* AssetSpec.swift in Sources */,
 				767030851ECB29080026CD70 /* MediaSpec.swift in Sources */,
+				7646D6611EEFF75A009E5C2B /* PlayCatchupSpec.swift in Sources */,
 				766FBB701EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift in Sources */,
 				7693EDD41EADF90100421551 /* PlayVodSpec.swift in Sources */,
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
