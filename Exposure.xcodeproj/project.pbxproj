@@ -129,15 +129,15 @@
 		761336B81ECCD61B00E316BF /* FetchAssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetList.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLiveSpec.swift; sourceTree = "<group>"; };
+		7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayLiveSpec.swift; path = ../PlayLiveSpec.swift; sourceTree = "<group>"; };
 		7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureErrorSpec.swift; sourceTree = "<group>"; };
 		7646D65E1EEFF5BE009E5C2B /* PlayCatchup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCatchup.swift; sourceTree = "<group>"; };
-		7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayCatchupSpec.swift; sourceTree = "<group>"; };
+		7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayCatchupSpec.swift; path = ../PlayCatchupSpec.swift; sourceTree = "<group>"; };
 		7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateEntitlement.swift; sourceTree = "<group>"; };
 		7646D6641EEFFFAE009E5C2B /* EntitlementValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntitlementValidation.swift; sourceTree = "<group>"; };
 		764DEE211EEF13240047A179 /* Entitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entitlement.swift; sourceTree = "<group>"; };
 		764DEE231EEF2D070047A179 /* PlayLive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayLive.swift; sourceTree = "<group>"; };
-		76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetListSpec.swift; sourceTree = "<group>"; };
+		76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchAssetListSpec.swift; path = ../FetchAssetListSpec.swift; sourceTree = "<group>"; };
 		76529CFA1EDBF2FE00318AE2 /* FilteredDevices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredDevices.swift; sourceTree = "<group>"; };
 		76529CFC1EDBF61100318AE2 /* DeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
 		76529CFE1EDC23E100318AE2 /* Authenticate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authenticate.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 		766FBB661EC9829200EBEC53 /* FetchAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAsset.swift; sourceTree = "<group>"; };
 		766FBB6B1EC9A19B00EBEC53 /* Sequence+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sequence+Extensions.swift"; sourceTree = "<group>"; };
 		766FBB6D1EC9A96500EBEC53 /* FetchAssetById.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetById.swift; sourceTree = "<group>"; };
-		766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetsByIdSpec.swift; sourceTree = "<group>"; };
+		766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FetchAssetsByIdSpec.swift; path = ../FetchAssetsByIdSpec.swift; sourceTree = "<group>"; };
 		766FBB711ECA2A1B00EBEC53 /* LocalizedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizedData.swift; sourceTree = "<group>"; };
 		766FBB731ECA2A4600EBEC53 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		766FBB751ECA2A6F00EBEC53 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -176,9 +176,9 @@
 		7693EDC91EADEB7300421551 /* CredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsSpec.swift; sourceTree = "<group>"; };
 		7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EDRMConfigurationSpec.swift; sourceTree = "<group>"; };
 		7693EDCD1EADEE9300421551 /* ExposureSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureSpec.swift; sourceTree = "<group>"; };
-		7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayRequestSpec.swift; sourceTree = "<group>"; };
-		7693EDD31EADF90100421551 /* PlayVodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayVodSpec.swift; sourceTree = "<group>"; };
-		7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementSpec.swift; sourceTree = "<group>"; };
+		7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayRequestSpec.swift; path = ../PlayRequestSpec.swift; sourceTree = "<group>"; };
+		7693EDD31EADF90100421551 /* PlayVodSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlayVodSpec.swift; path = ../PlayVodSpec.swift; sourceTree = "<group>"; };
+		7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlaybackEntitlementSpec.swift; path = ../PlaybackEntitlementSpec.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
@@ -258,6 +258,32 @@
 			name = fastlane;
 			sourceTree = "<group>";
 		};
+		7646D6671EF0052B009E5C2B /* Entitlement */ = {
+			isa = PBXGroup;
+			children = (
+				7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */,
+				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
+				7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */,
+				7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */,
+				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
+			);
+			path = Entitlement;
+			sourceTree = "<group>";
+		};
+		7646D6681EF005A3009E5C2B /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */,
+				7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */,
+				7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */,
+				76BBFBC21EA8FA8C001DBDDB /* AnonymousSpec.swift */,
+				7693EDC11EAA513000421551 /* LoginSpec.swift */,
+				7693EDC71EADE91300421551 /* SessionTokenSpec.swift */,
+				7693EDC91EADEB7300421551 /* CredentialsSpec.swift */,
+			);
+			name = Authentication;
+			sourceTree = "<group>";
+		};
 		766FBB5E1EC9816700EBEC53 /* Asset */ = {
 			isa = PBXGroup;
 			children = (
@@ -310,6 +336,8 @@
 		7670307D1ECB210C0026CD70 /* Asset */ = {
 			isa = PBXGroup;
 			children = (
+				766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */,
+				76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */,
 				7670307E1ECB21150026CD70 /* TagsSpec.swift */,
 				767030801ECB25E00026CD70 /* ImageSpec.swift */,
 				767030821ECB27DC0026CD70 /* ParentalRatingSpec.swift */,
@@ -373,25 +401,13 @@
 			isa = PBXGroup;
 			children = (
 				76A842B71EA75EC900BDAF2C /* Info.plist */,
-				76BBFBBE1EA8F669001DBDDB /* DeviceInfoSpec.swift */,
 				76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */,
-				76BBFBC21EA8FA8C001DBDDB /* AnonymousSpec.swift */,
-				7693EDC11EAA513000421551 /* LoginSpec.swift */,
 				76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */,
-				7693EDBF1EAA4BC400421551 /* FairplayConfigurationSpec.swift */,
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
-				7693EDC71EADE91300421551 /* SessionTokenSpec.swift */,
-				7693EDC91EADEB7300421551 /* CredentialsSpec.swift */,
-				7693EDCB1EADED5C00421551 /* EDRMConfigurationSpec.swift */,
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
-				7693EDCF1EADF30300421551 /* PlayRequestSpec.swift */,
-				7693EDD31EADF90100421551 /* PlayVodSpec.swift */,
-				7646D65A1EEFF292009E5C2B /* PlayLiveSpec.swift */,
-				7646D6601EEFF75A009E5C2B /* PlayCatchupSpec.swift */,
-				7693EDD51EAE00FD00421551 /* PlaybackEntitlementSpec.swift */,
-				766FBB6F1EC9C49900EBEC53 /* FetchAssetsByIdSpec.swift */,
-				76529CF81ED6148B00318AE2 /* FetchAssetListSpec.swift */,
+				7646D6681EF005A3009E5C2B /* Authentication */,
+				7646D6671EF0052B009E5C2B /* Entitlement */,
 				7670307D1ECB210C0026CD70 /* Asset */,
 			);
 			path = ExposureTests;
