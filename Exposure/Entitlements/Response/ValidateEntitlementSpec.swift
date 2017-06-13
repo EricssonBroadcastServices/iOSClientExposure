@@ -24,31 +24,31 @@ class ValidateEntitlementSpec: QuickSpec {
         let assetId = "assetId1_qwerty"
         let sessionToken = SessionToken(value: "token")
         
-        let playVod = Entitlement(environment: env,
+        let request = Entitlement(environment: env,
                                   sessionToken: sessionToken)
-            .vod(assetId: assetId)
+            .validate(assetId: assetId)
             .use(drm: .unencrypted)
             .use(format: .hls)
         
-        describe("PlayVod") {
+        describe("ValidateEntitlement") {
             it("should have headers") {
-                expect(playVod.headers).toNot(beNil())
-                expect(playVod.headers!).to(equal(sessionToken.authorizationHeader))
+                expect(request.headers).toNot(beNil())
+                expect(request.headers!).to(equal(sessionToken.authorizationHeader))
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/entitlement/" + assetId + "/play"
-                expect(playVod.endpointUrl).to(equal(env.apiUrl+endpoint))
+                let endpoint = "/entitlement/" + assetId
+                expect(request.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
             it("should generate paramters") {
                 let json = PlayRequest().toJSON()
-                expect(playVod.parameters.count).to(equal(json.count))
+                expect(request.parameters.count).to(equal(json.count))
             }
             
             it("should record DRM and format") {
-                let drm = playVod.drm
-                let format = playVod.format
+                let drm = request.drm
+                let format = request.format
                 
                 expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
                 expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
