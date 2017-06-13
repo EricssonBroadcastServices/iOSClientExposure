@@ -27,7 +27,7 @@ public struct PlayCatchup: Exposure, DRMRequest {
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/entitlement/channel/" + channelId + "/programId" + programId + "/play"
+        return environment.apiUrl + "/entitlement/channel/" + channelId + "/program/" + programId + "/play"
     }
     
     public var parameters: [String: Any] {
@@ -39,7 +39,7 @@ public struct PlayCatchup: Exposure, DRMRequest {
     }
 }
 
-extension PlayLive {
+extension PlayCatchup {
     public func request() -> ExposureRequest {
         return request(.post)
     }
