@@ -54,15 +54,29 @@ class ValidateEntitlementSpec: QuickSpec {
         }
         
         describe("EntitlementValidation") {
-            let json: [String: Any] = [
-                "status":"SUCCESS",
-                "paymentDone":false
-            ]
+            it("should process with valid json") {
+                let json: [String: Any] = [
+                    "status":"SUCCESS",
+                    "paymentDone":false
+                ]
+                
+                let result = EntitlementValidation(json: json)
+                
+                expect(result).toNot(beNil())
+                expect(result?.status).toNot(beNil())
+                expect(result?.paymentDone).toNot(beNil())
+            }
             
-            let result = EntitlementValidation(json: json)
-            
-            expect(result?.status).toNot(beNil())
-            expect(result?.paymentDone).toNot(beNil())
+            it("should fail with invalid json") {
+                let json: [String: Any] = [
+                    "WRONG_KEY":"SUCCESS",
+                    "OTHER_MISTAKE":false
+                ]
+                
+                let result = EntitlementValidation(json: json)
+                
+                expect(result).to(beNil())
+            }
         }
     }
 }
