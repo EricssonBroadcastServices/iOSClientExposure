@@ -75,6 +75,7 @@
 		769734A91EF1833100F6ADC8 /* FetchEpg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734A81EF1833100F6ADC8 /* FetchEpg.swift */; };
 		769734AB1EF1833A00F6ADC8 /* FetchEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734AA1EF1833A00F6ADC8 /* FetchEpgList.swift */; };
 		769734AD1EF1852C00F6ADC8 /* FilteredAssetIds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734AC1EF1852C00F6ADC8 /* FilteredAssetIds.swift */; };
+		769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734AE1EF18A3D00F6ADC8 /* FilteredDates.swift */; };
 		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -193,6 +194,7 @@
 		769734A81EF1833100F6ADC8 /* FetchEpg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpg.swift; sourceTree = "<group>"; };
 		769734AA1EF1833A00F6ADC8 /* FetchEpgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgList.swift; sourceTree = "<group>"; };
 		769734AC1EF1852C00F6ADC8 /* FilteredAssetIds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredAssetIds.swift; sourceTree = "<group>"; };
+		769734AE1EF18A3D00F6ADC8 /* FilteredDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredDates.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 		7697349B1EF17FB400F6ADC8 /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
+				769734AE1EF18A3D00F6ADC8 /* FilteredDates.swift */,
 			);
 			path = Parameters;
 			sourceTree = "<group>";
@@ -767,6 +770,7 @@
 				76A842EF1EA7667D00BDAF2C /* SessionToken.swift in Sources */,
 				766FBB841ECA2B6100EBEC53 /* Person.swift in Sources */,
 				76A842F71EA7667D00BDAF2C /* DataRequest.swift in Sources */,
+				769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */,
 				76A842F41EA7667D00BDAF2C /* PlaybackEntitlement.swift in Sources */,
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
 				76529D011EDC254300318AE2 /* TwoFactorLogin.swift in Sources */,
