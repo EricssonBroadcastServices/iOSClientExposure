@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Epg {
+public struct FetchEpg {
     public let environment: Environment
     
     public init(environment: Environment) {
@@ -16,8 +16,13 @@ public struct Epg {
     }
 }
 
-extension Epg {
-    public func list() -> FetchEpgList {
-        return FetchEpgList(environment: environment)
+extension FetchEpg {
+    public func channels() -> FetchEpgChannelList {
+        return FetchEpgChannelList(environment: environment)
+    }
+    
+    public func channel(id: String) -> FetchEpgChannelList {
+        return FetchEpgChannelList(environment: environment)
+            .filter(onlyAssetIds: [id])
     }
 }

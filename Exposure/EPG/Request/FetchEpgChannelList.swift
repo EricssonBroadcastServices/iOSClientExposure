@@ -1,5 +1,5 @@
 //
-//  FetchEpgList.swift
+//  FetchEpgChannelList.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2017-06-14.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
+public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
     public typealias Response = [ChannelEpg]
     
     public var endpointUrl: String {
@@ -73,7 +73,7 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
 }
 
 // MARK: - Request
-extension FetchEpgList {
+extension FetchEpgChannelList {
     public func request() -> ExposureRequest {
         return request(.get, encoding: ExposureURLEncoding.default)
     }
