@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, FilteredPublish {
+public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates {
     public typealias Response = [ChannelEpg]
     
     public var endpointUrl: String {
@@ -27,6 +27,7 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
     public var sortDescription: SortDescription
     public var pageFilter: PageFilter
     public var publishFilter: PublishFilter
+    public var dateFilter: DateFilter
     
     public let environment: Environment
     
@@ -35,6 +36,7 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
         self.sortDescription = SortDescription()
         self.pageFilter = PageFilter()
         self.publishFilter = PublishFilter()
+        self.dateFilter = DateFilter()
     }
     
     internal enum Keys: String {
@@ -42,13 +44,17 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
         case pageSize = "pageSize"
         case pageNumber = "pageNumber"
         case sort = "sort"
+        case from = "from"
+        case to = "to"
     }
     
     internal var queryParams: [String: Any] {
         var params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
             Keys.pageNumber.rawValue: pageFilter.page,
-            Keys.pageSize.rawValue: pageFilter.size
+            Keys.pageSize.rawValue: pageFilter.size,
+            Keys.from.rawValue: dateFilter.startMillis,
+            Keys.to.rawValue: dateFilter.endMillis
         ]
         
         if let sort = sortDescription.descriptors {

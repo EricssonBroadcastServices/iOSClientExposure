@@ -42,7 +42,7 @@ public struct DateFilter {
     internal let startMillis: UInt64
     internal let endMillis: UInt64
     
-    internal init(start: UInt64, end: UInt64) {
+    internal init(start: UInt64 = 0, end: UInt64 = Date().millisecondsSince1970) {
         self.startMillis = start
         self.endMillis = end
     }
