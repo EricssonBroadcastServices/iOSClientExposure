@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Program {
+public struct Program: ExposureConvertible {
     public let created: String? //The date the program was created.
     public let changed: String? //The date the program was changed.
     public let programId: String? //The id of the program.
@@ -21,4 +21,8 @@ public struct Program {
     public let catchupBlocked: Bool? //If this asset is currently blocked for catchup.
     public let asset: Asset? // The asset metadata
     public let blackout: Bool? //If this program is currently published as blackout. This means any publication contains blackout, not global blackout
+    
+    public init?(json: Any) {
+        
+    }
 }

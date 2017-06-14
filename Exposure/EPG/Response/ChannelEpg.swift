@@ -8,8 +8,12 @@
 
 import Foundation
 
-public struct ChannelEpg {
+public struct ChannelEpg: ExposureConvertible {
     public let channelId: String?
     public let programs: [Program]?
     public let totalHitsAllChannels: Int? //This is the total number of hits for all channels, not only this.
+    
+    public init?(json: Any) {
+        
+    }
 }
