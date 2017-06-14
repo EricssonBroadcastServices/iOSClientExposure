@@ -15,4 +15,12 @@ extension Date {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return formatter
     }
+    
+    public var millisecondsSince1970: UInt64 {
+        return UInt64((timeIntervalSince1970 * 1000.0).rounded())
+    }
+    
+    public init(milliseconds: UInt64) {
+        self = Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
+    }
 }

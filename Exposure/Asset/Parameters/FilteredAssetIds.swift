@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 public protocol FilteredAssetIds {
     var assetIdFilter: AssetIdFilter { get set }
 }
