@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public struct Program: ExposureConvertible {
     public let created: String? //The date the program was created.
@@ -23,6 +24,40 @@ public struct Program: ExposureConvertible {
     public let blackout: Bool? //If this program is currently published as blackout. This means any publication contains blackout, not global blackout
     
     public init?(json: Any) {
+        let actualJson = JSON(json)
         
+        created = actualJson[JSONKeys.created.rawValue].string
+        changed = actualJson[JSONKeys.changed.rawValue].string
+        programId = actualJson[JSONKeys.programId.rawValue].string
+        assetId = actualJson[JSONKeys.assetId.rawValue].string
+        channelId = actualJson[JSONKeys.channelId.rawValue].string
+        startTime = actualJson[JSONKeys.startTime.rawValue].string
+        endTime = actualJson[JSONKeys.endTime.rawValue].string
+        vodAvailable = actualJson[JSONKeys.vodAvailable.rawValue].bool
+        catchup = actualJson[JSONKeys.catchup.rawValue].bool
+        catchupBlocked = actualJson[JSONKeys.catchupBlocked.rawValue].bool
+        asset = Asset(json: actualJson[JSONKeys.asset.rawValue].object)
+        blackout = actualJson[JSONKeys.blackout.rawValue].bool
+        
+        if (created == nil && changed == nil && programId == nil && assetId == nil &&  channelId == nil)
+            && (startTime == nil && endTime == nil && vodAvailable == nil && catchup == nil)
+            && (catchupBlocked == nil && asset == nil && blackout == nil) {
+            return nil
+        }
+    }
+    
+    internal enum JSONKeys: String {
+        case created = "created"
+        case changed = "changed"
+        case programId = "programId"
+        case assetId = "assetId"
+        case channelId = "channelId"
+        case startTime = "startTime"
+        case endTime = "endTime"
+        case vodAvailable = "vodAvailable"
+        case catchup = "catchup"
+        case catchupBlocked = "catchupBlocked"
+        case asset = "asset"
+        case blackout = "blackout"
     }
 }
