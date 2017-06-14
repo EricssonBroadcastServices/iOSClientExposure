@@ -8,11 +8,12 @@
 
 import Foundation
 
-public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates {
+public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
     public typealias Response = [ChannelEpg]
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/content/asset"
+        let channelIds = assetIdFilter.assetIds?.joined(separator: ",")
+        return environment.apiUrl + "/epg" + (channelIds != nil ? "/\(channelIds!)" : "")
     }
     
     public var parameters: [String: Any] {
@@ -28,6 +29,7 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
     public var pageFilter: PageFilter
     public var publishFilter: PublishFilter
     public var dateFilter: DateFilter
+    public var assetIdFilter: AssetIdFilter
     
     public let environment: Environment
     
@@ -37,6 +39,7 @@ public struct FetchEpgList: Exposure, SortedResponse, PageableResponse, Filtered
         self.pageFilter = PageFilter()
         self.publishFilter = PublishFilter()
         self.dateFilter = DateFilter()
+        self.assetIdFilter = AssetIdFilter()
     }
     
     internal enum Keys: String {
