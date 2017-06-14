@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch, FilteredAssetIds {
     public typealias Response = AssetList
     
     public var endpointUrl: String {
@@ -29,6 +29,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var pageFilter: PageFilter
     public var deviceFilter: DeviceFilter
     public var elasticSearchQuery: ElasticSearchQuery
+    public var assetIdFilter: AssetIdFilter
     
     public var sortDescription: SortDescription
     
@@ -43,6 +44,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.pageFilter = PageFilter()
         self.deviceFilter = DeviceFilter()
         self.elasticSearchQuery = ElasticSearchQuery()
+        self.assetIdFilter = AssetIdFilter()
         
         self.sortDescription = SortDescription()
         
@@ -111,7 +113,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
             params[Keys.publicationQuery.rawValue] = publicationQuery
         }
         
-        if let assetIds = internalQuery.assetIds {
+        if let assetIds = assetIdFilter.assetIds {
             params[Keys.assetIds.rawValue] = assetIds
         }
         
@@ -131,17 +133,6 @@ extension FetchAssetList {
     public func filter(on assetType: AssetType) -> FetchAssetList {
         var old = self
         old.internalQuery = Query(previous: internalQuery, assetType: assetType)
-        return old
-    }
-    
-    // MARK: AssetIds
-    public var assetIds: [String]? {
-        return internalQuery.assetIds
-    }
-    
-    public func filter(onlyAssetIds: [String]?) -> FetchAssetList {
-        var old = self
-        old.internalQuery = Query(previous: internalQuery, assetIds: onlyAssetIds)
         return old
     }
     
@@ -174,21 +165,18 @@ extension FetchAssetList {
 extension FetchAssetList {
     internal struct Query {
         internal let assetType: AssetType?
-        internal let assetIds: [String]?
         
         internal let deviceQuery: String?
         internal let publicationQuery: String?
         
-        internal init(assetType: AssetType? = nil, assetIds: [String]? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
+        internal init(assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
             self.assetType = assetType
-            self.assetIds = assetIds
             self.deviceQuery = deviceQuery
             self.publicationQuery = publicationQuery
         }
         
-        internal init(previous: Query, assetType: AssetType? = nil, assetIds: [String]? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
+        internal init(previous: Query, assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
             self.assetType = assetType ?? previous.assetType
-            self.assetIds = assetIds ?? previous.assetIds
             self.deviceQuery = deviceQuery ?? previous.deviceQuery
             self.publicationQuery = publicationQuery ?? previous.publicationQuery
         }
