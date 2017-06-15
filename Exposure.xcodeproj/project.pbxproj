@@ -77,6 +77,8 @@
 		769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734AE1EF18A3D00F6ADC8 /* FilteredDates.swift */; };
 		769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B01EF1994900F6ADC8 /* FetchEpgChannelList.swift */; };
 		769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */; };
+		769734B61EF26D3100F6ADC8 /* ChannelEpgSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */; };
+		769734B81EF26D3B00F6ADC8 /* ProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */; };
 		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -197,6 +199,8 @@
 		769734AE1EF18A3D00F6ADC8 /* FilteredDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredDates.swift; sourceTree = "<group>"; };
 		769734B01EF1994900F6ADC8 /* FetchEpgChannelList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannelList.swift; sourceTree = "<group>"; };
 		769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgProgram.swift; sourceTree = "<group>"; };
+		769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgSpec.swift; sourceTree = "<group>"; };
+		769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramSpec.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
@@ -410,6 +414,15 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		769734B41EF26CF500F6ADC8 /* Epg */ = {
+			isa = PBXGroup;
+			children = (
+				769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */,
+				769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */,
+			);
+			path = Epg;
+			sourceTree = "<group>";
+		};
 		76A8429D1EA75EC900BDAF2C = {
 			isa = PBXGroup;
 			children = (
@@ -463,6 +476,7 @@
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
+				769734B41EF26CF500F6ADC8 /* Epg */,
 				7670307D1ECB210C0026CD70 /* Asset */,
 			);
 			path = ExposureTests;
@@ -826,6 +840,7 @@
 				7646D6821EF00A6B009E5C2B /* SessionTokenSpec.swift in Sources */,
 				7646D66E1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift in Sources */,
 				7646D6861EF00A6B009E5C2B /* PlayCatchupSpec.swift in Sources */,
+				769734B81EF26D3B00F6ADC8 /* ProgramSpec.swift in Sources */,
 				7646D6811EF00A6B009E5C2B /* LoginSpec.swift in Sources */,
 				7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */,
 				761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */,
@@ -840,6 +855,7 @@
 				7646D66D1EF00A20009E5C2B /* FetchAssetListSpec.swift in Sources */,
 				761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */,
 				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
+				769734B61EF26D3100F6ADC8 /* ChannelEpgSpec.swift in Sources */,
 				7646D67F1EF00A6B009E5C2B /* CredentialsSpec.swift in Sources */,
 				761336B51ECC31E800E316BF /* AssetSpec.swift in Sources */,
 				767030851ECB29080026CD70 /* MediaSpec.swift in Sources */,
