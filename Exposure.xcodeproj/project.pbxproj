@@ -79,6 +79,8 @@
 		769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */; };
 		769734B61EF26D3100F6ADC8 /* ChannelEpgSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */; };
 		769734B81EF26D3B00F6ADC8 /* ProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */; };
+		769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */; };
+		769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BD1EF28EF100F6ADC8 /* Marker.swift */; };
 		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -201,6 +203,8 @@
 		769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgProgram.swift; sourceTree = "<group>"; };
 		769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgSpec.swift; sourceTree = "<group>"; };
 		769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgramSpec.swift; sourceTree = "<group>"; };
+		769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannelListSpec.swift; sourceTree = "<group>"; };
+		769734BD1EF28EF100F6ADC8 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
@@ -342,6 +346,7 @@
 				766FBB831ECA2B6100EBEC53 /* Person.swift */,
 				766FBB851ECA2B7400EBEC53 /* Media.swift */,
 				766FBB871ECA2B9800EBEC53 /* ParentalRating.swift */,
+				769734BD1EF28EF100F6ADC8 /* Marker.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -419,6 +424,7 @@
 			children = (
 				769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */,
 				769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */,
+				769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */,
 			);
 			path = Epg;
 			sourceTree = "<group>";
@@ -800,6 +806,7 @@
 				766FBB6E1EC9A96500EBEC53 /* FetchAssetById.swift in Sources */,
 				766FBB881ECA2B9800EBEC53 /* ParentalRating.swift in Sources */,
 				766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */,
+				769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */,
 				769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */,
 				76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */,
 				7646D6631EEFFDBD009E5C2B /* ValidateEntitlement.swift in Sources */,
@@ -829,6 +836,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */,
 				7646D68A1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift in Sources */,
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				7646D6831EF00A6B009E5C2B /* EDRMConfigurationSpec.swift in Sources */,
