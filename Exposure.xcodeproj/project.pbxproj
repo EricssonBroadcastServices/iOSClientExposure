@@ -82,6 +82,7 @@
 		769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */; };
 		769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BD1EF28EF100F6ADC8 /* Marker.swift */; };
 		769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BF1EF2911A00F6ADC8 /* MarkerSpec.swift */; };
+		769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734C11EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift */; };
 		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,6 +208,7 @@
 		769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannelListSpec.swift; sourceTree = "<group>"; };
 		769734BD1EF28EF100F6ADC8 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		769734BF1EF2911A00F6ADC8 /* MarkerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerSpec.swift; sourceTree = "<group>"; };
+		769734C11EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgProgramSpec.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 				769734B51EF26D3100F6ADC8 /* ChannelEpgSpec.swift */,
 				769734B71EF26D3B00F6ADC8 /* ProgramSpec.swift */,
 				769734BB1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift */,
+				769734C11EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift */,
 			);
 			path = Epg;
 			sourceTree = "<group>";
@@ -856,6 +859,7 @@
 				7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */,
 				761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */,
 				761336B31ECC2C2600E316BF /* LocalizedDataSpec.swift in Sources */,
+				769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
 				7646D6871EF00A6B009E5C2B /* PlayLiveSpec.swift in Sources */,

@@ -91,55 +91,25 @@ class FetchEpgSpec: QuickSpec {
                 expect(params["to"]).toNot(beNil())
             }
         }
-        /*
-        describe("PageableResponse") {
-            it("should record page size and number") {
-                let size = fetchList.show(page: 1)
+        
+        describe("FilteredAssetIds") {
+            it("should record filter on assetIds") {
+                let filtered = fetch
+                    .channels()
+                    .filter(onlyAssetIds: channelIds)
                 
-                expect(size.pageNumber).to(equal(1))
-                expect(size.pageSize).to(equal(50))
+                expect(filtered.assetIds).toNot(beNil())
+                expect(filtered.assetIds!.count).to(equal(2))
                 
-                let modified = size.show(page: 2, spanning: 10)
+                let changed = filtered.filter(onlyAssetIds: ["other"])
+                expect(changed.assetIds).toNot(beNil())
+                expect(changed.assetIds!.count).to(equal(1))
                 
-                expect(modified.pageNumber).to(equal(2))
-                expect(modified.pageSize).to(equal(10))
+                let modified = changed.filter(onlyAssetIds: nil)
+                expect(modified.assetIds).to(beNil())
+                
+                
             }
-        }*/
-        /*
-        describe("SortedResponse") {
-            it("should store sort params") {
-                let sorted = fetchList
-                    .sort(on: "first")
-                    .thenSort(on: "second", ascending: false)
-                    .thenSort(on: SortDescriptor(key: "third"))
-                
-                expect(sorted.sortDescriptors).toNot(beNil())
-                expect(sorted.sortDescriptors!.count).to(equal(3))
-                
-                let reset = sorted
-                    .thenSort(on: [SortDescriptor(key: "fourth")])
-                    .sort(on: "fifth")
-                
-                expect(reset.sortDescriptors).toNot(beNil())
-                expect(reset.sortDescriptors!.count).to(equal(1))
-                
-                let regex = fetchList
-                    .sort(on: ["first","-second","-third"])
-                    .thenSort(on: ["fourth"])
-                expect(regex.sortDescriptors).toNot(beNil())
-                expect(regex.sortDescriptors!.count).to(equal(4))
-                
-                let startEmpty = fetchList
-                    .thenSort(on: SortDescriptor(key: "first"))
-                expect(startEmpty.sortDescriptors).toNot(beNil())
-                expect(startEmpty.sortDescriptors!.count).to(equal(1))
-                
-                let faultyRegex = fetchList
-                    .sort(on: SortDescriptor(key: "first"))
-                    .thenSort(on: ["-","","-correct"])
-                expect(faultyRegex.sortDescriptors).toNot(beNil())
-                expect(faultyRegex.sortDescriptors!.count).to(equal(2))
-            }
-        }*/
+        }
     }
 }
