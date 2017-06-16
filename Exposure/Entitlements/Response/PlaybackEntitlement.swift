@@ -30,6 +30,7 @@ public struct PlaybackEntitlement {
     public let maxResHeight: Int? // Max height resolution
     public let airplayBlocked: Bool? // If airplay is blocked
     public let mdnRequestRouterUrl: String? // MDN Request Router Url
+    public let lastViewedOffset: Int? // Last viewed offset
     
     public enum Status {
         case success
@@ -118,6 +119,7 @@ extension PlaybackEntitlement: ExposureConvertible {
         maxResHeight = actualJSON[JSONKeys.maxResHeight.rawValue].int
         airplayBlocked = actualJSON[JSONKeys.airplayBlocked.rawValue].bool
         mdnRequestRouterUrl = actualJSON[JSONKeys.mdnRequestRouterUrl.rawValue].string
+        lastViewedOffset = actualJSON[JSONKeys.lastViewedOffset.rawValue].int
     }
     
     internal enum JSONKeys: String {
@@ -140,5 +142,6 @@ extension PlaybackEntitlement: ExposureConvertible {
         case maxResHeight = "maxResHeight"
         case airplayBlocked = "airplayBlocked"
         case mdnRequestRouterUrl = "mdnRequestRouterUrl"
+        case lastViewedOffset = "lastViewedOffset"
     }
 }

@@ -54,6 +54,9 @@ class AssetSpec: QuickSpec {
                 expect(value!.customData).toNot(beNil())
                 expect(value!.externalReferences).toNot(beNil())
                 expect(value!.rating).toNot(beNil())
+                expect(value!.markers).toNot(beNil())
+                expect(value!.lastViewedTime).toNot(beNil())
+                expect(value!.lastViewedOffset).toNot(beNil())
             }
             
             it("should succeed with partial response") {
@@ -148,6 +151,10 @@ extension AssetSpec {
         ]
         static let externalReferences = [ExternalReferenceSpec.ExternalReferenceJSON.valid()]
         static let rating = 0.5
+        static let markers = [MarkerSpec.MarkerJSON.valid()]
+        static let lastViewedTime = 10
+        static let lastViewedOffset = 100
+        
         static func valid() -> Any {
             return [
                 "created": AssetJSON.created,
@@ -179,7 +186,10 @@ extension AssetSpec {
                 "expires": AssetJSON.expires,
                 "customData": AssetJSON.customData,
                 "externalReferences": AssetJSON.externalReferences,
-                "rating": AssetJSON.rating
+                "rating": AssetJSON.rating,
+                "markers": AssetJSON.markers,
+                "lastViewedTime": AssetJSON.lastViewedTime,
+                "lastViewedOffset": AssetJSON.lastViewedOffset
             ]
         }
         
