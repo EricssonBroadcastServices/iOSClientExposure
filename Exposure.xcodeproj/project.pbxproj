@@ -46,6 +46,7 @@
 		76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529D041EDC4A1E00318AE2 /* ElasticSearch.swift */; };
 		766094A81F0AAD61005E9A70 /* ExposureFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766094A61F0AAD61005E9A70 /* ExposureFairplayRequester.swift */; };
 		766094A91F0AAD61005E9A70 /* ExposurePlayback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766094A71F0AAD61005E9A70 /* ExposurePlayback.swift */; };
+		766094AB1F0AE614005E9A70 /* Player.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 766094AA1F0AE614005E9A70 /* Player.framework */; };
 		7667AEBA1EC1C44100C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AEB91EC1C44100C308FC /* .env */; };
 		766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB641EC9822B00EBEC53 /* Asset.swift */; };
 		766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB661EC9829200EBEC53 /* FetchAsset.swift */; };
@@ -174,6 +175,7 @@
 		76529D041EDC4A1E00318AE2 /* ElasticSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElasticSearch.swift; sourceTree = "<group>"; };
 		766094A61F0AAD61005E9A70 /* ExposureFairplayRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureFairplayRequester.swift; sourceTree = "<group>"; };
 		766094A71F0AAD61005E9A70 /* ExposurePlayback.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposurePlayback.swift; sourceTree = "<group>"; };
+		766094AA1F0AE614005E9A70 /* Player.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Player.framework; path = "Carthage/Checkouts/iOSClientPlayer/build/Debug-iphoneos/Player.framework"; sourceTree = "<group>"; };
 		7667AEB91EC1C44100C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .env; path = fastlane/.env; sourceTree = SOURCE_ROOT; };
 		766FBB641EC9822B00EBEC53 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		766FBB661EC9829200EBEC53 /* FetchAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAsset.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			files = (
 				76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */,
 				76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */,
+				766094AB1F0AE614005E9A70 /* Player.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +514,7 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				766094AA1F0AE614005E9A70 /* Player.framework */,
 				76BBFBCE1EAA0A8A001DBDDB /* Mockingjay.framework */,
 				76BBFBC71EA91633001DBDDB /* Mockingjay.framework */,
 				76BBFB791EA8C11F001DBDDB /* Nimble.framework */,
@@ -1023,6 +1027,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Checkouts/iOSClientPlayer/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1049,6 +1054,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Checkouts/iOSClientPlayer/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

@@ -15,7 +15,6 @@ public protocol ExposurePlayback {
 }
 
 extension Player {
-    // MOVED TO EXPOSURE
     public func stream(playback entitlement: PlaybackEntitlement) throws {
         guard let mediaLocator = entitlement.mediaLocator else {
             throw PlayerError.asset(reason: .missingMediaUrl)

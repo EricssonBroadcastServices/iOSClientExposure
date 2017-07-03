@@ -5,6 +5,9 @@
       location = "group:Exposure.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:Carthage/Checkouts/iOSClientPlayer/Player.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Carthage/Checkouts/Alamofire/Alamofire.xcodeproj">
    </FileRef>
    <FileRef
