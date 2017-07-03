@@ -16,35 +16,13 @@ public protocol ExposurePlayback {
 
 extension Player {
     // MOVED TO EXPOSURE
-    public func stream(playback entitlement: PlaybackEntitlement) {
-        do {
-            guard let mediaLocator = entitlement.mediaLocator else {
-                onError(self, PlayerError.asset(reason: .missingMediaUrl))
-                return
-            }
-            
-            let requester = EMPFairplayRequester(entitlement: entitlement)
-            currentAsset = try MediaAsset(mediaLocator: mediaLocator, fairplayRequester: requester)
-            onCreated(self)
-            
-            currentAsset?.prepare(loading: [.duration, .tracks, .playable]) { [unowned self] error in
-                guard error == nil else {
-                    self.onError(self, error!)
-                    return
-                }
-                
-                self.onInitCompleted(self)
-                
-                self.readyPlayback(with: self.currentAsset!)
-            }
+    public func stream(playback entitlement: PlaybackEntitlement) throws {
+        guard let mediaLocator = entitlement.mediaLocator else {
+            throw PlayerError.asset(reason: .missingMediaUrl)
         }
-        catch {
-            if let playerError = error as? PlayerError {
-                onError(self, playerError)
-            }
-            else {
-                onError(self, PlayerError.generalError(error: error))
-            }
-        }
+        
+        let requester = ExposureFairplayRequester(entitlement: entitlement)
+        
+        stream(url: mediaLocator, using: requester)
     }
 }

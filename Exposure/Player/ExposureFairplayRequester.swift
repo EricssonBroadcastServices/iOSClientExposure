@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 import Player
+import Alamofire
 
 internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     let entitlement: PlaybackEntitlement
@@ -63,7 +64,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         }
         
         //EMPFairplayRequester only should handle FPS Content Key requests.
-        if url.scheme != EMPFairplayRequester.customScheme {
+        if url.scheme != ExposureFairplayRequester.customScheme {
             return false
         }
         
