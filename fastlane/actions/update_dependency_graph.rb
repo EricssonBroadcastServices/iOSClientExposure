@@ -17,7 +17,13 @@ module Fastlane
                 
                 # create our list of files that we expect to have changed, they should all be relative to the project root, which should be equal to the git workdir root
                 expected_changed_files = []
+                
+                # 1. Cartfile.resolved
                 expected_changed_files << "Cartfile.resolved"
+                
+                # 2. Carthage/Checkouts/** (ie any change in submodules is ok)
+                submodule_directory = "Carthage/Checkouts/"
+                
                 
                 UI.message("Valid Files: #{expected_changed_files}")
                 
@@ -25,6 +31,14 @@ module Fastlane
                 git_dirty_files = Actions.sh('git diff --name-only HEAD').split("\n") + Actions.sh('git ls-files --other --exclude-standard').split("\n")
                 
                 UI.message("Changed Files: #{git_dirty_files}")
+                
+                found_files = []
+                found_files = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
+                if (git_dirty_files.include? "Cartfile.resolved")
+                    found_files << "Cartfile.resolved"
+                end
+                
+                UI.message("Found Valid Files: #{found_files}")
                 
                 # fastlane will take care of reading in the parameter and fetching the environment variable:
                 #UI.message "Parameter API Token: #{params[:api_token]}"
