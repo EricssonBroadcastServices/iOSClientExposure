@@ -60,7 +60,7 @@ platform :ios do
                  use_binaries: false,
                  no_build: true
                  )
-        update_dependency_graph
+        update_dependency_graph()
     end
     
     # Private lanes

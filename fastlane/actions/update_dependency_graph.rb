@@ -1,10 +1,10 @@
 module Fastlane
     module Actions
         module SharedValues
-            COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE = :COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE
+            ##COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE = :COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE
         end
         
-        class CommitCarthageDependenciesAction < Action
+        class UpdateDependencyGraphAction < Action
             def self.run(params)
                 #require 'xcodeproj'
                 #require 'pathname'
@@ -39,16 +39,17 @@ module Fastlane
             #####################################################
             
             def self.description
-            "A short description with <= 80 characters of what this action does"
+                "A short description with <= 80 characters of what this action does"
             end
         
             def self.details
-            # Optional:
-            # this is your chance to provide a more detailed description of this action
-            "You can use this action to do cool things..."
+                # Optional:
+                # this is your chance to provide a more detailed description of this action
+                "You can use this action to do cool things..."
             end
 
-#           def self.available_options
+            def self.available_options
+                [
 #           # Define all options your action supports.
 #                                   end),
 # FastlaneCore::ConfigItem.new(key: :development,
@@ -56,27 +57,27 @@ module Fastlane
 #                                        description: "Create a development certificate instead of a distribution one",
 #                                        is_string: false, # true: verifies the input is a string, false: every kind of value
 #                                        default_value: false) # the default value if the user didn't provide one
-#           ]
-#           end
+                ]
+            end
 
-#def self.output
+            def self.output
 #               # Define the shared values you are going to provide
 #               # Example
 #               [
 #                   ['COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE', 'A description of what this value contains']
 #               ]
-#           end
+            end
 
             def self.return_value
                 # If you method provides a return value, you can describe here what it does
             end
 
             def self.authors
-            # So no one will ever forget your contribution to fastlane :) You are awesome btw!
-            ["Your GitHub/Twitter Name"]
+                # So no one will ever forget your contribution to fastlane :) You are awesome btw!
+                ["Your GitHub/Twitter Name"]
             end
 
-#def self.is_supported?(platform)
+            def self.is_supported?(platform)
             # you can do things like
             #
             #  true
@@ -86,8 +87,8 @@ module Fastlane
             #  [:ios, :mac].include?(platform)
             #
 
-#   platform == :ios
-#end
+                platform == :ios
+            end
         end
     end
 end
