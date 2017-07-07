@@ -31,6 +31,7 @@ module Fastlane
                 UI.message("Dirty Files: #{git_dirty_files}")
                 
                 submodule_changes = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
+                UI.message("submodule_changes: #{submodule_changes}")
                 valid_changed_files = submodule_changes
                 if (git_dirty_files.include? cartfile)
                     valid_changed_files << cartfile
@@ -52,6 +53,8 @@ module Fastlane
                     UI.error(error)
                 end
     
+                UI.message("submodule_changes: #{submodule_changes}")
+                
                 unless valid_changed_files.empty?
                     UI.message("Valid files MATCH dirty files")
                     
