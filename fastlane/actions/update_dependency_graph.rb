@@ -16,29 +16,33 @@ module Fastlane
                 repo_pathname = Pathname.new(repo_path)
                 
                 # create our list of files that we expect to have changed, they should all be relative to the project root, which should be equal to the git workdir root
-                expected_changed_files = []
-                
                 # 1. Cartfile.resolved
-                expected_changed_files << "Cartfile.resolved"
+                cartfile = "Cartfile.resolved"
                 
                 # 2. Carthage/Checkouts/** (ie any change in submodules is ok)
                 submodule_directory = "Carthage/Checkouts/"
                 
                 
-                UI.message("Valid Files: #{expected_changed_files}")
+                UI.message("Valid Files: #{cartfile} and #{submodule_directory}**")
                 
                 # get the list of files that have actually changed in our git workdir
                 git_dirty_files = Actions.sh('git diff --name-only HEAD').split("\n") + Actions.sh('git ls-files --other --exclude-standard').split("\n")
                 
                 UI.message("Changed Files: #{git_dirty_files}")
                 
-                found_files = []
-                found_files = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
-                if (git_dirty_files.include? "Cartfile.resolved")
-                    found_files << "Cartfile.resolved"
+                valid_changed_files = []
+                valid_changed_files = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
+                if (git_dirty_files.include? cartfile)
+                    valid_changed_files << cartfile
                 end
                 
-                UI.message("Found Valid Files: #{found_files}")
+                UI.message("Found Valid Files: #{valid_changed_files}")
+                
+                if (valid_changed_files == git_dirty_files)
+                    UI.message("Valid files MATCH dirty files")
+                else
+                    UI.error("MISMATCH between valid files and dirty files")
+                end
                 
                 # fastlane will take care of reading in the parameter and fetching the environment variable:
                 #UI.message "Parameter API Token: #{params[:api_token]}"
