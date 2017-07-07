@@ -23,12 +23,12 @@ module Fastlane
                 submodule_directory = "Carthage/Checkouts/"
                 
                 
-                UI.message("Valid Files: #{cartfile} and #{submodule_directory}**")
+                UI.message("Expected Files: #{cartfile} and #{submodule_directory}**")
                 
                 # get the list of files that have actually changed in our git workdir
                 git_dirty_files = Actions.sh('git diff --name-only HEAD').split("\n") + Actions.sh('git ls-files --other --exclude-standard').split("\n")
                 
-                UI.message("Changed Files: #{git_dirty_files}")
+                UI.message("Dirty Files: #{git_dirty_files}")
                 
                 valid_changed_files = []
                 valid_changed_files = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
@@ -36,9 +36,10 @@ module Fastlane
                     valid_changed_files << cartfile
                 end
                 
-                UI.message("Found Valid Files: #{valid_changed_files}")
+                UI.message("Valid Files: #{valid_changed_files}")
                 
-                if (valid_changed_files == git_dirty_files)
+                changed_files_as_expected = (Set.new(git_dirty_files.map(&:downcase)) == Set.new(valid_changed_files.map(&:downcase)))
+                if (changed_files_as_expected)
                     UI.message("Valid files MATCH dirty files")
                 else
                     UI.error("MISMATCH between valid files and dirty files")
