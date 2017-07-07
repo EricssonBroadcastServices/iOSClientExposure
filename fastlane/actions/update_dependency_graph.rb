@@ -7,9 +7,9 @@ module Fastlane
         class UpdateDependencyGraphAction < Action
             def self.run(params)
                 #require 'xcodeproj'
-                #require 'pathname'
-                #require 'set'
-                #require 'shellwords'
+                require 'pathname'
+                require 'set'
+                require 'shellwords'
                 
                 # find the repo root path
                 repo_path = Actions.sh('git rev-parse --show-toplevel').strip
@@ -30,29 +30,50 @@ module Fastlane
                 
                 UI.message("Dirty Files: #{git_dirty_files}")
                 
-                valid_changed_files = []
-                valid_changed_files = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
+                submodule_changes = git_dirty_files.select { |i| i.start_with?(submodule_directory) }
+                valid_changed_files = submodule_changes
                 if (git_dirty_files.include? cartfile)
                     valid_changed_files << cartfile
                 end
                 
                 UI.message("Valid Files: #{valid_changed_files}")
                 
+                # make sure the files changed are related to the Dependency Graph
                 changed_files_as_expected = (Set.new(git_dirty_files.map(&:downcase)) == Set.new(valid_changed_files.map(&:downcase)))
-                if (changed_files_as_expected)
-                    UI.message("Valid files MATCH dirty files")
-                else
-                    UI.error("MISMATCH between valid files and dirty files")
+                unless changed_files_as_expected
+                    unexpected_files_changed = Set.new(git_dirty_files.map(&:downcase)) - Set.new(valid_changed_files.map(&:downcase))
+                    error = [
+                        "Found unexpected uncommited changes in the working directory.",
+                        "The following files not related to the dependency graph was found:",
+                        "#{unexpected_files_changed.join("\n")}",
+                        "Make sure you have a clean working directory",
+                    ].join("\n")
+                    UI.user_error!(error)
                 end
+    
+                UI.message("Valid files MATCH dirty files")
                 
-                # fastlane will take care of reading in the parameter and fetching the environment variable:
-                #UI.message "Parameter API Token: #{params[:api_token]}"
-                
-                # sh "shellcommand ./path"
-                
-                # Actions.lane_context[SharedValues::COMMIT_CARTHAGE_DEPENDENCIES_CUSTOM_VALUE] = "my_val"
+                # get the absolute paths to the files
+                git_add_paths = valid_changed_files.map do |path|
+                    updated = path.gsub("$(SRCROOT)", ".").gsub("${SRCROOT}", ".")
+                    File.expand_path(File.join(repo_pathname, updated))
+                end
+
+                # then create a commit with a message
+                Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
+
+                begin
+                    message = "Dependencies updated: #{submodule_changes.join(' ')}"
+                    
+                    Actions.sh("git commit -m '#{message}'")
+                    
+                    UI.success("Committed \"#{message}\" 💾.")
+                rescue => ex
+                    UI.error(ex)
+                    UI.important("Didn't commit any changes.")
+                end
             end
-        
+
             #####################################################
             # @!group Documentation
             #####################################################
