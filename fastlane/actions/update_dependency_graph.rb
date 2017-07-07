@@ -55,6 +55,7 @@ module Fastlane
     
                 UI.message("submodule_changes: #{submodule_changes}")
                 
+                # make sure we have valid changes before we run git commands
                 unless valid_changed_files.empty?
                     UI.message("Valid files MATCH dirty files")
                     
@@ -102,13 +103,13 @@ module Fastlane
 
             def self.available_options
                 [
-#           # Define all options your action supports.
-#                                   end),
-# FastlaneCore::ConfigItem.new(key: :development,
-#                                        env_name: "FL_COMMIT_CARTHAGE_DEPENDENCIES_DEVELOPMENT",
-#                                        description: "Create a development certificate instead of a distribution one",
-#                                        is_string: false, # true: verifies the input is a string, false: every kind of value
-#                                        default_value: false) # the default value if the user didn't provide one
+                    #           # Define all options your action supports.
+                    #                                   end),
+                    # FastlaneCore::ConfigItem.new(key: :development,
+                    #                                        env_name: "FL_COMMIT_CARTHAGE_DEPENDENCIES_DEVELOPMENT",
+                    #                                        description: "Create a development certificate instead of a distribution one",
+                    #                                        is_string: false, # true: verifies the input is a string, false: every kind of value
+                    #                                        default_value: false) # the default value if the user didn't provide one
                 ]
             end
 
@@ -126,18 +127,18 @@ module Fastlane
 
             def self.authors
                 # So no one will ever forget your contribution to fastlane :) You are awesome btw!
-                ["Your GitHub/Twitter Name"]
+                ["FredrikSjoberg"]
             end
 
             def self.is_supported?(platform)
-            # you can do things like
-            #
-            #  true
-            #
-            #  platform == :ios
-            #
-            #  [:ios, :mac].include?(platform)
-            #
+                # you can do things like
+                #
+                #  true
+                #
+                #  platform == :ios
+                #
+                #  [:ios, :mac].include?(platform)
+                #
 
                 platform == :ios
             end
