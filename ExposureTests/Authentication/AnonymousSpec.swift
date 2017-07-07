@@ -144,7 +144,7 @@ class AnonymousSpec: QuickSpec {
                 }
             }
             
-            context("Failure with invalid status code in response using validate()") {
+            /*context("Failure with invalid status code in response using validate()") {
                 let exposureResponse = ExposureResponseMessage(json: errorJson)!
                 beforeEach {
                     self.stub(uri(invalidAnonymous.endpointUrl), json(errorJson, status: 404))
@@ -194,7 +194,7 @@ class AnonymousSpec: QuickSpec {
                     expect(error).toEventuallyNot(beNil())
                     expect(error).toEventually(matchError(ExposureError.exposureResponse(reason: exposureResponse)))
                 }
-            }
+            }*/
             
             context("Success with valid status code in response using validate(statusCode: 403..<405)") {
                 beforeEach {
