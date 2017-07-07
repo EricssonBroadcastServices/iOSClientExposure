@@ -52,28 +52,33 @@ module Fastlane
                     UI.error(error)
                 end
     
-                UI.message("Valid files MATCH dirty files")
-                
-                # get the absolute paths to the files
-                git_add_paths = valid_changed_files.map do |path|
-                    updated = path.gsub("$(SRCROOT)", ".").gsub("${SRCROOT}", ".")
-                    File.expand_path(File.join(repo_pathname, updated))
+                unless valid_changed_files.empty?
+                    UI.message("Valid files MATCH dirty files")
+                    
+                    # get the absolute paths to the files
+                    git_add_paths = valid_changed_files.map do |path|
+                        updated = path.gsub("$(SRCROOT)", ".").gsub("${SRCROOT}", ".")
+                        File.expand_path(File.join(repo_pathname, updated))
+                    end
+
+                    # then create a commit with a message
+                    Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
+
+                    UI.message("Staged dependencies")
+                    begin
+                        message = "Dependencies updated: #{submodule_changes.join(' ')}"
+                        
+                        Actions.sh("git commit -m '#{message}'")
+                        
+                        UI.success("Committed \"#{message}\" 💾.")
+                    rescue => ex
+                        UI.error(ex)
+                        UI.important("Didn't commit any changes.")
+                    end
                 end
 
-                # then create a commit with a message
-                Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
+                UI.message("No changes to dependency graph")
 
-                UI.message("Staged dependencies")
-                begin
-                    message = "Dependencies updated: #{submodule_changes.join(' ')}"
-                    
-                    Actions.sh("git commit -m '#{message}'")
-                    
-                    UI.success("Committed \"#{message}\" 💾.")
-                rescue => ex
-                    UI.error(ex)
-                    UI.important("Didn't commit any changes.")
-                end
             end
 
             #####################################################
