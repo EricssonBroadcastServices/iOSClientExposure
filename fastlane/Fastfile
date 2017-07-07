@@ -25,7 +25,8 @@ platform :ios do
     lane :development do
         ensure_git_branch(branch: ENV["DEVELOPMENT_BRANCH"])
         ensure_git_status_clean
-        checkout_dependencies
+        
+        update_graph
         
         bump_build_number
         
@@ -41,7 +42,6 @@ platform :ios do
     
     desc "Runs all the tests"
     lane :run_unit_tests do
-        
         scan(
              workspace: ENV["UNIT_TEST_WORKSPACE"],
              scheme: ENV["UNIT_TEST_SCHEME"]
@@ -51,7 +51,8 @@ platform :ios do
     end
     
     
-    lane :update_graph do
+    desc "Checkout latest dependencies as declared in Cartfile.resolved"
+    private_lane :update_graph do
         carthage(
                  command: "update",
                  platform: "iOS",
@@ -74,22 +75,9 @@ platform :ios do
                             )
     end
     
-    desc "Checkout latest dependencies as declared in Cartfile.resolved"
-    private_lane :checkout_dependencies do
-        update_dependency_graph
-        #carthage(
-        #        command: "bootstrap",
-        #        platform: "iOS",
-        #        use_submodules: true,
-        #        use_ssh: true,
-        #        use_binaries: false,
-        #        no_build: true
-        #        )
-    end
-    
     desc "Posts a success notification for development integration"
     desc "in the Players channel on Slack"
-    lane :notify_slack_dev_success do
+    private_lane :notify_slack_dev_success do
         current_build_number = get_build_number
         current_time = Time.now.to_f
         project_name = ENV["PROJECT_TITLE"]
