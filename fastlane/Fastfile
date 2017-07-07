@@ -76,14 +76,15 @@ platform :ios do
     
     desc "Checkout latest dependencies as declared in Cartfile.resolved"
     private_lane :checkout_dependencies do
-        carthage(
-                 command: "bootstrap",
-                 platform: "iOS",
-                 use_submodules: true,
-                 use_ssh: true,
-                 use_binaries: false,
-                 no_build: true
-                 )
+        update_dependency_graph
+        #carthage(
+        #        command: "bootstrap",
+        #        platform: "iOS",
+        #        use_submodules: true,
+        #        use_ssh: true,
+        #        use_binaries: false,
+        #        no_build: true
+        #        )
     end
     
     desc "Posts a success notification for development integration"
