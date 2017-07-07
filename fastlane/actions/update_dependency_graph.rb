@@ -48,7 +48,8 @@ module Fastlane
                         "#{unexpected_files_changed.join("\n")}",
                         "Make sure you have a clean working directory",
                     ].join("\n")
-                    UI.user_error!(error)
+                    #UI.user_error!(error)
+                    UI.error(error)
                 end
     
                 UI.message("Valid files MATCH dirty files")
@@ -62,6 +63,7 @@ module Fastlane
                 # then create a commit with a message
                 Actions.sh("git add #{git_add_paths.map(&:shellescape).join(' ')}")
 
+                UI.message("Staged dependencies")
                 begin
                     message = "Dependencies updated: #{submodule_changes.join(' ')}"
                     
