@@ -48,7 +48,7 @@ module Fastlane
                         "#{unexpected_files_changed.join("\n")}",
                         "Make sure you have a clean working directory",
                     ].join("\n")
-                    #UI.user_error!(error)
+                    UI.user_error!(error)
                     UI.error(error)
                 end
     
