@@ -52,7 +52,7 @@ platform :ios do
     
     
     desc "Checkout latest dependencies as declared in Cartfile.resolved"
-    private_lane :update_graph do
+    lane :update_graph do
         carthage(
                  command: "update",
                  platform: "iOS",
