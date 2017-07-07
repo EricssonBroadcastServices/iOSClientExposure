@@ -67,7 +67,7 @@ module Fastlane
                     UI.message("Staged dependencies")
                     begin
                         # TODO: Find version + build number for each submodule and include that in the commit message
-                        module_names = submodule_changes.map{|x] x.gsub(submodule_directory,"")}.join(" ")
+                        module_names = submodule_changes.map{|x| x.gsub(submodule_directory,"")}.join(" ")
                         message = "Dependencies updated: #{module_names}"
                         
                         Actions.sh("git commit -m '#{message}'")
