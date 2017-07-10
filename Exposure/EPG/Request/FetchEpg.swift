@@ -21,9 +21,13 @@ extension FetchEpg {
         return FetchEpgChannelList(environment: environment)
     }
     
-    public func channel(id: String) -> FetchEpgChannelList {
+    public func channel(id: String) -> FetchEpgChannel {
+        return FetchEpgChannel(environment: environment, channelId: id)
+    }
+    
+    public func channels(ids: [String]) -> FetchEpgChannelList {
         return FetchEpgChannelList(environment: environment)
-            .filter(onlyAssetIds: [id])
+            .filter(onlyAssetIds: ids)
     }
     
     public func channel(id: String, programId: String) -> FetchEpgProgram {
