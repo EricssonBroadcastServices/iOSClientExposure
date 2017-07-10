@@ -442,8 +442,8 @@
 			children = (
 				769734A81EF1833100F6ADC8 /* FetchEpg.swift */,
 				769734B01EF1994900F6ADC8 /* FetchEpgChannelList.swift */,
-				769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */,
 				76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */,
+				769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
