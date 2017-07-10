@@ -12,7 +12,7 @@ public struct FetchEpgChannel: Exposure, SortedResponse, PageableResponse, Filte
     public typealias Response = ChannelEpg
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/epg" + channelId
+        return environment.apiUrl + "/epg/" + channelId
     }
     
     public var parameters: [String: Any] {
