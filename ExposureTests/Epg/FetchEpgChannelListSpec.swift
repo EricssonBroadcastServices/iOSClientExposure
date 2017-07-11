@@ -64,7 +64,7 @@ class FetchEpgSpec: QuickSpec {
             }
             
             it("should generate a correct endpoint url with no filter on channelId") {
-                let endpoint = "/epg"
+                let endpoint = "/epg/"
                 expect(allChannels.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             

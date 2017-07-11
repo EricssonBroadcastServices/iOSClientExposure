@@ -13,7 +13,7 @@ public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, F
     
     public var endpointUrl: String {
         let channelIds = assetIdFilter.assetIds?.joined(separator: ",")
-        return environment.apiUrl + "/epg/" + (channelIds != nil ? "/\(channelIds!)" : "")
+        return environment.apiUrl + "/epg/" + (channelIds != nil ? "\(channelIds!)" : "")
     }
     
     public var parameters: [String: Any] {
