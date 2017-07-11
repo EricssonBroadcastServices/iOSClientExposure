@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import Alamofire
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch, FilteredAssetIds {
     public typealias Response = AssetList
     
     public var endpointUrl: String {
@@ -28,6 +29,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var pageFilter: PageFilter
     public var deviceFilter: DeviceFilter
     public var elasticSearchQuery: ElasticSearchQuery
+    public var assetIdFilter: AssetIdFilter
     
     public var sortDescription: SortDescription
     
@@ -42,6 +44,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.pageFilter = PageFilter()
         self.deviceFilter = DeviceFilter()
         self.elasticSearchQuery = ElasticSearchQuery()
+        self.assetIdFilter = AssetIdFilter()
         
         self.sortDescription = SortDescription()
         
@@ -61,14 +64,15 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         case query = "query"
         case deviceQuery = "deviceQuery"
         case publicationQuery = "publicationQuery"
+        case assetIds = "assetIds"
     }
     
     internal var queryParams: [String: Any] {
         var params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
             Keys.fieldSet.rawValue: fieldsFilter.fieldSet.rawValue,
-            Keys.pageSize.rawValue: pageFilter.size,
-            Keys.pageNumber.rawValue: pageFilter.page
+            Keys.pageNumber.rawValue: pageFilter.page,
+            Keys.pageSize.rawValue: pageFilter.size
         ]
         
         if let excluded = fieldsFilter.excludedFields, !excluded.isEmpty {
@@ -107,6 +111,10 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         
         if let publicationQuery = internalQuery.publicationQuery {
             params[Keys.publicationQuery.rawValue] = publicationQuery
+        }
+        
+        if let assetIds = assetIdFilter.assetIds {
+            params[Keys.assetIds.rawValue] = assetIds
         }
         
         return params
@@ -172,5 +180,12 @@ extension FetchAssetList {
             self.deviceQuery = deviceQuery ?? previous.deviceQuery
             self.publicationQuery = publicationQuery ?? previous.publicationQuery
         }
+    }
+}
+
+// MARK: - Request
+extension FetchAssetList {
+    public func request() -> ExposureRequest {
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }

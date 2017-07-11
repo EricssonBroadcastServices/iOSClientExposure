@@ -25,7 +25,8 @@ platform :ios do
     lane :development do
         ensure_git_branch(branch: ENV["DEVELOPMENT_BRANCH"])
         ensure_git_status_clean
-        checkout_dependencies
+        
+        update_graph
         
         bump_build_number
         
@@ -41,7 +42,6 @@ platform :ios do
     
     desc "Runs all the tests"
     lane :run_unit_tests do
-        
         scan(
              workspace: ENV["UNIT_TEST_WORKSPACE"],
              scheme: ENV["UNIT_TEST_SCHEME"]
@@ -51,32 +51,33 @@ platform :ios do
     end
     
     
-    # Private lanes
-    
-    private_lane :bump_build_number do
-        new_build_number = increment_build_number(xcodeproj: ENV["XCODE_PROJECT"])
-        UI.message("Build: #{new_build_number}")
-        commit_version_bump(
-                            message: "Build number bumped: #{new_build_number}",
-                            xcodeproj: ENV["XCODE_PROJECT"]
-                            )
-    end
-    
     desc "Checkout latest dependencies as declared in Cartfile.resolved"
-    private_lane :checkout_dependencies do
+    private_lane :update_graph do
         carthage(
-                 command: "bootstrap",
+                 command: "update",
                  platform: "iOS",
                  use_submodules: true,
                  use_ssh: true,
                  use_binaries: false,
                  no_build: true
                  )
+        update_dependency_graph()
+    end
+    
+    # Private lanes
+    
+    private_lane :bump_build_number do
+        new_build_number = increment_build_number(xcodeproj: ENV["XCODE_PROJECT"])
+        UI.message("Build: #{new_build_number}")
+        commit_version_bump(
+                            message: "Build number: #{new_build_number}",
+                            xcodeproj: ENV["XCODE_PROJECT"]
+                            )
     end
     
     desc "Posts a success notification for development integration"
     desc "in the Players channel on Slack"
-    lane :notify_slack_dev_success do
+    private_lane :notify_slack_dev_success do
         current_build_number = get_build_number
         current_time = Time.now.to_f
         project_name = ENV["PROJECT_TITLE"]

@@ -1,16 +1,15 @@
 //
-//  PlayVod.swift
+//  ValidateEntitlement.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-03-23.
+//  Created by Fredrik Sjöberg on 2017-06-13.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
-import Alamofire
 
-public struct PlayVod: Exposure, DRMRequest {
-    public typealias Response = PlaybackEntitlement
+public struct ValidateEntitlement: Exposure, DRMRequest {
+    public typealias Response = EntitlementValidation
     
     public let assetId: String
     public let environment: Environment
@@ -26,11 +25,11 @@ public struct PlayVod: Exposure, DRMRequest {
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/entitlement/" + assetId + "/play"
+        return environment.apiUrl + "/entitlement/" + assetId
     }
     
     public var parameters: [String: Any] {
-        return playRequest.toJSON()
+        return queryParams
     }
     
     public var headers: [String: String]? {
@@ -38,8 +37,22 @@ public struct PlayVod: Exposure, DRMRequest {
     }
 }
 
-extension PlayVod {
+extension ValidateEntitlement {
+    internal enum Keys: String {
+        case drm = "drm"
+        case format = "format"
+    }
+    
+    internal var queryParams: [String: Any] {
+        return [
+            Keys.drm.rawValue: playRequest.drm.rawValue,
+            Keys.format.rawValue: playRequest.format.rawValue
+        ]
+    }
+}
+
+extension ValidateEntitlement {
     public func request() -> ExposureRequest {
-        return request(.post)
+        return request(.get, encoding: ExposureURLEncoding.default)
     }
 }

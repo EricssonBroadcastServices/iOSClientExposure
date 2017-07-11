@@ -91,18 +91,18 @@ class PlaybackEntitlementSpec: QuickSpec {
         describe("ExpirationReason") {
             
             it("should convert to typed") {
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "SUCCESS"), against: .success)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "NOT_ENTITLED"), against: .notEntitled)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "GEO_BLOCKED"), against: .geoBlocked)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "DOWNLOAD_BLOCKED"), against: .downloadBlocked)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "DEVICE_BLOCKED"), against: .deviceBlocked)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "LICENSE_EXPIRED"), against: .licenseExpired)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "NOT_AVAILABLE_IN_FORMAT"), against: .notAvailableInFormat)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "CONCURRENT_STREAMS_LIMIT_REACHED"), against: .concurrentStreamsLimitReached)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "NOT_ENABLED"), against: .notEnabled)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "GAP_IN_EPG"), against: .gapInEPG)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "EPG_PLAY_MAX_HOURS"), against: .epgPlayMaxHours)).to(beTrue())
-                expect(self.test(expirationReason: PlaybackEntitlement.ExpirationReason(string: "Some Reason"), against: .other(reason:"Some Reason"))).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "SUCCESS"), against: .success)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "NOT_ENTITLED"), against: .notEntitled)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "GEO_BLOCKED"), against: .geoBlocked)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "DOWNLOAD_BLOCKED"), against: .downloadBlocked)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "DEVICE_BLOCKED"), against: .deviceBlocked)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "LICENSE_EXPIRED"), against: .licenseExpired)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "NOT_AVAILABLE_IN_FORMAT"), against: .notAvailableInFormat)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "CONCURRENT_STREAMS_LIMIT_REACHED"), against: .concurrentStreamsLimitReached)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "NOT_ENABLED"), against: .notEnabled)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "GAP_IN_EPG"), against: .gapInEPG)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "EPG_PLAY_MAX_HOURS"), against: .epgPlayMaxHours)).to(beTrue())
+                expect(self.test(expirationReason: PlaybackEntitlement.Status(string: "Some Reason"), against: .other(reason:"Some Reason"))).to(beTrue())
             }
             
             it("should not init with nil string") {
@@ -121,7 +121,7 @@ class PlaybackEntitlementSpec: QuickSpec {
         }
     }
     
-    func test(expirationReason: PlaybackEntitlement.ExpirationReason, against: PlaybackEntitlement.ExpirationReason) -> Bool {
+    func test(expirationReason: PlaybackEntitlement.Status, against: PlaybackEntitlement.Status) -> Bool {
         switch (expirationReason, against) {
         case (.success, .success): return true
         case (.notEntitled, .notEntitled): return true

@@ -8,11 +8,42 @@
 
 import Foundation
 
-public struct PlayRequest {
-    public let drm: DRM
-    public let format: Format
+public protocol DRMRequest {
+    var playRequest: PlayRequest { get set }
+}
+
+extension DRMRequest {
+    public typealias DRM = PlayRequest.DRM
+    public typealias Format = PlayRequest.Format
     
-    public init(drm: DRM = .unencrypted, format: Format = .hls) {
+    // MARK: DRM
+    public var drm: DRM {
+        return playRequest.drm
+    }
+    
+    public func use(drm value: DRM) -> Self {
+        var old = self
+        old.playRequest = PlayRequest(drm: value, format: format)
+        return old
+    }
+    
+    // MARK: Format
+    public var format: Format {
+        return playRequest.format
+    }
+    
+    public func use(format value: Format) -> Self {
+        var old = self
+        old.playRequest = PlayRequest(drm: drm, format: value)
+        return old
+    }
+}
+
+public struct PlayRequest {
+    internal let drm: DRM
+    internal let format: Format
+    
+    internal init(drm: DRM = .fairplay, format: Format = .hls) {
         self.drm = drm
         self.format = format
     }

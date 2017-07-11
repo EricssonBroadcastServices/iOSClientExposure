@@ -16,7 +16,7 @@ public struct PlaybackEntitlement {
     public let fairplay: FairplayConfiguration? // The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
     public let mediaLocator: String? //The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
     public let licenseExpiration: String? // The datetime of expiration of the drm license.
-    public let licenseExpirationReason: ExpirationReason? //The reason of expiration of the drm license.
+    public let licenseExpirationReason: Status? //The reason of expiration of the drm license.
     public let licenseActivation: String? // The datetime of activation of the drm license.,
     public let playTokenExpiration: String? // The expiration of the the play token. The player needs to be initialized and done the play call before this.
     public let entitlementType: EntitlementType? // The type of entitlement that granted access to this play.
@@ -30,8 +30,9 @@ public struct PlaybackEntitlement {
     public let maxResHeight: Int? // Max height resolution
     public let airplayBlocked: Bool? // If airplay is blocked
     public let mdnRequestRouterUrl: String? // MDN Request Router Url
+    public let lastViewedOffset: Int? // Last viewed offset
     
-    public enum ExpirationReason {
+    public enum Status {
         case success
         case notEntitled
         case geoBlocked
@@ -47,7 +48,7 @@ public struct PlaybackEntitlement {
         
         internal init?(string: String?) {
             guard let value = string else { return nil }
-            self = ExpirationReason(string: value)
+            self = Status(string: value)
         }
         
         internal init(string: String) {
@@ -102,7 +103,7 @@ extension PlaybackEntitlement: ExposureConvertible {
         
         mediaLocator = actualJSON[JSONKeys.mediaLocator.rawValue].string
         licenseExpiration = actualJSON[JSONKeys.licenseExpiration.rawValue].string
-        licenseExpirationReason = ExpirationReason(string: actualJSON[JSONKeys.licenseExpirationReason.rawValue].string)
+        licenseExpirationReason = Status(string: actualJSON[JSONKeys.licenseExpirationReason.rawValue].string)
         licenseActivation = actualJSON[JSONKeys.licenseActivation.rawValue].string
         
         playTokenExpiration = actualJSON[JSONKeys.playTokenExpiration.rawValue].string
@@ -118,6 +119,7 @@ extension PlaybackEntitlement: ExposureConvertible {
         maxResHeight = actualJSON[JSONKeys.maxResHeight.rawValue].int
         airplayBlocked = actualJSON[JSONKeys.airplayBlocked.rawValue].bool
         mdnRequestRouterUrl = actualJSON[JSONKeys.mdnRequestRouterUrl.rawValue].string
+        lastViewedOffset = actualJSON[JSONKeys.lastViewedOffset.rawValue].int
     }
     
     internal enum JSONKeys: String {
@@ -140,5 +142,6 @@ extension PlaybackEntitlement: ExposureConvertible {
         case maxResHeight = "maxResHeight"
         case airplayBlocked = "airplayBlocked"
         case mdnRequestRouterUrl = "mdnRequestRouterUrl"
+        case lastViewedOffset = "lastViewedOffset"
     }
 }

@@ -44,6 +44,9 @@ public struct Asset {
     public let externalReferences: [ExternalReference]?
     public let rating: Float?
     
+    public let markers: [Marker]?
+    public let lastViewedTime: Int?
+    public let lastViewedOffset: Int?
 }
 
 // MARK: - ExposureConvertible
@@ -85,11 +88,16 @@ extension Asset: ExposureConvertible {
         externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
         rating = actualJson[JSONKeys.rating.rawValue].float
         
+        markers = actualJson[JSONKeys.markers.rawValue].arrayObject?.flatMap{ Marker(json: $0) }
+        lastViewedTime = actualJson[JSONKeys.lastViewedTime.rawValue].int
+        lastViewedOffset = actualJson[JSONKeys.lastViewedOffset.rawValue].int
+        
         if (created == nil && changed == nil && assetId == nil && type == nil && localized == nil && tags == nil && publications == nil)
         && (episode == nil && season == nil && seasonId == nil && seasons == nil && participants == nil && productionYear == nil)
         && (popularityScores == nil && releaseDate == nil && originalTitle == nil && live == nil && productionCountries == nil && subtitles == nil)
         && (audioTracks == nil && spokenLanguages == nil && medias == nil && parentalRatings == nil && linkedEntities == nil && runtime == nil)
-        && (tvShowId == nil && expires == nil && customData == nil && externalReferences == nil && rating == nil) {
+        && (tvShowId == nil && expires == nil && customData == nil && externalReferences == nil && rating == nil)
+        && (markers == nil && lastViewedOffset == nil && lastViewedTime == nil){
             return nil
         }
     }
@@ -125,11 +133,14 @@ extension Asset: ExposureConvertible {
         case customData = "customData"
         case externalReferences = "externalReferences"
         case rating = "rating"
+        case markers = "markers"
+        case lastViewedTime = "lastViewedTime"
+        case lastViewedOffset = "lastViewedOffset"
     }
 }
 
 extension Asset {
-    public enum AssetType {
+    public enum AssetType: Equatable, Hashable {
         case movie
         case tvShow
         case episode
@@ -169,6 +180,17 @@ extension Asset {
             case .liveEvent: return "LIVE_EVENT"
             case .other(type: _): return "OTHER"
             default: return "OTHER"
+            }
+        }
+        
+        public static func == (lhs: AssetType, rhs: AssetType) -> Bool {
+            return lhs.hashValue == rhs.hashValue
+        }
+        
+        public var hashValue: Int {
+            switch self {
+            case .other(type: let value): return (queryParam+"_"+value).hashValue
+            default: return queryParam.hashValue
             }
         }
     }
