@@ -1,19 +1,18 @@
 //
-//  FetchEpgChannelList.swift
+//  FetchEpgChannel.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-06-14.
+//  Created by Fredrik Sjöberg on 2017-07-10.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 
-public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
-    public typealias Response = ChannelEpgList
+public struct FetchEpgChannel: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates {
+    public typealias Response = ChannelEpg
     
     public var endpointUrl: String {
-        let channelIds = assetIdFilter.assetIds?.joined(separator: ",")
-        return environment.apiUrl + "/epg/" + (channelIds != nil ? "/\(channelIds!)" : "")
+        return environment.apiUrl + "/epg/" + channelId
     }
     
     public var parameters: [String: Any] {
@@ -29,17 +28,18 @@ public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, F
     public var pageFilter: PageFilter
     public var publishFilter: PublishFilter
     public var dateFilter: DateFilter
-    public var assetIdFilter: AssetIdFilter
     
+    public let channelId: String
     public let environment: Environment
     
-    internal init(environment: Environment) {
+    internal init(environment: Environment, channelId: String) {
         self.environment = environment
+        self.channelId = channelId
+        
         self.sortDescription = SortDescription()
         self.pageFilter = PageFilter()
         self.publishFilter = PublishFilter()
         self.dateFilter = DateFilter()
-        self.assetIdFilter = AssetIdFilter()
     }
     
     internal enum Keys: String {
@@ -73,7 +73,7 @@ public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, F
 }
 
 // MARK: - Request
-extension FetchEpgChannelList {
+extension FetchEpgChannel {
     public func request() -> ExposureRequest {
         return request(.get, encoding: ExposureURLEncoding.default)
     }

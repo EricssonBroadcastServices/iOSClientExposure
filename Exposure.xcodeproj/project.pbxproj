@@ -113,6 +113,8 @@
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */; };
 		76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */; };
+		76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */; };
+		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76BBFB761EA8C039001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB751EA8C039001DBDDB /* Cartfile.resolved */; };
 		76BBFB781EA8C11B001DBDDB /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFB771EA8C11B001DBDDB /* Quick.framework */; };
 		76BBFB7A1EA8C11F001DBDDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFB791EA8C11F001DBDDB /* Nimble.framework */; };
@@ -246,6 +248,8 @@
 		76A842EA1EA7667D00BDAF2C /* ServerTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTime.swift; sourceTree = "<group>"; };
 		76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
+		76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgList.swift; sourceTree = "<group>"; };
+		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76BBFB751EA8C039001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76BBFB771EA8C11B001DBDDB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Carthage/Checkouts/Quick/build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		76BBFB791EA8C11F001DBDDB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -438,6 +442,7 @@
 			children = (
 				769734A81EF1833100F6ADC8 /* FetchEpg.swift */,
 				769734B01EF1994900F6ADC8 /* FetchEpgChannelList.swift */,
+				76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */,
 				769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */,
 			);
 			path = Request;
@@ -446,6 +451,7 @@
 		7697349D1EF17FB400F6ADC8 /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */,
 				7697349E1EF1801000F6ADC8 /* ChannelEpg.swift */,
 				769734A01EF1803200F6ADC8 /* Program.swift */,
 			);
@@ -822,6 +828,7 @@
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
+				76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				7646D65F1EEFF5BE009E5C2B /* PlayCatchup.swift in Sources */,
 				76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */,
@@ -837,6 +844,7 @@
 				76529D011EDC254300318AE2 /* TwoFactorLogin.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
+				76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */,
 				76A842F91EA7667D00BDAF2C /* Date+Extensions.swift in Sources */,
 				76A842F81EA7667D00BDAF2C /* ExposureRequest.swift in Sources */,
 				7697349F1EF1801000F6ADC8 /* ChannelEpg.swift in Sources */,
