@@ -88,6 +88,7 @@
 		769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734BF1EF2911A00F6ADC8 /* MarkerSpec.swift */; };
 		769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734C11EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift */; };
 		76A417181EDF12AE00677A46 /* ExposureURLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */; };
+		76A44C9B1F16350E008992E9 /* Logout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A44C9A1F16350E008992E9 /* Logout.swift */; };
 		76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		76A842B81EA75EC900BDAF2C /* Exposure.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A842AA1EA75EC900BDAF2C /* Exposure.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		76A842C21EA7604F00BDAF2C /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 76A842C11EA7604F00BDAF2C /* Cartfile */; };
@@ -220,6 +221,7 @@
 		769734BF1EF2911A00F6ADC8 /* MarkerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerSpec.swift; sourceTree = "<group>"; };
 		769734C11EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgProgramSpec.swift; sourceTree = "<group>"; };
 		76A417171EDF12AE00677A46 /* ExposureURLEncoding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureURLEncoding.swift; sourceTree = "<group>"; };
+		76A44C9A1F16350E008992E9 /* Logout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logout.swift; sourceTree = "<group>"; };
 		76A842A71EA75EC900BDAF2C /* Exposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Exposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A842AA1EA75EC900BDAF2C /* Exposure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Exposure.h; sourceTree = "<group>"; };
 		76A842AB1EA75EC900BDAF2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -569,6 +571,7 @@
 				76A842CD1EA7667D00BDAF2C /* Anonymous.swift */,
 				76A842CE1EA7667D00BDAF2C /* Login.swift */,
 				76529D001EDC254300318AE2 /* TwoFactorLogin.swift */,
+				76A44C9A1F16350E008992E9 /* Logout.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -836,6 +839,7 @@
 				76A842F21EA7667D00BDAF2C /* EDRMConfiguration.swift in Sources */,
 				766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */,
 				76A842EF1EA7667D00BDAF2C /* SessionToken.swift in Sources */,
+				76A44C9B1F16350E008992E9 /* Logout.swift in Sources */,
 				766FBB841ECA2B6100EBEC53 /* Person.swift in Sources */,
 				76A842F71EA7667D00BDAF2C /* DataRequest.swift in Sources */,
 				769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */,

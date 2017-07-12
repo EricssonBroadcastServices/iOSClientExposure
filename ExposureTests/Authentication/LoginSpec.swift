@@ -76,5 +76,23 @@ class LoginSpec: QuickSpec {
                 expect(params["totp"]).toNot(beNil())
             }
         }
+        
+        describe("Logout") {
+            let logout = Authenticate(environment: env)
+                .logout(sessionToken: SessionToken(value: "VALUE"))
+            it("should have headers") {
+                expect(logout.headers).toNot(beNil())
+            }
+            
+            it("should generate a correct endpoint url") {
+                let endpoint = "/auth/session"
+                expect(logout.endpointUrl).to(equal(env.apiUrl+endpoint))
+            }
+            
+            it("should have no params") {
+                let params = logout.parameters
+                expect(params).to(beNil())
+            }
+        }
     }
 }
