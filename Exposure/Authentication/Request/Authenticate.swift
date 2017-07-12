@@ -28,4 +28,9 @@ extension Authenticate {
     public func twoFactor(username: String, password: String, twoFactor: String, rememberMe: Bool = false) -> TwoFactorLogin {
         return TwoFactorLogin(username: username, password: password, twoFactor: twoFactor, rememberMe: rememberMe, environment: environment)
     }
+    
+    public func logout(sessionToken: SessionToken) -> Logout {
+        return Logout(sessionToken: sessionToken,
+                      environment: environment)
+    }
 }
