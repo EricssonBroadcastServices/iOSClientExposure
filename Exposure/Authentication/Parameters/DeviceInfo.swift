@@ -47,16 +47,20 @@ public struct DeviceInfo {
         }
         
         public let name: String?
-        public let os: String = "iOS"
         
-        public var osVersion: String? {
-            let components = UIDevice.current.systemVersion.components(separatedBy: ".")
-            switch components.count {
-            case 0: return nil
-            case 1: return components.first! + ".0"
-            case 2: return components.joined(separator: ".")
-            default: return components[0] + "." + components[1]
-            }
+        public var os: String {
+            return UIDevice.current.systemName
+        }
+        
+        public var osVersion: String {
+            return UIDevice.current.systemVersion
+//            let components = UIDevice.current.systemVersion.components(separatedBy: ".")
+//            switch components.count {
+//            case 0: return nil
+//            case 1: return components.first! + ".0"
+//            case 2: return components.joined(separator: ".")
+//            default: return components[0] + "." + components[1]
+//            }
         }
         
         public let manufacturer: String = "Apple"
