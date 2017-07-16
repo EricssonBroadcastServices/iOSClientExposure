@@ -12,6 +12,12 @@ extension UIDevice {
     public static func deviceType() -> DeviceType {
         return DeviceType(model: current.model)
     }
+    
+    internal static var mergedSystemName: String {
+        let systemName = UIDevice.current.systemName
+        if systemName == "iPhone OS" { return "iOS" }
+        return systemName
+    }
 }
 public struct DeviceInfo {
     public init(device: Device = Device()) {
@@ -49,7 +55,7 @@ public struct DeviceInfo {
         public let name: String?
         
         public var os: String {
-            return UIDevice.current.systemName
+            return UIDevice.mergedSystemName
         }
         
         public var osVersion: String {
