@@ -104,12 +104,12 @@ extension DeviceInfo.Device: JSONEncodable {
             JSONKeys.width.rawValue: width,
             JSONKeys.model.rawValue: model,
             JSONKeys.os.rawValue: os,
+            JSONKeys.osVersion.rawValue: osVersion,
             JSONKeys.manufacturer.rawValue: manufacturer,
             JSONKeys.type.rawValue: type.queryParam
         ]
         
         if let name = name { json[JSONKeys.name.rawValue] = name }
-        if let osVersion = osVersion { json[JSONKeys.osVersion.rawValue] = osVersion }
         
         return json
     }
