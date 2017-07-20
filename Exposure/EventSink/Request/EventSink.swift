@@ -9,8 +9,7 @@
 import Foundation
 
 public struct EventSink {
-    public init() {
-    }
+    public init() { }
 }
 
 extension EventSink {

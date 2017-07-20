@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol AnalyticsPayload {
-    var payload: [String: Any] { get }
+    var jsonPayload: [String: Any] { get }
 }

@@ -33,6 +33,14 @@ public struct AnalyticsBatch {
     /// JSON array of analytics events.
     /// Should be sorted on $0.timestamp
     public let payload: [AnalyticsPayload]
+    
+    
+    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = []) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+        self.playToken = playToken
+        self.payload = payload
+    }
 }
 
 extension AnalyticsBatch {
@@ -41,7 +49,7 @@ extension AnalyticsBatch {
             JSONKeys.customer.rawValue: customer,
             JSONKeys.businessUnit.rawValue: businessUnit,
             JSONKeys.playToken.rawValue: playToken,
-            JSONKeys.payload.rawValue: payload.map{ $0.payload }
+            JSONKeys.payload.rawValue: payload.map{ $0.jsonPayload }
         ]
     }
     
