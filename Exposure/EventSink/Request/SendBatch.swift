@@ -18,28 +18,7 @@ public struct SendBatch {
     
     
     /// MARK: Parameters
-    /// Unix timestamp according to device clock when the batch was sent from the device.
-    public let dispatchTime: Int64
-    
-    /// Estimated offset between the device clock and the server clock, in milliseconds. A positive value means that the device is ahead of the server.
-    public let clockOffset: Int64?
-    
-    /// EMP Customer Group identifier
-    public var customer: String {
-        return environment.customer
-    }
-    
-    /// EMP Business Unit identifier
-    public var businessUnit: String {
-        return environment.businessUnit
-    }
-    
-    /// UUID uniquely identifying this playback session.
-    public let playToken: String
-    
-    /// JSON array of analytics events.
-    /// Should be sorted on $0.timestamp
-    public let payload: [AnalyticsPayload]
+    public let messageBatch: AnalyticsBatch
 }
 
 extension SendBatch: Exposure {
@@ -50,16 +29,7 @@ extension SendBatch: Exposure {
     }
     
     public var parameters: [String: Any] {
-        var messageBatch: [String: Any] = [
-            JSONKeys.dispatchTime.rawValue: dispatchTime,
-            JSONKeys.clockOffset.rawValue: clockOffset,
-            JSONKeys.customer.rawValue: customer,
-            JSONKeys.businessUnit.rawValue: businessUnit,
-            JSONKeys.playToken.rawValue: playToken,
-            JSONKeys.payload.rawValue: payload.map{ $0.payload }
-        ]
-        
-        return [JSONKeys.messageBatch.rawValue: messageBatch]
+        return [JSONKeys.messageBatch.rawValue: messageBatch.toJSON]
     }
     
     public var headers: [String: String]? {
@@ -68,27 +38,11 @@ extension SendBatch: Exposure {
     
     internal enum JSONKeys: String {
         case messageBatch = "messageBatch"
-        case dispatchTime = "dispatchTime"
-        case clockOffset = "clockOffset"
-        case customer = "customer"
-        case businessUnit = "businessUnit"
-        case playToken = "playToken"
-        case payload = "payload"
     }
 }
 
 extension SendBatch {
     public func request() -> ExposureRequest {
         return request(.post)
-    }
-}
-
-public struct AnalyticsConfigResponse {
-    
-}
-
-extension AnalyticsConfigResponse: ExposureConvertible {
-    public init?(json: Any) {
-        
     }
 }

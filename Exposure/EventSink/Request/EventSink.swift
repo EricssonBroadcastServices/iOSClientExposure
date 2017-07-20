@@ -16,3 +16,11 @@ public struct EventSink {
         self.environment = environment
     }
 }
+
+extension EventSink {
+    public func send(analytics batch: AnalyticsBatch, using sessionToken: SessionToken) -> SendBatch {
+        return SendBatch(sessionToken: sessionToken,
+                         environment: environment,
+                         messageBatch: batch)
+    }
+}
