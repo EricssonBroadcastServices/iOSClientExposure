@@ -10,12 +10,12 @@ import Foundation
 import SwiftyJSON
 
 public struct AnalyticsConfigResponse {
-    let secondsUntilNextReport: Int?
-    let includeApplicationMetrics: Bool?
-    let includeNetworkMetrics: Bool?
-    let includeGpsMetrics: Bool?
-    let includeDeviceMetrics: Bool?
-    let timestampNow: Int?
+    public let secondsUntilNextReport: Int?
+    public let includeApplicationMetrics: Bool?
+    public let includeNetworkMetrics: Bool?
+    public let includeGpsMetrics: Bool?
+    public let includeDeviceMetrics: Bool?
+    public let timestampNow: Int?
 }
 
 extension AnalyticsConfigResponse: ExposureConvertible {

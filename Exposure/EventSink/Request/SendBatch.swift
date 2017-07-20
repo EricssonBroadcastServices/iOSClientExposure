@@ -26,7 +26,7 @@ public struct SendBatch {
     /// Estimated offset between the device clock and the server clock, in milliseconds. A positive value means that the device is ahead of the server.
     public let clockOffset: Int64?
     
-    public init(messageBatch: AnalyticsBatch, clockOffset: Int64? = nil) {
+    internal init(messageBatch: AnalyticsBatch, clockOffset: Int64? = nil) {
         self.messageBatch = messageBatch
         self.clockOffset = clockOffset
     }

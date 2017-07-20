@@ -17,4 +17,8 @@ extension EventSink {
     public func send(analytics batch: AnalyticsBatch) -> SendBatch {
         return SendBatch(messageBatch: batch)
     }
+    
+    public func initialize(using environment: Environment) -> EventSinkInit {
+        return EventSinkInit(environment: environment)
+    }
 }
