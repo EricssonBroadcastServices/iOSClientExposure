@@ -9,8 +9,13 @@
 import Foundation
 
 public struct Environment {
+    /// Base exposure url. This is the customer specific URL to Exposure
     public let baseUrl: String
+    
+    /// EMP Customer Group identifier
     public let customer: String
+    
+    /// EMP Business Unit identifier
     public let businessUnit: String
     
     public init(baseUrl: String, customer: String, businessUnit: String) {
