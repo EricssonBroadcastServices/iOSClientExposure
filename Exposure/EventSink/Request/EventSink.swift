@@ -9,18 +9,12 @@
 import Foundation
 
 public struct EventSink {
-    /// Exposure environment
-    public let environment: Environment
-    
-    public init(environment: Environment) {
-        self.environment = environment
+    public init() {
     }
 }
 
 extension EventSink {
-    public func send(analytics batch: AnalyticsBatch, using sessionToken: SessionToken) -> SendBatch {
-        return SendBatch(sessionToken: sessionToken,
-                         environment: environment,
-                         messageBatch: batch)
+    public func send(analytics batch: AnalyticsBatch) -> SendBatch {
+        return SendBatch(messageBatch: batch)
     }
 }

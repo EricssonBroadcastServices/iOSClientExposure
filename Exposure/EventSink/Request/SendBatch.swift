@@ -11,14 +11,25 @@ import Foundation
 public struct SendBatch {
     /// MARK: Configuration
     /// Authorization: Bearer "sessionToken"
-    public let sessionToken: SessionToken
+    public var sessionToken: SessionToken {
+        return messageBatch.sessionToken
+    }
     
     /// Exposure environment
-    public let environment: Environment
-    
+    public var environment: Environment {
+        return messageBatch.environment
+    }
     
     /// MARK: Parameters
     public let messageBatch: AnalyticsBatch
+    
+    /// Estimated offset between the device clock and the server clock, in milliseconds. A positive value means that the device is ahead of the server.
+    public let clockOffset: Int64?
+    
+    public init(messageBatch: AnalyticsBatch, clockOffset: Int64? = nil) {
+        self.messageBatch = messageBatch
+        self.clockOffset = clockOffset
+    }
 }
 
 extension SendBatch: Exposure {
@@ -29,7 +40,16 @@ extension SendBatch: Exposure {
     }
     
     public var parameters: [String: Any] {
-        return [JSONKeys.messageBatch.rawValue: messageBatch.toJSON]
+        var event = messageBatch.toJSON()
+        
+        /// Unix timestamp according to device clock when the batch was sent from the device.
+        event[JSONKeys.dispatchTime.rawValue] = Date().millisecondsSince1970
+        
+        if let clockOffset = clockOffset {
+            event[JSONKeys.clockOffset.rawValue] = clockOffset
+        }
+
+        return event
     }
     
     public var headers: [String: String]? {
@@ -37,7 +57,8 @@ extension SendBatch: Exposure {
     }
     
     internal enum JSONKeys: String {
-        case messageBatch = "messageBatch"
+        case dispatchTime = "dispatchTime"
+        case clockOffset = "clockOffset"
     }
 }
 
