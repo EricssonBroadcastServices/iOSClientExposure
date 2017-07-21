@@ -22,10 +22,14 @@ extension Player: ExposurePlayback {
         
         let requester = ExposureFairplayRequester(entitlement: entitlement)
         
-        stream(url: mediaLocator, using: requester)
+        stream(url: mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
     }
         
     public func offline(playback entitlement: PlaybackEntitlement) throws {
         
     }
+}
+
+public protocol ExposureAnalyticsProvider: AnalyticsProvider {
+    
 }
