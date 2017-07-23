@@ -33,6 +33,44 @@ public struct SessionToken {
     }
 }
 
+extension SessionToken {
+    /// Parses the session token into its constituents
+    fileprivate var components: [String] {
+        return value.components(separatedBy: "|")
+    }
+}
+
+extension SessionToken {
+    ///  The token of the underlying CRM to use if talking directly to the CRM.
+    internal var crmToken: String {
+        return components[0]
+    }
+    
+    /// The id of the account in the CRM.
+    internal var accountId: String {
+        return components[1]
+    }
+    
+    /// The user id
+    internal var userId: String {
+        return components[2]
+    }
+    
+    /// Returns true if this session token is anonymous
+    internal var isAnonymous: Bool? {
+        switch components[6] {
+        case "true": return true
+        case "false": return false
+        default: return nil
+        }
+    }
+    
+    /// Returns true if the session token has the correct format
+    public var hasValidFormat: Bool {
+        return components.count == 9
+    }
+}
+
 extension SessionToken: ExposureConvertible {
     public init?(json: Any) {
         let actualJson = SwiftyJSON.JSON(json)

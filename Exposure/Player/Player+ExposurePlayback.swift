@@ -1,20 +1,15 @@
 //
-//  ExposurePlayback.swift
+//  Player+ExposurePlayback.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-07-03.
+//  Created by Fredrik Sjöberg on 2017-07-22.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
 import Foundation
 import Player
 
-public protocol ExposurePlayback {
-    func stream(playback entitlement: PlaybackEntitlement) throws
-    func offline(playback entitlement: PlaybackEntitlement) throws
-}
-
-extension Player: ExposurePlayback {
+extension Player {
     public func stream(playback entitlement: PlaybackEntitlement) throws {
         guard let mediaLocator = entitlement.mediaLocator else {
             throw PlayerError.asset(reason: .missingMediaUrl)
@@ -22,9 +17,9 @@ extension Player: ExposurePlayback {
         
         let requester = ExposureFairplayRequester(entitlement: entitlement)
         
-        stream(url: mediaLocator, using: requester)
+        stream(url: mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
     }
-        
+    
     public func offline(playback entitlement: PlaybackEntitlement) throws {
         
     }

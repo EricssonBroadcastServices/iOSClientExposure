@@ -30,7 +30,7 @@ extension FilteredDates {
         return old
     }
     
-    public func filter(starting: UInt64 = 0, ending: UInt64 = Date().millisecondsSince1970) -> Self {
+    public func filter(starting: Int64 = 0, ending: Int64 = Date().millisecondsSince1970) -> Self {
         var old = self
         old.dateFilter = DateFilter(start: starting,
                                     end: ending)
@@ -39,10 +39,10 @@ extension FilteredDates {
 }
 
 public struct DateFilter {
-    internal let startMillis: UInt64
-    internal let endMillis: UInt64
+    internal let startMillis: Int64
+    internal let endMillis: Int64
     
-    internal init(start: UInt64 = 0, end: UInt64 = Date().millisecondsSince1970) {
+    internal init(start: Int64 = 0, end: Int64 = Date().millisecondsSince1970) {
         self.startMillis = start
         self.endMillis = end
     }

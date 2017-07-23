@@ -16,11 +16,11 @@ extension Date {
         return formatter
     }
     
-    public var millisecondsSince1970: UInt64 {
-        return UInt64((timeIntervalSince1970 * 1000.0).rounded())
+    public var millisecondsSince1970: Int64 {
+        return Int64((timeIntervalSince1970 * 1000.0).rounded())
     }
     
-    public init(milliseconds: UInt64) {
+    public init(milliseconds: Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
     }
 }
