@@ -13,8 +13,8 @@ public struct EventSink {
 }
 
 extension EventSink {
-    public func send(analytics batch: AnalyticsBatch) -> SendBatch {
-        return SendBatch(messageBatch: batch)
+    public func send(analytics batch: AnalyticsBatch, clockOffset: Int64?) -> SendBatch {
+        return SendBatch(messageBatch: batch, clockOffset: clockOffset)
     }
     
     public func initialize(using environment: Environment) -> EventSinkInit {
