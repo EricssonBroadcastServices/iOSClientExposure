@@ -32,3 +32,9 @@ public struct Environment {
         return baseUrl + basePath
     }
 }
+
+extension Environment: Equatable {
+    public static func == (lhs: Environment, rhs: Environment) -> Bool {
+        return lhs.baseUrl == rhs.baseUrl && lhs.customer == rhs.customer && lhs.businessUnit == rhs.businessUnit
+    }
+}
