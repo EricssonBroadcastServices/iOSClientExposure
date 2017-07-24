@@ -33,6 +33,12 @@ public struct SessionToken {
     }
 }
 
+extension SessionToken: Equatable {
+    public static func == (lhs: SessionToken, rhs: SessionToken) -> Bool {
+        return lhs.value == rhs.value
+    }
+}
+
 extension SessionToken {
     /// Parses the session token into its constituents
     fileprivate var components: [String] {

@@ -54,9 +54,9 @@ extension AnalyticsBatch {
     }
     
     internal enum JSONKeys: String {
-        case customer = "customer"
-        case businessUnit = "businessUnit"
-        case sessionId = "sessionId"
-        case payload = "payload"
+        case customer = "Customer"
+        case businessUnit = "BusinessUnit"
+        case sessionId = "SessionId"
+        case payload = "Payload"
     }
 }

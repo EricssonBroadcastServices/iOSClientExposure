@@ -57,8 +57,8 @@ extension SendBatch: Exposure {
     }
     
     internal enum JSONKeys: String {
-        case dispatchTime = "dispatchTime"
-        case clockOffset = "clockOffset"
+        case dispatchTime = "DispatchTime"
+        case clockOffset = "ClockOffset"
     }
 }
 
