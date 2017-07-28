@@ -48,22 +48,22 @@ extension SessionToken {
 
 extension SessionToken {
     ///  The token of the underlying CRM to use if talking directly to the CRM.
-    internal var crmToken: String {
+    public var crmToken: String {
         return components[0]
     }
     
     /// The id of the account in the CRM.
-    internal var accountId: String {
+    public var accountId: String {
         return components[1]
     }
     
     /// The user id
-    internal var userId: String {
+    public var userId: String {
         return components[2]
     }
     
     /// Returns true if this session token is anonymous
-    internal var isAnonymous: Bool? {
+    public var isAnonymous: Bool? {
         switch components[6] {
         case "true": return true
         case "false": return false
