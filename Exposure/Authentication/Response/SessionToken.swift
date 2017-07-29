@@ -48,23 +48,29 @@ extension SessionToken {
 
 extension SessionToken {
     ///  The token of the underlying CRM to use if talking directly to the CRM.
-    public var crmToken: String {
-        return components[0]
+    public var crmToken: String? {
+        return components.first
     }
     
     /// The id of the account in the CRM.
-    public var accountId: String {
-        return components[1]
+    public var accountId: String? {
+        let comp = components
+        guard comp.count >= 1 else { return nil }
+        return comp[1]
     }
     
     /// The user id
-    public var userId: String {
-        return components[2]
+    public var userId: String? {
+        let comp = components
+        guard comp.count >= 2 else { return nil }
+        return comp[2]
     }
     
     /// Returns true if this session token is anonymous
     public var isAnonymous: Bool? {
-        switch components[6] {
+        let comp = components
+        guard comp.count >= 6 else { return nil }
+        switch comp[6] {
         case "true": return true
         case "false": return false
         default: return nil
