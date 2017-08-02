@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// `ExposureError` is the error type returned by the *Exposure Framework*. It can manifest as both *native errors* to the framework and *nested errors* specific to underlying frameworks or concepts such as `ExposureResponseMessage`.
+/// Effective error handling thus requires a deeper undestanding of the overall architecture.
+///
+/// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
 public enum ExposureError: Error {
     case generalError(error: Error)
     case serialization(reason: SerializationFailureReason)
@@ -32,6 +36,27 @@ extension ExposureError.SerializationFailureReason {
         switch self {
         case .jsonSerialization(error: let error): return "JSON Serialization error: \(error.localizedDescription)"
         case .objectSerialization(reason: let reason, json: let json): return "Object Serialization error: \(reason) for json: \(json)"
+        }
+    }
+}
+
+extension ExposureError {
+    /// Defines the `domain` specific code for the underlying error.
+    public var code: Int {
+        switch self {
+        case .generalError(error: _): return 101
+        case .serialization(reason: let error): return error.code
+        case .exposureResponse(reason: let reason): return reason.httpCode
+        }
+    }
+}
+
+extension ExposureError.SerializationFailureReason {
+    /// Defines the `domain` specific code for the underlying error.
+    public var code: Int {
+        switch self {
+        case .jsonSerialization(error: _): return 201
+        case .objectSerialization(reason: _, json: _): return 202
         }
     }
 }
