@@ -158,7 +158,8 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         
         Alamofire
             .request(url, method: .get)
-            .responseData{ [unowned self] response in
+            .responseData{ [weak self] response in
+                
                 if let error = response.error {
                     callback(nil, .fairplay(reason: .networking(error: error)))
                     return
@@ -166,7 +167,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
                 
                 if let success = response.value {
                     do {
-                        let certificate = try self.parseApplicationCertificate(response: success)
+                        let certificate = try self?.parseApplicationCertificate(response: success)
                         callback(certificate, nil)
                     }
                     catch {
