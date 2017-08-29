@@ -62,7 +62,7 @@ extension FilteredFields {
     }
 }
 
-/// Used internally to configure the filter
+/// Used internally to configure the fields filter
 public struct FieldsFilter {
     /// Baseline `FieldSet` to include
     public enum FieldSet: String {
