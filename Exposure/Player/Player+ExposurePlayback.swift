@@ -38,7 +38,7 @@ extension Player {
     }
 }
 
-/// MARK: <SessionShift>
+// MARK: - SessionShift
 extension Player {
     fileprivate func handleSessionShift(entitlement: PlaybackEntitlement) {
         // Make sure the user has specified sessionShift enabled
