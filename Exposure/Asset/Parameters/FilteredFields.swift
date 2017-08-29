@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Defines an *Exposure request* where the response fields may be selectively filtered.
+/// Defines an *Exposure request* filter on included response fields.
 public protocol FilteredFields {
     typealias FieldSet = FieldsFilter.FieldSet
     
