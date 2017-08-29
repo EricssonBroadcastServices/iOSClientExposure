@@ -9,10 +9,14 @@
 import Foundation
 import Alamofire
 
+/// *Exposure* endpoint integration for *Logout*.
 public struct Logout: Exposure {
     public typealias Response = [String:Any]
     
+    /// Auth token to invalidate
     public let sessionToken: SessionToken
+    
+    /// Environment to use
     public let environment: Environment
     
     internal init(sessionToken: SessionToken, environment: Environment) {
@@ -34,11 +38,13 @@ public struct Logout: Exposure {
 }
 
 extension Logout {
+    /// `Login` request is specified as a `.delete`
     public func request() -> ExposureRequest {
         return request(.delete)
     }
 }
 
+/// Simple hack to allow a `Dictionary` to be expected as `Exposure.Response`
 extension Dictionary: ExposureConvertible {
     public init?(json: Any) {
         self.init()

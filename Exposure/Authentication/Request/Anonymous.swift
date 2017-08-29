@@ -9,10 +9,14 @@
 import Foundation
 import Alamofire
 
+/// *Exposure* endpoint integration for handling *Anonymous* login.
 public struct Anonymous: Exposure {
     public typealias Response = SessionToken
     
+    /// `DeviceInfo` required by *Exposure*
     public let deviceInfo: DeviceInfo = DeviceInfo()
+    
+    /// Environment to use
     public let environment: Environment
     
     internal init(environment: Environment) {
@@ -23,16 +27,19 @@ public struct Anonymous: Exposure {
         return environment.apiUrl + "/auth/anonymous"
     }
     
+    
     public var parameters: [String: Any] {
         return deviceInfo.toJSON()
     }
     
+    /// `Anonymous` requires no headers
     public var headers: [String: String]? {
         return nil
     }
 }
 
 extension Anonymous {
+    /// `Anonymous` request is specified as a `.post`
     public func request() -> ExposureRequest {
         return request(.post)
     }

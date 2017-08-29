@@ -18,12 +18,22 @@ public protocol JSONEncodable {
 }
 
 public protocol Exposure {
+    /// Response type
     associatedtype Response
+    
+    /// Parameter type
     associatedtype Parameters
+    
+    /// Header type
     associatedtype Headers
     
+    /// Endpoint to contact
     var endpointUrl: String { get }
+    
+    /// Parameters to include
     var parameters: Parameters { get }
+    
+    /// Headers to include
     var headers: Headers { get }
 }
 

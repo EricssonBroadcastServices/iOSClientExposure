@@ -8,14 +8,26 @@
 
 import Foundation
 
+/// *Exposure* endpoint integration for handling *Two Factor Login* with *username* and *password*.
 public struct TwoFactorLogin: Exposure {
     public typealias Response = Credentials
     
+    /// Username to authenticate with
     public let username: String
+    
+    /// Password associated with `username`
     public let password: String
+    
+    /// Two factor token to use
     public let twoFactor: String
+    
+    /// `true` extends period of session validity, `false` uses normal validation period.
     public let rememberMe: Bool
+    
+    /// `DeviceInfo` required by *Exposure*
     public let deviceInfo: DeviceInfo = DeviceInfo()
+    
+    /// Environment to use
     public let environment: Environment
     
     internal init(username: String, password: String, twoFactor: String, rememberMe: Bool = false, environment: Environment) {
@@ -45,6 +57,7 @@ public struct TwoFactorLogin: Exposure {
         return nil
     }
     
+    /// Keys used to specify `json` body for the request.
     internal enum JSONKeys: String {
         case username = "username"
         case password = "password"
@@ -54,6 +67,7 @@ public struct TwoFactorLogin: Exposure {
 }
 
 extension TwoFactorLogin {
+    /// `TwoFactorLogin` request is specified as a `.post`
     public func request() -> ExposureRequest {
         return request(.post)
     }
