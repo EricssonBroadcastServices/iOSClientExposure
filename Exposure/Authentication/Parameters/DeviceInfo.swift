@@ -21,6 +21,8 @@ extension UIDevice {
         return systemName
     }
 }
+
+/// *Exposure* relevant data used to identify the current device.
 public struct DeviceInfo {
     public init(device: Device = Device()) {
         self.device = device
