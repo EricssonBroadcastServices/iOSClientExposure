@@ -10,27 +10,65 @@ import Foundation
 import SwiftyJSON
 
 public struct PlaybackEntitlement {
-    public let playToken: String? // Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
+    /// Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
+    public let playToken: String?
     
-    public let edrm: EDRMConfiguration? // The EDRM specific configuration. Will be empty if the status is not SUCCESS.
-    public let fairplay: FairplayConfiguration? // The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
-    public let mediaLocator: String? //The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
-    public let licenseExpiration: String? // The datetime of expiration of the drm license.
-    public let licenseExpirationReason: Status? //The reason of expiration of the drm license.
-    public let licenseActivation: String? // The datetime of activation of the drm license.,
-    public let playTokenExpiration: String? // The expiration of the the play token. The player needs to be initialized and done the play call before this.
-    public let entitlementType: EntitlementType? // The type of entitlement that granted access to this play.
-    public let live: Bool? // If this is a live entitlement.
-    public let playSessionId: String? // Unique id of this playback session, all analytics events for this session should be reported on with this id
-    public let ffEnabled: Bool? // If fast forward is enabled
-    public let timeshiftEnabled: Bool? // If timeshift is disabled
-    public let rwEnabled: Bool? // If rewind is enabled
-    public let minBitrate: Int? // Min bitrate to use
-    public let maxBitrate: Int? // Max bitrate to use
-    public let maxResHeight: Int? // Max height resolution
-    public let airplayBlocked: Bool? // If airplay is blocked
-    public let mdnRequestRouterUrl: String? // MDN Request Router Url
-    public let lastViewedOffset: Int? // Last viewed offset
+    /// The EDRM specific configuration. Will be empty if the status is not SUCCESS.
+    public let edrm: EDRMConfiguration?
+    
+    /// The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
+    public let fairplay: FairplayConfiguration?
+    
+    /// The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
+    public let mediaLocator: String?
+    
+    /// The datetime of expiration of the drm license.
+    public let licenseExpiration: String?
+    
+    ///The reason of expiration of the drm license.
+    public let licenseExpirationReason: Status?
+    
+    /// The datetime of activation of the drm license.
+    public let licenseActivation: String?
+    
+    /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
+    public let playTokenExpiration: String?
+    
+    /// The type of entitlement that granted access to this play.
+    public let entitlementType: EntitlementType?
+    
+    /// If this is a live entitlement.
+    public let live: Bool?
+    
+    /// Unique id of this playback session, all analytics events for this session should be reported on with this id
+    public let playSessionId: String?
+    
+    /// If fast forward is enabled
+    public let ffEnabled: Bool?
+    
+    /// If timeshift is disabled
+    public let timeshiftEnabled: Bool?
+    
+    /// If rewind is enabled
+    public let rwEnabled: Bool?
+    
+    /// Min bitrate to use
+    public let minBitrate: Int?
+    
+    /// Max bitrate to use
+    public let maxBitrate: Int?
+    
+    /// Max height resolution
+    public let maxResHeight: Int?
+    
+    /// If airplay is blocked
+    public let airplayBlocked: Bool?
+    
+    /// MDN Request Router Url
+    public let mdnRequestRouterUrl: String?
+    
+    /// Last viewed offset
+    public let lastViewedOffset: Int?
     
     public enum Status {
         case success

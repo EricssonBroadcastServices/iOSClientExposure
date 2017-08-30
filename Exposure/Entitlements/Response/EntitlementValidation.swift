@@ -11,8 +11,12 @@ import SwiftyJSON
 
 public struct EntitlementValidation: ExposureConvertible {
     public typealias Status = PlaybackEntitlement.Status
-    let status: Status? //The status of the entitlement
-    let paymentDone: Bool? //The status of the payment
+    
+    ///  The status of the entitlement
+    public let status: Status?
+    
+    // The status of the payment
+    public let paymentDone: Bool?
     
     public init?(json: Any){
         let actualJSON = SwiftyJSON.JSON(json)
