@@ -70,16 +70,34 @@ public struct PlaybackEntitlement {
     /// Last viewed offset
     public let lastViewedOffset: Int?
     
+    /// Details the `PlaybackEntitlement`s *license* status
     public enum Status {
+        /// If the user is entitled.
         case success
+        
+        /// If the user is not entitled.
         case notEntitled
+        
+        /// If the user is in a country that is not allowed for the country.
         case geoBlocked
+        
         case downloadBlocked
+        
+        ///  If the user device is not allowed to play the asset.
         case deviceBlocked
+        
+        /// If the asset has expired.
         case licenseExpired
+        
+        /// If there is not registered media for the asset in the format.
         case notAvailableInFormat
+        
+        /// If the maximum number of concurrent stream limit is reached.
         case concurrentStreamsLimitReached
+        
+        /// If the media is registered but the current status is not enabled
         case notEnabled
+        
         case gapInEPG
         case epgPlayMaxHours
         case other(reason: String)
