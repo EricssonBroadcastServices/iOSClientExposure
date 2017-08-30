@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Defines a `DRM` request format through *Exposure*.
+/// Defines a `DRM` request format used by *Exposure*.
 public protocol DRMRequest {
     
     /// Request to apply.

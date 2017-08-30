@@ -16,7 +16,7 @@ public struct Anonymous: Exposure {
     /// `DeviceInfo` required by *Exposure*
     public let deviceInfo: DeviceInfo = DeviceInfo()
     
-    /// Environment to use
+    /// `Environment` to use
     public let environment: Environment
     
     internal init(environment: Environment) {
@@ -40,6 +40,8 @@ public struct Anonymous: Exposure {
 
 extension Anonymous {
     /// `Anonymous` request is specified as a `.post`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.post)
     }

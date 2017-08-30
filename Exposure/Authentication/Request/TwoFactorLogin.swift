@@ -68,6 +68,8 @@ public struct TwoFactorLogin: Exposure {
 
 extension TwoFactorLogin {
     /// `TwoFactorLogin` request is specified as a `.post`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.post)
     }
