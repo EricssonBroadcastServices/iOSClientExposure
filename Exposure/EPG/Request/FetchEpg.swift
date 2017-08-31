@@ -8,7 +8,9 @@
 
 import Foundation
 
+/// *Exposure* request for fetching *EPG*.
 public struct FetchEpg {
+    /// `Environment` to use
     public let environment: Environment
     
     public init(environment: Environment) {
@@ -17,19 +19,35 @@ public struct FetchEpg {
 }
 
 extension FetchEpg {
+    /// Fetches EPG data for **all** channels.
+    ///
+    /// - returns: `FetchEpgChannelList` struct used to process the request.
     public func channels() -> FetchEpgChannelList {
         return FetchEpgChannelList(environment: environment)
     }
     
+    /// Fetches EPG data for a specific channel.
+    ///
+    /// - parameter id: channel to requested
+    /// - returns: `FetchEpgChannel` struct used to process the request.
     public func channel(id: String) -> FetchEpgChannel {
         return FetchEpgChannel(environment: environment, channelId: id)
     }
     
+    /// Fetches EPG data for a set of channels.
+    ///
+    /// - parameter ids: array of channelIds to request
+    /// - returns: `FetchEpgChannelList` struct used to process the request.
     public func channels(ids: [String]) -> FetchEpgChannelList {
         return FetchEpgChannelList(environment: environment)
             .filter(onlyAssetIds: ids)
     }
     
+    /// Fetches programming data for a specific program on a specified channel.
+    ///
+    /// - parameter id: channelId for the requested channel
+    /// - parameter programId: programId for the requested program
+    /// - returns: `FetchEpgProgram` struct used to process the request.
     public func channel(id: String, programId: String) -> FetchEpgProgram {
         return FetchEpgProgram(environment: environment,
                                channelId: id,

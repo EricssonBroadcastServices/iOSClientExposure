@@ -38,7 +38,7 @@ public struct Logout: Exposure {
 }
 
 extension Logout {
-    /// `Login` request is specified as a `.delete`
+    /// `Logout` request is specified as a `.delete`
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {

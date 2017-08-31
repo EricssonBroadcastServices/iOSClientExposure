@@ -33,7 +33,7 @@ public struct FetchServerTime: Exposure {
 }
 
 extension FetchServerTime {
-    /// `PlayLive` request is specified as a `.get`
+    /// `FetchServerTime` request is specified as a `.get`
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
