@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Customer specific *Exposure* environment.
 public struct Environment {
     /// Base exposure url. This is the customer specific URL to Exposure
     public let baseUrl: String

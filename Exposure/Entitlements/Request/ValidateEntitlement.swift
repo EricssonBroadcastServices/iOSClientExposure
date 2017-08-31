@@ -8,13 +8,20 @@
 
 import Foundation
 
+/// Content rights for specific assets are subject to change throughout a `PlaybackEntitlement`s life cycle. `ValidateEntitlement` offers a method to validate a previously granted *entitlement*, returning an updated `PlaybackEntitlement.Status`.
 public struct ValidateEntitlement: Exposure, DRMRequest {
     public typealias Response = EntitlementValidation
     
+    /// Id for the asset to validate
     public let assetId: String
+    
+    /// `Environment` to use
     public let environment: Environment
+    
+    /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
+    /// `DRM` and *format* to validate.
     public var playRequest: PlayRequest
     
     internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
@@ -52,6 +59,9 @@ extension ValidateEntitlement {
 }
 
 extension ValidateEntitlement {
+    /// `ValidateEntitlement` request is specified as a `.get`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.get, encoding: ExposureURLEncoding.default)
     }

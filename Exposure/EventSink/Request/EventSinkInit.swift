@@ -8,7 +8,9 @@
 
 import Foundation
 
+/// `EventSink` Initialization returns a set of basic data used to configure the *Analytics Environment*
 public struct EventSinkInit{
+    /// Exposure environment
     public let environment: Environment
     
     internal init(environment: Environment) {
@@ -33,6 +35,9 @@ extension EventSinkInit: Exposure {
 }
 
 extension EventSinkInit {
+    /// `EventSinkInit` request is specified as a `.post`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.post)
     }

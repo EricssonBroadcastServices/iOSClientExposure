@@ -10,8 +10,13 @@ import Foundation
 import SwiftyJSON
 
 public struct AnalyticsInitializationResponse {
+    /// Unix epoch time in milliseconds
     public let receivedTime: Int64?
+    
+    /// Unix epoch time in milliseconds
     public let repliedTime: Int64?
+    
+    /// *Exposure* analytics environment data
     public let settings: AnalyticsConfigResponse?
 }
 

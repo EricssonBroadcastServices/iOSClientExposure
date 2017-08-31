@@ -9,14 +9,20 @@
 import Foundation
 import SwiftyJSON
 
+/// `SessionToken` represents an authenticated *session* as recognized by *Exposure*
+///
+/// The token itself is by no means guaranteed to be valid, it merely represents the expected form.
+///
+/// For more information regarding `SessionToken`s, authentication requests and managing user sessions, please see [User Authentication]() in the documentation.
 public struct SessionToken {
+    /// Keys used to specify `json` body for the request.
     fileprivate enum JSONKeys: String {
         case sessionToken = "sessionToken"
     }
     
     public let value: String
     
-    
+    /// Most *Exposure* endpoints require an *authenticated* session for access. `authorizationHeader` provides this in an expected format.
     public var authorizationHeader: [String: String] {
         return ["Authorization": "Bearer " + value]
     }
@@ -25,6 +31,7 @@ public struct SessionToken {
         self.value = value
     }
     
+    /// There is no point in initializing a `SessionToken` without a value. Doing so will return `nil`
     public init?(value: String?) {
         guard let val = value else {
             return nil

@@ -9,11 +9,19 @@
 import Foundation
 import SwiftyJSON
 
+/// *Ericsson* `DRM` configuration.
 public struct EDRMConfiguration {
-    public let ownerId: String? // The id of the owner of the media.
-    public let userToken: String? // The user token.
-    public let requestUrl: String? // The url of the server to use.
-    public let adParameter: String? //The ad parameter to use.
+    /// The id of the owner of the media.
+    public let ownerId: String?
+    
+    /// The user token.
+    public let userToken: String?
+    
+    /// The url of the server to use.
+    public let requestUrl: String?
+    
+    ///The ad parameter to use.
+    public let adParameter: String?
 }
 
 extension EDRMConfiguration: ExposureConvertible {

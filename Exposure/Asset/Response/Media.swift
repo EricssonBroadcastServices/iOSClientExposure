@@ -10,15 +10,32 @@ import Foundation
 import SwiftyJSON
 
 public struct Media {
-    public let mediaId: String? // The id of the media.,
-    public let name: String? // The name of the media.,
-    public let drm: String? // The DRM of the media.,
-    public let format: String? // The streaming format of the media.,
-    public let height: Int? // The height in pixels.,
-    public let width: Int? // The width in pixels.,
-    public let durationMillis: Int? // The duration of the media in milliseconds.,
-    public let programId: String? // The id of the EPG program this media is for.,
-    public let status: String? // The status of the media. "enabled" if playable.
+    /// The id of the media.
+    public let mediaId: String?
+    
+    /// The name of the media.
+    public let name: String?
+    
+    /// The DRM of the media.
+    public let drm: String?
+    
+    /// The streaming format of the media.
+    public let format: String?
+    
+    /// The height in pixels.
+    public let height: Int?
+    
+    /// The width in pixels.
+    public let width: Int?
+    
+    /// The duration of the media in milliseconds.
+    public let durationMillis: Int?
+    
+    /// The id of the EPG program this media is for.
+    public let programId: String?
+    
+    /// The status of the media. "enabled" if playable.
+    public let status: String?
     
     public init?(json: Any) {
         let actualJson = JSON(json)

@@ -8,12 +8,15 @@
 
 import Foundation
 
+
+/// Defines an *Exposure request* filter on publicated assets.
+///
+/// - important: This filter is expected to be removed from *Exposure*. Best practice is to avoid.
 public protocol FilteredPublish {
     var publishFilter: PublishFilter { get set }
 }
 
 extension FilteredPublish {
-    // MARK: Published
     public var onlyPublished: Bool {
         return publishFilter.onlyPublished
     }

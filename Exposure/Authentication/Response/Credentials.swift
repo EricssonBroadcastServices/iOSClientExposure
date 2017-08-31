@@ -9,7 +9,9 @@
 import Foundation
 import SwiftyJSON
 
+/// `Credentials` response returned on a successful login attempt.
 public struct Credentials {
+    /// Keys used to specify `json` body for the request.
     fileprivate enum JSONKeys: String {
         case sessionToken = "sessionToken"
         case crmToken = "crmToken"

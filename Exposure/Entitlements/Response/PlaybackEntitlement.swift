@@ -9,39 +9,96 @@
 import Foundation
 import SwiftyJSON
 
+/// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement {
-    public let playToken: String? // Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
+    /// Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
+    public let playToken: String?
     
-    public let edrm: EDRMConfiguration? // The EDRM specific configuration. Will be empty if the status is not SUCCESS.
-    public let fairplay: FairplayConfiguration? // The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
-    public let mediaLocator: String? //The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
-    public let licenseExpiration: String? // The datetime of expiration of the drm license.
-    public let licenseExpirationReason: Status? //The reason of expiration of the drm license.
-    public let licenseActivation: String? // The datetime of activation of the drm license.,
-    public let playTokenExpiration: String? // The expiration of the the play token. The player needs to be initialized and done the play call before this.
-    public let entitlementType: EntitlementType? // The type of entitlement that granted access to this play.
-    public let live: Bool? // If this is a live entitlement.
-    public let playSessionId: String? // Unique id of this playback session, all analytics events for this session should be reported on with this id
-    public let ffEnabled: Bool? // If fast forward is enabled
-    public let timeshiftEnabled: Bool? // If timeshift is disabled
-    public let rwEnabled: Bool? // If rewind is enabled
-    public let minBitrate: Int? // Min bitrate to use
-    public let maxBitrate: Int? // Max bitrate to use
-    public let maxResHeight: Int? // Max height resolution
-    public let airplayBlocked: Bool? // If airplay is blocked
-    public let mdnRequestRouterUrl: String? // MDN Request Router Url
-    public let lastViewedOffset: Int? // Last viewed offset
+    /// The EDRM specific configuration. Will be empty if the status is not SUCCESS.
+    public let edrm: EDRMConfiguration?
     
+    /// The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
+    public let fairplay: FairplayConfiguration?
+    
+    /// The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
+    public let mediaLocator: String?
+    
+    /// The datetime of expiration of the drm license.
+    public let licenseExpiration: String?
+    
+    ///The reason of expiration of the drm license.
+    public let licenseExpirationReason: Status?
+    
+    /// The datetime of activation of the drm license.
+    public let licenseActivation: String?
+    
+    /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
+    public let playTokenExpiration: String?
+    
+    /// The type of entitlement that granted access to this play.
+    public let entitlementType: EntitlementType?
+    
+    /// If this is a live entitlement.
+    public let live: Bool?
+    
+    /// Unique id of this playback session, all analytics events for this session should be reported on with this id
+    public let playSessionId: String?
+    
+    /// If fast forward is enabled
+    public let ffEnabled: Bool?
+    
+    /// If timeshift is disabled
+    public let timeshiftEnabled: Bool?
+    
+    /// If rewind is enabled
+    public let rwEnabled: Bool?
+    
+    /// Min bitrate to use
+    public let minBitrate: Int?
+    
+    /// Max bitrate to use
+    public let maxBitrate: Int?
+    
+    /// Max height resolution
+    public let maxResHeight: Int?
+    
+    /// If airplay is blocked
+    public let airplayBlocked: Bool?
+    
+    /// MDN Request Router Url
+    public let mdnRequestRouterUrl: String?
+    
+    /// Last viewed offset. Used by *Session Shift*
+    public let lastViewedOffset: Int?
+    
+    /// Details the `PlaybackEntitlement`s *license* status
     public enum Status {
+        /// If the user is entitled.
         case success
+        
+        /// If the user is not entitled.
         case notEntitled
+        
+        /// If the user is in a country that is not allowed for the country.
         case geoBlocked
+        
         case downloadBlocked
+        
+        ///  If the user device is not allowed to play the asset.
         case deviceBlocked
+        
+        /// If the asset has expired.
         case licenseExpired
+        
+        /// If there is not registered media for the asset in the format.
         case notAvailableInFormat
+        
+        /// If the maximum number of concurrent stream limit is reached.
         case concurrentStreamsLimitReached
+        
+        /// If the media is registered but the current status is not enabled
         case notEnabled
+        
         case gapInEPG
         case epgPlayMaxHours
         case other(reason: String)

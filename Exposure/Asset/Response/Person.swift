@@ -10,8 +10,13 @@ import Foundation
 import SwiftyJSON
 
 public struct Person {
+    /// Identifier for `Person`
     public let personId: String?
+    
+    /// Specified name
     public let name: String?
+    
+    /// Title, function or similair
     public let function: String?
     
     public init?(json: Any) {

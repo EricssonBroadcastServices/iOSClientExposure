@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// *Exposure* endpoint integration for fetching *EPG* a specified channel
 public struct FetchEpgChannel: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates {
     public typealias Response = ChannelEpg
     
@@ -24,12 +25,16 @@ public struct FetchEpgChannel: Exposure, SortedResponse, PageableResponse, Filte
     }
     
     
+    // MARK: Filters
     public var sortDescription: SortDescription
     public var pageFilter: PageFilter
     public var publishFilter: PublishFilter
     public var dateFilter: DateFilter
     
+    /// Identifier for the requested channel
     public let channelId: String
+    
+    /// `Environment` to use
     public let environment: Environment
     
     internal init(environment: Environment, channelId: String) {
@@ -74,6 +79,9 @@ public struct FetchEpgChannel: Exposure, SortedResponse, PageableResponse, Filte
 
 // MARK: - Request
 extension FetchEpgChannel {
+    /// `FetchEpgChannel` request is specified as a `.get`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.get, encoding: ExposureURLEncoding.default)
     }
