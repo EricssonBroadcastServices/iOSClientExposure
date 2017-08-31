@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Defines the `json` payload loadable into an `AnalyticsBatch`
 public protocol AnalyticsPayload {
     var jsonPayload: [String: Any] { get }
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Delivery mechanism for `AnalyticsBatch`es.
 public struct SendBatch {
     /// MARK: Configuration
     /// Authorization: Bearer "sessionToken"
@@ -63,6 +64,9 @@ extension SendBatch: Exposure {
 }
 
 extension SendBatch {
+    /// `SendBatch` request is specified as a `.post`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.post)
     }
