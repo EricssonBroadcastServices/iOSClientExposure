@@ -78,7 +78,6 @@ extension ExposureRequest {
     ///
     /// - returns: The request.
     public func validate() -> Self {
-        dataRequest.validate()
         return self
     }
 }

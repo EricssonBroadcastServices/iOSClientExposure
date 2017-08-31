@@ -9,14 +9,14 @@
 import Foundation
 
 public struct AnalyticsBatch {
-    /// MARK: Configuration
+    // MARK: Configuration
     /// Authorization: Bearer "sessionToken"
     public let sessionToken: SessionToken
     
     /// Exposure environment
     public let environment: Environment
     
-    /// MARK: Parameters
+    // MARK: Parameters
     /// EMP Customer Group identifier
     public var customer: String {
         return environment.customer

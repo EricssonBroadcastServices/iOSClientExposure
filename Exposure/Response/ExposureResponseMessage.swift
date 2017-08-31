@@ -9,6 +9,24 @@
 import Foundation
 import SwiftyJSON
 
+/// *Exposure* may signal errors by transmitting a response message with a related `http` status code. Validating the related `ExposureRequest` is therefore good practice.
+///
+/// ```swift
+/// Entitlement(environment: myEnv,
+///             sessionToken: aToken)
+///     .vod(assetId)
+///     .request()
+///     .validate(statusCode: 200..<399) // Will throw ExposureError on code 400
+///     .response{ (exposureResponse: ExposureResponse<PlaybackEntitlement>) in
+///         if case let .exposureResponse(reason: reason) = exposureResponse.error {
+///             // Handle Exposure related error message
+///         }
+///     }
+/// ```
+///
+/// * 400 `INVALID_JSON` If JSON received is not valid JSON.
+/// * 401 `NO_SESSION_TOKEN` If the session token is missing.
+/// * 403 `FORBIDDEN` If this business unit has been configured to require server to server authentication, but it is not valid.
 public struct ExposureResponseMessage: ExposureConvertible {
     public let httpCode: Int
     public let message: String
