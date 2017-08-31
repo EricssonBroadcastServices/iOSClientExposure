@@ -8,8 +8,12 @@
 
 import SwiftyJSON
 
+/// Response struct detailing *server time*
 public struct ServerTime {
+    /// The number of milliseconds since epoch.
     public let epochMillis: UInt64?
+    
+    /// Current time as ISO 8601. In UTC.
     public let iso8601:String?
 }
 
