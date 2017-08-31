@@ -28,7 +28,10 @@ import SwiftyJSON
 /// * 401 `NO_SESSION_TOKEN` If the session token is missing.
 /// * 403 `FORBIDDEN` If this business unit has been configured to require server to server authentication, but it is not valid.
 public struct ExposureResponseMessage: ExposureConvertible {
+    /// `http` code returned by *Exposure*
     public let httpCode: Int
+    
+    /// Related error message returned by *Exposure*
     public let message: String
     
     public init?(json: Any) {

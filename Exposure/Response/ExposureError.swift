@@ -13,12 +13,21 @@ import Foundation
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
 public enum ExposureError: Error {
+    /// General Errors
     case generalError(error: Error)
+    
+    /// Serialization failed for some reason.
     case serialization(reason: SerializationFailureReason)
+    
+    /// *Exposure* responded with an error message
     case exposureResponse(reason: ExposureResponseMessage)
     
+    /// Raw data serializaiton failure.
     public enum SerializationFailureReason {
+        /// Failed to serilize json payload from response data.
         case jsonSerialization(error: Error)
+        
+        /// Failed to serialize object from json payload.
         case objectSerialization(reason: String, json: Any)
     }
 
