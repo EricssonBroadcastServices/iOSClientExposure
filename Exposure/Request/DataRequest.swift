@@ -10,6 +10,13 @@ import Foundation
 import Alamofire
 
 extension DataRequest {
+    /// Extends `DataRequest` to enable *Exposure* specific parsing.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter mapError: The error mapping function to convert between *untyped* `Error` and `ExposureError`.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    ///
+    /// - returns: The request.
     @discardableResult
     public func exposureResponse<Object: ExposureConvertible>(
         queue: DispatchQueue? = nil,

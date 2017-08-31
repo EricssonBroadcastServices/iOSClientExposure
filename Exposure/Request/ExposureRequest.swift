@@ -10,9 +10,17 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+/// Responsible for sending a request and receiving response from the server.
+///
+/// Errors are mapped to typed *ExposureErrors* by default. Specialized error handling can be performed through the `mapError(callback:)` function.
 public class ExposureRequest {
+    /// Internally handled by Alamofire
     internal let dataRequest: DataRequest
+    
+    /// Error mapping function where `error` and `data` are mapped to an `ExposureError`.
     internal var mapError: (Error, Data?) -> ExposureError
+    
+    /// Default error mapper tries to materialize an `ExposureResponseMessage` from the response `Data` if (and only if) an `Error` occured. Failure to do so will forward the `generalError`.
     internal init(dataRequest: DataRequest,
                   mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
         if let data = data {
@@ -28,6 +36,10 @@ public class ExposureRequest {
         self.mapError = mapError
     }
     
+    /// Customize the error mapping function
+    ///
+    /// - parameter callback: Callback to perform the error mapping
+    /// - returns: `Self`
     public func mapError(callback: @escaping (Error, Data?) -> ExposureError) -> Self {
         self.mapError = callback
         return self
@@ -35,6 +47,13 @@ public class ExposureRequest {
 }
 
 extension ExposureRequest {
+    /// Response materialization.
+    ///
+    /// Once the request has been created, calling this method will trigger the request and materialize the response.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    /// - returns: `Self`
     @discardableResult
     public func response<Object: ExposureConvertible>
         (queue: DispatchQueue? = nil,
@@ -52,7 +71,6 @@ extension ExposureRequest {
     /// If validation fails, subsequent calls to response handlers will have an associated error.
     ///
     /// - parameter range: The range of acceptable status codes.
-    ///
     /// - returns: The request.
     public func validate<S : Sequence where S.Iterator.Element == Int>(statusCode acceptableStatusCodes: S) -> Self {
         dataRequest.validate(statusCode: acceptableStatusCodes)
@@ -64,7 +82,6 @@ extension ExposureRequest {
     /// If validation fails, subsequent calls to response handlers will have an associated error.
     ///
     /// - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
-    ///
     /// - returns: The request.
     public func validate<S : Sequence where S.Iterator.Element == String>(contentType acceptableContentTypes: S) -> Self {
         dataRequest.validate(contentType: acceptableContentTypes)
