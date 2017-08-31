@@ -17,6 +17,9 @@ public protocol JSONEncodable {
     func toJSON() -> [String: Any]
 }
 
+/// Base protocol detailing the structure required interact with *Exposure*.
+///
+/// All requests to *Exposure* should adhere to this format.
 public protocol Exposure {
     /// Response type
     associatedtype Response
@@ -37,6 +40,7 @@ public protocol Exposure {
     var headers: Headers { get }
 }
 
+/// Ignoring local caches to allways retrieve fresh data.
 let sessionManager: SessionManager = {
     let configuration = URLSessionConfiguration.default
     configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -45,7 +49,11 @@ let sessionManager: SessionManager = {
 
 // MARK: - REST API
 extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
-    
+    /// Convenience method for making *Exposure* requests with a set of parameters and optional headers
+    ///
+    /// - parameter method: `Alamofire` specified `HTTPMethod`
+    /// - parameter encoding: Parameter encoding to use
+    /// - returns: `ExposureRequest` encapsulating the request to make
     internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         let dataRequest = sessionManager
             .request(endpointUrl,
@@ -59,6 +67,11 @@ extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
 
 
 extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
+    /// Convenience method for making *Exposure* requests with an optional set of parameters and headers
+    ///
+    /// - parameter method: `Alamofire` specified `HTTPMethod`
+    /// - parameter encoding: Parameter encoding to use
+    /// - returns: `ExposureRequest` encapsulating the request to make
     internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
         if let params = parameters {
             let dataRequest = sessionManager
