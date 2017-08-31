@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 
+/// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement {
     /// Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
     public let playToken: String?

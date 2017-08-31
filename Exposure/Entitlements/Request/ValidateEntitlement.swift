@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Content rights for specific assets are subject to change throughout a `PlaybackEntitlement`s life cycle. `ValidateEntitlement` offers a method to validate a previously granted *entitlement*, returning an updated `PlaybackEntitlement.Status`.
 public struct ValidateEntitlement: Exposure, DRMRequest {
     public typealias Response = EntitlementValidation
     
