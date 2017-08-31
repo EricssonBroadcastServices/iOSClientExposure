@@ -10,9 +10,14 @@ import Foundation
 import SwiftyJSON
 
 public struct ParentalRating {
-    public let country: String? // The two letter country code this rating is for.,
-    public let scheme: String? // The rating scheme, for instance MPAA.,
-    public let rating: String? // The rating, allowed values depends on the scheme.
+    /// The two letter country code this rating is for.
+    public let country: String?
+    
+    /// The rating scheme, for instance MPAA.
+    public let scheme: String?
+    
+    /// The rating, allowed values depends on the scheme.
+    public let rating: String?
     
     public init?(json: Any) {
         let actualJson = JSON(json)

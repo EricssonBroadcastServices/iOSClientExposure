@@ -10,11 +10,19 @@ import Foundation
 import SwiftyJSON
 
 public struct Image {
+    /// Path to where the image is located
     public let url: String?
+    
+    /// Height of the image
     public let height: Int?
+    
+    /// Width of the image
     public let width: Int?
     
+    /// Orientation of the image
     public let orientation: Orientation?
+    
+    /// Image type
     public let type: String?
     
     public init?(json: Any) {

@@ -68,7 +68,7 @@ public struct PlaybackEntitlement {
     /// MDN Request Router Url
     public let mdnRequestRouterUrl: String?
     
-    /// Last viewed offset
+    /// Last viewed offset. Used by *Session Shift*
     public let lastViewedOffset: Int?
     
     /// Details the `PlaybackEntitlement`s *license* status
