@@ -9,10 +9,11 @@
 * Usage
     - [Getting Started](#getting-started)
     - [Authentication: Best practices](#authentication\:-best-practices)
-    - [Requesting Playback Entitlements](#requesting-playback-entitlements)
+    - [Entitlement Requests and Streaming through  `Player`](#entitlement-requests-and-streaming-through-player)
     - [Fetching EPG](#fetching-epg)
     - [Fetching Assets](#fetching-assets)
-    - [Analytics delivery](#analytics-delivery)
+    - [Analytics Delivery](#analytics-delivery)
+    - [Fairplay Integration](#fairplay-integration)
     - [Error Handling](#error-handling)
 * [Release Notes](#release-notes)
 * [Upgrade Guides](#upgrade-guides)
@@ -64,16 +65,48 @@ Finally, make sure you add the `.framework`s to your targets *General -> Embedde
 `Exposure` conveys seamless integration with the *EMP Exposure Layer* and enables client applications quick access to functionality such as *authentication*, *entitlement requests* and *EPG*.
 
 ### Getting Started
+*EMP Exposure Layer* has three central concepts of special importance.
+
+* `Environment` Describes the customer specific *Exposure* environment
+* `SessionToken` Represents an authenticated user session
+* *Asset Id* A unique identifier for a media asset in the system.
+
+The basic building block of any interaction with the *EMP Exposure layer* is `Environment`. This `struct` details the customer specific information required to make requests.
+
+Besides an `Environment`, a valid `SessionToken` is required for accessing most of the functionality. This token is returned upon succesful authentication through the `Authenticate` endpoint.
+
+```Swift
+Authenticate(environment: exposureEnv)
+    .login(username: someUser,
+           password: somePassword)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<Credentials>) in
+        if let error = response.error {
+            // Handle Error
+        }
+        
+        if let credentials = response.value {
+            let sessionToken: SessionToken = credentials.sessionToken
+            
+            // Store/pass along the returned SessionToken
+        }
+    }
+```
+
+Finally, *Asset Id* refers to unique media assets and may represent items such as *tv shows*, *movies*, *tv channels* or *clips*. Client applications should use this id when refering to media in the *EMP system*.
 
 ### Authentication: Best Practices
 
-### Requesting Playback Entitlements
+### Entitlement Requests and Streaming through Player
 
 ### Fetching EPG
 
 ### Fetching Assets
 
 ### Analytics Delivery
+
+### Fairplay Integration
 
 ### Error Handling
 
