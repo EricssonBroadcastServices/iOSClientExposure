@@ -169,6 +169,7 @@ Entitlement(environment: environment,
     }
 ```
 
+#### Playback through `Player`
 `Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase.
 
 ```Swift
