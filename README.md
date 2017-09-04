@@ -169,6 +169,8 @@ Entitlement(environment: environment,
     }
 ```
 
+A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. Client applications should be aware of the importance of using `ExposureRequest.validate()` and handling the response as appropriate. For more information, please see [Error Handling](#error-handling).
+
 #### Playback through `Player`
 `Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase.
 
