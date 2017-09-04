@@ -147,6 +147,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		76009F9D1F5D44A7008E1738 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetRightsSpec.swift; sourceTree = "<group>"; };
 		761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedEntitySpec.swift; sourceTree = "<group>"; };
 		761336AE1ECB860300E316BF /* DeviceRightsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRightsSpec.swift; sourceTree = "<group>"; };
@@ -545,6 +546,7 @@
 		76A842A91EA75EC900BDAF2C /* Exposure */ = {
 			isa = PBXGroup;
 			children = (
+				76009F9D1F5D44A7008E1738 /* README.md */,
 				76380DA51EBC784800691342 /* fastlane */,
 				76A842C11EA7604F00BDAF2C /* Cartfile */,
 				76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */,
