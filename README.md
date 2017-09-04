@@ -186,6 +186,26 @@ catch {
 Using the `Player.stream(playback:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
 
 ### Fetching EPG
+*EPG*, or the *electronic programming guide*, details previous. current and upcomming programs on a specific channel. Client applications may request *EPG* data through the `FetchEpg` endpoint.
+
+#### Channel Lists
+`Exposure` supports fetching *EPG* for a set of channels, either all channels or filtered on `channelId`s.
+
+The example below fetches *EPG* for 3 specified channels from yesterday to tomorrow, limiting the result to 100 entries and sorting the returned `[ChannelEpg]` on *channelId* in a *descending order*.
+
+```Swift
+FetchEpg(environment: environment)
+    .channels(ids: ["channel_1_news", "ESPM_sports", "netflux_series")
+    .filter(starting: yesterdaysDate, ending: tomorrowsDate)
+    .sort(on: ["-channelId"])
+    .show(page: 1, spanning: 100)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<ChannelEpgList>) in
+        // Handle response
+    }
+```
+
 
 ### Fetching Assets
 
