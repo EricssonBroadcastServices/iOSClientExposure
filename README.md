@@ -8,7 +8,7 @@
 * [Installation](#installation)
 * Usage
     - [Getting Started](#getting-started)
-    - [Authentication: Best practices](#authentication\:-best-practices)
+    - [Authentication: Best practices](#authentication-best-practices)
     - [Entitlement Requests and Streaming through  `Player`](#entitlement-requests-and-streaming-through-player)
     - [Fetching EPG](#fetching-epg)
     - [Fetching Assets](#fetching-assets)
@@ -94,7 +94,6 @@ Finally, *Asset Id* refers to unique media assets and may represent items such a
 ### Authentication: Best Practices
 Retrieving, persisting, validating and destroying user `SessionToken`s lays a the heart of the *EMP Exposure layer*.
 
-
 Authentication requests return a valid `SessionToken` (or an encapsulating `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
 
 ```Swift
@@ -116,7 +115,7 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
-A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)`. Please note that `Exposure` will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid. It is thus a good idea to use the `validate()` method on `ExposureRequest`s.
+A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)`. Please note that `Exposure` will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid. It is thus a good idea to use the `validate()` method on `ExposureRequest`s. For more information about validation and `ExposureResponse`, please see [Error Handling](#error-handling)
 
 ```Swift
 Authenticate(environment: exposureEnv)
@@ -129,14 +128,59 @@ Authenticate(environment: exposureEnv)
         }
         
         if let stillValid = response.value {
-            // Optionally handle the data returned by Exposure in the form of the SessionResponse
+            // Optionally handle the data returned by Exposure in the form of a SessionResponse
         }
     }
 ```
 
-
+Destroying an authenticated user session is accomplished by calling `Authenticate.logout(sessionToken:)`
 
 ### Entitlement Requests and Streaming through Player
+Requesting entitlements is part of the core functionality delivered by the `Exposure` module. A `PlaybackEntitlement` contains all information required to create and start a playback session.
+
+Requests are made on *assetId* and return results based on the user associated with the supplied `SessionToken`. Three endpoints exist depending on the type of entitlement that is requested.
+
+```Swift
+let request = Entitlement(environment: environment, sessionToken: sessionToken)
+
+let vodRequest = request.vod(assetId: someAsset)
+let liveRequest = request.live(channelId: someChannel)
+let catchupRequest = request.catchup(channelId: someChannel, programId: someProgram)
+```
+
+Optionally, client applications can request a `DRM` other than the default  `.fairplay`. Please note that the `iOS` platform might not support the requested `DRM`. As for *Fairplay* `DRM`, `Exposure` supplies an out of the box implementation of `FairplayRequester` to handle rights management on the *EMP* platform. For more information, please see [Fairplay Integration](#fairplay-integration).
+
+```Swift
+Entitlement(environment: environment,
+           sessionToken: sessionToken)
+    .catchup(channelId: someChannel,
+             programId: someProgram)
+    .use(drm: .unencrypted)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<PlaybackEntitlement>) in
+        if let error = response.error {
+            // Handle error
+        }
+        
+        if let entitlement = response.value {
+            // Forward entitlement to playback view
+        }
+    }
+```
+
+`Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase.
+
+```Swift
+do {
+    player.stream(playback: anEntitlement)
+}
+catch {
+    // Handle errors
+}
+```
+
+Using the `Player.stream(playback:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
 
 ### Fetching EPG
 
