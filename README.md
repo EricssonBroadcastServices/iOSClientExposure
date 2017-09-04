@@ -79,24 +79,45 @@ Besides an `Environment`, a valid `SessionToken` is required for accessing most 
 Authenticate(environment: exposureEnv)
     .login(username: someUser,
            password: somePassword)
-    .request()
-    .validate()
-    .response{ (response: ExposureResponse<Credentials>) in
-        if let error = response.error {
-            // Handle Error
-        }
-        
-        if let credentials = response.value {
-            let sessionToken: SessionToken = credentials.sessionToken
-            
-            // Store/pass along the returned SessionToken
-        }
-    }
+
+Authenticate(environment: exposureEnv)
+    .twoFactor(username: someUser,
+               password: somePassword,
+              twoFactor: mfaCode)
+
+Authenticate(environment: exposureEnv)
+    .anonymous()
 ```
 
 Finally, *Asset Id* refers to unique media assets and may represent items such as *tv shows*, *movies*, *tv channels* or *clips*. Client applications should use this id when refering to media in the *EMP system*.
 
 ### Authentication: Best Practices
+Retrieving, persisting, validating and destroying user `SessionToken`s lays a the heart of the *EMP Exposure layer*.
+
+Several methods exist for dealing with user authentication through the `Authenticate` endpoint.
+
+```Swift
+Authenticate(environment: exposureEnv)
+    .login(username: someUser,
+           password: somePassword)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<Credentials>) in
+        if let error = response.error {
+           // Handle Error
+        }
+           
+        if let credentials = response.value {
+           let sessionToken: SessionToken = credentials.sessionToken
+           
+           // Store/pass along the returned SessionToken
+        }
+    }
+```
+
+Authentication requests return a valid `SessionToken` (or an encapsulating `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
+
+Please note that the `sessionToken` itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s through the `
 
 ### Entitlement Requests and Streaming through Player
 
