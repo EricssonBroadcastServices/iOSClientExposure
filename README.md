@@ -242,7 +242,7 @@ In addition, it is possible to filter on `DeviceType` and *assetIds*
 ```Swift
 let deviceFilteredRequest = pagedSortedRequest
     .filter(onlyAssetIds: ["amazing_show_s01_e01", "channel_1_news"]
-	.filter(on: .tablet)
+    .filter(on: .tablet)
 ```
 
 Finally, advanced queries can be performed using *elastic search* on related properties. For example, a filter for finding only assets with *HLS* and *Fairplay* media can be expressed as follows
