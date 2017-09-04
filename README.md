@@ -73,7 +73,7 @@ Finally, make sure you add the `.framework`s to your targets *General -> Embedde
 
 The basic building block of any interaction with the *EMP Exposure layer* is `Environment`. This `struct` details the customer specific information required to make requests.
 
-Besides an `Environment`, a valid `SessionToken` is required for accessing most of the functionality. This token is returned upon succesful authentication through the `Authenticate` endpoint.
+Besides an `Environment`, a valid `SessionToken` is required for accessing most of the functionality. This token is returned upon succesful authentication through the `Authenticate` endpoint. Several methods exist for dealing with user authentication, listed below.
 
 ```Swift
 Authenticate(environment: exposureEnv)
@@ -94,7 +94,8 @@ Finally, *Asset Id* refers to unique media assets and may represent items such a
 ### Authentication: Best Practices
 Retrieving, persisting, validating and destroying user `SessionToken`s lays a the heart of the *EMP Exposure layer*.
 
-Several methods exist for dealing with user authentication through the `Authenticate` endpoint.
+
+Authentication requests return a valid `SessionToken` (or an encapsulating `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
 
 ```Swift
 Authenticate(environment: exposureEnv)
@@ -115,9 +116,25 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
-Authentication requests return a valid `SessionToken` (or an encapsulating `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
+A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)`. Please note that `Exposure` will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid. It is thus a good idea to use the `validate()` method on `ExposureRequest`s.
 
-Please note that the `sessionToken` itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s through the `
+```Swift
+Authenticate(environment: exposureEnv)
+    .validate(sessionToken: someToken)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<SessionResponse>) in
+        if let case .exposureResponse(reason: reason) = error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
+            // Session is no longer valid.
+        }
+        
+        if let stillValid = response.value {
+            // Optionally handle the data returned by Exposure in the form of the SessionResponse
+        }
+    }
+```
+
+
 
 ### Entitlement Requests and Streaming through Player
 
