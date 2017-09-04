@@ -218,6 +218,47 @@ FetchEpg(environment: environment)
 ```
 
 ### Fetching Assets
+Client applications can fetch and filter assets on a variety of properties.
+
+It is possible to specify what data fields should be included in the response. The following request fetches `.all` fields in the `FieldSet`, excluding `publications.rights` and `tags`.
+
+```Swift
+let sortedListRequest = FetchAsset(environment: environment)
+    .list()
+    .use(fieldSet: .all)
+    .exclude(fields: ["publications.rights", "tags"])
+```
+
+Just as with *EPG*, it is possible to sort the response and limit it to a set number of entries
+
+```Swift
+let pagedSortedRequest = sortedListRequest
+    .sort(on: ["-publications.publicationDate","assetId"])
+    .show(page: 1, spanning: 100)
+```
+
+In addition, it is possible to filter on `DeviceType` and *assetIds*
+
+```Swift
+let deviceFilteredRequest = pagedSortedRequest
+    .filter(onlyAssetIds: ["amazing_show_s01_e01", "channel_1_news"]
+	.filter(on: .tablet)
+```
+
+Finally, advanced queries can be performed using *elastic search* on related properties. For example, a filter for finding only assets with *HLS* and *Fairplay* media can be expressed as follows
+
+```Swift
+let elasticSearchRequest = deviceFilteredRequest
+    .elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
+```
+For more information on how to construct queries, please see [Elastic Search](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/query-dsl-query-string-query.html) documentation.
+
+It is also possible to fetch an asset by Id
+
+```Swift
+FetchAsset(environment: environment)
+    .filter(assetId: "amazing_show_s01_e01")
+```
 
 ### Analytics Delivery
 
