@@ -305,14 +305,17 @@ sessionToken: sessionToken)
     .request()
     .validate(statusCode: 200..<299)
     .response{ [weak self] (response: ExposureResponse<PlaybackEntitlement>) in
-    if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 401) {
-        // Handle error
-        self?.notifyUser(errorCode: reason.httpCode, withReason: reason.message)
+        if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 401) {
+            // Handle error
+            self?.notifyUser(errorCode: reason.httpCode, withReason: reason.message)
+        }
+        ...
     }
-    ...
-}
 ```
 
+Errors delivered as an `ExposureResponseMessage` should, for the most part, not be considered *fatal*. They convey server intent. Some may however block client applications from proceeding with the intended *navigation flow*. For example, `ExposureResponseMessage` received when using `Authenticate` results in the user failing to log in. This in turn will block entitlement requests and thus make playback initialization impossible.
+
+It is up to the client application to decide how to best handle `ExposureResponseMessage`s.
 
 ## Release Notes
 Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/CHANGELOG.md).
