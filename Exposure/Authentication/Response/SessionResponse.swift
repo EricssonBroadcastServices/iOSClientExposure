@@ -14,7 +14,7 @@ public struct SessionResponse {
     /// Keys used to specify `json` body for the request.
     fileprivate enum JSONKeys: String {
         case crmToken = "crmToken"
-        case accountId = "accoundId"
+        case accountId = "accountId"
         case userId = "userId"
     }
     

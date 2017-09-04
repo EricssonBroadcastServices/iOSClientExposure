@@ -26,7 +26,7 @@ class SessionResponseSpec: QuickSpec {
             }
             
             it("should succeed with partial response") {
-                let value = Marker(json: SessionResponseJSON.missingKeys())
+                let value = SessionResponse(json: SessionResponseJSON.missingKeys())
                 
                 expect(value).toNot(beNil())
                 expect(value!.crmToken).toNot(beNil())
