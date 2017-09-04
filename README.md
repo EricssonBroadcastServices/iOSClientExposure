@@ -273,6 +273,7 @@ FetchAsset(environment: environment)
 ### Analytics Delivery
 
 ### Fairplay Integration
+`Exposure` provides out of the box integration for managing *EMP* configured *Fairplay* `DRM` protection. By using the `Player.stream(playback:)` function start playback the framework automatically configures `player` to use an `ExposureFairplayRequester` as its `FairplayRequester`.
 
 ### Error Handling
 
