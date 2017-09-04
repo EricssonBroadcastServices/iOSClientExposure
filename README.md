@@ -250,6 +250,11 @@ Finally, advanced queries can be performed using *elastic search* on related pro
 ```Swift
 let elasticSearchRequest = deviceFilteredRequest
     .elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<AssetList>) in
+        // Handle response
+    }
 ```
 For more information on how to construct queries, please see [Elastic Search](https://www.elastic.co/guide/en/elasticsearch/reference/1.7/query-dsl-query-string-query.html) documentation.
 
@@ -258,6 +263,11 @@ It is also possible to fetch an asset by Id
 ```Swift
 FetchAsset(environment: environment)
     .filter(assetId: "amazing_show_s01_e01")
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<Asset>) in
+        // Handle response
+    }
 ```
 
 ### Analytics Delivery
