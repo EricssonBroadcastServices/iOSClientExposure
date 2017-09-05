@@ -11,8 +11,12 @@ import AVFoundation
 import Player
 import Alamofire
 
+/// *Exposure* specific implementation of the `FairplayRequester` protocol.
+///
+/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
 internal class ExposureFairplayRequester: NSObject, FairplayRequester {
-    let entitlement: PlaybackEntitlement
+    /// Entitlement related to this specific *Fairplay* request.
+    internal let entitlement: PlaybackEntitlement
     
     init(entitlement: PlaybackEntitlement) {
         self.entitlement = entitlement
@@ -20,43 +24,14 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     
     /// The DispatchQueue to use for AVAssetResourceLoaderDelegate callbacks.
     fileprivate let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.resourcerequests")
+    
     /// The URL scheme for FPS content.
     static let customScheme = "skd"
     
-    /// When iOS asks the app to provide a CK, the app invokes
-    /// the AVAssetResourceLoader delegate’s implementation of
-    /// its -resourceLoader:shouldWaitForLoadingOfRequestedResource:
-    /// method. This method provides the delegate with an instance
-    /// of AVAssetResourceLoadingRequest, which accesses the
-    /// underlying NSURLRequest for the requested resource together
-    /// with support for responding to the request.
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
-        return canHandle(resourceLoadingRequest: loadingRequest)
-    }
-    
-    
-    /// Delegates receive this message when assistance is required of the application
-    /// to renew a resource previously loaded by
-    /// resourceLoader:shouldWaitForLoadingOfRequestedResource:. For example, this
-    /// method is invoked to renew decryption keys that require renewal, as indicated
-    /// in a response to a prior invocation of
-    /// resourceLoader:shouldWaitForLoadingOfRequestedResource:. If the result is
-    /// YES, the resource loader expects invocation, either subsequently or
-    /// immediately, of either -[AVAssetResourceRenewalRequest finishLoading] or
-    /// -[AVAssetResourceRenewalRequest finishLoadingWithError:]. If you intend to
-    /// finish loading the resource after your handling of this message returns, you
-    /// must retain the instance of AVAssetResourceRenewalRequest until after loading
-    /// is finished. If the result is NO, the resource loader treats the loading of
-    /// the resource as having failed. Note that if the delegate's implementation of
-    /// -resourceLoader:shouldWaitForRenewalOfRequestedResource: returns YES without
-    /// finishing the loading request immediately, it may be invoked again with
-    /// another loading request before the prior request is finished; therefore in
-    /// such cases the delegate should be prepared to manage multiple loading
-    /// requests.
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForRenewalOfRequestedResource renewalRequest: AVAssetResourceRenewalRequest) -> Bool {
-        return canHandle(resourceLoadingRequest: renewalRequest)
-    }
-    
+    /// Starting point for the *Fairplay* validation chain. Note that returning `false` from this method does not automatically mean *Fairplay* validation failed.
+    /// 
+    /// - parameter resourceLoadingRequest: loading request to handle
+    /// - returns: ´true` if the requester can handle the request, `false` otherwise.
     fileprivate func canHandle(resourceLoadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         
         guard let url = resourceLoadingRequest.request.url else {
@@ -75,7 +50,15 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         return true
     }
     
-    
+    /// Handling a *Fairplay* validation request is a process in several parts:
+    ///
+    /// * Fetch and parse the *Application Certificate*
+    /// * Request a *Server Playback Context*, `SPC`, for the specified asset using the *Application Certificate*
+    /// * Request a *Content Key Context*, `CKC`, for the validated `SPC`.
+    ///
+    /// If this process fails, the `resourceLoadingRequest` will call `resourceLoadingRequest.finishLoading(with: someError`.
+    ///
+    /// For more information regarding *Fairplay* validation, please see Apple's documentation regarding *Fairplay Streaming*.
     fileprivate func handle(resourceLoadingRequest: AVAssetResourceLoadingRequest) {
         
         guard let url = resourceLoadingRequest.request.url,
@@ -148,8 +131,14 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
             }
         }
     }
-    
-    // MARK: Application Certificate
+}
+
+// MARK: - Application Certificate
+extension ExposureFairplayRequester {
+    /// The *Application Certificate* is fetched from a server specified by a `certificateUrl` delivered in the *entitlement* obtained through *Exposure*.
+    ///
+    /// - note: This method uses a specialized function for parsing the retrieved *Application Certificate* from an *MRR specific* format.
+    /// - parameter callback: fires when the certificate is fetched or when an `error` occurs.
     fileprivate func fetchApplicationCertificate(callback: @escaping (Data?, PlayerError?) -> Void) {
         guard let url = certificateUrl else {
             callback(nil, .fairplay(reason: .missingApplicationCertificateUrl))
@@ -158,7 +147,8 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         
         Alamofire
             .request(url, method: .get)
-            .responseData{ [unowned self] response in
+            .responseData{ [weak self] response in
+                
                 if let error = response.error {
                     callback(nil, .fairplay(reason: .networking(error: error)))
                     return
@@ -166,7 +156,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
                 
                 if let success = response.value {
                     do {
-                        let certificate = try self.parseApplicationCertificate(response: success)
+                        let certificate = try self?.parseApplicationCertificate(response: success)
                         callback(certificate, nil)
                     }
                     catch {
@@ -177,6 +167,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         }
     }
     
+    /// Retrieve the `certificateUrl` by parsing the *entitlement*.
     fileprivate var certificateUrl: URL? {
         guard let urlString = entitlement.fairplay?.certificateUrl else { return nil }
         return URL(string: urlString)
@@ -185,17 +176,20 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     /// MRR Application Certificate response format is XML
     ///
     /// Success format
+    /// ```xml
     /// <fps>
     ///    <checksum>82033743d5c0</checksum>
     ///    <version>1.2.3.400</version>
     ///    <hostname>host.example.com</hostname>
     ///    <cert>MIIExzCCA6+gAwIBAgIIVRMcpsYSxcIwDQYJKoZIhvcNAQEFBQAwfzELMAkGA1UE</cert>
     /// </fps>
+    /// ```
     ///
-    /// fps.cert: Contains the Application Certificate as base64 encoded string
+    /// `<fps/><cert/>` Contains the Application Certificate as base64 encoded string
     ///
     ///
     /// Error format
+    /// ```xml
     /// <error>
     ///    <checksum>82033743d5c0</checksum>
     ///    <version>1.2.3.400</version>
@@ -203,6 +197,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     ///    <code>500</code>
     ///    <message>Error message</message>
     /// </error>
+    /// ```
     fileprivate func parseApplicationCertificate(response data: Data) throws -> Data {
         let xml = SWXMLHash.parse(data)
         // MRR Certifica
@@ -221,9 +216,16 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         }
         throw PlayerError.fairplay(reason: .applicationCertificateParsing)
     }
-    
-    
-    // MARK: Content Key Context
+}
+
+// MARK: - Content Key Context
+extension ExposureFairplayRequester {
+    /// Fetching a *Content Key Context*, `CKC`, requires a valid *Server Playback Context*.
+    ///
+    /// - note: This method uses a specialized function for parsing the retrieved *Content Key Context* from an *MRR specific* format.
+    ///
+    /// - parameter spc: *Server Playback Context*
+    /// - parameter callback: fires when `CKC` is fetched or when an `error` occurs.
     fileprivate func fetchContentKeyContext(spc: Data, callback: @escaping (Data?, PlayerError?) -> Void) {
         guard let url = licenseUrl else {
             callback(nil, .fairplay(reason: .missingContentKeyContextUrl))
@@ -263,6 +265,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         }
     }
     
+    /// Retrieve the `licenseUrl` by parsing the *entitlement*.
     fileprivate var licenseUrl: URL? {
         guard let urlString = entitlement.fairplay?.licenseAcquisitionUrl else { return nil }
         return URL(string: urlString)
@@ -271,17 +274,20 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     /// MRR Content Key Context response format is XML
     ///
     /// Success format
+    /// ```xml
     /// <fps>
     ///    <checksum>82033743d5c0</checksum>
     ///    <version>1.2.3.400</version>
     ///    <hostname>host.example.com</hostname>
     ///    <ckc>MIIExzCCA6+gAwIBAgIIVRMcpsYSxcIwDQYJKoZIhvcNAQEFBQAwfzELMAkGA1UE</cert>
     /// </fps>
+    /// ```
     ///
-    /// fps.ckc: Contains the Application Certificate as base64 encoded string
+    /// `<fps/><ckc/>` Contains the Application Certificate as base64 encoded string
     ///
     ///
     /// Error format
+    /// ```xml
     /// <error>
     ///    <checksum>82033743d5c0</checksum>
     ///    <version>1.2.3.400</version>
@@ -289,6 +295,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     ///    <code>500</code>
     ///    <message>Error message</message>
     /// </error>
+    /// ```
     fileprivate func parseContentKeyContext(response data: Data) throws -> Data {
         let xml = SWXMLHash.parse(data)
         if let ckc = xml["fps"]["ckc"].element?.text {
@@ -305,5 +312,17 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
             throw PlayerError.fairplay(reason: .contentKeyContextServer(code: code, message: message))
         }
         throw PlayerError.fairplay(reason: .contentKeyContextParsing)
+    }
+    
+}
+
+// MARK: - AVAssetResourceLoaderDelegate
+extension ExposureFairplayRequester {
+    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
+        return canHandle(resourceLoadingRequest: loadingRequest)
+    }
+    
+    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForRenewalOfRequestedResource renewalRequest: AVAssetResourceRenewalRequest) -> Bool {
+        return canHandle(resourceLoadingRequest: renewalRequest)
     }
 }

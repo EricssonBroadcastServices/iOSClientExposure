@@ -8,9 +8,11 @@
 
 import Foundation
 
+/// Request *server time*. This may be used to detect client clock drift or simply synchronizing client and server timestamps.
 public struct FetchServerTime: Exposure {
     public typealias Response = ServerTime
     
+    /// `Environment` to use
     public let environment: Environment
     
     public init(environment: Environment) {
@@ -31,6 +33,9 @@ public struct FetchServerTime: Exposure {
 }
 
 extension FetchServerTime {
+    /// `FetchServerTime` request is specified as a `.get`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.get)
     }

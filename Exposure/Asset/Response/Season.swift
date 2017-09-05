@@ -10,28 +10,47 @@ import Foundation
 import SwiftyJSON
 
 public struct Season {
+    /// When this `Season` was created
     public let created: String?
+    
+    /// Last known change made to the entry
     public let changed: String?
+    
+    /// Season
     public let season: String?
     
+    /// Associated `Tag`s
     public let tags: [Tag]?
+    
+    /// Localization and internationalization
     public let localized: [LocalizedData]?
     
     public let tvShowId: String?
     public let seasonId: String?
+    
+    /// Number of eposides available in this season
     public let episodeCount: Int?
     
+    /// Episodes for this season
     public let episodes: [Asset]?
     
+    /// Date when the season was published, in UTC format
     public let publishedDate: String?
+    
+    /// Date when the season was made available, in UTC format
     public let availableDate: String?
+    
+    /// Year when the season premiered
     public let startYear: Int?
+    
+    /// Year when the season ended
     public let endYear: Int?
     
     public let linkedEntities: [LinkedEntity]?
     public let externalReferences: [ExternalReference]?
-    public let customData: [String: Any]?
     
+    /// Any custom data in `json` format
+    public let customData: [String: Any]?
     
     public init?(json: Any) {
         let actualJson = JSON(json)

@@ -8,7 +8,10 @@
 
 import Foundation
 
+/// Defines a `DRM` request format used by *Exposure*.
 public protocol DRMRequest {
+    
+    /// Request to apply.
     var playRequest: PlayRequest { get set }
 }
 
@@ -16,22 +19,34 @@ extension DRMRequest {
     public typealias DRM = PlayRequest.DRM
     public typealias Format = PlayRequest.Format
     
-    // MARK: DRM
+    /// Requested `DRM`
     public var drm: DRM {
         return playRequest.drm
     }
     
+    /// Specifies the `DRM` to request
+    ///
+    /// Please note that playback may not be supported for all DRM formats. For more information please consult `Player` documentation.
+    ///
+    /// - parameter value: selected `DRM`
+    /// - returns: `Self`
     public func use(drm value: DRM) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: value, format: format)
         return old
     }
     
-    // MARK: Format
+    /// Requested `Format`
     public var format: Format {
         return playRequest.format
     }
     
+    /// Specifies the `Format` to request
+    ///
+    /// Please note that playback may not be supported for all formats. For more information please consult `Player` documentation.
+    ///
+    /// - parameter value: selected `Format`
+    /// - returns: `Self`
     public func use(format value: Format) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: drm, format: value)
@@ -39,6 +54,7 @@ extension DRMRequest {
     }
 }
 
+/// Used internally to configure the `DRM` request.
 public struct PlayRequest {
     internal let drm: DRM
     internal let format: Format
@@ -48,7 +64,9 @@ public struct PlayRequest {
         self.format = format
     }
     
-    /// The requested DRM. The token will be adapted according to this parameter.
+    /// The requested DRM. The playToken will be adapted according to this parameter.
+    ///
+    /// Please note that playback may not be supported for all DRM formats. For more information please consult `Player` documentation.
     public enum DRM: String {
         case playready = "PLAYREADY"
         case edrm = "EDRM"
@@ -59,6 +77,8 @@ public struct PlayRequest {
     }
     
     /// The requested format. The server will make sure that the asset is available in this format.
+    ///
+    /// Please note that playback may not be supported for all formats. For more information please consult `Player` documentation.
     public enum Format: String {
         case dash = "DASH"
         case smoothstreaming = "SMOOTHSTREAMING"
@@ -76,6 +96,7 @@ extension PlayRequest: JSONEncodable {
             ]
     }
     
+    /// Keys used to specify `json` body for the request.
     internal enum JSONKeys: String {
         case drm = "drm"
         case format = "format"

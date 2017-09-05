@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// *Exposure* defines a set of *device types*. For the joint `iOS`/`tvOS` platform only a handful of them are relevant. All of them are included here for completeness sake but this is subject to change.
 public enum DeviceType {
     case web
     case mobile
@@ -36,6 +37,11 @@ public enum DeviceType {
         }
     }
     
+    /// Initializer for creating `DeviceType`s used for the joint `iOS`/`tvOS` platform.
+    ///
+    /// - note: Default value if no matches found equals to `.mobile`
+    ///
+    /// - parameter model: *System* description of the current device.
     internal init(model: String) {
         switch model {
         case "iPhone": self = .mobile
@@ -45,6 +51,7 @@ public enum DeviceType {
         }
     }
     
+    /// Keys used to specify `DeviceType` as a query parameter for the request.
     internal var queryParam: String {
         switch self {
         case .web: return "WEB"

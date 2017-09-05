@@ -9,7 +9,9 @@
 import Foundation
 import SwiftyJSON
 
+/// `Credentials` response returned on a successful login attempt.
 public struct Credentials {
+    /// Keys used to specify `json` body for the request.
     fileprivate enum JSONKeys: String {
         case sessionToken = "sessionToken"
         case crmToken = "crmToken"
@@ -18,10 +20,19 @@ public struct Credentials {
         case accountStatus = "accountStatus"
     }
     
+    /// The session token to use for subsequent requests.
     public let sessionToken: SessionToken
+    
+    ///  The token of the underlying CRM to use if talking directly to the CRM.
     public let crmToken: String?
+    
+    /// The id of the account in the CRM.
     public let accountId: String?
+    
+    /// The time when the session expires
     public let expiration: Date?
+    
+    /// The status of the account
     public let accountStatus: String?
     
     public init(sessionToken: SessionToken, crmToken: String?, accountId: String?, expiration: Date?, accountStatus: String?) {

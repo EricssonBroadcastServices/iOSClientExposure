@@ -10,34 +10,72 @@ import Foundation
 import SwiftyJSON
 
 public struct Asset {
+    /// Date when this asset was created, in UTC format.
     public let created: String?
+    
+    /// Date when this asset was last changed, in UTC format.
     public let changed: String?
+    
+    /// Identifier for the asset
     public let assetId: String?
+    
+    /// Asset type
     public let type: AssetType?
+    
+    /// Localization data
     public let localized: [LocalizedData]?
+    
+    /// Associated tags
     public let tags: [Tag]?
+    
+    /// Publications
     public let publications: [Publication]?
+    
     
     public let episode: String?
     public let season: String?
     public let seasonId: String?
+    
+    /// Seasons related to this asset.
     public let seasons: [Season]?
+    
+    /// People associated with this asset
     public let participants: [Person]?
+    
+    /// Year produced
     public let productionYear: Int?
     public let popularityScores: [String: Any]?
+    
+    /// Date when this asset was released, in UTC format.
     public let releaseDate: String?
+    
+    /// Original title
     public let originalTitle: String?
     
+    /// If this asset is a live asset
     public let live: Bool?
     public let productionCountries: [String]?
+    
+    /// Subtitles available for the asset
     public let subtitles: [String]?
+    
+    /// Audio tracks available for the asset
     public let audioTracks: [String]?
+    
+    /// Spoken languages during playback
     public let spokenLanguages: [String]?
+    
+    /// Different media formats available
     public let medias: [Media]?
+    
+    /// Parental ratings
     public let parentalRatings: [ParentalRating]?
     
+    
     public let linkedEntities: [LinkedEntity]?
-    public let runtime: Int? // The duration of the asset in seconds.,
+    
+    /// The duration of the asset in seconds.
+    public let runtime: Int?
     public let tvShowId: String?
     public let expires: String?
     public let customData: [String: Any]?
@@ -45,7 +83,11 @@ public struct Asset {
     public let rating: Float?
     
     public let markers: [Marker]?
+    
+    /// When this asset was last viewed.
     public let lastViewedTime: Int?
+    
+    /// Offset from where last playback ended. Used by *Session Shift* to enable bookmarking functionality.
     public let lastViewedOffset: Int?
 }
 

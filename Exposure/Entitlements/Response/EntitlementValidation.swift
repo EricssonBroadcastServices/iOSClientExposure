@@ -9,10 +9,17 @@
 import Foundation
 import SwiftyJSON
 
+/// Response detailing the result of an `EntitlementValidation` request.
+///
+/// Will return 200 even if user is not entitled with the result being in the `status` message.
 public struct EntitlementValidation: ExposureConvertible {
     public typealias Status = PlaybackEntitlement.Status
-    let status: Status? //The status of the entitlement
-    let paymentDone: Bool? //The status of the payment
+    
+    /// The status of the entitlement
+    public let status: Status?
+    
+    /// The status of the payment
+    public let paymentDone: Bool?
     
     public init?(json: Any){
         let actualJSON = SwiftyJSON.JSON(json)

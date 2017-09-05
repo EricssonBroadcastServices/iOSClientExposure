@@ -10,6 +10,7 @@ import Foundation
 import SwiftyJSON
 
 public struct Publication {
+    
     public let publicationDate: String?
     public let fromDate: String?
     public let toDate: String?
@@ -22,7 +23,6 @@ public struct Publication {
     public let customData: [String: Any]? // JsonNode
     public let rights: AssetRights?
     public let devices: [DeviceRights]?
-    
     
     public init?(json: Any) {
         let actualJson = JSON(json)

@@ -10,17 +10,20 @@ import Foundation
 import SwiftyJSON
 
 extension Date {
+    /// Date formatter for utc.
     public static func utcFormatter() -> DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return formatter
     }
     
-    public var millisecondsSince1970: UInt64 {
-        return UInt64((timeIntervalSince1970 * 1000.0).rounded())
+    /// Unix epoch time in milliseconds
+    public var millisecondsSince1970: Int64 {
+        return Int64((timeIntervalSince1970 * 1000.0).rounded())
     }
     
-    public init(milliseconds: UInt64) {
+    /// Create a Date from unix epoch time in milliseconds
+    public init(milliseconds: Int64) {
         self = Date(timeIntervalSince1970: TimeInterval(milliseconds / 1000))
     }
 }

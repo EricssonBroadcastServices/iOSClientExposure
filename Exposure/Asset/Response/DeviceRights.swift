@@ -10,14 +10,16 @@ import Foundation
 import SwiftyJSON
 
 public struct DeviceRights {
-    
+    /// Device type this rights concerns
     public let type: DeviceType?
+    
     public let model: String?
     public let manufacturer: String?
     public let os: String?
     public let osVersion: String?
-    public let rights: AssetRights?
     
+    /// Asset rights specific for this device
+    public let rights: AssetRights?
     
     public init?(json: Any) {
         let actualJson = JSON(json)

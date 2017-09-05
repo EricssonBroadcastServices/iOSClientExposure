@@ -9,10 +9,16 @@
 import Foundation
 import SwiftyJSON
 
+/// `ChannelEpgList` response contains *EPG* information for a set of channels.
 public struct ChannelEpg: ExposureConvertible {
+    /// Id of the requested channel
     public let channelId: String?
+    
+    /// Programs on the channel
     public let programs: [Program]?
-    public let totalHitsAllChannels: Int? //This is the total number of hits for all channels, not only this.
+    
+    /// This is the total number of hits for all channels, not only this.
+    public let totalHitsAllChannels: Int?
     
     public init?(json: Any) {
         let actualJson = JSON(json)

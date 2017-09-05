@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// *Exposure* endpoint integration for fetching *Program Data* for a specific program.
 public struct FetchEpgProgram: Exposure, FilteredPublish {
     public typealias Response = Program
     
@@ -23,13 +24,17 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
         return nil
     }
     
-    
+    // MARK: Filters
     public var publishFilter: PublishFilter
-    
     internal var internalQuery: Query
     
+    /// `Environment` to use
     public let environment: Environment
+    
+    /// Identifier for the requested channel
     public let channelId: String
+    
+    /// Identifier for the requested program
     public let programId: String
     
     internal init(environment: Environment, channelId: String, programId: String) {
@@ -45,7 +50,7 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
     }
     
     internal var queryParams: [String: Any] {
-        var params:[String: Any] = [
+        let params:[String: Any] = [
             Keys.onlyPublished.rawValue: publishFilter.onlyPublished
         ]
         
@@ -76,6 +81,9 @@ extension FetchEpgProgram {
 
 // MARK: - Request
 extension FetchEpgProgram {
+    /// `FetchEpgProgram` request is specified as a `.get`
+    ///
+    /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
         return request(.get, encoding: ExposureURLEncoding.default)
     }
