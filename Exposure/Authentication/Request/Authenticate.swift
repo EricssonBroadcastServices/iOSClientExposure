@@ -55,4 +55,9 @@ extension Authenticate {
         return Logout(sessionToken: sessionToken,
                       environment: environment)
     }
+    
+    public func validate(sessionToken: SessionToken) -> ValidateSessionToken {
+        return ValidateSessionToken(sessionToken: sessionToken,
+                                    environment: environment)
+    }
 }
