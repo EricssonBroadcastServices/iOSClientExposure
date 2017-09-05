@@ -337,5 +337,6 @@ No formalised roadmap has yet been established but an extensive backlog of possi
 - [ ] User playback history
 - [ ] User preferences
 - [ ] Device management
+- [ ] Swift 4: Replace SwiftyJSON with native Codable 
 
 ## Contributing
