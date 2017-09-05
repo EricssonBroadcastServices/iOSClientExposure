@@ -34,7 +34,7 @@
 * `Swift` 3.0+
 * `Xcode` 8.2.1+
 * Framework dependencies
-    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientExposure)
+    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
     - [`SwiftyJSON`](https://github.com/SwiftyJSON/SwiftyJSON)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
