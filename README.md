@@ -3,7 +3,7 @@
 # Exposure
 
 * [Features](#features)
-* [License](https://github.com/EricssonBroadcastServices/iOSClientExposure/LICENSE)
+* [License](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/LICENSE)
 * [Requirements](#requirements)
 * [Installation](#installation)
 * Usage
