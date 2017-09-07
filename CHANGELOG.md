@@ -7,6 +7,7 @@
 NO RELEASE DATE SET YET
 
 #### Bug fixes
+* `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.
 * `EMP-10298` `ExposureRequest.validate()` should now correctly validate on statusCodes and content type.
 * `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`.
 
