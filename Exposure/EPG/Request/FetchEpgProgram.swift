@@ -85,6 +85,6 @@ extension FetchEpgProgram {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
-        return request(.get, encoding: ExposureURLEncoding.default)
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }
