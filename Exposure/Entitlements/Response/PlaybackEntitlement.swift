@@ -177,6 +177,13 @@ extension PlaybackEntitlement: ExposureConvertible {
         airplayBlocked = actualJSON[JSONKeys.airplayBlocked.rawValue].bool
         mdnRequestRouterUrl = actualJSON[JSONKeys.mdnRequestRouterUrl.rawValue].string
         lastViewedOffset = actualJSON[JSONKeys.lastViewedOffset.rawValue].int
+        
+        if (playToken == nil && fairplay == nil && mediaLocator == nil && licenseExpiration == nil && licenseExpirationReason == nil)
+            && (licenseActivation == nil && playTokenExpiration == nil && entitlementType == nil && live == nil && playSessionId == nil)
+            && (ffEnabled == nil && timeshiftEnabled == nil && rwEnabled == nil && minBitrate == nil && maxBitrate == nil)
+            && (maxResHeight == nil && airplayBlocked == nil && mdnRequestRouterUrl == nil && lastViewedOffset == nil) {
+            return nil
+        }
     }
     
     internal enum JSONKeys: String {

@@ -47,7 +47,32 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "maxBitrate":20,
                     "maxResHeight":30,
                     "airplayBlocked":false,
-                    "mdnRequestRouterUrl":"mdnRequestRouterUrl"
+                    "mdnRequestRouterUrl":"mdnRequestRouterUrl",
+                    "lastViewedOffset":10
+                ]
+                
+                let entitlement = PlaybackEntitlement(json: json)
+                
+                expect(entitlement).toNot(beNil())
+            }
+            
+            it("should not init with invalid json") {
+                let entitlement = PlaybackEntitlement(json: ["invalid":"JSON"])
+                
+                expect(entitlement).to(beNil())
+            }
+            
+            it("should not init with empty json") {
+                let entitlement = PlaybackEntitlement(json: [:])
+                
+                expect(entitlement).to(beNil())
+            }
+            
+            it("should init with partial json") {
+                
+                let json:[String: Any] = [
+                    "playToken":"playToken",
+                    "mediaLocator":"mediaLocator"
                 ]
                 
                 let entitlement = PlaybackEntitlement(json: json)
@@ -56,14 +81,20 @@ class PlaybackEntitlementSpec: QuickSpec {
             }
             
             it("should not create invalid EDRMConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let entitlement = PlaybackEntitlement(json: [
+                    "playToken":"playToken",
+                    "mediaLocator":"mediaLocator"
+                    ])
                 
                 expect(entitlement).toNot(beNil())
                 expect(entitlement?.edrm).to(beNil())
             }
             
             it("should not create invalid FairplayConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let entitlement = PlaybackEntitlement(json: [
+                    "playToken":"playToken",
+                    "mediaLocator":"mediaLocator"
+                    ])
                 
                 expect(entitlement).toNot(beNil())
                 expect(entitlement?.fairplay).to(beNil())
