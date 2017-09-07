@@ -7,7 +7,8 @@
 NO RELEASE DATE SET YET
 
 #### Bug fixes
-* `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`
+* `EMP-10298` `ExposureRequest.validate()` should now correctly validate on statusCodes and content type.
+* `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`.
 
 ## 0.2.0
 Released 5 Sep 2017
