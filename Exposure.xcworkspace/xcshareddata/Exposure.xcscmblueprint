@@ -21,7 +21,7 @@
     "67620B5EFA902936DF04070AF595B76AB0333747" : "iOSClientExposure\/Carthage\/Checkouts\/Alamofire\/",
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "iOSClientExposure\/Carthage\/Checkouts\/SwiftyJSON\/",
     "214A69DBE68449124238BBE07F858F4905887B1B" : "iOSClientExposure\/",
-    "B30894CAEEC5ADF2BD3B0062DFB2EF32B12F989D" : "iOSClientExposure\/Carthage\/Checkouts\/iOSClientPlayer\/",
+    "B30894CAEEC5ADF2BD3B0062DFB2EF32B12F989D" : "iOSClientPlayer\/",
     "2202450528CFA50DD806F0340B3987713E89BFB6" : "iOSClientExposure\/Carthage\/Checkouts\/Mockingjay\/URITemplate\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Exposure",

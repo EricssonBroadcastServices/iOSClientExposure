@@ -81,14 +81,20 @@ class PlaybackEntitlementSpec: QuickSpec {
             }
             
             it("should not create invalid EDRMConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let entitlement = PlaybackEntitlement(json: [
+                    "playToken":"playToken",
+                    "mediaLocator":"mediaLocator"
+                    ])
                 
                 expect(entitlement).toNot(beNil())
                 expect(entitlement?.edrm).to(beNil())
             }
             
             it("should not create invalid FairplayConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let entitlement = PlaybackEntitlement(json: [
+                    "playToken":"playToken",
+                    "mediaLocator":"mediaLocator"
+                    ])
                 
                 expect(entitlement).toNot(beNil())
                 expect(entitlement?.fairplay).to(beNil())

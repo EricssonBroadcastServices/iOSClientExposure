@@ -1,7 +1,13 @@
 # CHANGELOG
 
-* `0.2.x` Releases - [0.2.0](#020)
+* `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
+
+## 0.2.1
+NO RELEASE DATE SET YET
+
+#### Bug fixes
+* `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`
 
 ## 0.2.0
 Released 5 Sep 2017
