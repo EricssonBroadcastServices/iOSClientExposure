@@ -7,7 +7,7 @@
 NO RELEASE DATE SET YET
 
 #### Changes
-* `EMP-10269` `Airing` is now distinct from fetching `Program`
+* `EMP-10270` `Airing` is now distinct from fetching `Program`
 
 #### Bug fixes
 * `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.
