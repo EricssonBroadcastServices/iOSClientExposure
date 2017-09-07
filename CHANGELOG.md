@@ -6,6 +6,9 @@
 ## 0.2.1
 NO RELEASE DATE SET YET
 
+#### Changes
+* `EMP-10322` `Image.Orientation` made `Equatable`.
+
 #### Bug fixes
 * `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.
 * `EMP-10298` `ExposureRequest.validate()` should now correctly validate on statusCodes and content type.

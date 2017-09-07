@@ -44,7 +44,7 @@ public struct Image {
         case type = "type"
     }
     
-    public enum Orientation {
+    public enum Orientation: Equatable {
         case portrait
         case landscape
         case square
@@ -63,6 +63,17 @@ public struct Image {
             case "SQUARE": self = .square
             case "UNKNOWN": self = .unknown
             default: self = .other(type: string)
+            }
+        }
+        
+        public static func == (lhs: Orientation, rhs: Orientation) -> Bool {
+            switch (lhs, rhs) {
+            case (.portrait, .portrait): return true
+            case (.landscape, .landscape): return true
+            case (.square, .square): return true
+            case (.unknown, .unknown): return true
+            case (.other(let l), .other(let r)): return l == r
+            default: return false
             }
         }
     }
