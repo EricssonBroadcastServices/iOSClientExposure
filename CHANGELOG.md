@@ -7,6 +7,7 @@
 NO RELEASE DATE SET YET
 
 #### Changes
+* `EMP-10270` `Airing` is now distinct from fetching `Program`
 * `EMP-10322` `Image.Orientation` made `Equatable`.
 
 #### Bug fixes

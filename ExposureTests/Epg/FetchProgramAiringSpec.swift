@@ -1,8 +1,8 @@
 //
-//  FetchEpgProgramSpec.swift
+//  FetchProgramAiringSpec.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-06-15.
+//  Created by Fredrik Sjöberg on 2017-09-07.
 //  Copyright © 2017 emp. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ import Mockingjay
 
 @testable import Exposure
 
-class FetchEpgProgramSpec: QuickSpec {
+class FetchProgramAiringSpec: QuickSpec {
     
     override func spec() {
         super.spec()
@@ -27,24 +27,21 @@ class FetchEpgProgramSpec: QuickSpec {
         let programId = "second"
         let fetch = FetchEpg(environment: env)
         
-        let program = fetch.channel(id: channelId, programId: programId)
-        describe("Program") {
+        
+        describe("Program Airing") {
+            let airing = fetch.airingFor(programId: programId, channelId: channelId)
+            
             it("should have no headers") {
-                expect(program.headers).to(beNil())
+                expect(airing.headers).to(beNil())
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/epg/" + channelId + "/program/" + programId
-                expect(program.endpointUrl).to(equal(env.apiUrl+endpoint))
+                let endpoint = "/epg/" + channelId + "/program/" + programId + "/airing"
+                expect(airing.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
-            it("should generate paramters") {
-                let params = program
-                    .filter(onlyPublished: true)
-                    .parameters
-                
-                expect(params.count).to(equal(1))
-                expect(params["onlyPublished"]).toNot(beNil())
+            it("should have no paramters") {
+                expect(airing.parameters).to(beNil())
             }
         }
     }

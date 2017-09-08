@@ -53,4 +53,15 @@ extension FetchEpg {
                                channelId: id,
                                programId: programId)
     }
+    
+    /// Fetches programming data for a specific program on a specified channel.
+    ///
+    /// - parameter programId: programId for the requested program
+    /// - parameter channelId: channelId for the requested channel
+    /// - returns: `FetchProgramAiring` struct used to process the request.
+    public func airingFor(programId: String, channelId: String) -> FetchProgramAiring {
+        return FetchProgramAiring(environment: environment,
+                                  channelId: channelId,
+                                  programId: programId)
+    }
 }

@@ -13,7 +13,7 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
     public typealias Response = Program
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/epg/" + channelId + "/program/" + programId + (airing ? "/airing" : "")
+        return environment.apiUrl + "/epg/" + channelId + "/program/" + programId
     }
     
     public var parameters: [String: Any] {
@@ -26,7 +26,6 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
     
     // MARK: Filters
     public var publishFilter: PublishFilter
-    internal var internalQuery: Query
     
     /// `Environment` to use
     public let environment: Environment
@@ -42,7 +41,6 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
         self.channelId = channelId
         self.programId = programId
         self.publishFilter = PublishFilter()
-        self.internalQuery = Query()
     }
     
     internal enum Keys: String {
@@ -55,27 +53,6 @@ public struct FetchEpgProgram: Exposure, FilteredPublish {
         ]
         
         return params
-    }
-}
-
-// MARK: - Internal Query
-extension FetchEpgProgram {
-    public var airing: Bool {
-        return internalQuery.airing
-    }
-    
-    public func filter(airingOnly: Bool) -> FetchEpgProgram {
-        var old = self
-        old.internalQuery = Query(airing: airingOnly)
-        return old
-    }
-    
-    internal struct Query {
-        internal let airing: Bool
-        
-        internal init(airing: Bool = false) {
-            self.airing = airing
-        }
     }
 }
 
