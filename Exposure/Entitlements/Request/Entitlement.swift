@@ -69,6 +69,20 @@ extension Entitlement {
                            environment: environment,
                            sessionToken: sessionToken)
     }
+
+    /// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
+    ///
+    /// Default streaming format is:
+    /// * `drm` FAIRPLAY
+    /// * `format` HLS
+    ///
+    /// - parameter assetId: asset to request
+    /// - returns: `PlayVod` struct used to process the request
+    public func download(assetId: String) -> DownloadVod {
+        return DownloadVod(assetId: assetId,
+                           environment: environment,
+                           sessionToken: sessionToken)
+    }
     
     /// Checks if the user is entitled to the asset with assetId.
     ///
