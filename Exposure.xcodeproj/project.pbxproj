@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2701F6FF80700C74093 /* DownloadVod.swift */; };
+		3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */; };
 		76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */; };
 		76009FA11F5D66FC008E1738 /* SessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009FA01F5D66FC008E1738 /* SessionResponse.swift */; };
 		76009FA31F5D6A44008E1738 /* ValidateSessionTokenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009FA21F5D6A44008E1738 /* ValidateSessionTokenSpec.swift */; };
@@ -156,6 +158,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3EB9A2701F6FF80700C74093 /* DownloadVod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVod.swift; sourceTree = "<group>"; };
+		3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVodSpec.swift; sourceTree = "<group>"; };
 		76009F9D1F5D44A7008E1738 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSessionToken.swift; sourceTree = "<group>"; };
 		76009FA01F5D66FC008E1738 /* SessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionResponse.swift; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 				7646D67B1EF00A6B009E5C2B /* PlayRequestSpec.swift */,
 				7646D67C1EF00A6B009E5C2B /* PlayVodSpec.swift */,
 				7646D67D1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift */,
+				3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */,
 			);
 			path = Entitlement;
 			sourceTree = "<group>";
@@ -694,6 +699,7 @@
 				76A842D61EA7667D00BDAF2C /* PlayVod.swift */,
 				764DEE231EEF2D070047A179 /* PlayLive.swift */,
 				7646D65E1EEFF5BE009E5C2B /* PlayCatchup.swift */,
+				3EB9A2701F6FF80700C74093 /* DownloadVod.swift */,
 				7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */,
 			);
 			path = Request;
@@ -840,7 +846,7 @@
 				TargetAttributes = {
 					76A842A61EA75EC900BDAF2C = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = JCUPRVKEC5;
+            DevelopmentTeam = JCUPRVKEC5;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -913,6 +919,7 @@
 				766FBB7C1ECA2AD200EBEC53 /* DeviceRights.swift in Sources */,
 				76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */,
 				76A842EB1EA7667D00BDAF2C /* DeviceInfo.swift in Sources */,
+				3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */,
 				76C7DDEE1F23DAEE008FE955 /* Player+ExposurePlayback.swift in Sources */,
 				76288CB21F20B048004B22AB /* AnalyticsPayload.swift in Sources */,
 				76A842FA1EA7667D00BDAF2C /* ExposureError.swift in Sources */,
@@ -1003,6 +1010,7 @@
 				7646D6811EF00A6B009E5C2B /* LoginSpec.swift in Sources */,
 				7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */,
 				761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */,
+				3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */,
 				761336B31ECC2C2600E316BF /* LocalizedDataSpec.swift in Sources */,
 				769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,

@@ -77,7 +77,7 @@ extension Entitlement {
     /// * `format` HLS
     ///
     /// - parameter assetId: asset to request
-    /// - returns: `PlayVod` struct used to process the request
+    /// - returns: `DownloadVod` struct used to process the request
     public func download(assetId: String) -> DownloadVod {
         return DownloadVod(assetId: assetId,
                            environment: environment,

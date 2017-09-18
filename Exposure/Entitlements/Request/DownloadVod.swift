@@ -56,6 +56,6 @@ extension DownloadVod {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
-        return request(.post)
+        return request(.post) 
     }
 }
