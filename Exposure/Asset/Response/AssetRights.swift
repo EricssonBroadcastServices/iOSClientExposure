@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct AssetRights: Decodable {
     /// Minimum bitrate allowed

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct AssetList: Decodable {
     public let totalCount: Int?

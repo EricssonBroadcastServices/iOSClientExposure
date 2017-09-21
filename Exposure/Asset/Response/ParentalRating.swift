@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct ParentalRating: Decodable {
     /// The two letter country code this rating is for.

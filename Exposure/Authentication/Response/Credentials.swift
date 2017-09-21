@@ -10,14 +10,11 @@ import Foundation
 import SwiftyJSON
 
 /// `Credentials` response returned on a successful login attempt.
-public struct Credentials {
+public struct Credentials: Decodable {
     /// Keys used to specify `json` body for the request.
-    fileprivate enum JSONKeys: String {
-        case sessionToken = "sessionToken"
-        case crmToken = "crmToken"
-        case accountId = "accoundId"
+    fileprivate enum CodingKeys: String, CodingKey {
+        case sessionToken, crmToken, accountId, accountStatus
         case expiration = "expirationDateTime"
-        case accountStatus = "accountStatus"
     }
     
     /// The session token to use for subsequent requests.
@@ -42,42 +39,13 @@ public struct Credentials {
         self.expiration = expiration
         self.accountStatus = accountStatus
     }
-}
 
-extension Credentials: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = SwiftyJSON.JSON(json)
-        guard let jSessionToken = SessionToken(json: json) else { return nil }
-        
-        sessionToken = jSessionToken
-        
-        crmToken = actualJson[JSONKeys.crmToken.rawValue].string
-        accountId = actualJson[JSONKeys.accountId.rawValue].string
-        accountStatus = actualJson[JSONKeys.accountStatus.rawValue].string
-        
-        let jExpiration = actualJson[JSONKeys.expiration.rawValue].string
-        if jExpiration != nil {
-            expiration = Date
-                .utcFormatter()
-                .date(from: jExpiration!)
-        }
-        else {
-            expiration = nil
-        }
-        
-        
-    }
-    
-    public func toJson() -> [String: Any] {
-        var json: [String: Any] = [:]
-        json[JSONKeys.sessionToken.rawValue] = sessionToken.value
-        if let crmToken = crmToken { json[JSONKeys.crmToken.rawValue] = crmToken }
-        if let accountId = accountId { json[JSONKeys.accountId.rawValue] = accountId }
-        if let expiration = expiration {
-            let expirationString = Date.utcFormatter().string(from: expiration)
-            json[JSONKeys.expiration.rawValue] = expirationString
-        }
-        if let accountStatus = accountStatus { json[JSONKeys.accountStatus.rawValue] = accountStatus }
-        return json
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        sessionToken = SessionToken(value: try container.decode(String.self, forKey: .sessionToken))
+        crmToken = try? container.decode(String.self, forKey: .crmToken)
+        accountId = try? container.decode(String.self, forKey: .accountId)
+        accountStatus = try? container.decode(String.self, forKey: .accountStatus)
+        expiration = try? container.decode(Date.self, forKey: .expiration)
     }
 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct LinkedEntity: Decodable {
     public let entityId: String?

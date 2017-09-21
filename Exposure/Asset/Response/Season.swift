@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Season: Decodable {
     /// When this `Season` was created
@@ -54,22 +53,22 @@ public struct Season: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        created = try container.decode(String.self, forKey: .created)
-        changed = try container.decode(String.self, forKey: .changed)
-        season = try container.decode(String.self, forKey: .season)
-        tags = try container.decode([Tag].self, forKey: .tags)
-        localized = try container.decode([LocalizedData].self, forKey: .localized)
-        tvShowId = try container.decode(String.self, forKey: .tvShowId)
-        seasonId = try container.decode(String.self, forKey: .seasonId)
-        episodeCount = try container.decode(Int.self, forKey: .episodeCount)
-        episodes = try container.decode([Asset].self, forKey: .episodes)
-        publishedDate = try container.decode(String.self, forKey: .publishedDate)
-        availableDate = try container.decode(String.self, forKey: .availableDate)
-        startYear = try container.decode(Int.self, forKey: .startYear)
-        endYear = try container.decode(Int.self, forKey: .endYear)
-        linkedEntities = try container.decode([LinkedEntity].self, forKey: .linkedEntities)
-        externalReferences = try container.decode([ExternalReference].self, forKey: .externalReferences)
-        customData = try container.decode([String: Any].self, forKey: .customData)
+        created = try? container.decode(String.self, forKey: .created)
+        changed = try? container.decode(String.self, forKey: .changed)
+        season = try? container.decode(String.self, forKey: .season)
+        tags = try? container.decode([Tag].self, forKey: .tags)
+        localized = try? container.decode([LocalizedData].self, forKey: .localized)
+        tvShowId = try? container.decode(String.self, forKey: .tvShowId)
+        seasonId = try? container.decode(String.self, forKey: .seasonId)
+        episodeCount = try? container.decode(Int.self, forKey: .episodeCount)
+        episodes = try? container.decode([Asset].self, forKey: .episodes)
+        publishedDate = try? container.decode(String.self, forKey: .publishedDate)
+        availableDate = try? container.decode(String.self, forKey: .availableDate)
+        startYear = try? container.decode(Int.self, forKey: .startYear)
+        endYear = try? container.decode(Int.self, forKey: .endYear)
+        linkedEntities = try? container.decode([LinkedEntity].self, forKey: .linkedEntities)
+        externalReferences = try? container.decode([ExternalReference].self, forKey: .externalReferences)
+        customData = try? container.decode([String: Any].self, forKey: .customData)
     }
 
     internal enum CodingKeys: String, CodingKey {

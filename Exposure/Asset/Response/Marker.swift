@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Marker: Decodable {
     public let offset: Int?

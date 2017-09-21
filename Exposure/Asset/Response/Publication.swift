@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Publication: Decodable {
     
@@ -20,24 +19,24 @@ public struct Publication: Decodable {
     public let products: [String]?
     public let publicationId: String?
     
-    public let customData: [String: Any]? // JsonNode
+    public let customData: [String: AnyJSONType]? // JsonNode
     public let rights: AssetRights?
     public let devices: [DeviceRights]?
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        publicationDate = try container.decode(String.self, forKey: .publicationDate)
-        fromDate = try container.decode(String.self, forKey: .fromDate)
-        toDate = try container.decode(String.self, forKey: .toDate)
+        publicationDate = try? container.decode(String.self, forKey: .publicationDate)
+        fromDate = try? container.decode(String.self, forKey: .fromDate)
+        toDate = try? container.decode(String.self, forKey: .toDate)
 
-        countries = try container.decode([String].self, forKey: .countries)
-        services = try container.decode([String].self, forKey: .services)
-        products = try container.decode([String].self, forKey: .products)
-        publicationId = try container.decode(String.self, forKey: .publicationId)
+        countries = try? container.decode([String].self, forKey: .countries)
+        services = try? container.decode([String].self, forKey: .services)
+        products = try? container.decode([String].self, forKey: .products)
+        publicationId = try? container.decode(String.self, forKey: .publicationId)
 
-        customData = try container.decode([String: Any].self, forKey: .customData)
-        rights = try container.decode(AssetRights.self, forKey: .rights)
-        devices = try container.decode([DeviceRights].self, forKey: .devices)
+        customData = try? container.decode([String: AnyJSONType].self, forKey: .customData)
+        rights = try? container.decode(AssetRights.self, forKey: .rights)
+        devices = try? container.decode([DeviceRights].self, forKey: .devices)
     }
 
     private enum CodingKeys: String, CodingKey {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct DeviceRights: Decodable {
     /// Device type this rights concerns
@@ -24,12 +23,12 @@ public struct DeviceRights: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        type = DeviceType(string: try container.decode(String.self, forKey: .type))
-        model = try container.decode(String.self, forKey: .model)
-        manufacturer = try container.decode(String.self, forKey: .manufacturer)
-        os = try container.decode(String.self, forKey: .os)
-        osVersion = try container.decode(String.self, forKey: .osVersion)
-        rights = try container.decode(AssetRights.self.self, forKey: .rights)
+        type = DeviceType(string: try? container.decode(String.self, forKey: .type))
+        model = try? container.decode(String.self, forKey: .model)
+        manufacturer = try? container.decode(String.self, forKey: .manufacturer)
+        os = try? container.decode(String.self, forKey: .os)
+        osVersion = try? container.decode(String.self, forKey: .osVersion)
+        rights = try? container.decode(AssetRights.self.self, forKey: .rights)
     }
 
     enum CodingKeys: String, CodingKey {

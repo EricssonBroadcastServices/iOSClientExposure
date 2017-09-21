@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Asset {
     /// Date when this asset was created, in UTC format.
@@ -20,7 +19,7 @@ public struct Asset {
     public let assetId: String?
     
     /// Asset type
-    public let type: AssetType?
+    public var type: AssetType?
     
     /// Localization data
     public let localized: [LocalizedData]?
@@ -44,7 +43,7 @@ public struct Asset {
     
     /// Year produced
     public let productionYear: Int?
-    public let popularityScores: [String: Any]?
+    public let popularityScores: [String: AnyJSONType]?
     
     /// Date when this asset was released, in UTC format.
     public let releaseDate: String?
@@ -78,7 +77,7 @@ public struct Asset {
     public let runtime: Int?
     public let tvShowId: String?
     public let expires: String?
-    public let customData: [String: Any]?
+    public let customData: [String: AnyJSONType]?
     public let externalReferences: [ExternalReference]?
     public let rating: Float?
     
@@ -96,46 +95,46 @@ extension Asset: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        created = try container.decode(String?.self, forKey: .created)
-        changed = try container.decode(String?.self, forKey: .changed)
-        assetId = try container.decode(String?.self, forKey: .assetId)
-        type = try container.decode(AssetType?.self, forKey: .type)
-        localized = try container.decode([LocalizedData]?.self, forKey: .localized)
-        tags = try container.decode([Tag]?.self, forKey: .tags)
-        publications = try container.decode([Publication]?.self, forKey: .publications)
+        created = try? container.decode(String.self, forKey: .created)
+        changed = try? container.decode(String.self, forKey: .changed)
+        assetId = try? container.decode(String.self, forKey: .assetId)
+        type = AssetType(string: try? container.decode(String.self, forKey: .type))
+        localized = try? container.decode([LocalizedData].self, forKey: .localized)
+        tags = try? container.decode([Tag].self, forKey: .tags)
+        publications = try? container.decode([Publication].self, forKey: .publications)
 
-        episode = try container.decode(String?.self, forKey: .episode)
-        season = try container.decode(String?.self, forKey: .season)
-        seasonId = try container.decode(String?.self, forKey: .seasonId)
+        episode = try? container.decode(String.self, forKey: .episode)
+        season = try? container.decode(String.self, forKey: .season)
+        seasonId = try? container.decode(String.self, forKey: .seasonId)
 
-        seasons = try container.decode([Season]?.self, forKey: .seasons)
+        seasons = try? container.decode([Season].self, forKey: .seasons)
 
-        participants = try container.decode([Person]?.self, forKey: .participants)
+        participants = try? container.decode([Person].self, forKey: .participants)
 
-        productionYear = try container.decode(Int?.self, forKey: .productionYear)
-        productionCountries = try container.decode([String]?.self, forKey: .productionCountries)
+        productionYear = try? container.decode(Int.self, forKey: .productionYear)
+        productionCountries = try? container.decode([String].self, forKey: .productionCountries)
 
-        popularityScores = try container.decode([String: Any]?.self, forKey: .popularityScores)
+        popularityScores = try? container.decode([String: AnyJSONType].self, forKey: .popularityScores)
 
-        releaseDate = try container.decode(String?.self, forKey: .releaseDate)
-        originalTitle = try container.decode(String?.self, forKey: .originalTitle)
-        live = try container.decode(Bool?.self, forKey: .live)
+        releaseDate = try? container.decode(String.self, forKey: .releaseDate)
+        originalTitle = try? container.decode(String.self, forKey: .originalTitle)
+        live = try? container.decode(Bool.self, forKey: .live)
 
-        subtitles = try container.decode([String]?.self, forKey: .subtitles)
-        audioTracks = try container.decode([String]?.self, forKey: .audioTracks)
-        spokenLanguages = try container.decode([String]?.self, forKey: .spokenLanguages)
-        medias = try container.decode([Media]?.self, forKey: .medias)
-        parentalRatings = try container.decode([ParentalRating]?.self, forKey: .parentalRatings)
-        linkedEntities = try container.decode([LinkedEntity]?.self, forKey: .linkedEntities)
-        runtime = try container.decode(Int?.self, forKey: .runtime)
-        tvShowId = try container.decode(String?.self, forKey: .tvShowId)
-        expires = try container.decode(String?.self, forKey: .expires)
-        customData = try container.decode([String: Any]?.self, forKey: .customData)
-        externalReferences = try container.decode([ExternalReference]?.self, forKey: .externalReferences)
-        rating = try container.decode(Float?.self, forKey: .rating)
-        markers = try container.decode([Marker]?.self, forKey: .markers)
-        lastViewedTime = try container.decode(Int?.self, forKey: .lastViewedTime)
-        lastViewedOffset = try container.decode(Int?.self, forKey: .lastViewedOffset)
+        subtitles = try? container.decode([String].self, forKey: .subtitles)
+        audioTracks = try? container.decode([String].self, forKey: .audioTracks)
+        spokenLanguages = try? container.decode([String].self, forKey: .spokenLanguages)
+        medias = try? container.decode([Media].self, forKey: .medias)
+        parentalRatings = try? container.decode([ParentalRating].self, forKey: .parentalRatings)
+        linkedEntities = try? container.decode([LinkedEntity].self, forKey: .linkedEntities)
+        runtime = try? container.decode(Int.self, forKey: .runtime)
+        tvShowId = try? container.decode(String.self, forKey: .tvShowId)
+        expires = try? container.decode(String.self, forKey: .expires)
+        customData = try? container.decode([String: AnyJSONType].self, forKey: .customData)
+        externalReferences = try? container.decode([ExternalReference].self, forKey: .externalReferences)
+        rating = try? container.decode(Float.self, forKey: .rating)
+        markers = try? container.decode([Marker].self, forKey: .markers)
+        lastViewedTime = try? container.decode(Int.self, forKey: .lastViewedTime)
+        lastViewedOffset = try? container.decode(Int.self, forKey: .lastViewedOffset)
     }
 
     internal enum CodingKeys: String, CodingKey {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Image: Decodable {
     /// Path to where the image is located
@@ -27,11 +26,11 @@ public struct Image: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.decode(String.self, forKey: .url)
-        height = try container.decode(Int.self, forKey: .height)
-        width = try container.decode(Int.self, forKey: .width)
-        orientation = Orientation(string: try container.decode(String.self, forKey: .orientation))
-        type = try container.decode(String.self, forKey: .type)
+        url = try? container.decode(String.self, forKey: .url)
+        height = try? container.decode(Int.self, forKey: .height)
+        width = try? container.decode(Int.self, forKey: .width)
+        orientation = Orientation(string: try? container.decode(String.self, forKey: .orientation))
+        type = try? container.decode(String.self, forKey: .type)
     }
 
     internal enum CodingKeys: String, CodingKey {

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement {
@@ -149,44 +148,38 @@ public struct PlaybackEntitlement {
     }
 }
 
-extension PlaybackEntitlement: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJSON = SwiftyJSON.JSON(json)
+extension PlaybackEntitlement: Decodable {
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        playToken = actualJSON[JSONKeys.playToken.rawValue].string
+        playToken = try? container.decode(String.self, forKey: .playToken)
         
-        edrm = EDRMConfiguration(json: actualJSON[JSONKeys.edrm.rawValue].dictionaryObject ?? [:])
-        fairplay = FairplayConfiguration(json: actualJSON[JSONKeys.fairplay.rawValue].dictionaryObject ?? [:])
+        edrm = try? container.decode(EDRMConfiguration.self, forKey: .edrm)
+        fairplay = try? container.decode(FairplayConfiguration.self, forKey: .fairplay)
+
+        mediaLocator = try? container.decode(String.self, forKey: .mediaLocator)
+        licenseExpiration = try? container.decode(String.self, forKey: .licenseExpiration)
+        licenseExpirationReason = Status(string: try? container.decode(String.self, forKey: .licenseExpirationReason))
+        licenseActivation = try? container.decode(String.self, forKey: .licenseActivation)
         
-        mediaLocator = actualJSON[JSONKeys.mediaLocator.rawValue].string
-        licenseExpiration = actualJSON[JSONKeys.licenseExpiration.rawValue].string
-        licenseExpirationReason = Status(string: actualJSON[JSONKeys.licenseExpirationReason.rawValue].string)
-        licenseActivation = actualJSON[JSONKeys.licenseActivation.rawValue].string
-        
-        playTokenExpiration = actualJSON[JSONKeys.playTokenExpiration.rawValue].string
-        entitlementType = EntitlementType(string: actualJSON[JSONKeys.entitlementType.rawValue].string)
-        
-        live = actualJSON[JSONKeys.live.rawValue].bool
-        playSessionId = actualJSON[JSONKeys.playSessionId.rawValue].string
-        ffEnabled = actualJSON[JSONKeys.ffEnabled.rawValue].bool
-        timeshiftEnabled = actualJSON[JSONKeys.timeshiftEnabled.rawValue].bool
-        rwEnabled = actualJSON[JSONKeys.rwEnabled.rawValue].bool
-        minBitrate = actualJSON[JSONKeys.minBitrate.rawValue].int
-        maxBitrate = actualJSON[JSONKeys.maxBitrate.rawValue].int
-        maxResHeight = actualJSON[JSONKeys.maxResHeight.rawValue].int
-        airplayBlocked = actualJSON[JSONKeys.airplayBlocked.rawValue].bool
-        mdnRequestRouterUrl = actualJSON[JSONKeys.mdnRequestRouterUrl.rawValue].string
-        lastViewedOffset = actualJSON[JSONKeys.lastViewedOffset.rawValue].int
-        
-        if (playToken == nil && fairplay == nil && mediaLocator == nil && licenseExpiration == nil && licenseExpirationReason == nil)
-            && (licenseActivation == nil && playTokenExpiration == nil && entitlementType == nil && live == nil && playSessionId == nil)
-            && (ffEnabled == nil && timeshiftEnabled == nil && rwEnabled == nil && minBitrate == nil && maxBitrate == nil)
-            && (maxResHeight == nil && airplayBlocked == nil && mdnRequestRouterUrl == nil && lastViewedOffset == nil) {
-            return nil
-        }
+        playTokenExpiration = try? container.decode(String.self, forKey: .playTokenExpiration)
+        entitlementType = EntitlementType(string: try? container.decode(String.self, forKey: .entitlementType))
+
+        live = try? container.decode(Bool.self, forKey: .live)
+        playSessionId = try? container.decode(String.self, forKey: .playSessionId)
+        ffEnabled = try? container.decode(Bool.self, forKey: .ffEnabled)
+        timeshiftEnabled = try? container.decode(Bool.self, forKey: .timeshiftEnabled)
+        rwEnabled = try? container.decode(Bool.self, forKey: .rwEnabled)
+        minBitrate = try? container.decode(Int.self, forKey: .minBitrate)
+        maxBitrate = try? container.decode(Int.self, forKey: .maxBitrate)
+        maxResHeight = try? container.decode(Int.self, forKey: .maxResHeight)
+        airplayBlocked = try? container.decode(Bool.self, forKey: .airplayBlocked)
+        mdnRequestRouterUrl = try? container.decode(String.self, forKey: .mdnRequestRouterUrl)
+        lastViewedOffset = try? container.decode(Int.self, forKey: .lastViewedOffset)
     }
     
-    internal enum JSONKeys: String {
+    internal enum CodingKeys: String, CodingKey {
         case playToken = "playToken"
         case edrm = "edrmConfig"
         case fairplay = "fairplayConfig"

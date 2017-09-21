@@ -14,10 +14,10 @@ import SwiftyJSON
 /// The token itself is by no means guaranteed to be valid, it merely represents the expected form.
 ///
 /// For more information regarding `SessionToken`s, authentication requests and managing user sessions, please see [User Authentication]() in the documentation.
-public struct SessionToken {
+public struct SessionToken: Decodable {
     /// Keys used to specify `json` body for the request.
-    fileprivate enum JSONKeys: String {
-        case sessionToken = "sessionToken"
+    fileprivate enum CodingKeys: String, CodingKey {
+        case sessionToken
     }
     
     public let value: String
@@ -37,6 +37,11 @@ public struct SessionToken {
             return nil
         }
         self.value = val
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        value = try container.decode(String.self, forKey: .sessionToken)
     }
 }
 
@@ -90,10 +95,3 @@ extension SessionToken {
     }
 }
 
-extension SessionToken: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = SwiftyJSON.JSON(json)
-        guard let jSessionToken = actualJson[JSONKeys.sessionToken.rawValue].string else { return nil }
-        value = jSessionToken
-    }
-}
