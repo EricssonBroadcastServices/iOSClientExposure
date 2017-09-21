@@ -72,7 +72,7 @@ extension ExposureRequest {
     ///
     /// - parameter range: The range of acceptable status codes.
     /// - returns: The request.
-    public func validate<S : Sequence where S.Iterator.Element == Int>(statusCode acceptableStatusCodes: S) -> Self {
+    public func validate<S : Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
         dataRequest.validate(statusCode: acceptableStatusCodes)
         return self
     }
@@ -83,7 +83,7 @@ extension ExposureRequest {
     ///
     /// - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
     /// - returns: The request.
-    public func validate<S : Sequence where S.Iterator.Element == String>(contentType acceptableContentTypes: S) -> Self {
+    public func validate<S : Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
         dataRequest.validate(contentType: acceptableContentTypes)
         return self
     }

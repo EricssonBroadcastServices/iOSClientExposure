@@ -30,7 +30,6 @@ extension DataRequest {
             }
 
             do {
-                print(String.init(data: jsonData, encoding: .utf8))
                 let object = try JSONDecoder().decode(Object.self, from: jsonData)
                 return .success(object)
             } catch (let e) {
