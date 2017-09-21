@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 /// Responsible for sending a request and receiving response from the server.
 ///
@@ -25,9 +24,11 @@ public class ExposureRequest {
                   mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
         if let data = data {
             // Handle status code errors from Exposure
-            let responseBody = SwiftyJSON.JSON(data: data).object
-            if let exposureResponse = ExposureResponseMessage(json: responseBody) {
+            do {
+                let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
                 return ExposureError.exposureResponse(reason: exposureResponse)
+            } catch (let error) {
+                return ExposureError.generalError(error: error)
             }
         }
         return ExposureError.generalError(error: error)

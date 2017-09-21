@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// `ChannelEpgList` response contains *EPG* information for a set of channels.
 public struct ChannelEpg: Decodable {

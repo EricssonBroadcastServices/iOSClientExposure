@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// `SessionToken` represents an authenticated *session* as recognized by *Exposure*
 ///

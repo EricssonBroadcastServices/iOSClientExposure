@@ -46,9 +46,3 @@ extension Logout {
     }
 }
 
-/// Simple hack to allow a `Dictionary` to be expected as `Exposure.Response`
-extension Dictionary: ExposureConvertible {
-    public init?(json: Any) {
-        self.init()
-    }
-}

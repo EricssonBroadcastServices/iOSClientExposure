@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// `Credentials` response returned on a successful login attempt.
 public struct Credentials: Decodable {

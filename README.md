@@ -36,7 +36,6 @@
 * Framework dependencies
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
-    - [`SwiftyJSON`](https://github.com/SwiftyJSON/SwiftyJSON)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
 ## Installation
@@ -363,6 +362,6 @@ No formalised roadmap has yet been established but an extensive backlog of possi
 - [ ] User playback history
 - [ ] User preferences
 - [ ] Device management
-- [ ] Swift 4: Replace SwiftyJSON with native Codable 
+- [x] Swift 4: Replace SwiftyJSON with native Codable 
 
 ## Contributing

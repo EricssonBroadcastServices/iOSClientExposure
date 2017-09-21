@@ -7,17 +7,10 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// Returned when validating a `SessionToken`
-public struct SessionResponse {
-    /// Keys used to specify `json` body for the request.
-    fileprivate enum JSONKeys: String {
-        case crmToken = "crmToken"
-        case accountId = "accountId"
-        case userId = "userId"
-    }
-    
+public struct SessionResponse: Decodable {
+
     /// The token within the crm.
     public let crmToken: String?
     
@@ -34,14 +27,3 @@ public struct SessionResponse {
     }
 }
 
-extension SessionResponse: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = SwiftyJSON.JSON(json)
-        
-        crmToken = actualJson[JSONKeys.crmToken.rawValue].string
-        accountId = actualJson[JSONKeys.accountId.rawValue].string
-        userId = actualJson[JSONKeys.userId.rawValue].string
-        
-        if crmToken == nil && accountId == nil && userId == nil { return nil }
-    }
-}

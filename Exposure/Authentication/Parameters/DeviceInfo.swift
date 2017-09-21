@@ -23,7 +23,7 @@ extension UIDevice {
 }
 
 /// *Exposure* relevant data used to identify the current device.
-public struct DeviceInfo {
+public struct DeviceInfo: Serializable {
     public init(device: Device = Device()) {
         self.device = device
     }
@@ -36,7 +36,7 @@ public struct DeviceInfo {
     /// Device specific information
     public let device: Device
     
-    public struct Device {
+    public struct Device: Serializable {
         public init(name: String? = nil) {
             self.name = name
         }
@@ -87,7 +87,7 @@ public struct DeviceInfo {
     }
 }
 
-extension DeviceInfo: JSONEncodable {
+extension DeviceInfo {
     public func toJSON() -> [String: Any] {
         var json: [String: Any] = [:]
         
@@ -108,7 +108,7 @@ extension DeviceInfo: JSONEncodable {
     }
 }
 
-extension DeviceInfo.Device: JSONEncodable {
+extension DeviceInfo.Device {
     public func toJSON() -> [String: Any] {
         var json: [String: Any] = [
             JSONKeys.height.rawValue: height,
