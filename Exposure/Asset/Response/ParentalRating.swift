@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public struct ParentalRating {
+public struct ParentalRating: Decodable {
     /// The two letter country code this rating is for.
     public let country: String?
     
@@ -18,19 +18,4 @@ public struct ParentalRating {
     
     /// The rating, allowed values depends on the scheme.
     public let rating: String?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        country = actualJson[JSONKeys.country.rawValue].string
-        scheme = actualJson[JSONKeys.scheme.rawValue].string
-        rating = actualJson[JSONKeys.rating.rawValue].string
-        
-        if country == nil && scheme == nil && rating == nil { return nil }
-    }
-    
-    internal enum JSONKeys: String {
-        case country = "country"
-        case scheme = "scheme"
-        case rating = "rating"
-    }
 }

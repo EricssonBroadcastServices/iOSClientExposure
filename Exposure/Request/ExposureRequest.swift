@@ -55,12 +55,12 @@ extension ExposureRequest {
     /// - parameter completionHandler: The code to be executed once the request has finished.
     /// - returns: `Self`
     @discardableResult
-    public func response<Object: ExposureConvertible>
+    public func response<T: Decodable>
         (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
-        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Object>) in
+         completionHandler: @escaping (ExposureResponse<T>) -> Void) -> Self {
+        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<T>) in
             completionHandler(ExposureResponse(dataResponse: dataResponse))
-        }
+            }
         return self
     }
 }

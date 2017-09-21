@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public struct Image {
+public struct Image: Decodable {
     /// Path to where the image is located
     public let url: String?
     
@@ -24,24 +24,18 @@ public struct Image {
     
     /// Image type
     public let type: String?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        url = actualJson[JSONKeys.url.rawValue].string
-        height = actualJson[JSONKeys.height.rawValue].int
-        width = actualJson[JSONKeys.width.rawValue].int
-        orientation = Orientation(string: actualJson[JSONKeys.orientation.rawValue].string)
-        type = actualJson[JSONKeys.type.rawValue].string
-        
-        if url == nil && height == nil && width == nil && orientation == nil && type == nil { return nil }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        url = try container.decode(String.self, forKey: .url)
+        height = try container.decode(Int.self, forKey: .height)
+        width = try container.decode(Int.self, forKey: .width)
+        orientation = Orientation(string: try container.decode(String.self, forKey: .orientation))
+        type = try container.decode(String.self, forKey: .type)
     }
-    
-    internal enum JSONKeys: String {
-        case url = "url"
-        case height = "height"
-        case width = "width"
-        case orientation = "orientation"
-        case type = "type"
+
+    internal enum CodingKeys: String, CodingKey {
+        case url, height, width, orientation, type
     }
     
     public enum Orientation: Equatable {

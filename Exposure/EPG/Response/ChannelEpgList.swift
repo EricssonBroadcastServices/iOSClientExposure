@@ -7,19 +7,9 @@
 //
 
 import Foundation
-import SwiftyJSON
-
 
 /// `ChannelEpgList` response contains *EPG* information for a set of channels
-public struct ChannelEpgList: ExposureConvertible {
+public struct ChannelEpgList: Decodable {
     /// Channels with EPG data
     public let channels: [ChannelEpg]?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        
-        channels = actualJson.arrayObject?.flatMap{ ChannelEpg(json: $0) }
-        
-        if channels == nil { return nil }
-    }
 }

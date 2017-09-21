@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public struct Publication {
+public struct Publication: Decodable {
     
     public let publicationDate: String?
     public let fromDate: String?
@@ -23,39 +23,25 @@ public struct Publication {
     public let customData: [String: Any]? // JsonNode
     public let rights: AssetRights?
     public let devices: [DeviceRights]?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        publicationDate = actualJson[JSONKeys.publicationDate.rawValue].string
-        fromDate = actualJson[JSONKeys.fromDate.rawValue].string
-        toDate = actualJson[JSONKeys.toDate.rawValue].string
-        
-        countries = actualJson[JSONKeys.countries.rawValue].array?.flatMap{ $0.string }
-        services = actualJson[JSONKeys.services.rawValue].array?.flatMap{ $0.string }
-        products = actualJson[JSONKeys.products.rawValue].array?.flatMap{ $0.string }
-        publicationId = actualJson[JSONKeys.publicationId.rawValue].string
-        
-        customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
-        rights = AssetRights(json: actualJson[JSONKeys.rights.rawValue].object)
-        devices = actualJson[JSONKeys.devices.rawValue].arrayObject?.flatMap{ DeviceRights(json: $0) }
-        
-        if publicationDate == nil && fromDate == nil && toDate == nil
-            && countries == nil && services == nil && products == nil && publicationId == nil
-            && customData == nil && rights == nil && devices == nil {
-            return nil
-        }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        publicationDate = try container.decode(String.self, forKey: .publicationDate)
+        fromDate = try container.decode(String.self, forKey: .fromDate)
+        toDate = try container.decode(String.self, forKey: .toDate)
+
+        countries = try container.decode([String].self, forKey: .countries)
+        services = try container.decode([String].self, forKey: .services)
+        products = try container.decode([String].self, forKey: .products)
+        publicationId = try container.decode(String.self, forKey: .publicationId)
+
+        customData = try container.decode([String: Any].self, forKey: .customData)
+        rights = try container.decode(AssetRights.self, forKey: .rights)
+        devices = try container.decode([DeviceRights].self, forKey: .devices)
     }
-    
-    internal enum JSONKeys: String {
-        case publicationDate = "publicationDate"
-        case fromDate = "fromDate"
-        case toDate = "toDate"
-        case countries = "countries"
-        case services = "services"
-        case products = "products"
-        case publicationId = "publicationId"
-        case customData = "customData"
-        case rights = "rights"
-        case devices = "devices"
+
+    private enum CodingKeys: String, CodingKey {
+        case publicationDate, fromDate, toDate, countries, services, products, publicationId
+        case customData, rights, devices
     }
 }
