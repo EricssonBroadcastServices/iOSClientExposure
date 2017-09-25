@@ -52,11 +52,11 @@ class PublicationSpec: QuickSpec {
                 expect(result?.devices).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty or non matching response") {
                 let json = PublicationJSON.empty()
                 let result = json.decode(Publication.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -76,7 +76,7 @@ extension PublicationSpec {
         static let customData = ["Custom":10]
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
         static let devices = [DeviceRightsSpec.DeviceRightsJSON.valid()]
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
                 "fromDate": PublicationJSON.fromDate,
@@ -91,13 +91,13 @@ extension PublicationSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

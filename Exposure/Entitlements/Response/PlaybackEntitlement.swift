@@ -10,17 +10,42 @@ import Foundation
 
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement {
-    /// Play token to use for either PlayReady or MRR. Will be empty if the status is not SUCCESS.
-    public let playToken: String?
+    // MARK: Required
+    /// Play token to use for either PlayReady or MRR.
+    public let playToken: String
+    
+    /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
+    public let playTokenExpiration: String
+    
+    /// The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
+    public let mediaLocator: String
+    
+    /// Unique id of this playback session, all analytics events for this session should be reported on with this id
+    public let playSessionId: String
+    
+    /// If this is a live entitlement.
+    public let live: Bool
+    
+    /// If fast forward is enabled
+    public let ffEnabled: Bool
+    
+    /// If timeshift is disabled
+    public let timeshiftEnabled: Bool
+    
+    /// If rewind is enabled
+    public let rwEnabled: Bool
+    
+    /// If airplay is blocked
+    public let airplayBlocked: Bool
+    
+    
+    // MARK: Optional
     
     /// The EDRM specific configuration. Will be empty if the status is not SUCCESS.
     public let edrm: EDRMConfiguration?
     
     /// The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
     public let fairplay: FairplayConfiguration?
-    
-    /// The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
-    public let mediaLocator: String?
     
     /// The datetime of expiration of the drm license.
     public let licenseExpiration: String?
@@ -31,26 +56,8 @@ public struct PlaybackEntitlement {
     /// The datetime of activation of the drm license.
     public let licenseActivation: String?
     
-    /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
-    public let playTokenExpiration: String?
-    
     /// The type of entitlement that granted access to this play.
     public let entitlementType: EntitlementType?
-    
-    /// If this is a live entitlement.
-    public let live: Bool?
-    
-    /// Unique id of this playback session, all analytics events for this session should be reported on with this id
-    public let playSessionId: String?
-    
-    /// If fast forward is enabled
-    public let ffEnabled: Bool?
-    
-    /// If timeshift is disabled
-    public let timeshiftEnabled: Bool?
-    
-    /// If rewind is enabled
-    public let rwEnabled: Bool?
     
     /// Min bitrate to use
     public let minBitrate: Int?
@@ -61,14 +68,77 @@ public struct PlaybackEntitlement {
     /// Max height resolution
     public let maxResHeight: Int?
     
-    /// If airplay is blocked
-    public let airplayBlocked: Bool?
-    
     /// MDN Request Router Url
     public let mdnRequestRouterUrl: String?
     
     /// Last viewed offset. Used by *Session Shift*
     public let lastViewedOffset: Int?
+    
+    /// Identity of the product that permitted playback of the asset
+    public let productId: String?
+}
+
+extension PlaybackEntitlement: Decodable {
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        // Required
+        playToken = try container.decode(String.self, forKey: .playToken)
+        playTokenExpiration = try container.decode(String.self, forKey: .playTokenExpiration)
+        mediaLocator = try container.decode(String.self, forKey: .mediaLocator)
+        playSessionId = try container.decode(String.self, forKey: .playSessionId)
+        
+        live = try container.decode(Bool.self, forKey: .live)
+        ffEnabled = try container.decode(Bool.self, forKey: .ffEnabled)
+        timeshiftEnabled = try container.decode(Bool.self, forKey: .timeshiftEnabled)
+        rwEnabled = try container.decode(Bool.self, forKey: .rwEnabled)
+        airplayBlocked = try container.decode(Bool.self, forKey: .airplayBlocked)
+        
+        // Optional
+        edrm = try container.decodeIfPresent(EDRMConfiguration.self, forKey: .edrm)
+        fairplay = try container.decodeIfPresent(FairplayConfiguration.self, forKey: .fairplay)
+        
+        licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
+        licenseExpirationReason = Status(string: try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason))
+        licenseActivation = try container.decodeIfPresent(String.self, forKey: .licenseActivation)
+        
+        entitlementType = EntitlementType(string: try container.decodeIfPresent(String.self, forKey: .entitlementType))
+        
+        minBitrate = try container.decodeIfPresent(Int.self, forKey: .minBitrate)
+        maxBitrate = try container.decodeIfPresent(Int.self, forKey: .maxBitrate)
+        maxResHeight = try container.decodeIfPresent(Int.self, forKey: .maxResHeight)
+        
+        mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
+        lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
+        productId = try container.decodeIfPresent(String.self, forKey: .productId)
+    }
+    
+    internal enum CodingKeys: String, CodingKey {
+        case playToken
+        case edrm
+        case fairplay
+        case mediaLocator
+        case licenseExpiration
+        case licenseExpirationReason
+        case licenseActivation
+        case playTokenExpiration
+        case entitlementType
+        case live
+        case playSessionId
+        case ffEnabled
+        case timeshiftEnabled
+        case rwEnabled
+        case minBitrate
+        case maxBitrate
+        case maxResHeight
+        case airplayBlocked
+        case mdnRequestRouterUrl
+        case lastViewedOffset
+        case productId
+    }
+}
+
+extension PlaybackEntitlement {
     
     /// Details the `PlaybackEntitlement`s *license* status
     public enum Status: Equatable {
@@ -142,7 +212,9 @@ public struct PlaybackEntitlement {
             }
         }
     }
-    
+}
+
+extension PlaybackEntitlement {
     public enum EntitlementType {
         case tvod
         case svod
@@ -163,60 +235,5 @@ public struct PlaybackEntitlement {
             default: self = .other(type: string)
             }
         }
-    }
-}
-
-extension PlaybackEntitlement: Decodable {
-
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
-        
-        edrm = try container.decodeIfPresent(EDRMConfiguration.self, forKey: .edrm)
-        fairplay = try container.decode(FairplayConfiguration.self, forKey: .fairplay)
-
-        mediaLocator = try container.decodeIfPresent(String.self, forKey: .mediaLocator)
-        licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
-        licenseExpirationReason = Status(string: try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason))
-        licenseActivation = try container.decodeIfPresent(String.self, forKey: .licenseActivation)
-        
-        playTokenExpiration = try container.decodeIfPresent(String.self, forKey: .playTokenExpiration)
-        entitlementType = EntitlementType(string: try container.decodeIfPresent(String.self, forKey: .entitlementType))
-
-        live = try container.decodeIfPresent(Bool.self, forKey: .live)
-        playSessionId = try container.decodeIfPresent(String.self, forKey: .playSessionId)
-        ffEnabled = try container.decodeIfPresent(Bool.self, forKey: .ffEnabled)
-        timeshiftEnabled = try container.decodeIfPresent(Bool.self, forKey: .timeshiftEnabled)
-        rwEnabled = try container.decodeIfPresent(Bool.self, forKey: .rwEnabled)
-        minBitrate = try container.decodeIfPresent(Int.self, forKey: .minBitrate)
-        maxBitrate = try container.decodeIfPresent(Int.self, forKey: .maxBitrate)
-        maxResHeight = try container.decodeIfPresent(Int.self, forKey: .maxResHeight)
-        airplayBlocked = try container.decodeIfPresent(Bool.self, forKey: .airplayBlocked)
-        mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
-        lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
-    }
-    
-    internal enum CodingKeys: String, CodingKey {
-        case playToken
-        case edrm
-        case fairplay
-        case mediaLocator
-        case licenseExpiration
-        case licenseExpirationReason
-        case licenseActivation
-        case playTokenExpiration
-        case entitlementType
-        case live
-        case playSessionId
-        case ffEnabled
-        case timeshiftEnabled
-        case rwEnabled
-        case minBitrate
-        case maxBitrate
-        case maxResHeight
-        case airplayBlocked
-        case mdnRequestRouterUrl
-        case lastViewedOffset
     }
 }

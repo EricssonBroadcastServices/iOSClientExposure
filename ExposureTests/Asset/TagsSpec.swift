@@ -60,7 +60,7 @@ extension TagsSpec {
         static let changed = "2016-10-28T12:01:20Z"
         static let type = "genre"
         static let tagValues = [["tagId": "tg002_qwerty"]]
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "created": TagsJSON.created,
                 "changed": TagsJSON.changed,
@@ -69,13 +69,13 @@ extension TagsSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": TagsJSON.created
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

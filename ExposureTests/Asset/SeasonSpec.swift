@@ -41,12 +41,13 @@ class SeasonSpec: QuickSpec {
                 expect(result?.customData).toNot(beNil())
             }
             
-            it("should init with partial response") {
-                let json = SeasonJSON.valid()
+            it("should init with required properties") {
+                let json = SeasonJSON.requiredKeys()
                 let result = json.decode(Season.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
+                
                 expect(result?.changed).to(beNil())
                 expect(result?.season).to(beNil())
                 expect(result?.tags).to(beNil())
@@ -64,11 +65,10 @@ class SeasonSpec: QuickSpec {
                 expect(result?.customData).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let json = SeasonJSON.valid()
-                let result = json.decode(Season.self)
-                
-                expect(result).to(beNil())
+            it("should not init without required properties") {
+                let json = SeasonJSON.missingKeys()
+                expect{ try json.throwingDecode(Season.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
     }
@@ -92,7 +92,7 @@ extension SeasonSpec {
         static let linkedEntities = [LinkedEntitySpec.LinkedEntityJSON.valid()]
         static let externalReferences = [ExternalReferenceSpec.ExternalReferenceJSON.valid()]
         static let customData:[String:Any] = [:]
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "created": SeasonJSON.created,
                 "changed": SeasonJSON.changed,
@@ -113,14 +113,17 @@ extension SeasonSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func requiredKeys() -> [String: Codable] {
             return [
                 "created": SeasonJSON.created
             ]
         }
         
-        static func empty() -> [String: Any] {
-            return [:]
+        static func missingKeys() -> [String: Codable] {
+            return [
+                "tags": SeasonJSON.tags,
+                "localized": SeasonJSON.localized
+            ]
         }
     }
 }

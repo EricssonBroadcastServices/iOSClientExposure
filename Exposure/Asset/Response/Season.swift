@@ -10,7 +10,7 @@ import Foundation
 
 public struct Season: Decodable {
     /// When this `Season` was created
-    public let created: String?
+    public let created: String
     
     /// Last known change made to the entry
     public let changed: String?
@@ -49,11 +49,11 @@ public struct Season: Decodable {
     public let externalReferences: [ExternalReference]?
     
     /// Any custom data in `json` format
-    public let customData: [String: Any]?
+    public let customData: [String: AnyJSONType]?
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        created = try container.decodeIfPresent(String.self, forKey: .created)
+        created = try container.decode(String.self, forKey: .created)
         changed = try container.decodeIfPresent(String.self, forKey: .changed)
         season = try container.decodeIfPresent(String.self, forKey: .season)
         tags = try container.decodeIfPresent([Tag].self, forKey: .tags)
@@ -68,7 +68,7 @@ public struct Season: Decodable {
         endYear = try container.decodeIfPresent(Int.self, forKey: .endYear)
         linkedEntities = try container.decodeIfPresent([LinkedEntity].self, forKey: .linkedEntities)
         externalReferences = try container.decodeIfPresent([ExternalReference].self, forKey: .externalReferences)
-        customData = try container.decodeIfPresent([String: Any].self, forKey: .customData)
+        customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
     }
 
     internal enum CodingKeys: String, CodingKey {

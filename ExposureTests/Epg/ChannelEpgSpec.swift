@@ -56,7 +56,7 @@ extension ChannelEpgSpec {
         static let programs = [ProgramSpec.ProgramJSON.valid()]
         static let totalHitsAllChannels = 10
         
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "channelId": ChannelEpgJSON.channelId,
                 "programs": ChannelEpgJSON.programs,
@@ -64,13 +64,13 @@ extension ChannelEpgSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "channelId": ChannelEpgJSON.channelId
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

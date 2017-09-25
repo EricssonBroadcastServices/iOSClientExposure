@@ -17,7 +17,7 @@ class ExposureResponseMessageSpec: QuickSpec {
         
         describe("ExposureResponseMessage") {
             it("should not initialize with missing fields") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "httpCode":404
                 ]
                 
@@ -27,7 +27,7 @@ class ExposureResponseMessageSpec: QuickSpec {
             }
             
             it("should not initialize with invalid fields") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "httpCode":"invalid",
                     "message":"a message"
                 ]

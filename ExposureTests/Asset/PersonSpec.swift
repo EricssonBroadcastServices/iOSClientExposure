@@ -28,8 +28,8 @@ class PersonSpec: QuickSpec {
                 expect(result?.function).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let json = PersonJSON.missingKeys()
+            it("should init with required properties") {
+                let json = PersonJSON.requiredKeys()
                 let result = json.decode(Person.self)
                 
                 expect(result).toNot(beNil())
@@ -38,11 +38,10 @@ class PersonSpec: QuickSpec {
                 expect(result?.function).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let json = PersonJSON.empty()
-                let result = json.decode(Person.self)
-                
-                expect(result).to(beNil())
+            it("should not init without required properties") {
+                let json = PersonJSON.missingKeys()
+                expect{ try json.throwingDecode(Person.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
     }
@@ -53,7 +52,7 @@ extension PersonSpec {
         static let personId = "susan_jr_sarandon"
         static let name = "Susan Jr. Sarandon"
         static let function = "Stuntman"
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "personId": PersonJSON.personId,
                 "name": PersonJSON.name,
@@ -61,13 +60,13 @@ extension PersonSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func requiredKeys() -> [String: Codable] {
             return [
                 "personId": PersonJSON.personId
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [:]
         }
     }

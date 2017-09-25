@@ -28,7 +28,7 @@ public struct DeviceRights: Decodable {
         manufacturer = try container.decodeIfPresent(String.self, forKey: .manufacturer)
         os = try container.decodeIfPresent(String.self, forKey: .os)
         osVersion = try container.decodeIfPresent(String.self, forKey: .osVersion)
-        rights = try container.decodeIfPresent(AssetRights.self.self, forKey: .rights)
+        rights = try container.decodeIfPresent(AssetRights.self, forKey: .rights)
     }
 
     enum CodingKeys: String, CodingKey {

@@ -56,7 +56,7 @@ extension AssetListSpec {
         static let pageSize = 1
         static let pageNumber = 1
         static let items = [AssetSpec.AssetJSON.valid()]
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "totalCount": AssetListJSON.totalCount,
                 "pageSize": AssetListJSON.pageSize,
@@ -65,13 +65,13 @@ extension AssetListSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "totalCount": AssetListJSON.totalCount
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

@@ -51,17 +51,11 @@ class DeviceRightsSpec: QuickSpec {
                 expect(result).to(beNil())
             }
             
-            it("should init with missformed assetRights") {
+            it("should NOT init with missformed assetRights") {
                 let json = DeviceRightsJSON.missformatedAssetRights()
                 let result = json.decode(DeviceRights.self)
                 
-                expect(result).toNot(beNil())
-                expect(result?.type).toNot(beNil())
-                expect(result?.model).to(beNil())
-                expect(result?.manufacturer).to(beNil())
-                expect(result?.os).to(beNil())
-                expect(result?.osVersion).to(beNil())
-                expect(result?.rights).to(beNil())
+                expect(result).to(beNil())
             }
         }
         
@@ -113,7 +107,7 @@ extension DeviceRightsSpec {
         static let os = "iOS"
         static let osVersion = "iOS10.0"
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type,
                 "model": DeviceRightsJSON.model,
@@ -124,17 +118,17 @@ extension DeviceRightsSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
         
-        static func missformatedAssetRights() -> [String: Any] {
+        static func missformatedAssetRights() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type,
                 "rights": []

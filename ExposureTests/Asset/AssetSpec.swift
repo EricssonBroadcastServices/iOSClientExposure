@@ -158,7 +158,7 @@ extension AssetSpec {
         static let lastViewedTime = 10
         static let lastViewedOffset = 100
         
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "created": AssetJSON.created,
                 "changed": AssetJSON.changed,
@@ -196,13 +196,13 @@ extension AssetSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": AssetJSON.created
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

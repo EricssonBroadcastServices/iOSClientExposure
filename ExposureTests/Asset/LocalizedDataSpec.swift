@@ -68,7 +68,7 @@ extension LocalizedDataSpec {
         static let shortDescription = "shortDescription"
         static let longDescription = "longDescription"
         static let images = [ImageSpec.ImageJSON.valid()]
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "locale": LocalizedDataJSON.locale,
                 "title": LocalizedDataJSON.title,
@@ -81,13 +81,13 @@ extension LocalizedDataSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "locale": LocalizedDataJSON.locale
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

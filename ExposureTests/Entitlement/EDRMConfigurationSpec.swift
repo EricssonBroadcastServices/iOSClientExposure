@@ -18,7 +18,7 @@ class EDRMConfigurationSpec: QuickSpec {
         
         describe("EDRMConfiguration") {
             it("should init correctly from json") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "ownerId":"id",
                     "userToken":"token",
                     "requestUrl":"requestUrl",
@@ -40,7 +40,7 @@ class EDRMConfigurationSpec: QuickSpec {
             }
             
             it("should fail on incomplete json") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "ownerId":"id",
                     "userToken":"token",
                     "requestUrl":10,

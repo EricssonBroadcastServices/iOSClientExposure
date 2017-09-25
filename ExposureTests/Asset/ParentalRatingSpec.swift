@@ -53,7 +53,7 @@ extension ParentalRatingSpec {
         static let country = "ZA"
         static let scheme = "age"
         static let rating = "10"
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "country": ParentalRatingJSON.country,
                 "scheme": ParentalRatingJSON.scheme,
@@ -61,13 +61,13 @@ extension ParentalRatingSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "rating": ParentalRatingJSON.rating
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

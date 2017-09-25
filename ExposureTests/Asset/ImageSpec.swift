@@ -59,7 +59,7 @@ extension ImageSpec {
         static let width = 500
         static let orientation = "PORTRAIT"
         static let type = "other"
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "url": ImageJSON.url,
                 "height": ImageJSON.height,
@@ -69,13 +69,13 @@ extension ImageSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "width": ImageJSON.width
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

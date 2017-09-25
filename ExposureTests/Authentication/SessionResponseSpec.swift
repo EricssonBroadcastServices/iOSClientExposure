@@ -26,21 +26,10 @@ class SessionResponseSpec: QuickSpec {
                 expect(result?.userId).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should not init without required properties") {
                 let json = SessionResponseJSON.missingKeys()
-                let result = json.decode(SessionResponse.self)
-                
-                expect(result).toNot(beNil())
-                expect(result?.crmToken).toNot(beNil())
-                expect(result?.accountId).to(beNil())
-                expect(result?.userId).to(beNil())
-            }
-            
-            it("should not init with empty or non matching response") {
-                let json = SessionResponseJSON.empty()
-                let result = json.decode(SessionResponse.self)
-                
-                expect(result).to(beNil())
+                expect{ try json.throwingDecode(SessionResponse.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
     }
@@ -52,7 +41,7 @@ extension SessionResponseSpec {
         static let accountId = "accountId"
         static let userId = "userId"
         
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "crmToken": SessionResponseJSON.crmToken,
                 "accountId": SessionResponseJSON.accountId,
@@ -60,14 +49,10 @@ extension SessionResponseSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "crmToken": SessionResponseJSON.crmToken
             ]
-        }
-        
-        static func empty() -> [String: Any] {
-            return [:]
         }
     }
 }

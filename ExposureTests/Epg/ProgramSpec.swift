@@ -37,16 +37,17 @@ class ProgramSpec: QuickSpec {
                 expect(result?.blackout).toNot(beNil())
             }
             
-            it("should init with partial response") {
-                let json = ProgramJSON.missingKeys()
+            it("should init with required keys") {
+                let json = ProgramJSON.requiredKeys()
                 let result = json.decode(Program.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
+                expect(result?.programId).toNot(beNil())
+                expect(result?.assetId).toNot(beNil())
+                expect(result?.channelId).toNot(beNil())
+                
                 expect(result?.changed).to(beNil())
-                expect(result?.programId).to(beNil())
-                expect(result?.assetId).to(beNil())
-                expect(result?.channelId).to(beNil())
                 expect(result?.startTime).to(beNil())
                 expect(result?.endTime).to(beNil())
                 expect(result?.vodAvailable).to(beNil())
@@ -57,7 +58,7 @@ class ProgramSpec: QuickSpec {
             }
             
             it("should not init with empty or non matching response") {
-                let json = ProgramJSON.empty()
+                let json = ProgramJSON.missingKeys()
                 
                 let result = json.decode(Program.self)
                 
@@ -82,7 +83,7 @@ extension ProgramSpec {
         static let asset = AssetSpec.AssetJSON.valid()
         static let blackout = false
         
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "created": ProgramJSON.created,
                 "changed": ProgramJSON.changed,
@@ -99,14 +100,22 @@ extension ProgramSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func requiredKeys() -> [String: Codable] {
             return [
-                "created": ProgramJSON.created
+                "created": ProgramJSON.created,
+                "programId": ProgramJSON.programId,
+                "assetId": ProgramJSON.assetId,
+                "channelId": ProgramJSON.channelId
             ]
         }
         
-        static func empty() -> [String: Any] {
-            return [:]
+        static func missingKeys() -> [String: Codable] {
+            return [
+                "catchup": ProgramJSON.catchup,
+                "catchupBlocked": ProgramJSON.catchupBlocked,
+                "asset": ProgramJSON.asset,
+                "blackout": ProgramJSON.blackout
+            ]
         }
     }
 }

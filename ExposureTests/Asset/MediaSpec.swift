@@ -72,7 +72,7 @@ extension MediaSpec {
         static let programId = "programId"
         static let status = "enabled"
         
-        static func valid() -> [String: Any] {
+        static func valid() -> [String: Codable] {
             return [
                 "mediaId": MediaJSON.mediaId,
                 "name": MediaJSON.name,
@@ -86,13 +86,13 @@ extension MediaSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Any] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "format": MediaJSON.format
             ]
         }
         
-        static func empty() -> [String: Any] {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }
