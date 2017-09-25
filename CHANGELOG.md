@@ -10,6 +10,7 @@ NO RELEASE DATE SET YET
 * Removed `SwiftyJSON` in favor of `Decodable` from Swift4`
 * `EMP-10270` `Airing` is now distinct from fetching `Program`
 * `EMP-10322` `Image.Orientation` made `Equatable`.
+* Integrated `Download` entitlement requests and validation.
 
 #### Bug fixes
 * `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.

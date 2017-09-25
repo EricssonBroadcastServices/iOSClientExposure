@@ -24,6 +24,7 @@
 - [x] Asset search
 - [x] Authentication
 - [x] Playback Entitlement requests
+- [x] Download Entitlement requests
 - [x] EPG discovery
 - [x] Analytics drop-off
 - [x] Server time sync
@@ -145,6 +146,7 @@ let request = Entitlement(environment: environment, sessionToken: sessionToken)
 let vodRequest = request.vod(assetId: someAsset)
 let liveRequest = request.live(channelId: someChannel)
 let catchupRequest = request.catchup(channelId: someChannel, programId: someProgram)
+let downloadRequest = request.download(assetId: someOfflineAsset)
 ```
 
 Optionally, client applications can request a `DRM` other than the default  `.fairplay`. Please note that the `iOS` platform might not support the requested `DRM`. As for *Fairplay* `DRM`, `Exposure` supplies an out of the box implementation of `FairplayRequester` to handle rights management on the *EMP* platform. For more information, please see [Fairplay Integration](#fairplay-integration).

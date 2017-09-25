@@ -93,4 +93,14 @@ extension Entitlement {
                                    environment: environment,
                                    sessionToken: sessionToken)
     }
+    
+    /// Checks if the user is entitled to the asset with assetId.
+    ///
+    /// - parameter downloadId: asset to validate
+    /// - returns: `DownloadValidation` struct used to process the request
+    public func validate(downloadId: String) -> ValidateDownload {
+        return ValidateDownload(assetId: downloadId,
+                                environment: environment,
+                                sessionToken: sessionToken)
+    }
 }
