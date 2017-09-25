@@ -132,7 +132,6 @@
 		76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */; };
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */; };
-		76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */; };
 		76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */; };
@@ -318,7 +317,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */,
-				76A844911EA7A3E000BDAF2C /* SwiftyJSON.framework in Frameworks */,
 				766094AB1F0AE614005E9A70 /* Player.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
