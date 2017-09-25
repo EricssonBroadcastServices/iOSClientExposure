@@ -26,11 +26,11 @@ public struct Image: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try? container.decode(String.self, forKey: .url)
-        height = try? container.decode(Int.self, forKey: .height)
-        width = try? container.decode(Int.self, forKey: .width)
-        orientation = Orientation(string: try? container.decode(String.self, forKey: .orientation))
-        type = try? container.decode(String.self, forKey: .type)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        height = try container.decodeIfPresent(Int.self, forKey: .height)
+        width = try container.decodeIfPresent(Int.self, forKey: .width)
+        orientation = Orientation(string: try container.decodeIfPresent(String.self, forKey: .orientation))
+        type = try container.decodeIfPresent(String.self, forKey: .type)
     }
 
     internal enum CodingKeys: String, CodingKey {

@@ -22,8 +22,8 @@ public struct EntitlementValidation: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        status = Status(string: try? container.decode(String.self, forKey: .status))
-        paymentDone = try? container.decode(Bool.self, forKey: .paymentDone)
+        status = Status(string: try container.decodeIfPresent(String.self, forKey: .status))
+        paymentDone = try container.decodeIfPresent(Bool.self, forKey: .paymentDone)
     }
     
     internal enum CodingKeys: String, CodingKey {

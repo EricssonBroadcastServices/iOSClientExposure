@@ -153,52 +153,52 @@ extension PlaybackEntitlement: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        playToken = try? container.decode(String.self, forKey: .playToken)
+        playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
         
-        edrm = try? container.decode(EDRMConfiguration.self, forKey: .edrm)
-        fairplay = try? container.decode(FairplayConfiguration.self, forKey: .fairplay)
+        edrm = try container.decodeIfPresent(EDRMConfiguration.self, forKey: .edrm)
+        fairplay = try container.decode(FairplayConfiguration.self, forKey: .fairplay)
 
-        mediaLocator = try? container.decode(String.self, forKey: .mediaLocator)
-        licenseExpiration = try? container.decode(String.self, forKey: .licenseExpiration)
-        licenseExpirationReason = Status(string: try? container.decode(String.self, forKey: .licenseExpirationReason))
-        licenseActivation = try? container.decode(String.self, forKey: .licenseActivation)
+        mediaLocator = try container.decodeIfPresent(String.self, forKey: .mediaLocator)
+        licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
+        licenseExpirationReason = Status(string: try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason))
+        licenseActivation = try container.decodeIfPresent(String.self, forKey: .licenseActivation)
         
-        playTokenExpiration = try? container.decode(String.self, forKey: .playTokenExpiration)
-        entitlementType = EntitlementType(string: try? container.decode(String.self, forKey: .entitlementType))
+        playTokenExpiration = try container.decodeIfPresent(String.self, forKey: .playTokenExpiration)
+        entitlementType = EntitlementType(string: try container.decodeIfPresent(String.self, forKey: .entitlementType))
 
-        live = try? container.decode(Bool.self, forKey: .live)
-        playSessionId = try? container.decode(String.self, forKey: .playSessionId)
-        ffEnabled = try? container.decode(Bool.self, forKey: .ffEnabled)
-        timeshiftEnabled = try? container.decode(Bool.self, forKey: .timeshiftEnabled)
-        rwEnabled = try? container.decode(Bool.self, forKey: .rwEnabled)
-        minBitrate = try? container.decode(Int.self, forKey: .minBitrate)
-        maxBitrate = try? container.decode(Int.self, forKey: .maxBitrate)
-        maxResHeight = try? container.decode(Int.self, forKey: .maxResHeight)
-        airplayBlocked = try? container.decode(Bool.self, forKey: .airplayBlocked)
-        mdnRequestRouterUrl = try? container.decode(String.self, forKey: .mdnRequestRouterUrl)
-        lastViewedOffset = try? container.decode(Int.self, forKey: .lastViewedOffset)
+        live = try container.decodeIfPresent(Bool.self, forKey: .live)
+        playSessionId = try container.decodeIfPresent(String.self, forKey: .playSessionId)
+        ffEnabled = try container.decodeIfPresent(Bool.self, forKey: .ffEnabled)
+        timeshiftEnabled = try container.decodeIfPresent(Bool.self, forKey: .timeshiftEnabled)
+        rwEnabled = try container.decodeIfPresent(Bool.self, forKey: .rwEnabled)
+        minBitrate = try container.decodeIfPresent(Int.self, forKey: .minBitrate)
+        maxBitrate = try container.decodeIfPresent(Int.self, forKey: .maxBitrate)
+        maxResHeight = try container.decodeIfPresent(Int.self, forKey: .maxResHeight)
+        airplayBlocked = try container.decodeIfPresent(Bool.self, forKey: .airplayBlocked)
+        mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
+        lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
     }
     
     internal enum CodingKeys: String, CodingKey {
-        case playToken = "playToken"
-        case edrm = "edrmConfig"
-        case fairplay = "fairplayConfig"
-        case mediaLocator = "mediaLocator"
-        case licenseExpiration = "licenseExpiration"
-        case licenseExpirationReason = "licenseExpirationReason"
-        case licenseActivation = "licenseActivation"
-        case playTokenExpiration = "playTokenExpiration"
-        case entitlementType = "entitlementType"
-        case live = "live"
-        case playSessionId = "playSessionId"
-        case ffEnabled = "ffEnabled"
-        case timeshiftEnabled = "timeshiftEnabled"
-        case rwEnabled = "rwEnabled"
-        case minBitrate = "minBitrate"
-        case maxBitrate = "maxBitrate"
-        case maxResHeight = "maxResHeight"
-        case airplayBlocked = "airplayBlocked"
-        case mdnRequestRouterUrl = "mdnRequestRouterUrl"
-        case lastViewedOffset = "lastViewedOffset"
+        case playToken
+        case edrm
+        case fairplay
+        case mediaLocator
+        case licenseExpiration
+        case licenseExpirationReason
+        case licenseActivation
+        case playTokenExpiration
+        case entitlementType
+        case live
+        case playSessionId
+        case ffEnabled
+        case timeshiftEnabled
+        case rwEnabled
+        case minBitrate
+        case maxBitrate
+        case maxResHeight
+        case airplayBlocked
+        case mdnRequestRouterUrl
+        case lastViewedOffset
     }
 }

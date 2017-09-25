@@ -42,9 +42,9 @@ public struct Credentials: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         sessionToken = SessionToken(value: try container.decode(String.self, forKey: .sessionToken))
-        crmToken = try? container.decode(String.self, forKey: .crmToken)
-        accountId = try? container.decode(String.self, forKey: .accountId)
-        accountStatus = try? container.decode(String.self, forKey: .accountStatus)
-        expiration = try? container.decode(Date.self, forKey: .expiration)
+        crmToken = try container.decodeIfPresent(String.self, forKey: .crmToken)
+        accountId = try container.decodeIfPresent(String.self, forKey: .accountId)
+        accountStatus = try container.decodeIfPresent(String.self, forKey: .accountStatus)
+        expiration = try container.decodeIfPresent(Date.self, forKey: .expiration)
     }
 }

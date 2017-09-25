@@ -25,18 +25,18 @@ public struct Publication: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        publicationDate = try? container.decode(String.self, forKey: .publicationDate)
-        fromDate = try? container.decode(String.self, forKey: .fromDate)
-        toDate = try? container.decode(String.self, forKey: .toDate)
+        publicationDate = try container.decodeIfPresent(String.self, forKey: .publicationDate)
+        fromDate = try container.decodeIfPresent(String.self, forKey: .fromDate)
+        toDate = try container.decodeIfPresent(String.self, forKey: .toDate)
 
-        countries = try? container.decode([String].self, forKey: .countries)
-        services = try? container.decode([String].self, forKey: .services)
-        products = try? container.decode([String].self, forKey: .products)
-        publicationId = try? container.decode(String.self, forKey: .publicationId)
+        countries = try container.decodeIfPresent([String].self, forKey: .countries)
+        services = try container.decodeIfPresent([String].self, forKey: .services)
+        products = try container.decodeIfPresent([String].self, forKey: .products)
+        publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
 
-        customData = try? container.decode([String: AnyJSONType].self, forKey: .customData)
-        rights = try? container.decode(AssetRights.self, forKey: .rights)
-        devices = try? container.decode([DeviceRights].self, forKey: .devices)
+        customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
+        rights = try container.decodeIfPresent(AssetRights.self, forKey: .rights)
+        devices = try container.decodeIfPresent([DeviceRights].self, forKey: .devices)
     }
 
     private enum CodingKeys: String, CodingKey {
