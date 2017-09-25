@@ -60,14 +60,13 @@ class ValidateEntitlementSpec: QuickSpec {
                     "paymentDone":false
                     ]
                 
-                expect{ try json.decode(EntitlementValidation.self) }
-                    .toNot(beNil())
+                let result = try? json.decode(EntitlementValidation.self)
                 
-                expect{ try json.decode(EntitlementValidation.self).status }
-                    .to(equal(.success))
+                expect(result).toNot(beNil())
                 
-                expect{ try json.decode(EntitlementValidation.self).paymentDone }
-                    .to(equal(false))
+                expect(result?.status).to(equal(.success))
+                
+                expect(result?.paymentDone).to(equal(false))
             }
             
             it("should fail with invalid json") {

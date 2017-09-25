@@ -20,6 +20,7 @@ class MarkerSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
+                let json
                 let value = Marker(json: MarkerJSON.valid())
                 
                 expect(value).toNot(beNil())

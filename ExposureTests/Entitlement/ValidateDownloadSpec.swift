@@ -68,29 +68,16 @@ class ValidateDownloadSpec: QuickSpec {
                     "downloadMaxSecondsAfterDownload": 200
                 ]
                 
-                expect{ try json.decode(DownloadValidation.self) }
-                    .toNot(beNil())
+                let result = try? json.decode(DownloadValidation.self)
                 
-                expect{ try json.decode(DownloadValidation.self).status }
-                    .to(equal(.success))
-                
-                expect{ try json.decode(DownloadValidation.self).paymentDone }
-                    .to(equal(false))
-                
-                expect{ try json.decode(DownloadValidation.self).downloadMaxSecondsAfterPlay }
-                    .to(equal(100))
-                
-                expect{ try json.decode(DownloadValidation.self).downloadMaxSecondsAfterDownload }
-                    .to(equal(200))
-                
-                expect{ try bitrate.decode(DownloadValidation.Bitrate.self) }
-                    .toNot(beNil())
-                
-                expect{ try json.decode(DownloadValidation.self).bitrates?.first?.bitrate }
-                    .to(equal(120000))
-                
-                expect{ try json.decode(DownloadValidation.self).bitrates?.first?.size }
-                    .to(equal(200000))
+                expect(result).toNot(beNil())
+                expect(result?.status).to(equal(.success))
+                expect(result?.paymentDone).to(equal(false))
+                expect(result?.downloadMaxSecondsAfterPlay).to(equal(100))
+                expect(result?.downloadMaxSecondsAfterDownload).to(equal(200))
+                expect{ try bitrate.decode(DownloadValidation.Bitrate.self) }.toNot(beNil())
+                expect(result?.bitrates?.first?.bitrate).to(equal(120000))
+                expect(result?.bitrates?.first?.size).to(equal(200000))
                 
             }
             
@@ -100,8 +87,9 @@ class ValidateDownloadSpec: QuickSpec {
                     "OTHER_MISTAKE":false
                 ]
                 
-                expect{ try json.decode(DownloadValidation.self) }
-                    .to(beNil())
+                let result = try? json.decode(DownloadValidation.self)
+                
+                expect(result).to(beNil())
             }
         }
     }

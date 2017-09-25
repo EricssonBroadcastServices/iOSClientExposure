@@ -19,21 +19,22 @@ class FairplayConfigurationSpec: QuickSpec {
             context("Success") {
                 it("should init with correct information") {
                     
-                    let json = [
+                    let json: [String: Any] = [
                         "secondaryMediaLocator":"foo",
                         "certificateUrl":"bar",
                         "licenseAcquisitionUrl":"baz"
                     ]
                     
-                    let config = FairplayConfiguration(json: json)
-                    expect(config).toNot(beNil())
-                    expect(config?.secondaryMediaLocator).toNot(beNil())
-                    expect(config?.certificateUrl).toNot(beNil())
-                    expect(config?.licenseAcquisitionUrl).toNot(beNil())
+                    let result = try? json.decode(FairplayConfiguration.self)
                     
-                    expect(config?.secondaryMediaLocator!).to(equal("foo"))
-                    expect(config?.certificateUrl!).to(equal("bar"))
-                    expect(config?.licenseAcquisitionUrl!).to(equal("baz"))
+                    expect(result).toNot(beNil())
+                    expect(result?.secondaryMediaLocator).toNot(beNil())
+                    expect(result?.certificateUrl).toNot(beNil())
+                    expect(result?.licenseAcquisitionUrl).toNot(beNil())
+                    
+                    expect(result?.secondaryMediaLocator!).to(equal("foo"))
+                    expect(result?.certificateUrl!).to(equal("bar"))
+                    expect(result?.licenseAcquisitionUrl!).to(equal("baz"))
                 }
             }
             

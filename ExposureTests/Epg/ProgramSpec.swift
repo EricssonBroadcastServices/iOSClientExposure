@@ -19,45 +19,49 @@ class ProgramSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let object = Program(json: ProgramJSON.valid())
+                let json = ProgramJSON.valid()
                 
-                expect(object).toNot(beNil())
-                expect(object!.created).toNot(beNil())
-                expect(object!.changed).toNot(beNil())
-                expect(object!.programId).toNot(beNil())
-                expect(object!.assetId).toNot(beNil())
-                expect(object!.channelId).toNot(beNil())
-                expect(object!.startTime).toNot(beNil())
-                expect(object!.endTime).toNot(beNil())
-                expect(object!.vodAvailable).toNot(beNil())
-                expect(object!.catchup).toNot(beNil())
-                expect(object!.catchupBlocked).toNot(beNil())
-                expect(object!.asset).toNot(beNil())
-                expect(object!.blackout).toNot(beNil())
+                let result = try? json.decode(Program.self)
+                
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).toNot(beNil())
+                expect(result?.programId).toNot(beNil())
+                expect(result?.assetId).toNot(beNil())
+                expect(result?.channelId).toNot(beNil())
+                expect(result?.startTime).toNot(beNil())
+                expect(result?.endTime).toNot(beNil())
+                expect(result?.vodAvailable).toNot(beNil())
+                expect(result?.catchup).toNot(beNil())
+                expect(result?.catchupBlocked).toNot(beNil())
+                expect(result?.asset).toNot(beNil())
+                expect(result?.blackout).toNot(beNil())
             }
             
             it("should init with partial response") {
-                let object = Program(json: ProgramJSON.missingKeys())
+                let json = ProgramJSON.missingKeys()
                 
-                expect(object).toNot(beNil())
-                expect(object!.created).toNot(beNil())
-                expect(object!.changed).to(beNil())
-                expect(object!.programId).to(beNil())
-                expect(object!.assetId).to(beNil())
-                expect(object!.channelId).to(beNil())
-                expect(object!.startTime).to(beNil())
-                expect(object!.endTime).to(beNil())
-                expect(object!.vodAvailable).to(beNil())
-                expect(object!.catchup).to(beNil())
-                expect(object!.catchupBlocked).to(beNil())
-                expect(object!.asset).to(beNil())
-                expect(object!.blackout).to(beNil())
+                let result = try? json.decode(Program.self)
+                
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).to(beNil())
+                expect(result?.programId).to(beNil())
+                expect(result?.assetId).to(beNil())
+                expect(result?.channelId).to(beNil())
+                expect(result?.startTime).to(beNil())
+                expect(result?.endTime).to(beNil())
+                expect(result?.vodAvailable).to(beNil())
+                expect(result?.catchup).to(beNil())
+                expect(result?.catchupBlocked).to(beNil())
+                expect(result?.asset).to(beNil())
+                expect(result?.blackout).to(beNil())
             }
             
             it("should not init with empty or non matching response") {
-                let object = Program(json: ProgramJSON.empty())
+                let json = ProgramJSON.empty()
                 
-                expect(object).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }
@@ -78,7 +82,7 @@ extension ProgramSpec {
         static let asset = AssetSpec.AssetJSON.valid()
         static let blackout = false
         
-        static func valid() -> Any {
+        static func valid() -> [String: Any] {
             return [
                 "created": ProgramJSON.created,
                 "changed": ProgramJSON.changed,
@@ -95,13 +99,13 @@ extension ProgramSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Any] {
             return [
                 "created": ProgramJSON.created
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }
