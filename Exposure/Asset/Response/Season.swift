@@ -10,7 +10,7 @@ import Foundation
 
 public struct Season: Decodable {
     /// When this `Season` was created
-    public let created: String
+    public let created: String?
     
     /// Last known change made to the entry
     public let changed: String?
@@ -53,7 +53,7 @@ public struct Season: Decodable {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        created = try container.decode(String.self, forKey: .created)
+        created = try container.decodeIfPresent(String.self, forKey: .created)
         changed = try container.decodeIfPresent(String.self, forKey: .changed)
         season = try container.decodeIfPresent(String.self, forKey: .season)
         tags = try container.decodeIfPresent([Tag].self, forKey: .tags)

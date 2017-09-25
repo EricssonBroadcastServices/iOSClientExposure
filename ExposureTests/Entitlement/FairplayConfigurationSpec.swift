@@ -32,9 +32,9 @@ class FairplayConfigurationSpec: QuickSpec {
                     expect(result?.certificateUrl).toNot(beNil())
                     expect(result?.licenseAcquisitionUrl).toNot(beNil())
                     
-                    expect(result?.secondaryMediaLocator!).to(equal("foo"))
-                    expect(result?.certificateUrl!).to(equal("bar"))
-                    expect(result?.licenseAcquisitionUrl!).to(equal("baz"))
+                    expect(result?.secondaryMediaLocator).to(equal("foo"))
+                    expect(result?.certificateUrl).to(equal("bar"))
+                    expect(result?.licenseAcquisitionUrl).to(equal("baz"))
                 }
             }
             
@@ -44,10 +44,8 @@ class FairplayConfigurationSpec: QuickSpec {
                         "secondaryMediaLocator":"foo",
                         "certificateUrl":"bar"
                     ]
-                    
-                    let result = json.decode(FairplayConfiguration.self)
-                    
-                    expect(result).to(beNil())
+                    expect{ try json.throwingDecode(FairplayConfiguration.self) }
+                        .to(throwError(errorType: DecodingError.self))
                 }
             }
         }

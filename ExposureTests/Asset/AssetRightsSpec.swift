@@ -52,7 +52,7 @@ class AssetRightsSpec: QuickSpec {
                 expect(result?.downloadMaxSecondsAfterPlay).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = AssetRightsJSON.missingKeys()
                 let result = json.decode(AssetRights.self)
                 
@@ -86,11 +86,11 @@ class AssetRightsSpec: QuickSpec {
                 expect(result?.downloadMaxSecondsAfterPlay).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = AssetRightsJSON.empty()
                 let result = json.decode(AssetRights.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

@@ -34,7 +34,7 @@ class MediaSpec: QuickSpec {
                 expect(result?.status).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = MediaJSON.missingKeys()
                 let result = json.decode(Media.self)
                 
@@ -50,11 +50,11 @@ class MediaSpec: QuickSpec {
                 expect(result?.status).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = MediaJSON.empty()
                 let result = json.decode(Media.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

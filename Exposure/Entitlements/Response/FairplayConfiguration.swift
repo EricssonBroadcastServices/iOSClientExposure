@@ -13,12 +13,12 @@ import Foundation
 /// `FairplayConfiguration` encapsulates all information required by client applications to initiate playback. For more information regarding *Fairplay* streaming, please see [Apple's documentation](https://developer.apple.com/streaming/fps/)
 public struct FairplayConfiguration: Decodable {
     /// *MRR* identifier for the *Fairplay* media.
-    public let secondaryMediaLocator: String?
+    public let secondaryMediaLocator: String
     
     /// URL to the *Application Certificate*
-    public let certificateUrl:String?
+    public let certificateUrl:String
     
     /// URL to where *Content Key Context* requests will be made
-    public let licenseAcquisitionUrl: String?
+    public let licenseAcquisitionUrl: String
 }
 

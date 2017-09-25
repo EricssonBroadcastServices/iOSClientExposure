@@ -40,11 +40,10 @@ class ChannelEpgSpec: QuickSpec {
                 expect(result?.totalHitsAllChannels).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = ChannelEpgJSON.empty()
-                
                 let result = json.decode(ChannelEpg.self)
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct Tag: Decodable {
-    public let created: String
+    public let created: String?
     public let changed: String?
     public let type: String?
     public let tagValues: [Values]?

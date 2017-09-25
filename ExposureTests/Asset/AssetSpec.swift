@@ -60,18 +60,18 @@ class AssetSpec: QuickSpec {
                 expect(result?.lastViewedOffset).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = AssetJSON.missingKeys()
                 let result = json.decode(Asset.self)
                 
                 expect(result).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = AssetJSON.empty()
                 let result = json.decode(Asset.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
         

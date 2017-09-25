@@ -28,7 +28,7 @@ class ExternalReferenceSpec: QuickSpec {
                 expect(result?.value).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = ExternalReferenceJSON.missingKeys()
                 let result = json.decode(ExternalReference.self)
                 
@@ -38,11 +38,11 @@ class ExternalReferenceSpec: QuickSpec {
                 expect(result?.value).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = ExternalReferenceJSON.empty()
                 let result = json.decode(ExternalReference.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

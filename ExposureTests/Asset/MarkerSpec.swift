@@ -37,11 +37,13 @@ class MarkerSpec: QuickSpec {
                 expect(result?.url).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty or non matching response") {
                 let json = MarkerJSON.empty()
                 let result = json.decode(Marker.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.offset).to(beNil())
+                expect(result?.url).to(beNil())
             }
         }
     }

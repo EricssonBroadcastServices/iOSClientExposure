@@ -10,7 +10,7 @@ import Foundation
 
 public struct Person: Decodable {
     /// Identifier for `Person`
-    public let personId: String
+    public let personId: String?
     
     /// Specified name
     public let name: String?

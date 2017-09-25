@@ -38,11 +38,14 @@ class ParentalRatingSpec: QuickSpec {
                 expect(result?.rating).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty or non matching response") {
                 let json = ParentalRatingJSON.empty()
                 let result = json.decode(ParentalRating.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.country).to(beNil())
+                expect(result?.scheme).to(beNil())
+                expect(result?.rating).to(beNil())
             }
         }
     }

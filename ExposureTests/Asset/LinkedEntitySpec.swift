@@ -28,7 +28,7 @@ class LinkedEntitySpec: QuickSpec {
                 expect(result?.entityType).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = LinkedEntityJSON.missingKeys()
                 let result = json.decode(LinkedEntity.self)
                 
@@ -38,11 +38,11 @@ class LinkedEntitySpec: QuickSpec {
                 expect(result?.entityType).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = LinkedEntityJSON.empty()
                 let result = json.decode(LinkedEntity.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

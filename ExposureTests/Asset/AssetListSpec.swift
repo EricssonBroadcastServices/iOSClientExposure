@@ -40,11 +40,15 @@ class AssetListSpec: QuickSpec {
                 expect(result?.items).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = AssetListJSON.empty()
                 let result = json.decode(AssetList.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.totalCount).to(beNil())
+                expect(result?.pageSize).to(beNil())
+                expect(result?.pageNumber).to(beNil())
+                expect(result?.items).to(beNil())
             }
         }
     }

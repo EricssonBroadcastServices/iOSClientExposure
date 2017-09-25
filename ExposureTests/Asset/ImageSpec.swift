@@ -30,7 +30,7 @@ class ImageSpec: QuickSpec {
                 expect(result?.width).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = ImageJSON.missingKeys()
                 let result = json.decode(Image.self)
                 
@@ -42,11 +42,11 @@ class ImageSpec: QuickSpec {
                 expect(result?.width).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = ImageJSON.empty()
                 let result = json.decode(Image.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

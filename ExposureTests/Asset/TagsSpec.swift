@@ -48,7 +48,7 @@ class TagsSpec: QuickSpec {
                 let json = TagsJSON.empty()
                 let result = json.decode(Tag.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }

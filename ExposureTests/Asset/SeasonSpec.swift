@@ -41,8 +41,8 @@ class SeasonSpec: QuickSpec {
                 expect(result?.customData).toNot(beNil())
             }
             
-            it("should init with required properties") {
-                let json = SeasonJSON.requiredKeys()
+            it("should init with partial response") {
+                let json = SeasonJSON.missingKeys()
                 let result = json.decode(Season.self)
                 
                 expect(result).toNot(beNil())
@@ -65,10 +65,28 @@ class SeasonSpec: QuickSpec {
                 expect(result?.customData).to(beNil())
             }
             
-            it("should not init without required properties") {
-                let json = SeasonJSON.missingKeys()
-                expect{ try json.throwingDecode(Season.self) }
-                    .to(throwError(errorType: DecodingError.self))
+            it("should init with empty response") {
+                let json = SeasonJSON.empty()
+                let result = json.decode(Season.self)
+                
+                expect(result).toNot(beNil())
+                
+                expect(result?.created).to(beNil())
+                expect(result?.changed).to(beNil())
+                expect(result?.season).to(beNil())
+                expect(result?.tags).to(beNil())
+                expect(result?.localized).to(beNil())
+                expect(result?.tvShowId).to(beNil())
+                expect(result?.seasonId).to(beNil())
+                expect(result?.episodeCount).to(beNil())
+                expect(result?.episodes).to(beNil())
+                expect(result?.publishedDate).to(beNil())
+                expect(result?.availableDate).to(beNil())
+                expect(result?.startYear).to(beNil())
+                expect(result?.endYear).to(beNil())
+                expect(result?.linkedEntities).to(beNil())
+                expect(result?.externalReferences).to(beNil())
+                expect(result?.customData).to(beNil())
             }
         }
     }
@@ -113,17 +131,14 @@ extension SeasonSpec {
             ]
         }
         
-        static func requiredKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": SeasonJSON.created
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
-            return [
-                "tags": SeasonJSON.tags,
-                "localized": SeasonJSON.localized
-            ]
+        static func empty() -> [String: Codable] {
+            return [:]
         }
     }
 }

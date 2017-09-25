@@ -35,7 +35,7 @@ class PublicationSpec: QuickSpec {
                 expect(result?.devices).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = PublicationJSON.missingKeys()
                 let result = json.decode(Publication.self)
                 
@@ -52,7 +52,7 @@ class PublicationSpec: QuickSpec {
                 expect(result?.devices).to(beNil())
             }
             
-            it("should init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = PublicationJSON.empty()
                 let result = json.decode(Publication.self)
                 

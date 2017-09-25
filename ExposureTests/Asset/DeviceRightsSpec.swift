@@ -31,7 +31,7 @@ class DeviceRightsSpec: QuickSpec {
                 expect(result?.rights).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
+            it("should init with partial response") {
                 let json = DeviceRightsJSON.missingKeys()
                 let result = json.decode(DeviceRights.self)
                 
@@ -44,18 +44,11 @@ class DeviceRightsSpec: QuickSpec {
                 expect(result?.rights).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
+            it("should init with empty response") {
                 let json = DeviceRightsJSON.empty()
                 let result = json.decode(DeviceRights.self)
                 
-                expect(result).to(beNil())
-            }
-            
-            it("should NOT init with missformed assetRights") {
-                let json = DeviceRightsJSON.missformatedAssetRights()
-                let result = json.decode(DeviceRights.self)
-                
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
         
