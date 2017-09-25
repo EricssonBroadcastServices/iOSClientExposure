@@ -9,7 +9,6 @@
 import Quick
 import Nimble
 import Mockingjay
-import SwiftyJSON
 
 @testable import Exposure
 

@@ -7,7 +7,7 @@
 NO RELEASE DATE SET YET
 
 #### Changes
-* Removed `SwiftyJSON` in favor of `Decodable` from Swift4`
+* Removed `SwiftyJSON` in favor of `Decodable` from `Swift 4.0`
 * `EMP-10270` `Airing` is now distinct from fetching `Program`
 * `EMP-10322` `Image.Orientation` made `Equatable`.
 * Integrated `Download` entitlement requests and validation.

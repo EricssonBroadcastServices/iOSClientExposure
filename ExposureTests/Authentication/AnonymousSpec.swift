@@ -9,7 +9,6 @@
 import Quick
 import Nimble
 import Mockingjay
-import SwiftyJSON
 
 @testable import Exposure
 
@@ -128,10 +127,10 @@ class AnonymousSpec: QuickSpec {
                             token = exposureResponse.value
                             error = exposureResponse.error
                             
-                            if let data = data {
-                                let json = JSON(data).dictionary
-                                httpCode = json?["httpCode"]?.int
-                                message = json?["message"]?.string
+                            if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                as? [String: Any] ?? [:] {
+                                    httpCode = json["httpCode"] as? Int
+                                    message = json["message"] as? String
                             }
                     }
                 }
