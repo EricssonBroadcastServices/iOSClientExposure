@@ -24,7 +24,7 @@ class DownloadVodSpec: QuickSpec {
 
         let downloadVod = Entitlement(environment: env,
                                       sessionToken: sessionToken)
-            .vod(assetId: assetId)
+            .download(assetId: assetId)
             .use(drm: .unencrypted)
             .use(format: .hls)
 
