@@ -55,28 +55,37 @@ class ValidateEntitlementSpec: QuickSpec {
         
         describe("EntitlementValidation") {
             it("should process with valid json") {
-                let json: [String: Any] = [
+                let json: [String : Any] = [
                     "status":"SUCCESS",
                     "paymentDone":false
-                ]
+                    ]
                 
-                let result = EntitlementValidation(json: json)
+                expect{ try json.decode(EntitlementValidation.self) }
+                    .toNot(beNil())
                 
-                expect(result).toNot(beNil())
-                expect(result?.status).toNot(beNil())
-                expect(result?.paymentDone).toNot(beNil())
+                expect{ try json.decode(EntitlementValidation.self).status }
+                    .to(equal(.success))
+                
+                expect{ try json.decode(EntitlementValidation.self).paymentDone }
+                    .to(equal(false))
             }
             
             it("should fail with invalid json") {
-                let json: [String: Any] = [
-                    "WRONG_KEY":"SUCCESS",
-                    "OTHER_MISTAKE":false
-                ]
-                
-                let result = EntitlementValidation(json: json)
-                
-                expect(result).to(beNil())
+                expect{
+                    try [
+                        "WRONG_KEY":"SUCCESS",
+                        "OTHER_MISTAKE":false
+                        ].decode(EntitlementValidation.self)
+                    }
+                    .to(beNil())
             }
         }
+    }
+}
+
+extension Dictionary where Key == String, Value == Any {
+    func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
+        let data = try JSONEncoder().encode(self)
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }

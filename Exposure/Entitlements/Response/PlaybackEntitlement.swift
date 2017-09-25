@@ -71,7 +71,7 @@ public struct PlaybackEntitlement {
     public let lastViewedOffset: Int?
     
     /// Details the `PlaybackEntitlement`s *license* status
-    public enum Status {
+    public enum Status: Equatable {
         /// If the user is entitled.
         case success
         
@@ -121,6 +121,24 @@ public struct PlaybackEntitlement {
             case "GAP_IN_EPG": self = .gapInEPG
             case "EPG_PLAY_MAX_HOURS": self = .epgPlayMaxHours
             default: self = .other(reason: string)
+            }
+        }
+        
+        public static func == (lhs: Status, rhs: Status) -> Bool {
+            switch (lhs, rhs) {
+            case (.success, .success): return true
+            case (.notEntitled, .notEntitled): return true
+            case (.geoBlocked, .geoBlocked): return true
+            case (.downloadBlocked, .downloadBlocked): return true
+            case (.deviceBlocked, .deviceBlocked): return true
+            case (.licenseExpired, .licenseExpired): return true
+            case (.notAvailableInFormat, .notAvailableInFormat): return true
+            case (.concurrentStreamsLimitReached, .concurrentStreamsLimitReached): return true
+            case (.notEnabled, .notEnabled): return true
+            case (.gapInEPG, .gapInEPG): return true
+            case (.epgPlayMaxHours, .epgPlayMaxHours): return true
+            case (.other(let l), .other(let r)): return l == r
+            default: return false
             }
         }
     }

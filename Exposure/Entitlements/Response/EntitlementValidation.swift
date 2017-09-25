@@ -27,7 +27,7 @@ public struct EntitlementValidation: Decodable {
     }
     
     internal enum CodingKeys: String, CodingKey {
-        case status = "status"
-        case paymentDone = "paymentDone"
+        case status
+        case paymentDone
     }
 }

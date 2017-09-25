@@ -104,7 +104,7 @@ extension PlayRequest {
     
     /// Keys used to specify `json` body for the request.
     internal enum CodingKeys: String, CodingKey {
-        case drm = "drm"
-        case format = "format"
+        case drm
+        case format
     }
 }

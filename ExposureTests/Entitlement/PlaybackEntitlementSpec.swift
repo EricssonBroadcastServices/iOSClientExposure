@@ -51,53 +51,64 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "lastViewedOffset":10
                 ]
                 
-                let entitlement = PlaybackEntitlement(json: json)
-                
-                expect(entitlement).toNot(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .toNot(beNil())
             }
             
             it("should not init with invalid json") {
-                let entitlement = PlaybackEntitlement(json: ["invalid":"JSON"])
+                let json:[String: Any] = ["invalid":"JSON"]
                 
-                expect(entitlement).to(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .to(beNil())
             }
             
             it("should not init with empty json") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let json:[String: Any] = [:]
                 
-                expect(entitlement).to(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .to(beNil())
             }
             
             it("should init with partial json") {
-                
                 let json:[String: Any] = [
                     "playToken":"playToken",
                     "mediaLocator":"mediaLocator"
                 ]
                 
-                let entitlement = PlaybackEntitlement(json: json)
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .toNot(beNil())
                 
-                expect(entitlement).toNot(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self).playToken }
+                    .to(equal("playToken"))
+                
+                expect{ try json.decode(PlaybackEntitlement.self).mediaLocator }
+                    .to(equal("mediaLocator"))
             }
             
             it("should not create invalid EDRMConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [
+                let json:[String: Any] = [
                     "playToken":"playToken",
                     "mediaLocator":"mediaLocator"
-                    ])
+                ]
                 
-                expect(entitlement).toNot(beNil())
-                expect(entitlement?.edrm).to(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .toNot(beNil())
+                
+                expect{ try json.decode(PlaybackEntitlement.self).edrm }
+                    .to(beNil())
             }
             
             it("should not create invalid FairplayConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [
+                let json:[String: Any] = [
                     "playToken":"playToken",
                     "mediaLocator":"mediaLocator"
-                    ])
+                ]
                 
-                expect(entitlement).toNot(beNil())
-                expect(entitlement?.fairplay).to(beNil())
+                expect{ try json.decode(PlaybackEntitlement.self) }
+                    .toNot(beNil())
+                
+                expect{ try json.decode(PlaybackEntitlement.self).fairplay }
+                    .to(beNil())
             }
         }
         

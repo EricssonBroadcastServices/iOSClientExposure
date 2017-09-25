@@ -55,24 +55,43 @@ class ValidateDownloadSpec: QuickSpec {
         
         describe("DownloadValidation") {
             it("should process with valid json") {
+                let bitrate: [String: Any] = [
+                    "bitrate": 120000,
+                    "size": 200000
+                ]
+                
                 let json: [String: Any] = [
                     "status":"SUCCESS",
                     "paymentDone":false,
-                    "bitrates": [
-                        [
-                            "bitrate": 120000,
-                            "size": 200000
-                        ]
-                    ],
+                    "bitrates": [bitrate],
                     "downloadMaxSecondsAfterPlay": 100,
                     "downloadMaxSecondsAfterDownload": 200
                 ]
                 
-                let result = DownloadValidation(json: json)
+                expect{ try json.decode(DownloadValidation.self) }
+                    .toNot(beNil())
                 
-                expect(result).toNot(beNil())
-                expect(result?.status).toNot(beNil())
-                expect(result?.paymentDone).toNot(beNil())
+                expect{ try json.decode(DownloadValidation.self).status }
+                    .to(equal(.success))
+                
+                expect{ try json.decode(DownloadValidation.self).paymentDone }
+                    .to(equal(false))
+                
+                expect{ try json.decode(DownloadValidation.self).downloadMaxSecondsAfterPlay }
+                    .to(equal(100))
+                
+                expect{ try json.decode(DownloadValidation.self).downloadMaxSecondsAfterDownload }
+                    .to(equal(200))
+                
+                expect{ try bitrate.decode(DownloadValidation.Bitrate.self) }
+                    .toNot(beNil())
+                
+                expect{ try json.decode(DownloadValidation.self).bitrates?.first?.bitrate }
+                    .to(equal(120000))
+                
+                expect{ try json.decode(DownloadValidation.self).bitrates?.first?.size }
+                    .to(equal(200000))
+                
             }
             
             it("should fail with invalid json") {
@@ -81,9 +100,8 @@ class ValidateDownloadSpec: QuickSpec {
                     "OTHER_MISTAKE":false
                 ]
                 
-                let result = DownloadValidation(json: json)
-                
-                expect(result).to(beNil())
+                expect{ try json.decode(DownloadValidation.self) }
+                    .to(beNil())
             }
         }
     }
