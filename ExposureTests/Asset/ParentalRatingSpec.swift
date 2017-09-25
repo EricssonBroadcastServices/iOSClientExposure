@@ -19,27 +19,30 @@ class ParentalRatingSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = ParentalRating(json: ParentalRatingJSON.valid())
+                let json = ParentalRatingJSON.valid()
+                let result = json.decode(ParentalRating.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.country).toNot(beNil())
-                expect(value!.scheme).toNot(beNil())
-                expect(value!.rating).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.country).toNot(beNil())
+                expect(result?.scheme).toNot(beNil())
+                expect(result?.rating).toNot(beNil())
             }
             
             it("should succeed with partial response") {
-                let value = ParentalRating(json: ParentalRatingJSON.missingKeys())
+                let json = ParentalRatingJSON.missingKeys()
+                let result = json.decode(ParentalRating.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.country).to(beNil())
-                expect(value!.scheme).to(beNil())
-                expect(value!.rating).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.country).to(beNil())
+                expect(result?.scheme).to(beNil())
+                expect(result?.rating).toNot(beNil())
             }
             
             it("should not init with empty or non matching response") {
-                let value = ParentalRating(json: ParentalRatingJSON.empty())
+                let json = ParentalRatingJSON.empty()
+                let result = json.decode(ParentalRating.self)
                 
-                expect(value).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }
@@ -50,7 +53,7 @@ extension ParentalRatingSpec {
         static let country = "ZA"
         static let scheme = "age"
         static let rating = "10"
-        static func valid() -> Any {
+        static func valid() -> [String: Any] {
             return [
                 "country": ParentalRatingJSON.country,
                 "scheme": ParentalRatingJSON.scheme,
@@ -58,13 +61,13 @@ extension ParentalRatingSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Any] {
             return [
                 "rating": ParentalRatingJSON.rating
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

@@ -17,20 +17,24 @@ class ExposureResponseMessageSpec: QuickSpec {
         
         describe("ExposureResponseMessage") {
             it("should not initialize with missing fields") {
-                let json = [
+                let json: [String: Any] = [
                     "httpCode":404
                 ]
-                let message = ExposureResponseMessage(json: json)
-                expect(message).to(beNil())
+                
+                let result = json.decode(ExposureResponseMessage.self)
+                
+                expect(result).to(beNil())
             }
             
             it("should not initialize with invalid fields") {
-                let json = [
+                let json: [String: Any] = [
                     "httpCode":"invalid",
                     "message":"a message"
                 ]
-                let message = ExposureResponseMessage(json: json)
-                expect(message).to(beNil())
+                
+                let result = json.decode(ExposureResponseMessage.self)
+                
+                expect(result).to(beNil())
             }
         }
     }

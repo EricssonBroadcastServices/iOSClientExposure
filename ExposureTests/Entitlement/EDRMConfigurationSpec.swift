@@ -25,7 +25,7 @@ class EDRMConfigurationSpec: QuickSpec {
                     "adParameter":"ad"
                 ]
                 
-                let result = try? json.decode(EDRMConfiguration.self)
+                let result = json.decode(EDRMConfiguration.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.ownerId).toNot(beNil())
@@ -40,16 +40,16 @@ class EDRMConfigurationSpec: QuickSpec {
             }
             
             it("should fail on incomplete json") {
-                let json = [
+                let json: [String: Any] = [
                     "ownerId":"id",
                     "userToken":"token",
-                    "requestUrl":nil,
+                    "requestUrl":10,
                     "adParameter":"ad"
                 ]
                 
-                let edrm = EDRMConfiguration(json: json)
+                let result = json.decode(EDRMConfiguration.self)
                 
-                expect(edrm).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }

@@ -20,7 +20,7 @@ class TagsSpec: QuickSpec {
         describe("JSON") {
             it("should succeed with valid response") {
                 let json = TagsJSON.valid()
-                let result = try? json.decode(Tag.self)
+                let result = json.decode(Tag.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
@@ -35,7 +35,7 @@ class TagsSpec: QuickSpec {
             
             it("should init with partial response") {
                 let json = TagsJSON.missingKeys()
-                let result = try? json.decode(Tag.self)
+                let result = json.decode(Tag.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
@@ -46,7 +46,7 @@ class TagsSpec: QuickSpec {
             
             it("should not init with empty or non matching response") {
                 let json = TagsJSON.empty()
-                let result = try? json.decode(Tag.self)
+                let result = json.decode(Tag.self)
                 
                 expect(result).to(beNil())
             }

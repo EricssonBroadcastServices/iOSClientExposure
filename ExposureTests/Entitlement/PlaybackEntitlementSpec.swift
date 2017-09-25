@@ -51,22 +51,19 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "lastViewedOffset":10
                 ]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .toNot(beNil())
+                expect(json.decode(PlaybackEntitlement.self)).toNot(beNil())
             }
             
             it("should not init with invalid json") {
                 let json:[String: Any] = ["invalid":"JSON"]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .to(beNil())
+                expect(json.decode(PlaybackEntitlement.self)).to(beNil())
             }
             
             it("should not init with empty json") {
                 let json:[String: Any] = [:]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .to(beNil())
+                expect(json.decode(PlaybackEntitlement.self)).to(beNil())
             }
             
             it("should init with partial json") {
@@ -75,14 +72,11 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "mediaLocator":"mediaLocator"
                 ]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .toNot(beNil())
-                
-                expect{ try json.decode(PlaybackEntitlement.self).playToken }
-                    .to(equal("playToken"))
-                
-                expect{ try json.decode(PlaybackEntitlement.self).mediaLocator }
-                    .to(equal("mediaLocator"))
+                let result = json.decode(PlaybackEntitlement.self)
+                    
+                expect(result).toNot(beNil())
+                expect(result?.playToken).to(equal("playToken"))
+                expect(result?.mediaLocator).to(equal("mediaLocator"))
             }
             
             it("should not create invalid EDRMConfiguration") {
@@ -91,11 +85,10 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "mediaLocator":"mediaLocator"
                 ]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .toNot(beNil())
+                let result = json.decode(PlaybackEntitlement.self)
                 
-                expect{ try json.decode(PlaybackEntitlement.self).edrm }
-                    .to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.edrm).to(beNil())
             }
             
             it("should not create invalid FairplayConfiguration") {
@@ -104,11 +97,10 @@ class PlaybackEntitlementSpec: QuickSpec {
                     "mediaLocator":"mediaLocator"
                 ]
                 
-                expect{ try json.decode(PlaybackEntitlement.self) }
-                    .toNot(beNil())
+                let result = json.decode(PlaybackEntitlement.self)
                 
-                expect{ try json.decode(PlaybackEntitlement.self).fairplay }
-                    .to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.fairplay).to(beNil())
             }
         }
         

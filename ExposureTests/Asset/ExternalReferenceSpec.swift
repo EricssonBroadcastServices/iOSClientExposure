@@ -19,27 +19,30 @@ class ExternalReferenceSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = ExternalReference(json: ExternalReferenceJSON.valid())
+                let json = ExternalReferenceJSON.valid()
+                let result = json.decode(ExternalReference.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.locator).toNot(beNil())
-                expect(value!.type).toNot(beNil())
-                expect(value!.value).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.locator).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.value).toNot(beNil())
             }
             
             it("should succeed with partial response") {
-                let value = ExternalReference(json: ExternalReferenceJSON.missingKeys())
+                let json = ExternalReferenceJSON.missingKeys()
+                let result = json.decode(ExternalReference.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.locator).toNot(beNil())
-                expect(value!.type).to(beNil())
-                expect(value!.value).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.locator).toNot(beNil())
+                expect(result?.type).to(beNil())
+                expect(result?.value).to(beNil())
             }
             
             it("should not init with empty or non matching response") {
-                let value = ExternalReference(json: ExternalReferenceJSON.empty())
+                let json = ExternalReferenceJSON.empty()
+                let result = json.decode(ExternalReference.self)
                 
-                expect(value).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }
@@ -50,7 +53,7 @@ extension ExternalReferenceSpec {
         static let locator = "http://someUrl.com/references/ref1"
         static let type = "QAProvider"
         static let value = "QAExternalRef_3da09434-6193-450b-8fd1-aa283c14eb8d"
-        static func valid() -> Any {
+        static func valid() -> [String: Any] {
             return [
                 "locator": ExternalReferenceJSON.locator,
                 "type": ExternalReferenceJSON.type,
@@ -58,13 +61,13 @@ extension ExternalReferenceSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Any] {
             return [
                 "locator": ExternalReferenceJSON.locator
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

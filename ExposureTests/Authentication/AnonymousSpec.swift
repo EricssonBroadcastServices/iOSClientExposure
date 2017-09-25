@@ -37,7 +37,13 @@ class AnonymousSpec: QuickSpec {
                                               accountId: expectedAccountId,
                                               expiration: expectedExpirationDate,
                                               accountStatus: expectedAccountStatus)
-        let expectedJson = expectedCredentials.toJson()
+        let expectedJson: [String: Any] = [
+            "sessionToken":expectedSessionToken,
+            "crmToken":expectedCrmToken,
+            "accountId":expectedAccountId,
+            "expirationDateTime":expectedExpirationDate,
+            "accountStatus":expectedAccountStatus
+        ]
         
         describe("Anonymous") {
             it("should have no headers") {

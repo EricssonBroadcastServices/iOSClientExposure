@@ -68,7 +68,7 @@ class ValidateDownloadSpec: QuickSpec {
                     "downloadMaxSecondsAfterDownload": 200
                 ]
                 
-                let result = try? json.decode(DownloadValidation.self)
+                let result = json.decode(DownloadValidation.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.status).to(equal(.success))
@@ -87,7 +87,7 @@ class ValidateDownloadSpec: QuickSpec {
                     "OTHER_MISTAKE":false
                 ]
                 
-                let result = try? json.decode(DownloadValidation.self)
+                let result = json.decode(DownloadValidation.self)
                 
                 expect(result).to(beNil())
             }

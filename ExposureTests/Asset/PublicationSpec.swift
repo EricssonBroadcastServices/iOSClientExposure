@@ -19,41 +19,44 @@ class PublicationSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Publication(json: PublicationJSON.valid())
+                let json = PublicationJSON.valid()
+                let result = json.decode(Publication.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.publicationDate).toNot(beNil())
-                expect(value!.fromDate).toNot(beNil())
-                expect(value!.toDate).toNot(beNil())
-                expect(value!.countries).toNot(beNil())
-                expect(value!.services).toNot(beNil())
-                expect(value!.products).toNot(beNil())
-                expect(value!.publicationId).toNot(beNil())
-                expect(value!.customData).toNot(beNil())
-                expect(value!.rights).toNot(beNil())
-                expect(value!.devices).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.publicationDate).toNot(beNil())
+                expect(result?.fromDate).toNot(beNil())
+                expect(result?.toDate).toNot(beNil())
+                expect(result?.countries).toNot(beNil())
+                expect(result?.services).toNot(beNil())
+                expect(result?.products).toNot(beNil())
+                expect(result?.publicationId).toNot(beNil())
+                expect(result?.customData).toNot(beNil())
+                expect(result?.rights).toNot(beNil())
+                expect(result?.devices).toNot(beNil())
             }
             
             it("should succeed with partial response") {
-                let value = Publication(json: PublicationJSON.missingKeys())
+                let json = PublicationJSON.missingKeys()
+                let result = json.decode(Publication.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.publicationDate).toNot(beNil())
-                expect(value!.fromDate).to(beNil())
-                expect(value!.toDate).to(beNil())
-                expect(value!.countries).to(beNil())
-                expect(value!.services).to(beNil())
-                expect(value!.products).to(beNil())
-                expect(value!.publicationId).to(beNil())
-                expect(value!.customData).to(beNil())
-                expect(value!.rights).to(beNil())
-                expect(value!.devices).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.publicationDate).toNot(beNil())
+                expect(result?.fromDate).to(beNil())
+                expect(result?.toDate).to(beNil())
+                expect(result?.countries).to(beNil())
+                expect(result?.services).to(beNil())
+                expect(result?.products).to(beNil())
+                expect(result?.publicationId).to(beNil())
+                expect(result?.customData).to(beNil())
+                expect(result?.rights).to(beNil())
+                expect(result?.devices).to(beNil())
             }
             
             it("should not init with empty or non matching response") {
-                let value = Publication(json: PublicationJSON.empty())
+                let json = PublicationJSON.empty()
+                let result = json.decode(Publication.self)
                 
-                expect(value).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }
@@ -73,7 +76,7 @@ extension PublicationSpec {
         static let customData = ["Custom":10]
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
         static let devices = [DeviceRightsSpec.DeviceRightsJSON.valid()]
-        static func valid() -> Any {
+        static func valid() -> [String: Any] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
                 "fromDate": PublicationJSON.fromDate,
@@ -88,13 +91,13 @@ extension PublicationSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Any] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

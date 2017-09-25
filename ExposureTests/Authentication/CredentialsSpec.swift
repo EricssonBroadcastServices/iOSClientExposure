@@ -18,15 +18,16 @@ class CredentialsSpec: QuickSpec {
         
         describe("Credentials") {
             it("should not set a date if json is missing the datestring field") {
-                let json = [
+                let json: [String: Any] = [
                     "sessionToken":"token",
                     "invalidDateKey":"SomeDateString"
                 ]
-                let credentials = Credentials(json: json)
                 
-                expect(credentials).toNot(beNil())
-                expect(credentials!.sessionToken.value).to(equal("token"))
-                expect(credentials!.expiration).to(beNil())
+                let result = json.decode(Credentials.self)
+                
+                expect(result).toNot(beNil())
+                expect(result?.sessionToken.value).to(equal("token"))
+                expect(result?.expiration).to(beNil())
             }
         }
     }

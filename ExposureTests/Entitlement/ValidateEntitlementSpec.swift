@@ -60,7 +60,7 @@ class ValidateEntitlementSpec: QuickSpec {
                     "paymentDone":false
                     ]
                 
-                let result = try? json.decode(EntitlementValidation.self)
+                let result = json.decode(EntitlementValidation.self)
                 
                 expect(result).toNot(beNil())
                 
@@ -83,8 +83,8 @@ class ValidateEntitlementSpec: QuickSpec {
 }
 
 extension Dictionary where Key == String, Value == Any {
-    func decode<T>(_ type: T.Type) throws -> T where T : Decodable {
-        let data = try JSONEncoder().encode(self)
-        return try JSONDecoder().decode(T.self, from: data)
+    func decode<T>(_ type: T.Type) -> T? where T : Decodable {
+        guard let data = try? JSONEncoder().encode(self) else { return nil }
+        return try? JSONDecoder().decode(T.self, from: data)
     }
 }

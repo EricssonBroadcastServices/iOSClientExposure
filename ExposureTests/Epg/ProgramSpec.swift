@@ -20,8 +20,7 @@ class ProgramSpec: QuickSpec {
         describe("JSON") {
             it("should succeed with valid response") {
                 let json = ProgramJSON.valid()
-                
-                let result = try? json.decode(Program.self)
+                let result = json.decode(Program.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
@@ -40,8 +39,7 @@ class ProgramSpec: QuickSpec {
             
             it("should init with partial response") {
                 let json = ProgramJSON.missingKeys()
-                
-                let result = try? json.decode(Program.self)
+                let result = json.decode(Program.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.created).toNot(beNil())
@@ -60,6 +58,8 @@ class ProgramSpec: QuickSpec {
             
             it("should not init with empty or non matching response") {
                 let json = ProgramJSON.empty()
+                
+                let result = json.decode(Program.self)
                 
                 expect(result).to(beNil())
             }

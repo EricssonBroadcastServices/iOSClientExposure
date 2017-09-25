@@ -21,7 +21,7 @@ class ChannelEpgSpec: QuickSpec {
             it("should succeed with valid response") {
                 let json = ChannelEpgJSON.valid()
                 
-                let result = try? json.decode(ChannelEpg.self)
+                let result = json.decode(ChannelEpg.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.channelId).toNot(beNil())
@@ -32,7 +32,7 @@ class ChannelEpgSpec: QuickSpec {
             it("should init with partial response") {
                 let json = ChannelEpgJSON.missingKeys()
                 
-                let result = try? json.decode(ChannelEpg.self)
+                let result = json.decode(ChannelEpg.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.channelId).toNot(beNil())
@@ -43,7 +43,7 @@ class ChannelEpgSpec: QuickSpec {
             it("should not init with empty or non matching response") {
                 let json = ChannelEpgJSON.empty()
                 
-                let result = try? json.decode(ChannelEpg.self)
+                let result = json.decode(ChannelEpg.self)
                 expect(result).to(beNil())
             }
         }

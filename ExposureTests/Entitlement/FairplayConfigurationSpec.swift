@@ -25,7 +25,7 @@ class FairplayConfigurationSpec: QuickSpec {
                         "licenseAcquisitionUrl":"baz"
                     ]
                     
-                    let result = try? json.decode(FairplayConfiguration.self)
+                    let result = json.decode(FairplayConfiguration.self)
                     
                     expect(result).toNot(beNil())
                     expect(result?.secondaryMediaLocator).toNot(beNil())
@@ -40,13 +40,14 @@ class FairplayConfigurationSpec: QuickSpec {
             
             context("Failure") {
                 it("should fail to init without all fields present") {
-                    let json = [
+                    let json: [String: Any] = [
                         "secondaryMediaLocator":"foo",
                         "certificateUrl":"bar"
                     ]
                     
-                    let config = FairplayConfiguration(json: json)
-                    expect(config).to(beNil())
+                    let result = json.decode(FairplayConfiguration.self)
+                    
+                    expect(result).to(beNil())
                 }
             }
         }
