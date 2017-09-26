@@ -45,6 +45,10 @@ public struct Credentials: Decodable {
         crmToken = try container.decodeIfPresent(String.self, forKey: .crmToken)
         accountId = try container.decodeIfPresent(String.self, forKey: .accountId)
         accountStatus = try container.decodeIfPresent(String.self, forKey: .accountStatus)
-        expiration = try container.decodeIfPresent(Date.self, forKey: .expiration)
+        guard let dataString = try container.decodeIfPresent(String.self, forKey: .expiration) else {
+            expiration = nil
+            return
+        }
+        expiration = Date.utcFormatter().date(from: dataString)
     }
 }
