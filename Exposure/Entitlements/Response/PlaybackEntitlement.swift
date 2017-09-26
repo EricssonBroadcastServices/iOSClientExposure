@@ -11,9 +11,6 @@ import Foundation
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement {
     // MARK: Required
-    /// Play token to use for either PlayReady or MRR.
-    public let playToken: String
-    
     /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
     public let playTokenExpiration: String
     
@@ -40,6 +37,9 @@ public struct PlaybackEntitlement {
     
     
     // MARK: Optional
+
+    /// Play token to use for either PlayReady or MRR. Will be empty if the asset is unencrypted.
+    public let playToken: String?
     
     /// The EDRM specific configuration. Will be empty if the status is not SUCCESS.
     public let edrm: EDRMConfiguration?
@@ -83,7 +83,6 @@ extension PlaybackEntitlement: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Required
-        playToken = try container.decode(String.self, forKey: .playToken)
         playTokenExpiration = try container.decode(String.self, forKey: .playTokenExpiration)
         mediaLocator = try container.decode(String.self, forKey: .mediaLocator)
         playSessionId = try container.decode(String.self, forKey: .playSessionId)
@@ -95,6 +94,7 @@ extension PlaybackEntitlement: Decodable {
         airplayBlocked = try container.decode(Bool.self, forKey: .airplayBlocked)
         
         // Optional
+        playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
         edrm = try container.decodeIfPresent(EDRMConfiguration.self, forKey: .edrm)
         fairplay = try container.decodeIfPresent(FairplayConfiguration.self, forKey: .fairplay)
         
