@@ -232,7 +232,12 @@ extension ExposureFairplayRequester {
             return
         }
         
-        let headers = ["AzukiApp": entitlement.playToken, // May not be needed
+        guard let playToken = entitlement.playToken else {
+            callback(nil, .fairplay(reason: .missingPlaytoken))
+            return
+        }
+        
+        let headers = ["AzukiApp": playToken, // May not be needed
             "Content-type": "application/octet-stream"]
         
         Alamofire

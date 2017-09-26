@@ -10,19 +10,19 @@ import Foundation
 
 public struct Program: Decodable {
     /// The date the program was created.
-    public let created: String
+    public let created: String?
     
     /// The date the program was changed.
     public let changed: String?
     
     /// The id of the program.
-    public let programId: String
+    public let programId: String?
     
     /// The id of the asset this program is for.
-    public let assetId: String
+    public let assetId: String?
     
     /// The id of the channel this program is on.
-    public let channelId: String
+    public let channelId: String?
     
     /// Start time for the program
     public let startTime: String?

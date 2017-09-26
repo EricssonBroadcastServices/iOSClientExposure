@@ -37,7 +37,7 @@ class ProgramSpec: QuickSpec {
                 expect(result?.blackout).toNot(beNil())
             }
             
-            it("should init with required keys") {
+            it("should init with partial response") {
                 let json = ProgramJSON.requiredKeys()
                 let result = json.decode(Program.self)
                 
@@ -57,12 +57,10 @@ class ProgramSpec: QuickSpec {
                 expect(result?.blackout).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let json = ProgramJSON.missingKeys()
-                
+            it("should init with empty response") {
+                let json = ProgramJSON.empty()
                 let result = json.decode(Program.self)
-                
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -100,7 +98,7 @@ extension ProgramSpec {
             ]
         }
         
-        static func requiredKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": ProgramJSON.created,
                 "programId": ProgramJSON.programId,
@@ -109,13 +107,8 @@ extension ProgramSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
-            return [
-                "catchup": ProgramJSON.catchup,
-                "catchupBlocked": ProgramJSON.catchupBlocked,
-                "asset": ProgramJSON.asset,
-                "blackout": ProgramJSON.blackout
-            ]
+        static func empty() -> [String: Codable] {
+            return [:]
         }
     }
 }
