@@ -108,6 +108,10 @@ extension ExposureError {
         
         /// `FairplayRequester` could not complete the resource loading request because its associated `AVAssetResourceLoadingDataRequest` was `nil`. This indicates no data was being requested.
         case missingDataRequest
+        
+        // MARK: General
+        /// Unable to set *contentType* to `AVStreamingKeyDeliveryPersistentContentKeyType` since no content information is requested for the `AVAssetResourceLoadingRequest`.
+        case contentInformationRequestMissing
     }
 }
 
@@ -153,6 +157,7 @@ extension ExposureError.FairplayError {
         case .contentKeyContextParsing: return "Content Key Context server response lacks parsable data"
         case .missingContentKeyContext: return "Content Key Context missing from response"
         case .missingDataRequest: return "Data Request missing"
+        case .contentInformationRequestMissing: return "Unable to set contentType on contentInformationRequest"
         }
     }
 }
@@ -197,6 +202,7 @@ extension ExposureError.FairplayError {
         case .missingPlaytoken: return 312
         case .networking(error: _): return 313
         case .serverPlaybackContext(error: _): return 314
+        case .contentInformationRequestMissing: return 315
         }
     }
 }

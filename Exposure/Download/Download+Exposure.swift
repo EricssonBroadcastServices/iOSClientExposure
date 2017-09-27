@@ -13,7 +13,7 @@ import Download
 /// *Exposure* specific implementation of the `OfflineFairplayRequester` protocol.
 ///
 /// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayRequester {
+internal class ExposureDownloadFairplayRequester: NSObject, OfflineFairplayRequester {
     /// Entitlement related to this specific *Fairplay* request.
     internal let entitlement: PlaybackEntitlement
     
@@ -62,15 +62,60 @@ internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayReq
     ///
     /// For more information regarding *Fairplay* validation, please see Apple's documentation regarding *Fairplay Streaming*.
     fileprivate func handle(resourceLoadingRequest: AVAssetResourceLoadingRequest) {
+        guard resourceLoadingRequest.contentInformationRequest != nil else {
+            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .contentInformationRequestMissing))
+        }
+        resourceLoadingRequest.contentInformationRequest?.contentType = AVStreamingKeyDeliveryPersistentContentKeyType
         
         guard let url = resourceLoadingRequest.request.url,
             let assetIDString = url.host,
             let contentIdentifier = assetIDString.data(using: String.Encoding.utf8) else {
-                resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .invalidContentIdentifier))
+                resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .invalidContentIdentifier))
                 return
         }
         
         print(url, " - ",assetIDString)
+        
+        guard let dataRequest = resourceLoadingRequest.dataRequest else {
+            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingDataRequest))
+            return
+        }
+        
+        // Check if we can handle the request with a previously persisted content key
+        if let keyData = persistedContentKey {
+            dataRequest.respond(with: keyData)
+            resourceLoadingRequest.finishLoading()
+            return
+        }
+        
+        
+        // Scenarios
+        //
+        // 1. Key Persisted
+        //      * Supply key
+        //
+        // 2. Key Not Persisted
+        //      
+        
+        // Scenarios
+        //
+        // 1. Download Asset
+        //      * Download key
+        //      * Download asset
+        //
+        // 2. Resume Download
+        //      2.1 Key persisted
+        //          * Continue download (or invalid key, error)
+        //      2.2 Key NOT persisted
+        //          * Try downloading key again?
+        //          * Throw error?
+        //
+        // 3. Play Downloaded Asset
+        //      2.1 Key persisted
+        //          * Playback (or invalid key, error)
+        //      2.2 Key NOT persisted
+        //          * Throw error
+        
         
         fetchApplicationCertificate{ [unowned self] certificate, certificateError in
             print("fetchApplicationCertificate")
@@ -79,9 +124,6 @@ internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayReq
                 resourceLoadingRequest.finishLoading(with: certificateError)
                 return
             }
-            
-            
-            let resourceLoadingRequestOptions: [String: Any]? = nil// [AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey: true as AnyObject]
             
             if let certificate = certificate {
                 print("prepare SPC")
@@ -99,12 +141,12 @@ internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayReq
                         }
                         
                         guard let dataRequest = resourceLoadingRequest.dataRequest else {
-                            resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .missingDataRequest))
+                            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingDataRequest))
                             return
                         }
                         
                         guard let ckcBase64 = ckcBase64 else {
-                            resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .missingContentKeyContext))
+                            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingContentKeyContext))
                             return
                         }
                         
@@ -127,7 +169,7 @@ internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayReq
                     //                    -42783 The certificate supplied for SPC is not valid and is possibly revoked.
                     print("SPC - ",error.localizedDescription)
                     print("SPC - ",error)
-                    resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .serverPlaybackContext(error: error)))
+                    resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .serverPlaybackContext(error: error)))
                     return
                 }
             }
@@ -135,7 +177,13 @@ internal class ExposurePersistentFairplayRequester: NSObject, OfflineFairplayReq
     }
 }
 
-extension ExposurePersistentFairplayRequester {
+extension ExposureDownloadFairplayRequester {
+    internal var persistedContentKey: Data? {
+        guard let url = contentKeyUrl else { return nil }
+        return try? Data(contentsOf: url)
+    }
+}
+extension ExposureDownloadFairplayRequester {
     internal var contentKeyDirectory: URL? {
         return FileManager
             .default
@@ -152,7 +200,7 @@ extension ExposurePersistentFairplayRequester {
 }
 
 // MARK: - AVAssetResourceLoaderDelegate
-extension ExposureFairplayRequester {
+extension ExposureDownloadFairplayRequester {
     public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         return canHandle(resourceLoadingRequest: loadingRequest)
     }
@@ -170,14 +218,14 @@ extension Downloader {
     /// - parameter entitlement: *Exposure* provided entitlement
     @available(iOS 10.0, *)
     public static func download(entitlement: PlaybackEntitlement) throws -> DownloadTask {
-        let fairplayRequester = ExposurePersistentFairplayRequester(entitlement: entitlement)
+        let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
         return try download(mediaLocator: entitlement.mediaLocator, named: entitlement.mediaLocator, artwork: nil, using: fairplayRequester)
     }
     
     @available(iOS, introduced: 9.0, deprecated: 10.0)
     public static func download(entitlement: PlaybackEntitlement, to url: URL) throws -> DownloadTask {
-        let fairplayRequester = ExposurePersistentFairplayRequester(entitlement: entitlement)
+        let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
         return try download(mediaLocator: entitlement.mediaLocator, to: url, using: fairplayRequester)
     }
