@@ -301,7 +301,7 @@ EventSink()
 *EMP* provides an out of the box [Analytics module](https://github.com/FredrikSjoberg/iOSClientAnalytics) which integrates seamlessly with the rest of the platform.
 
 ### Fairplay Integration
-`Exposure` provides out of the box integration for managing *EMP* configured *Fairplay* `DRM` protection. By using the `Player.stream(playback:)` function to engage playback the framework automatically configures `player` to use an `ExposureFairplayRequester` as its `FairplayRequester`.
+`Exposure` provides out of the box integration for managing *EMP* configured *Fairplay* `DRM` protection. By using the `Player.stream(playback:)` function to engage playback the framework automatically configures `player` to use an `ExposureStreamFairplayRequester` as its `FairplayRequester`.
 
 ### Error Handling
 Effective error handling when using `Exposure` revolves around responding to three major categories of errors.

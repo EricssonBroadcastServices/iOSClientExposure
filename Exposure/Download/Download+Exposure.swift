@@ -13,7 +13,7 @@ import Download
 /// *Exposure* specific implementation of the `OfflineFairplayRequester` protocol.
 ///
 /// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposureDownloadFairplayRequester: NSObject, OfflineFairplayRequester {
+internal class ExposureDownloadFairplayRequester: NSObject, DownloadFairplayRequester {
     /// Entitlement related to this specific *Fairplay* request.
     internal let entitlement: PlaybackEntitlement
     
@@ -38,7 +38,7 @@ internal class ExposureDownloadFairplayRequester: NSObject, OfflineFairplayReque
         }
         
         //EMPFairplayRequester only should handle FPS Content Key requests.
-        if url.scheme != ExposureFairplayRequester.customScheme {
+        if url.scheme != ExposureDownloadFairplayRequester.customScheme {
             return false
         }
         

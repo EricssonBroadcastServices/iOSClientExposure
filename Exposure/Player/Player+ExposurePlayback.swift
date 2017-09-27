@@ -23,7 +23,7 @@ extension Player {
         handleSessionShift(entitlement: entitlement)
         
         // Fairplay
-        let requester = ExposureFairplayRequester(entitlement: entitlement)
+        let requester = ExposureStreamFairplayRequester(entitlement: entitlement)
         
         stream(url: entitlement.mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
     }

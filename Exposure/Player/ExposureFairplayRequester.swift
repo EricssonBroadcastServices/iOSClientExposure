@@ -1,5 +1,5 @@
 //
-//  ExposureFairplayRequester.swift
+//  ExposureStreamFairplayRequester.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2017-07-03.
@@ -14,7 +14,7 @@ import Alamofire
 /// *Exposure* specific implementation of the `FairplayRequester` protocol.
 ///
 /// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposureFairplayRequester: NSObject, FairplayRequester {
+internal class ExposureStreamFairplayRequester: NSObject, FairplayRequester {
     /// Entitlement related to this specific *Fairplay* request.
     internal let entitlement: PlaybackEntitlement
     
@@ -39,7 +39,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         }
         
         //EMPFairplayRequester only should handle FPS Content Key requests.
-        if url.scheme != ExposureFairplayRequester.customScheme {
+        if url.scheme != ExposureStreamFairplayRequester.customScheme {
             return false
         }
         
@@ -134,7 +134,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
 }
 
 // MARK: - Application Certificate
-extension ExposureFairplayRequester {
+extension ExposureStreamFairplayRequester {
     /// The *Application Certificate* is fetched from a server specified by a `certificateUrl` delivered in the *entitlement* obtained through *Exposure*.
     ///
     /// - note: This method uses a specialized function for parsing the retrieved *Application Certificate* from an *MRR specific* format.
@@ -219,7 +219,7 @@ extension ExposureFairplayRequester {
 }
 
 // MARK: - Content Key Context
-extension ExposureFairplayRequester {
+extension ExposureStreamFairplayRequester {
     /// Fetching a *Content Key Context*, `CKC`, requires a valid *Server Playback Context*.
     ///
     /// - note: This method uses a specialized function for parsing the retrieved *Content Key Context* from an *MRR specific* format.
@@ -317,7 +317,7 @@ extension ExposureFairplayRequester {
 }
 
 // MARK: - AVAssetResourceLoaderDelegate
-extension ExposureFairplayRequester {
+extension ExposureStreamFairplayRequester {
     public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         return canHandle(resourceLoadingRequest: loadingRequest)
     }
