@@ -10,6 +10,7 @@ NO RELEASE DATE SET YET
 * `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
 
 #### Changes
+* Moved `FairplayError` from `Player` to `Exposure`.
 * Requirements for `Xcode` set to `9.0+` and `Swift` to `4.0+`
 * Removed `SwiftyJSON` in favor of `Decodable` from `Swift` `4.0+`
 * `EMP-10270` `Airing` is now distinct from fetching `Program`

@@ -345,6 +345,16 @@ Errors delivered as an `ExposureResponseMessage` should, for the most part, not 
 
 It is up to the client application to decide how to best handle `ExposureResponseMessage`s. Each endpoint may return a slightly different set of response messages. For more in depth information, please consult the documentation related to each individual request.
 
+#### Fairplay DRM Errors
+Another major cause of errors is *Fairplay* `DRM` issues, broadly categorized into two types:
+
+* Server related `DRM` errors
+* Application related
+
+Server related issues most likely stem from an invalid or broken backend configuration. Application issues range from parsing errors, unexpected server response or networking issues.
+
+*Fairplay* `DRM` troubleshooting is highly coupled with the specific application and backend implementations and as such hard to generalize. For more information about *Fairplay* debugging, please see Apple's [documentation](https://developer.apple.com/library/content/technotes/tn2454).
+
 ## Release Notes
 Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/CHANGELOG.md).
 
