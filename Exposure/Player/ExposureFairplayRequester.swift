@@ -11,45 +11,84 @@ import AVFoundation
 import Player
 import Alamofire
 
-/// *Exposure* specific implementation of the `FairplayRequester` protocol.
-///
-/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposureStreamFairplayRequester: NSObject, FairplayRequester {
+internal protocol ExposureFairplayRequester: class {
     /// Entitlement related to this specific *Fairplay* request.
-    internal let entitlement: PlaybackEntitlement
-    
-    init(entitlement: PlaybackEntitlement) {
-        self.entitlement = entitlement
-    }
+    var entitlement: PlaybackEntitlement { get }
     
     /// The DispatchQueue to use for AVAssetResourceLoaderDelegate callbacks.
-    fileprivate let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.streaming.fairplay.requests")
+    var resourceLoadingRequestQueue: DispatchQueue { get }
+    
+    /// Options specifying the resource loading request
+    var resourceLoadingRequestOptions: [String : AnyObject]? { get }
     
     /// The URL scheme for FPS content.
-    static let customScheme = "skd"
+    var customScheme: String { get }
     
+    /// Called when `CKC` data was successfully retrieved from remote server
+    ///
+    /// - parameter ckc: The `CKC` data retrieved from server
+    /// - returns: Key data used to finalize the request
+    func onSuccessfulRetrieval(of ckc: Data, for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws-> Data
+    
+    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool
+}
+
+extension ExposureFairplayRequester {
     /// Starting point for the *Fairplay* validation chain. Note that returning `false` from this method does not automatically mean *Fairplay* validation failed.
-    /// 
+    ///
     /// - parameter resourceLoadingRequest: loading request to handle
     /// - returns: ´true` if the requester can handle the request, `false` otherwise.
-    fileprivate func canHandle(resourceLoadingRequest: AVAssetResourceLoadingRequest) -> Bool {
+    internal func canHandle(resourceLoadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         
         guard let url = resourceLoadingRequest.request.url else {
             return false
         }
         
         //EMPFairplayRequester only should handle FPS Content Key requests.
-        if url.scheme != ExposureStreamFairplayRequester.customScheme {
+        if url.scheme != customScheme {
             return false
         }
         
         resourceLoadingRequestQueue.async { [unowned self] in
-            self.handle(resourceLoadingRequest: resourceLoadingRequest)
+            // TODO: Weak? Async task with [unowned self]
+            do {
+                if try self.shouldContactRemote(for: resourceLoadingRequest) {
+                    self.handle(resourceLoadingRequest: resourceLoadingRequest)
+                }
+            }
+            catch {
+                resourceLoadingRequest.finishLoading(with: error)
+            }
         }
         
         return true
     }
+}
+
+/// *Exposure* specific implementation of the `FairplayRequester` protocol for streaming purposes.
+///
+/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
+internal class ExposureStreamFairplayRequester: NSObject, ExposureFairplayRequester, FairplayRequester {
     
+    init(entitlement: PlaybackEntitlement) {
+        self.entitlement = entitlement
+    }
+    
+    internal let entitlement: PlaybackEntitlement
+    internal let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.streaming.fairplay.requests")
+    internal let customScheme = "skd"
+    internal let resourceLoadingRequestOptions: [String : AnyObject]? = nil
+    
+    internal func onSuccessfulRetrieval(of ckc: Data, for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Data {
+        return ckc
+    }
+    
+    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool {
+        return true
+    }
+}
+
+extension ExposureFairplayRequester {
     /// Handling a *Fairplay* validation request is a process in several parts:
     ///
     /// * Fetch and parse the *Application Certificate*
@@ -78,13 +117,10 @@ internal class ExposureStreamFairplayRequester: NSObject, FairplayRequester {
                 return
             }
             
-            
-            let resourceLoadingRequestOptions: [String: Any]? = nil// [AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey: true as AnyObject]
-            
             if let certificate = certificate {
                 print("prepare SPC")
                 do {
-                    let spcData = try resourceLoadingRequest.streamingContentKeyRequestData(forApp: certificate, contentIdentifier: contentIdentifier, options: resourceLoadingRequestOptions)
+                    let spcData = try resourceLoadingRequest.streamingContentKeyRequestData(forApp: certificate, contentIdentifier: contentIdentifier, options: self.resourceLoadingRequestOptions)
                     
                     // Content Key Context fetch from licenseUrl requires base64 encoded data
                     let spcBase64 = spcData.base64EncodedData(options: Data.Base64EncodingOptions.endLineWithLineFeed)
@@ -106,10 +142,17 @@ internal class ExposureStreamFairplayRequester: NSObject, FairplayRequester {
                             return
                         }
                         
-                        // Provide data to the loading request.
-                        dataRequest.respond(with: ckcBase64)
-                        resourceLoadingRequest.finishLoading()  // Treat the processing of the request as complete.
-                        
+                        do {
+                            // Allow implementation specific handling of the returned `CKC`
+                            let contentKey = try self.onSuccessfulRetrieval(of: ckcBase64, for: resourceLoadingRequest)
+                            
+                            // Provide data to the loading request.
+                            dataRequest.respond(with: contentKey)
+                            resourceLoadingRequest.finishLoading() // Treat the processing of the request as complete.
+                        }
+                        catch {
+                            resourceLoadingRequest.finishLoading(with: error)
+                        }
                     }
                 }
                 catch {
@@ -134,7 +177,7 @@ internal class ExposureStreamFairplayRequester: NSObject, FairplayRequester {
 }
 
 // MARK: - Application Certificate
-extension ExposureStreamFairplayRequester {
+extension ExposureFairplayRequester {
     /// The *Application Certificate* is fetched from a server specified by a `certificateUrl` delivered in the *entitlement* obtained through *Exposure*.
     ///
     /// - note: This method uses a specialized function for parsing the retrieved *Application Certificate* from an *MRR specific* format.
@@ -219,7 +262,7 @@ extension ExposureStreamFairplayRequester {
 }
 
 // MARK: - Content Key Context
-extension ExposureStreamFairplayRequester {
+extension ExposureFairplayRequester {
     /// Fetching a *Content Key Context*, `CKC`, requires a valid *Server Playback Context*.
     ///
     /// - note: This method uses a specialized function for parsing the retrieved *Content Key Context* from an *MRR specific* format.
