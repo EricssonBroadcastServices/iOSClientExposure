@@ -23,7 +23,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
     }
     
     /// The DispatchQueue to use for AVAssetResourceLoaderDelegate callbacks.
-    fileprivate let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.resourcerequests")
+    fileprivate let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.streaming.fairplay.requests")
     
     /// The URL scheme for FPS content.
     static let customScheme = "skd"
