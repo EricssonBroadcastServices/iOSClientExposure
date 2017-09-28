@@ -106,7 +106,8 @@ extension Downloader {
     public static func download(entitlement: PlaybackEntitlement) throws -> DownloadTask {
         let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
-        return try download(mediaLocator: entitlement.mediaLocator, named: entitlement.mediaLocator, artwork: nil, using: fairplayRequester)
+        // TODO: Download name should probably be retrieved from *Exposure*
+        return try download(mediaLocator: entitlement.mediaLocator, named: nil, artwork: nil, using: fairplayRequester)
     }
     
     @available(iOS, introduced: 9.0, deprecated: 10.0)
