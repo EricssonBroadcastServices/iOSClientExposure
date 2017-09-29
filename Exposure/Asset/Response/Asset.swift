@@ -83,11 +83,8 @@ public struct Asset {
     
     public let markers: [Marker]?
     
-    /// When this asset was last viewed.
-    public let lastViewedTime: Int?
-    
-    /// Offset from where last playback ended. Used by *Session Shift* to enable bookmarking functionality.
-    public let lastViewedOffset: Int?
+    /// User specific data regarding this asset
+    public let userData: AssetUserData?
 }
 
 extension Asset: Decodable {
@@ -133,8 +130,7 @@ extension Asset: Decodable {
         externalReferences = try container.decodeIfPresent([ExternalReference].self, forKey: .externalReferences)
         rating = try container.decodeIfPresent(Float.self, forKey: .rating)
         markers = try container.decodeIfPresent([Marker].self, forKey: .markers)
-        lastViewedTime = try container.decodeIfPresent(Int.self, forKey: .lastViewedTime)
-        lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
+        userData = try container.decodeIfPresent(AssetUserData.self, forKey: .userData)
     }
 
     internal enum CodingKeys: String, CodingKey {
@@ -169,8 +165,7 @@ extension Asset: Decodable {
         case externalReferences
         case rating
         case markers
-        case lastViewedTime
-        case lastViewedOffset
+        case userData
     }
 }
 

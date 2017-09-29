@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
+public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish, IncludesUserData {
     public typealias Response = Asset
     
     public var endpointUrl: String {
@@ -21,12 +21,13 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
     }
     
     public var headers: [String: String]? {
-        return nil
+        return userDataFilter.sessionToken?.authorizationHeader
     }
     
     internal var query: Query
     public var publishFilter: PublishFilter
     public var fieldsFilter: FieldsFilter
+    public var userDataFilter: UserDataFilter
     
     public let environment: Environment
     public let assetId: String
@@ -37,6 +38,7 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
         self.fieldsFilter = FieldsFilter()
         self.publishFilter = PublishFilter()
         self.query = Query()
+        self.userDataFilter = UserDataFilter()
     }
     
     internal enum Keys: String {
@@ -46,6 +48,7 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
         case includeFields = "includeFields"
         case seasonsIncluded = "includeSeasons"
         case episodesIncluded = "includeEpisodes"
+        case includeUserData = "includeUserData"
     }
     
     internal var queryParams: [String: Any] {
@@ -69,6 +72,9 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
         if let included = fieldsFilter.includedFields, !included.isEmpty {
             params[Keys.includeFields.rawValue] = included.joined(separator: ",")
         }
+        
+        // Check if we are requesting user specific data
+        params[Keys.includeUserData.rawValue] = userDataIncluded
         
         return params
     }

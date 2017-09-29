@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch, FilteredAssetIds {
+public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, PageableResponse, FilteredDevices, SortedResponse, ElasticSearch, FilteredAssetIds, IncludesUserData {
     public typealias Response = AssetList
     
     public var endpointUrl: String {
@@ -21,7 +21,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     }
     
     public var headers: [String: String]? {
-        return nil
+        return userDataFilter.sessionToken?.authorizationHeader
     }
     
     public var fieldsFilter: FieldsFilter
@@ -30,6 +30,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
     public var deviceFilter: DeviceFilter
     public var elasticSearchQuery: ElasticSearchQuery
     public var assetIdFilter: AssetIdFilter
+    public var userDataFilter: UserDataFilter
     
     public var sortDescription: SortDescription
     
@@ -45,6 +46,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         self.deviceFilter = DeviceFilter()
         self.elasticSearchQuery = ElasticSearchQuery()
         self.assetIdFilter = AssetIdFilter()
+        self.userDataFilter = UserDataFilter()
         
         self.sortDescription = SortDescription()
         
@@ -65,6 +67,7 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         case deviceQuery = "deviceQuery"
         case publicationQuery = "publicationQuery"
         case assetIds = "assetIds"
+        case includeUserData = "includeUserData"
     }
     
     internal var queryParams: [String: Any] {
@@ -116,6 +119,9 @@ public struct FetchAssetList: Exposure, FilteredFields, FilteredPublish, Pageabl
         if let assetIds = assetIdFilter.assetIds {
             params[Keys.assetIds.rawValue] = assetIds
         }
+        
+        // Check if we are requesting user specific data
+        params[Keys.includeUserData.rawValue] = userDataIncluded
         
         return params
     }
