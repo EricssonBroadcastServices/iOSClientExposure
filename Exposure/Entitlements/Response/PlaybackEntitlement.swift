@@ -115,8 +115,8 @@ extension PlaybackEntitlement: Decodable {
     
     internal enum CodingKeys: String, CodingKey {
         case playToken
-        case edrm
-        case fairplay
+        case edrm = "edrmConfig"
+        case fairplay = "fairplayConfig"
         case mediaLocator
         case licenseExpiration
         case licenseExpirationReason
