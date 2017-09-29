@@ -103,11 +103,11 @@ extension Downloader {
     ///
     /// - parameter entitlement: *Exposure* provided entitlement
     @available(iOS 10.0, *)
-    public static func download(entitlement: PlaybackEntitlement) throws -> DownloadTask {
+    public static func download(entitlement: PlaybackEntitlement, named name: String? = nil) throws -> DownloadTask {
         let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
         // TODO: Download name should probably be retrieved from *Exposure*
-        return try download(mediaLocator: entitlement.mediaLocator, named: nil, artwork: nil, using: fairplayRequester)
+        return try download(mediaLocator: entitlement.mediaLocator, named: name, artwork: nil, using: fairplayRequester)
     }
     
     @available(iOS, introduced: 9.0, deprecated: 10.0)
