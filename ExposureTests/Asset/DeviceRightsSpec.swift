@@ -19,45 +19,36 @@ class DeviceRightsSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = DeviceRights(json: DeviceRightsJSON.valid())
+                let json = DeviceRightsJSON.valid()
+                let result = json.decode(DeviceRights.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.type).toNot(beNil())
-                expect(value!.model).toNot(beNil())
-                expect(value!.manufacturer).toNot(beNil())
-                expect(value!.os).toNot(beNil())
-                expect(value!.osVersion).toNot(beNil())
-                expect(value!.rights).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.model).toNot(beNil())
+                expect(result?.manufacturer).toNot(beNil())
+                expect(result?.os).toNot(beNil())
+                expect(result?.osVersion).toNot(beNil())
+                expect(result?.rights).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = DeviceRights(json: DeviceRightsJSON.missingKeys())
+            it("should init with partial response") {
+                let json = DeviceRightsJSON.missingKeys()
+                let result = json.decode(DeviceRights.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.type).toNot(beNil())
-                expect(value!.model).to(beNil())
-                expect(value!.manufacturer).to(beNil())
-                expect(value!.os).to(beNil())
-                expect(value!.osVersion).to(beNil())
-                expect(value!.rights).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.model).to(beNil())
+                expect(result?.manufacturer).to(beNil())
+                expect(result?.os).to(beNil())
+                expect(result?.osVersion).to(beNil())
+                expect(result?.rights).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = DeviceRights(json: DeviceRightsJSON.empty())
+            it("should init with empty response") {
+                let json = DeviceRightsJSON.empty()
+                let result = json.decode(DeviceRights.self)
                 
-                expect(value).to(beNil())
-            }
-            
-            it("should init with missformed assetRights") {
-                let value = DeviceRights(json: DeviceRightsJSON.missformatedAssetRights())
-                
-                expect(value).toNot(beNil())
-                expect(value!.type).toNot(beNil())
-                expect(value!.model).to(beNil())
-                expect(value!.manufacturer).to(beNil())
-                expect(value!.os).to(beNil())
-                expect(value!.osVersion).to(beNil())
-                expect(value!.rights).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
         
@@ -109,7 +100,7 @@ extension DeviceRightsSpec {
         static let os = "iOS"
         static let osVersion = "iOS10.0"
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type,
                 "model": DeviceRightsJSON.model,
@@ -120,17 +111,17 @@ extension DeviceRightsSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
         
-        static func missformatedAssetRights() -> Any {
+        static func missformatedAssetRights() -> [String: Codable] {
             return [
                 "type": DeviceRightsJSON.type,
                 "rights": []

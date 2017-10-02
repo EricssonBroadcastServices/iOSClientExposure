@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-public struct Season {
+public struct Season: Decodable {
     /// When this `Season` was created
     public let created: String?
     
@@ -50,53 +49,30 @@ public struct Season {
     public let externalReferences: [ExternalReference]?
     
     /// Any custom data in `json` format
-    public let customData: [String: Any]?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        created = actualJson[JSONKeys.created.rawValue].string
-        changed = actualJson[JSONKeys.changed.rawValue].string
-        season = actualJson[JSONKeys.season.rawValue].string
-        
-        tags = actualJson[JSONKeys.tags.rawValue].arrayObject?.flatMap{ Tag(json: $0) }
-        localized = actualJson[JSONKeys.localized.rawValue].arrayObject?.flatMap{ LocalizedData(json: $0) }
-        
-        tvShowId = actualJson[JSONKeys.tvShowId.rawValue].string
-        seasonId = actualJson[JSONKeys.seasonId.rawValue].string
-        episodeCount = actualJson[JSONKeys.episodeCount.rawValue].int
-        
-        episodes = actualJson[JSONKeys.episodes.rawValue].arrayObject?.flatMap{ Asset(json: $0) }
-        
-        publishedDate = actualJson[JSONKeys.publishedDate.rawValue].string
-        availableDate = actualJson[JSONKeys.availableDate.rawValue].string
-        startYear = actualJson[JSONKeys.startYear.rawValue].int
-        endYear = actualJson[JSONKeys.endYear.rawValue].int
-        
-        linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].arrayObject?.flatMap{ LinkedEntity(json: $0) }
-        externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
-        customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
-        
-        if created == nil && changed == nil && season == nil && tags == nil && localized == nil && tvShowId == nil && seasonId == nil
-            && episodeCount == nil && episodes == nil && publishedDate == nil && availableDate == nil && startYear == nil
-            && endYear == nil && linkedEntities == nil && externalReferences == nil && customData == nil { return nil }
+    public let customData: [String: AnyJSONType]?
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        created = try container.decodeIfPresent(String.self, forKey: .created)
+        changed = try container.decodeIfPresent(String.self, forKey: .changed)
+        season = try container.decodeIfPresent(String.self, forKey: .season)
+        tags = try container.decodeIfPresent([Tag].self, forKey: .tags)
+        localized = try container.decodeIfPresent([LocalizedData].self, forKey: .localized)
+        tvShowId = try container.decodeIfPresent(String.self, forKey: .tvShowId)
+        seasonId = try container.decodeIfPresent(String.self, forKey: .seasonId)
+        episodeCount = try container.decodeIfPresent(Int.self, forKey: .episodeCount)
+        episodes = try container.decodeIfPresent([Asset].self, forKey: .episodes)
+        publishedDate = try container.decodeIfPresent(String.self, forKey: .publishedDate)
+        availableDate = try container.decodeIfPresent(String.self, forKey: .availableDate)
+        startYear = try container.decodeIfPresent(Int.self, forKey: .startYear)
+        endYear = try container.decodeIfPresent(Int.self, forKey: .endYear)
+        linkedEntities = try container.decodeIfPresent([LinkedEntity].self, forKey: .linkedEntities)
+        externalReferences = try container.decodeIfPresent([ExternalReference].self, forKey: .externalReferences)
+        customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
     }
-    
-    internal enum JSONKeys: String {
-        case created = "created"
-        case changed = "changed"
-        case season = "season"
-        case tags = "tags"
-        case localized = "localized"
-        case tvShowId = "tvShowId"
-        case seasonId = "seasonId"
-        case episodeCount = "episodeCount"
-        case episodes = "episodes"
-        case publishedDate = "publishedDate"
-        case availableDate = "availableDate"
-        case startYear = "startYear"
-        case endYear = "endYear"
-        case linkedEntities = "linkedEntities"
-        case externalReferences = "externalReferences"
-        case customData = "customData"
+
+    internal enum CodingKeys: String, CodingKey {
+        case created, changed, season, tags, localized, tvShowId, seasonId, episodeCount, episodes
+        case publishedDate, availableDate, startYear, endYear, linkedEntities, externalReferences, customData
     }
 }

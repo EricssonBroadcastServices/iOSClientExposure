@@ -55,28 +55,43 @@ class ValidateEntitlementSpec: QuickSpec {
         
         describe("EntitlementValidation") {
             it("should process with valid json") {
-                let json: [String: Any] = [
+                let json: [String : Codable] = [
                     "status":"SUCCESS",
                     "paymentDone":false
-                ]
+                    ]
                 
-                let result = EntitlementValidation(json: json)
+                let result = json.decode(EntitlementValidation.self)
                 
                 expect(result).toNot(beNil())
-                expect(result?.status).toNot(beNil())
-                expect(result?.paymentDone).toNot(beNil())
+                
+                expect(result?.status).to(equal(.success))
+                
+                expect(result?.paymentDone).to(equal(false))
             }
             
             it("should fail with invalid json") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "WRONG_KEY":"SUCCESS",
                     "OTHER_MISTAKE":false
                 ]
                 
-                let result = EntitlementValidation(json: json)
-                
-                expect(result).to(beNil())
+                expect{ try json.throwingDecode(EntitlementValidation.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
+    }
+}
+
+extension Dictionary where Key == String, Value == Codable {
+    func decode<T>(_ type: T.Type) -> T? where T : Decodable {
+        guard let data = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted) else { return nil }
+        return try? JSONDecoder().decode(T.self, from: data)
+    }
+}
+
+extension Dictionary where Key == String, Value == Codable {
+    func throwingDecode<T>(_ type: T.Type) throws -> T where T : Decodable {
+        let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }

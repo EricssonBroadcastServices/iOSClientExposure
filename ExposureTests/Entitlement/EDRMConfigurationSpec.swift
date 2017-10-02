@@ -18,38 +18,38 @@ class EDRMConfigurationSpec: QuickSpec {
         
         describe("EDRMConfiguration") {
             it("should init correctly from json") {
-                let json = [
+                let json: [String: Codable] = [
                     "ownerId":"id",
                     "userToken":"token",
                     "requestUrl":"requestUrl",
                     "adParameter":"ad"
                 ]
                 
-                let edrm = EDRMConfiguration(json: json)
+                let result = json.decode(EDRMConfiguration.self)
                 
-                expect(edrm).toNot(beNil())
-                expect(edrm!.ownerId).toNot(beNil())
-                expect(edrm!.userToken).toNot(beNil())
-                expect(edrm!.requestUrl).toNot(beNil())
-                expect(edrm!.adParameter).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.ownerId).toNot(beNil())
+                expect(result?.userToken).toNot(beNil())
+                expect(result?.requestUrl).toNot(beNil())
+                expect(result?.adParameter).toNot(beNil())
                 
-                expect(edrm!.ownerId).to(equal("id"))
-                expect(edrm!.userToken).to(equal("token"))
-                expect(edrm!.requestUrl).to(equal("requestUrl"))
-                expect(edrm!.adParameter).to(equal("ad"))
+                expect(result?.ownerId).to(equal("id"))
+                expect(result?.userToken).to(equal("token"))
+                expect(result?.requestUrl).to(equal("requestUrl"))
+                expect(result?.adParameter).to(equal("ad"))
             }
             
             it("should fail on incomplete json") {
-                let json = [
+                let json: [String: Codable] = [
                     "ownerId":"id",
                     "userToken":"token",
-                    "requestUrl":nil,
+                    "requestUrl":10,
                     "adParameter":"ad"
                 ]
                 
-                let edrm = EDRMConfiguration(json: json)
+                let result = json.decode(EDRMConfiguration.self)
                 
-                expect(edrm).to(beNil())
+                expect(result).to(beNil())
             }
         }
     }

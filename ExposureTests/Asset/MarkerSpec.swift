@@ -20,25 +20,30 @@ class MarkerSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Marker(json: MarkerJSON.valid())
+                let json = MarkerJSON.valid()
+                let result = json.decode(Marker.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.offset).toNot(beNil())
-                expect(value!.url).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.offset).toNot(beNil())
+                expect(result?.url).toNot(beNil())
             }
             
             it("should succeed with partial response") {
-                let value = Marker(json: MarkerJSON.missingKeys())
+                let json = MarkerJSON.missingKeys()
+                let result = json.decode(Marker.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.offset).toNot(beNil())
-                expect(value!.url).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.offset).toNot(beNil())
+                expect(result?.url).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = Marker(json: MarkerJSON.empty())
+            it("should init with empty or non matching response") {
+                let json = MarkerJSON.empty()
+                let result = json.decode(Marker.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.offset).to(beNil())
+                expect(result?.url).to(beNil())
             }
         }
     }
@@ -49,20 +54,20 @@ extension MarkerSpec {
         static let offset = 100
         static let url = "someUrl"
         
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "offset": MarkerJSON.offset,
                 "url": MarkerJSON.url,
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "offset": MarkerJSON.offset
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

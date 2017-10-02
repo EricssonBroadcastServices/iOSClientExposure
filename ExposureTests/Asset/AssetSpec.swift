@@ -21,54 +21,57 @@ class AssetSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Asset(json: AssetJSON.valid())
+                let json = AssetJSON.valid()
+                let result = json.decode(Asset.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.created).toNot(beNil())
-                expect(value!.changed).toNot(beNil())
-                expect(value!.assetId).toNot(beNil())
-                expect(value!.type).toNot(beNil())
-                expect(value!.localized).toNot(beNil())
-                expect(value!.tags).toNot(beNil())
-                expect(value!.publications).toNot(beNil())
-                expect(value!.episode).toNot(beNil())
-                expect(value!.season).toNot(beNil())
-                expect(value!.seasonId).toNot(beNil())
-                expect(value!.seasons).toNot(beNil())
-                expect(value!.participants).toNot(beNil())
-                expect(value!.productionYear).toNot(beNil())
-                expect(value!.popularityScores).toNot(beNil())
-                expect(value!.releaseDate).toNot(beNil())
-                expect(value!.originalTitle).toNot(beNil())
-                expect(value!.live).toNot(beNil())
-                expect(value!.productionCountries).toNot(beNil())
-                expect(value!.subtitles).toNot(beNil())
-                expect(value!.audioTracks).toNot(beNil())
-                expect(value!.spokenLanguages).toNot(beNil())
-                expect(value!.medias).toNot(beNil())
-                expect(value!.parentalRatings).toNot(beNil())
-                expect(value!.linkedEntities).toNot(beNil())
-                expect(value!.runtime).toNot(beNil())
-                expect(value!.tvShowId).toNot(beNil())
-                expect(value!.expires).toNot(beNil())
-                expect(value!.customData).toNot(beNil())
-                expect(value!.externalReferences).toNot(beNil())
-                expect(value!.rating).toNot(beNil())
-                expect(value!.markers).toNot(beNil())
-                expect(value!.lastViewedTime).toNot(beNil())
-                expect(value!.lastViewedOffset).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).toNot(beNil())
+                expect(result?.assetId).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.localized).toNot(beNil())
+                expect(result?.tags).toNot(beNil())
+                expect(result?.publications).toNot(beNil())
+                expect(result?.episode).toNot(beNil())
+                expect(result?.season).toNot(beNil())
+                expect(result?.seasonId).toNot(beNil())
+                expect(result?.seasons).toNot(beNil())
+                expect(result?.participants).toNot(beNil())
+                expect(result?.productionYear).toNot(beNil())
+                expect(result?.popularityScores).toNot(beNil())
+                expect(result?.releaseDate).toNot(beNil())
+                expect(result?.originalTitle).toNot(beNil())
+                expect(result?.live).toNot(beNil())
+                expect(result?.productionCountries).toNot(beNil())
+                expect(result?.subtitles).toNot(beNil())
+                expect(result?.audioTracks).toNot(beNil())
+                expect(result?.spokenLanguages).toNot(beNil())
+                expect(result?.medias).toNot(beNil())
+                expect(result?.parentalRatings).toNot(beNil())
+                expect(result?.linkedEntities).toNot(beNil())
+                expect(result?.runtime).toNot(beNil())
+                expect(result?.tvShowId).toNot(beNil())
+                expect(result?.expires).toNot(beNil())
+                expect(result?.customData).toNot(beNil())
+                expect(result?.externalReferences).toNot(beNil())
+                expect(result?.rating).toNot(beNil())
+                expect(result?.markers).toNot(beNil())
+                expect(result?.lastViewedTime).toNot(beNil())
+                expect(result?.lastViewedOffset).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = Asset(json: AssetJSON.missingKeys())
+            it("should init with partial response") {
+                let json = AssetJSON.missingKeys()
+                let result = json.decode(Asset.self)
                 
-                expect(value).toNot(beNil())
+                expect(result).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = Asset(json: AssetJSON.empty())
+            it("should init with empty response") {
+                let json = AssetJSON.empty()
+                let result = json.decode(Asset.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
         
@@ -155,7 +158,7 @@ extension AssetSpec {
         static let lastViewedTime = 10
         static let lastViewedOffset = 100
         
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "created": AssetJSON.created,
                 "changed": AssetJSON.changed,
@@ -193,13 +196,13 @@ extension AssetSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": AssetJSON.created
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

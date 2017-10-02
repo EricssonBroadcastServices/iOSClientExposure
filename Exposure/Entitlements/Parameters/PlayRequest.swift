@@ -55,7 +55,7 @@ extension DRMRequest {
 }
 
 /// Used internally to configure the `DRM` request.
-public struct PlayRequest {
+public struct PlayRequest: Serializable {
     internal let drm: DRM
     internal let format: Format
     
@@ -86,19 +86,25 @@ public struct PlayRequest {
         case mp4 = "MP4"
         case syndicated = "SYNDICATED"
     }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(drm.rawValue, forKey: .drm)
+        try container.encode(format.rawValue, forKey: .format)
+    }
 }
 
-extension PlayRequest: JSONEncodable {
+extension PlayRequest {
     public func toJSON() -> [String: Any] {
         return [
-            JSONKeys.drm.rawValue: drm.rawValue,
-            JSONKeys.format.rawValue: format.rawValue
+            CodingKeys.drm.rawValue: drm.rawValue,
+            CodingKeys.format.rawValue: format.rawValue
             ]
     }
     
     /// Keys used to specify `json` body for the request.
-    internal enum JSONKeys: String {
-        case drm = "drm"
-        case format = "format"
+    internal enum CodingKeys: String, CodingKey {
+        case drm
+        case format
     }
 }

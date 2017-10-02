@@ -19,27 +19,30 @@ class PersonSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Person(json: PersonJSON.valid())
+                let json = PersonJSON.valid()
+                let result = json.decode(Person.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.personId).toNot(beNil())
-                expect(value!.name).toNot(beNil())
-                expect(value!.function).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.personId).toNot(beNil())
+                expect(result?.name).toNot(beNil())
+                expect(result?.function).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = Person(json: PersonJSON.missingKeys())
+            it("should init with partial response") {
+                let json = PersonJSON.missingKeys()
+                let result = json.decode(Person.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.personId).toNot(beNil())
-                expect(value!.name).to(beNil())
-                expect(value!.function).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.personId).toNot(beNil())
+                expect(result?.name).to(beNil())
+                expect(result?.function).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = Person(json: PersonJSON.empty())
+            it("should init with empty response") {
+                let json = PersonJSON.empty()
+                let result = json.decode(Person.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -50,7 +53,7 @@ extension PersonSpec {
         static let personId = "susan_jr_sarandon"
         static let name = "Susan Jr. Sarandon"
         static let function = "Stuntman"
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "personId": PersonJSON.personId,
                 "name": PersonJSON.name,
@@ -58,13 +61,13 @@ extension PersonSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "personId": PersonJSON.personId
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

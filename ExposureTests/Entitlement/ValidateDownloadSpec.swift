@@ -55,35 +55,40 @@ class ValidateDownloadSpec: QuickSpec {
         
         describe("DownloadValidation") {
             it("should process with valid json") {
-                let json: [String: Any] = [
+                let bitrate: [String: Codable] = [
+                    "bitrate": 120000,
+                    "size": 200000
+                ]
+                
+                let json: [String: Codable] = [
                     "status":"SUCCESS",
                     "paymentDone":false,
-                    "bitrates": [
-                        [
-                            "bitrate": 120000,
-                            "size": 200000
-                        ]
-                    ],
+                    "bitrates": [bitrate],
                     "downloadMaxSecondsAfterPlay": 100,
                     "downloadMaxSecondsAfterDownload": 200
                 ]
                 
-                let result = DownloadValidation(json: json)
+                let result = json.decode(DownloadValidation.self)
                 
                 expect(result).toNot(beNil())
-                expect(result?.status).toNot(beNil())
-                expect(result?.paymentDone).toNot(beNil())
+                expect(result?.status).to(equal(.success))
+                expect(result?.paymentDone).to(equal(false))
+                expect(result?.downloadMaxSecondsAfterPlay).to(equal(100))
+                expect(result?.downloadMaxSecondsAfterDownload).to(equal(200))
+                expect{ try bitrate.decode(DownloadValidation.Bitrate.self) }.toNot(beNil())
+                expect(result?.bitrates?.first?.bitrate).to(equal(120000))
+                expect(result?.bitrates?.first?.size).to(equal(200000))
+                
             }
             
             it("should fail with invalid json") {
-                let json: [String: Any] = [
+                let json: [String: Codable] = [
                     "WRONG_KEY":"SUCCESS",
                     "OTHER_MISTAKE":false
                 ]
                 
-                let result = DownloadValidation(json: json)
-                
-                expect(result).to(beNil())
+                expect{ try json.throwingDecode(DownloadValidation.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
     }

@@ -9,7 +9,6 @@
 import Quick
 import Nimble
 import Mockingjay
-import SwiftyJSON
 
 @testable import Exposure
 
@@ -30,14 +29,21 @@ class AnonymousSpec: QuickSpec {
         let expectedSessionToken = "sessionToken"
         let expectedCrmToken = "crmToken"
         let expectedAccountId = "accountId"
-        let expectedExpirationDate = Date()
+        let date = Date()
+        let expectedExpirationDate = Date.utcFormatter().string(from: date)
         let expectedAccountStatus = "accountStatus"
         let expectedCredentials = Credentials(sessionToken: SessionToken(value: expectedSessionToken),
                                               crmToken: expectedCrmToken,
                                               accountId: expectedAccountId,
-                                              expiration: expectedExpirationDate,
+                                              expiration: date,
                                               accountStatus: expectedAccountStatus)
-        let expectedJson = expectedCredentials.toJson()
+        let expectedJson: [String: Any] = [
+            "sessionToken":expectedSessionToken,
+            "crmToken":expectedCrmToken,
+            "accountId":expectedAccountId,
+            "expirationDateTime":expectedExpirationDate,
+            "accountStatus":expectedAccountStatus
+        ]
         
         describe("Anonymous") {
             it("should have no headers") {
@@ -121,10 +127,10 @@ class AnonymousSpec: QuickSpec {
                             token = exposureResponse.value
                             error = exposureResponse.error
                             
-                            if let data = data {
-                                let json = JSON(data).dictionary
-                                httpCode = json?["httpCode"]?.int
-                                message = json?["message"]?.string
+                            if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                                as? [String: Any] ?? [:] {
+                                    httpCode = json["httpCode"] as? Int
+                                    message = json["message"] as? String
                             }
                     }
                 }

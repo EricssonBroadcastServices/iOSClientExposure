@@ -19,27 +19,30 @@ class LinkedEntitySpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = LinkedEntity(json: LinkedEntityJSON.valid())
+                let json = LinkedEntityJSON.valid()
+                let result = json.decode(LinkedEntity.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.entityId).toNot(beNil())
-                expect(value!.linkType).toNot(beNil())
-                expect(value!.entityType).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.entityId).toNot(beNil())
+                expect(result?.linkType).toNot(beNil())
+                expect(result?.entityType).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = LinkedEntity(json: LinkedEntityJSON.missingKeys())
+            it("should init with partial response") {
+                let json = LinkedEntityJSON.missingKeys()
+                let result = json.decode(LinkedEntity.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.entityId).to(beNil())
-                expect(value!.linkType).to(beNil())
-                expect(value!.entityType).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.entityId).to(beNil())
+                expect(result?.linkType).to(beNil())
+                expect(result?.entityType).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = LinkedEntity(json: LinkedEntityJSON.empty())
+            it("should init with empty response") {
+                let json = LinkedEntityJSON.empty()
+                let result = json.decode(LinkedEntity.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -50,7 +53,7 @@ extension LinkedEntitySpec {
         static let entityId = "anEntityId"
         static let linkType = "aLinkType"
         static let entityType = "anEnitityType"
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "entityId": LinkedEntityJSON.entityId,
                 "linkType": LinkedEntityJSON.linkType,
@@ -58,13 +61,13 @@ extension LinkedEntitySpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "entityType": LinkedEntityJSON.entityType
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

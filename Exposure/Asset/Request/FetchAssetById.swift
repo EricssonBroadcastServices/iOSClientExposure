@@ -31,7 +31,7 @@ public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish {
     public let environment: Environment
     public let assetId: String
     
-    internal init(environment: Environment, assetId: String) {
+    public init(environment: Environment, assetId: String) {
         self.environment = environment
         self.assetId = assetId
         self.fieldsFilter = FieldsFilter()

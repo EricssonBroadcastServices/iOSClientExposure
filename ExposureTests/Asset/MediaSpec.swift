@@ -19,39 +19,42 @@ class MediaSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Media(json: MediaJSON.valid())
+                let json = MediaJSON.valid()
+                let result = json.decode(Media.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.mediaId).toNot(beNil())
-                expect(value!.name).toNot(beNil())
-                expect(value!.drm).toNot(beNil())
-                expect(value!.format).toNot(beNil())
-                expect(value!.height).toNot(beNil())
-                expect(value!.width).toNot(beNil())
-                expect(value!.durationMillis).toNot(beNil())
-                expect(value!.programId).toNot(beNil())
-                expect(value!.status).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.mediaId).toNot(beNil())
+                expect(result?.name).toNot(beNil())
+                expect(result?.drm).toNot(beNil())
+                expect(result?.format).toNot(beNil())
+                expect(result?.height).toNot(beNil())
+                expect(result?.width).toNot(beNil())
+                expect(result?.durationMillis).toNot(beNil())
+                expect(result?.programId).toNot(beNil())
+                expect(result?.status).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = Media(json: MediaJSON.missingKeys())
+            it("should init with partial response") {
+                let json = MediaJSON.missingKeys()
+                let result = json.decode(Media.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.mediaId).to(beNil())
-                expect(value!.name).to(beNil())
-                expect(value!.drm).to(beNil())
-                expect(value!.format).toNot(beNil())
-                expect(value!.height).to(beNil())
-                expect(value!.width).to(beNil())
-                expect(value!.durationMillis).to(beNil())
-                expect(value!.programId).to(beNil())
-                expect(value!.status).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.mediaId).to(beNil())
+                expect(result?.name).to(beNil())
+                expect(result?.drm).to(beNil())
+                expect(result?.format).toNot(beNil())
+                expect(result?.height).to(beNil())
+                expect(result?.width).to(beNil())
+                expect(result?.durationMillis).to(beNil())
+                expect(result?.programId).to(beNil())
+                expect(result?.status).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = Media(json: MediaJSON.empty())
+            it("should init with empty response") {
+                let json = MediaJSON.empty()
+                let result = json.decode(Media.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -69,7 +72,7 @@ extension MediaSpec {
         static let programId = "programId"
         static let status = "enabled"
         
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "mediaId": MediaJSON.mediaId,
                 "name": MediaJSON.name,
@@ -83,13 +86,13 @@ extension MediaSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "format": MediaJSON.format
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

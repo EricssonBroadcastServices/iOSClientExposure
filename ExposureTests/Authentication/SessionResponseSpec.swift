@@ -17,27 +17,19 @@ class SessionResponseSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = SessionResponse(json: SessionResponseJSON.valid())
+                let json = SessionResponseJSON.valid()
+                let result = json.decode(SessionResponse.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.crmToken).toNot(beNil())
-                expect(value!.accountId).toNot(beNil())
-                expect(value!.userId).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.crmToken).toNot(beNil())
+                expect(result?.accountId).toNot(beNil())
+                expect(result?.userId).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = SessionResponse(json: SessionResponseJSON.missingKeys())
-                
-                expect(value).toNot(beNil())
-                expect(value!.crmToken).toNot(beNil())
-                expect(value!.accountId).to(beNil())
-                expect(value!.userId).to(beNil())
-            }
-            
-            it("should not init with empty or non matching response") {
-                let value = SessionResponse(json: SessionResponseJSON.empty())
-                
-                expect(value).to(beNil())
+            it("should not init without required properties") {
+                let json = SessionResponseJSON.missingKeys()
+                expect{ try json.throwingDecode(SessionResponse.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
         }
     }
@@ -49,7 +41,7 @@ extension SessionResponseSpec {
         static let accountId = "accountId"
         static let userId = "userId"
         
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "crmToken": SessionResponseJSON.crmToken,
                 "accountId": SessionResponseJSON.accountId,
@@ -57,14 +49,10 @@ extension SessionResponseSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "crmToken": SessionResponseJSON.crmToken
             ]
-        }
-        
-        static func empty() -> Any {
-            return [:]
         }
     }
 }

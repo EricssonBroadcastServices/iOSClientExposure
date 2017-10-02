@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import SwiftyJSON
 
 /// Responsible for sending a request and receiving response from the server.
 ///
@@ -25,9 +24,11 @@ public class ExposureRequest {
                   mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
         if let data = data {
             // Handle status code errors from Exposure
-            let responseBody = SwiftyJSON.JSON(data: data).object
-            if let exposureResponse = ExposureResponseMessage(json: responseBody) {
+            do {
+                let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
                 return ExposureError.exposureResponse(reason: exposureResponse)
+            } catch (let error) {
+                return ExposureError.generalError(error: error)
             }
         }
         return ExposureError.generalError(error: error)
@@ -55,7 +56,7 @@ extension ExposureRequest {
     /// - parameter completionHandler: The code to be executed once the request has finished.
     /// - returns: `Self`
     @discardableResult
-    public func response<Object: ExposureConvertible>
+    public func response<Object>
         (queue: DispatchQueue? = nil,
          completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
         dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Object>) in
@@ -72,7 +73,7 @@ extension ExposureRequest {
     ///
     /// - parameter range: The range of acceptable status codes.
     /// - returns: The request.
-    public func validate<S : Sequence where S.Iterator.Element == Int>(statusCode acceptableStatusCodes: S) -> Self {
+    public func validate<S : Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
         dataRequest.validate(statusCode: acceptableStatusCodes)
         return self
     }
@@ -83,7 +84,7 @@ extension ExposureRequest {
     ///
     /// - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
     /// - returns: The request.
-    public func validate<S : Sequence where S.Iterator.Element == String>(contentType acceptableContentTypes: S) -> Self {
+    public func validate<S : Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
         dataRequest.validate(contentType: acceptableContentTypes)
         return self
     }

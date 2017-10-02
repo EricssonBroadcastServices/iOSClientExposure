@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 // Response struct wrapping the *Exposure* request, response and result.
-public struct ExposureResponse<Value: ExposureConvertible> {
+public struct ExposureResponse<Value: Decodable> {
     /// Internal data structure
     internal let dataResponse: DataResponse<Value>
     
