@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnalyticsBatch {
+public struct AnalyticsBatch: Decodable {
     // MARK: Configuration
     /// Authorization: Bearer "sessionToken"
     public let sessionToken: SessionToken
