@@ -1,5 +1,5 @@
 //
-//  ExposureStreamFairplayRequester.swift
+//  ExposureFairplayRequester.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2017-07-03.
@@ -61,29 +61,6 @@ extension ExposureFairplayRequester {
             }
         }
         
-        return true
-    }
-}
-
-/// *Exposure* specific implementation of the `FairplayRequester` protocol for streaming purposes.
-///
-/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposureStreamFairplayRequester: NSObject, ExposureFairplayRequester, FairplayRequester {
-    
-    init(entitlement: PlaybackEntitlement) {
-        self.entitlement = entitlement
-    }
-    
-    internal let entitlement: PlaybackEntitlement
-    internal let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.streaming.fairplay.requests")
-    internal let customScheme = "skd"
-    internal let resourceLoadingRequestOptions: [String : AnyObject]? = nil
-    
-    internal func onSuccessfulRetrieval(of ckc: Data, for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Data {
-        return ckc
-    }
-    
-    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool {
         return true
     }
 }
@@ -357,15 +334,4 @@ extension ExposureFairplayRequester {
         throw ExposureError.fairplay(reason: .contentKeyContextParsing)
     }
     
-}
-
-// MARK: - AVAssetResourceLoaderDelegate
-extension ExposureStreamFairplayRequester {
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
-        return canHandle(resourceLoadingRequest: loadingRequest)
-    }
-    
-    public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForRenewalOfRequestedResource renewalRequest: AVAssetResourceRenewalRequest) -> Bool {
-        return canHandle(resourceLoadingRequest: renewalRequest)
-    }
 }
