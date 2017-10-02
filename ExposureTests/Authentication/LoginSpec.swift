@@ -24,7 +24,6 @@ class LoginSpec: QuickSpec {
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         let username = "username"
         let password = "password"
-        let rememberMe = false
         
         let login = Authenticate(environment: env)
             .login(username: username, password: password)

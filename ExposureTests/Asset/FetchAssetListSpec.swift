@@ -23,8 +23,6 @@ class FetchAssetListSpec: QuickSpec {
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
-        let assetResponse = AssetListSpec.AssetListJSON.valid()
-        
         let fetchAsset = FetchAsset(environment: env)
         let fetchList = fetchAsset.list()
         

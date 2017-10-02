@@ -22,9 +22,6 @@ class ValidateSessionTokenSpec: QuickSpec {
         let customer = "BlixtGroup"
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
-        let username = "username"
-        let password = "password"
-        let rememberMe = false
         let sessionToken = SessionToken(value: "TOKEN")
         
         let request = ValidateSessionToken(sessionToken: sessionToken, environment: env)

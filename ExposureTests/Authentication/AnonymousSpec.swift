@@ -32,11 +32,7 @@ class AnonymousSpec: QuickSpec {
         let date = Date()
         let expectedExpirationDate = Date.utcFormatter().string(from: date)
         let expectedAccountStatus = "accountStatus"
-        let expectedCredentials = Credentials(sessionToken: SessionToken(value: expectedSessionToken),
-                                              crmToken: expectedCrmToken,
-                                              accountId: expectedAccountId,
-                                              expiration: date,
-                                              accountStatus: expectedAccountStatus)
+        
         let expectedJson: [String: Any] = [
             "sessionToken":expectedSessionToken,
             "crmToken":expectedCrmToken,
@@ -105,7 +101,6 @@ class AnonymousSpec: QuickSpec {
                 }
             }
             
-            let invalidEnv = Environment(baseUrl: base, customer: "WrongCustomer", businessUnit: "WrongBusinessUnit")
             let invalidAnonymous = Authenticate(environment: env).anonymous()
             
             let errorJson: [String: Any] = [

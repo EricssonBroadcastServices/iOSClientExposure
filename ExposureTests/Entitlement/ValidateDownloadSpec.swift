@@ -75,7 +75,7 @@ class ValidateDownloadSpec: QuickSpec {
                 expect(result?.paymentDone).to(equal(false))
                 expect(result?.downloadMaxSecondsAfterPlay).to(equal(100))
                 expect(result?.downloadMaxSecondsAfterDownload).to(equal(200))
-                expect{ try bitrate.decode(DownloadValidation.Bitrate.self) }.toNot(beNil())
+                expect(bitrate.decode(DownloadValidation.Bitrate.self)).toNot(beNil())
                 expect(result?.bitrates?.first?.bitrate).to(equal(120000))
                 expect(result?.bitrates?.first?.size).to(equal(200000))
                 

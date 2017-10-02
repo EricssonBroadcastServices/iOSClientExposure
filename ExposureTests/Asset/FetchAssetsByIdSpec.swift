@@ -23,7 +23,6 @@ class FetchAssetByIdSpec: QuickSpec {
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
         let assetId = AssetSpec.AssetJSON.assetId
-        let assetResponse = AssetSpec.AssetJSON.valid()
         
         let fetchAsset = FetchAsset(environment: env)
         let fetchReq = fetchAsset.filter(assetId: assetId)
