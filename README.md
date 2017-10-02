@@ -34,6 +34,7 @@
 * `iOS` 9.0+
 * `Swift` 4.0+
 * `Xcode` 9.0+
+
 * Framework dependencies
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
