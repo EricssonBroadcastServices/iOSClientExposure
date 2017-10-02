@@ -59,25 +59,26 @@ extension AssetUserPlayHistorySpec {
         
         static func valid() -> [String: Codable] {
             return [
-                "lastViewedOffset": AssetUserPlayHistoryJSON.offset,
-                "lastViewedTime": AssetUserPlayHistoryJSON.url,
-                "programId": AssetUserPlayHistoryJSON.url,
-                "channelId": AssetUserPlayHistoryJSON.url
+                "lastViewedOffset": AssetUserPlayHistoryJSON.lastViewedOffset,
+                "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime,
+                "programId": AssetUserPlayHistoryJSON.programId,
+                "channelId": AssetUserPlayHistoryJSON.channelId
             ]
         }
         
         static func requiredKeys() -> [String: Codable] {
             return [
-                "lastViewedOffset": AssetUserPlayHistoryJSON.offset,
-                "lastViewedTime": AssetUserPlayHistoryJSON.url
+                "lastViewedOffset": AssetUserPlayHistoryJSON.lastViewedOffset,
+                "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime
             ]
         }
         
         static func missingKeys() -> [String: Codable] {
             return [
-                "lastViewedTime": AssetUserPlayHistoryJSON.url,
-                "programId": AssetUserPlayHistoryJSON.url,
-                "channelId": AssetUserPlayHistoryJSON.url
+                "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime,
+                "programId": AssetUserPlayHistoryJSON.programId,
+                "channelId": AssetUserPlayHistoryJSON.channelId
             ]
+        }
     }
 }

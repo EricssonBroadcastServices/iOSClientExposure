@@ -56,8 +56,7 @@ class AssetSpec: QuickSpec {
                 expect(result?.externalReferences).toNot(beNil())
                 expect(result?.rating).toNot(beNil())
                 expect(result?.markers).toNot(beNil())
-                expect(result?.lastViewedTime).toNot(beNil())
-                expect(result?.lastViewedOffset).toNot(beNil())
+                expect(result?.userData).toNot(beNil())
             }
             
             it("should init with partial response") {
@@ -155,8 +154,7 @@ extension AssetSpec {
         static let externalReferences = [ExternalReferenceSpec.ExternalReferenceJSON.valid()]
         static let rating = 0.5
         static let markers = [MarkerSpec.MarkerJSON.valid()]
-        static let lastViewedTime = 10
-        static let lastViewedOffset = 100
+        static let userData = AssetUserDataSpec.AssetUserDataJSON.valid()
         
         static func valid() -> [String: Codable] {
             return [
@@ -191,8 +189,7 @@ extension AssetSpec {
                 "externalReferences": AssetJSON.externalReferences,
                 "rating": AssetJSON.rating,
                 "markers": AssetJSON.markers,
-                "lastViewedTime": AssetJSON.lastViewedTime,
-                "lastViewedOffset": AssetJSON.lastViewedOffset
+                "userData": AssetJSON.userData
             ]
         }
         

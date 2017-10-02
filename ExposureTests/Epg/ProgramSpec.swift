@@ -38,7 +38,7 @@ class ProgramSpec: QuickSpec {
             }
             
             it("should init with partial response") {
-                let json = ProgramJSON.requiredKeys()
+                let json = ProgramJSON.missingKeys()
                 let result = json.decode(Program.self)
                 
                 expect(result).toNot(beNil())

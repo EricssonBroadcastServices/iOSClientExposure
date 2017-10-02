@@ -27,6 +27,12 @@ class AssetUserDataSpec: QuickSpec {
             }
             
             it("should init with empty or non matching response") {
+                let result = AssetUserDataJSON.incomplete().decode(AssetUserData.self)
+                
+                expect(result).to(beNil())
+            }
+            
+            it("should init with empty or non matching response") {
                 let json = AssetUserDataJSON.empty()
                 let result = json.decode(AssetUserData.self)
                 
@@ -41,6 +47,12 @@ extension AssetUserDataSpec {
         static func valid() -> [String: Codable] {
             return [
                 "playHistory": AssetUserPlayHistorySpec.AssetUserPlayHistoryJSON.valid()
+            ]
+        }
+        
+        static func incomplete() -> [String: Codable] {
+            return [
+                "playHistory": ""
             ]
         }
         

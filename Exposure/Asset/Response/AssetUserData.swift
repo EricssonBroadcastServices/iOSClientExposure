@@ -10,4 +10,15 @@ import Foundation
 
 public struct AssetUserData: Decodable {
     public let playHistory: AssetUserPlayHistory?
+    
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        playHistory = try container.decode(AssetUserPlayHistory.self, forKey: .playHistory)
+    }
+    
+    internal enum CodingKeys: String, CodingKey {
+        case playHistory
+    }
 }
