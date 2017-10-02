@@ -13,10 +13,10 @@ import Foundation
 /// The token itself is by no means guaranteed to be valid, it merely represents the expected form.
 ///
 /// For more information regarding `SessionToken`s, authentication requests and managing user sessions, please see [User Authentication]() in the documentation.
-public struct SessionToken: Decodable {
+public struct SessionToken: Codable {
     /// Keys used to specify `json` body for the request.
     fileprivate enum CodingKeys: String, CodingKey {
-        case sessionToken
+        case value = "sessionToken"
     }
     
     public let value: String
@@ -38,10 +38,14 @@ public struct SessionToken: Decodable {
         self.value = val
     }
 
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        value = try container.decode(String.self, forKey: .sessionToken)
-    }
+//    public init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        value = try container.decode(String.self, forKey: .sessionToken)
+//    }
+//    
+//    public func encode(to encoder: Encoder) throws {
+//        encoder
+//    }
 }
 
 extension SessionToken: Equatable {
