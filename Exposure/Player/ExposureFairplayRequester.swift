@@ -49,11 +49,11 @@ extension ExposureFairplayRequester {
             return false
         }
         
-        resourceLoadingRequestQueue.async { [unowned self] in
-            // TODO: Weak? Async task with [unowned self]
+        resourceLoadingRequestQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
             do {
-                if try self.shouldContactRemote(for: resourceLoadingRequest) {
-                    self.handle(resourceLoadingRequest: resourceLoadingRequest)
+                if try weakSelf.shouldContactRemote(for: resourceLoadingRequest) {
+                    weakSelf.handle(resourceLoadingRequest: resourceLoadingRequest)
                 }
             }
             catch {
