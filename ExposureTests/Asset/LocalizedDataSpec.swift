@@ -19,37 +19,40 @@ class LocalizedDataSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = LocalizedData(json: LocalizedDataJSON.valid())
+                let json = LocalizedDataJSON.valid()
+                let result = json.decode(LocalizedData.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.locale).toNot(beNil())
-                expect(value!.title).toNot(beNil())
-                expect(value!.sortingTitle).toNot(beNil())
-                expect(value!.description).toNot(beNil())
-                expect(value!.tinyDescription).toNot(beNil())
-                expect(value!.shortDescription).toNot(beNil())
-                expect(value!.longDescription).toNot(beNil())
-                expect(value!.images).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.locale).toNot(beNil())
+                expect(result?.title).toNot(beNil())
+                expect(result?.sortingTitle).toNot(beNil())
+                expect(result?.description).toNot(beNil())
+                expect(result?.tinyDescription).toNot(beNil())
+                expect(result?.shortDescription).toNot(beNil())
+                expect(result?.longDescription).toNot(beNil())
+                expect(result?.images).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let value = LocalizedData(json: LocalizedDataJSON.missingKeys())
+            it("should init with partial response") {
+                let json = LocalizedDataJSON.missingKeys()
+                let result = json.decode(LocalizedData.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.locale).toNot(beNil())
-                expect(value!.title).to(beNil())
-                expect(value!.sortingTitle).to(beNil())
-                expect(value!.description).to(beNil())
-                expect(value!.tinyDescription).to(beNil())
-                expect(value!.shortDescription).to(beNil())
-                expect(value!.longDescription).to(beNil())
-                expect(value!.images).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.locale).toNot(beNil())
+                expect(result?.title).to(beNil())
+                expect(result?.sortingTitle).to(beNil())
+                expect(result?.description).to(beNil())
+                expect(result?.tinyDescription).to(beNil())
+                expect(result?.shortDescription).to(beNil())
+                expect(result?.longDescription).to(beNil())
+                expect(result?.images).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = LocalizedData(json: LocalizedDataJSON.empty())
+            it("should init with empty response") {
+                let json = LocalizedDataJSON.empty()
+                let result = json.decode(LocalizedData.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -65,7 +68,7 @@ extension LocalizedDataSpec {
         static let shortDescription = "shortDescription"
         static let longDescription = "longDescription"
         static let images = [ImageSpec.ImageJSON.valid()]
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "locale": LocalizedDataJSON.locale,
                 "title": LocalizedDataJSON.title,
@@ -78,13 +81,13 @@ extension LocalizedDataSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "locale": LocalizedDataJSON.locale
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

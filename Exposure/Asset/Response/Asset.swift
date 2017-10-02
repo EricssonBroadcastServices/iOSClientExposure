@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 public struct Asset {
     /// Date when this asset was created, in UTC format.
@@ -20,7 +19,7 @@ public struct Asset {
     public let assetId: String?
     
     /// Asset type
-    public let type: AssetType?
+    public var type: AssetType?
     
     /// Localization data
     public let localized: [LocalizedData]?
@@ -44,7 +43,7 @@ public struct Asset {
     
     /// Year produced
     public let productionYear: Int?
-    public let popularityScores: [String: Any]?
+    public let popularityScores: [String: AnyJSONType]?
     
     /// Date when this asset was released, in UTC format.
     public let releaseDate: String?
@@ -78,106 +77,95 @@ public struct Asset {
     public let runtime: Int?
     public let tvShowId: String?
     public let expires: String?
-    public let customData: [String: Any]?
+    public let customData: [String: AnyJSONType]?
     public let externalReferences: [ExternalReference]?
     public let rating: Float?
     
     public let markers: [Marker]?
     
-    /// When this asset was last viewed.
-    public let lastViewedTime: Int?
-    
-    /// Offset from where last playback ended. Used by *Session Shift* to enable bookmarking functionality.
-    public let lastViewedOffset: Int?
+    /// User specific data regarding this asset
+    public let userData: AssetUserData?
 }
 
-// MARK: - ExposureConvertible
-extension Asset: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        created = actualJson[JSONKeys.created.rawValue].string
-        changed = actualJson[JSONKeys.changed.rawValue].string
-        assetId = actualJson[JSONKeys.assetId.rawValue].string
-        type = AssetType(string: actualJson[JSONKeys.type.rawValue].string)
-        
-        localized = actualJson[JSONKeys.localized.rawValue].arrayObject?.flatMap{ LocalizedData(json: $0) }
-        tags = actualJson[JSONKeys.tags.rawValue].arrayObject?.flatMap{ Tag(json: $0) }
-        publications = actualJson[JSONKeys.publications.rawValue].arrayObject?.flatMap{ Publication(json: $0) }
-        
-        episode = actualJson[JSONKeys.episode.rawValue].string
-        season = actualJson[JSONKeys.season.rawValue].string
-        seasonId = actualJson[JSONKeys.seasonId.rawValue].string
-        seasons = actualJson[JSONKeys.seasons.rawValue].arrayObject?.flatMap{ Season(json: $0) }
-        participants = actualJson[JSONKeys.participants.rawValue].arrayObject?.flatMap{ Person(json: $0) }
-        productionYear = actualJson[JSONKeys.productionYear.rawValue].int
-        popularityScores = actualJson[JSONKeys.popularityScores.rawValue].dictionaryObject
-        releaseDate = actualJson[JSONKeys.releaseDate.rawValue].string
-        originalTitle = actualJson[JSONKeys.originalTitle.rawValue].string
-        
-        live = actualJson[JSONKeys.live.rawValue].bool
-        productionCountries = actualJson[JSONKeys.productionCountries.rawValue].array?.flatMap{ $0.string }
-        subtitles = actualJson[JSONKeys.subtitles.rawValue].array?.flatMap{ $0.string }
-        audioTracks = actualJson[JSONKeys.audioTracks.rawValue].array?.flatMap{ $0.string }
-        spokenLanguages = actualJson[JSONKeys.spokenLanguages.rawValue].array?.flatMap{ $0.string }
-        medias = actualJson[JSONKeys.medias.rawValue].arrayObject?.flatMap{ Media(json: $0) }
-        parentalRatings = actualJson[JSONKeys.parentalRatings.rawValue].arrayObject?.flatMap{ ParentalRating(json: $0) }
-        
-        linkedEntities = actualJson[JSONKeys.linkedEntities.rawValue].arrayObject?.flatMap{ LinkedEntity(json: $0) }
-        runtime = actualJson[JSONKeys.runtime.rawValue].int
-        tvShowId = actualJson[JSONKeys.tvShowId.rawValue].string
-        expires = actualJson[JSONKeys.expires.rawValue].string
-        customData = actualJson[JSONKeys.customData.rawValue].dictionaryObject
-        externalReferences = actualJson[JSONKeys.externalReferences.rawValue].arrayObject?.flatMap{ ExternalReference(json: $0) }
-        rating = actualJson[JSONKeys.rating.rawValue].float
-        
-        markers = actualJson[JSONKeys.markers.rawValue].arrayObject?.flatMap{ Marker(json: $0) }
-        lastViewedTime = actualJson[JSONKeys.lastViewedTime.rawValue].int
-        lastViewedOffset = actualJson[JSONKeys.lastViewedOffset.rawValue].int
-        
-        if (created == nil && changed == nil && assetId == nil && type == nil && localized == nil && tags == nil && publications == nil)
-        && (episode == nil && season == nil && seasonId == nil && seasons == nil && participants == nil && productionYear == nil)
-        && (popularityScores == nil && releaseDate == nil && originalTitle == nil && live == nil && productionCountries == nil && subtitles == nil)
-        && (audioTracks == nil && spokenLanguages == nil && medias == nil && parentalRatings == nil && linkedEntities == nil && runtime == nil)
-        && (tvShowId == nil && expires == nil && customData == nil && externalReferences == nil && rating == nil)
-        && (markers == nil && lastViewedOffset == nil && lastViewedTime == nil){
-            return nil
-        }
+extension Asset: Decodable {
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        created = try container.decodeIfPresent(String.self, forKey: .created)
+        changed = try container.decodeIfPresent(String.self, forKey: .changed)
+        assetId = try container.decodeIfPresent(String.self, forKey: .assetId)
+        type = AssetType(string: try container.decodeIfPresent(String.self, forKey: .type))
+        localized = try container.decodeIfPresent([LocalizedData].self, forKey: .localized)
+        tags = try container.decodeIfPresent([Tag].self, forKey: .tags)
+        publications = try container.decodeIfPresent([Publication].self, forKey: .publications)
+
+        episode = try container.decodeIfPresent(String.self, forKey: .episode)
+        season = try container.decodeIfPresent(String.self, forKey: .season)
+        seasonId = try container.decodeIfPresent(String.self, forKey: .seasonId)
+
+        seasons = try container.decodeIfPresent([Season].self, forKey: .seasons)
+
+        participants = try container.decodeIfPresent([Person].self, forKey: .participants)
+
+        productionYear = try container.decodeIfPresent(Int.self, forKey: .productionYear)
+        productionCountries = try container.decodeIfPresent([String].self, forKey: .productionCountries)
+
+        popularityScores = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .popularityScores)
+
+        releaseDate = try container.decodeIfPresent(String.self, forKey: .releaseDate)
+        originalTitle = try container.decodeIfPresent(String.self, forKey: .originalTitle)
+        live = try container.decodeIfPresent(Bool.self, forKey: .live)
+
+        subtitles = try container.decodeIfPresent([String].self, forKey: .subtitles)
+        audioTracks = try container.decodeIfPresent([String].self, forKey: .audioTracks)
+        spokenLanguages = try container.decodeIfPresent([String].self, forKey: .spokenLanguages)
+        medias = try container.decodeIfPresent([Media].self, forKey: .medias)
+        parentalRatings = try container.decodeIfPresent([ParentalRating].self, forKey: .parentalRatings)
+        linkedEntities = try container.decodeIfPresent([LinkedEntity].self, forKey: .linkedEntities)
+        runtime = try container.decodeIfPresent(Int.self, forKey: .runtime)
+        tvShowId = try container.decodeIfPresent(String.self, forKey: .tvShowId)
+        expires = try container.decodeIfPresent(String.self, forKey: .expires)
+        customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
+        externalReferences = try container.decodeIfPresent([ExternalReference].self, forKey: .externalReferences)
+        rating = try container.decodeIfPresent(Float.self, forKey: .rating)
+        markers = try container.decodeIfPresent([Marker].self, forKey: .markers)
+        userData = try container.decodeIfPresent(AssetUserData.self, forKey: .userData)
     }
-    
-    internal enum JSONKeys: String {
-        case created = "created"
-        case changed = "changed"
-        case assetId = "assetId"
-        case type = "type"
-        case localized = "localized"
-        case tags = "tags"
-        case publications = "publications"
-        case episode = "episode"
-        case season = "season"
-        case seasonId = "seasonId"
-        case seasons = "seasons"
-        case participants = "participants"
-        case productionYear = "productionYear"
-        case popularityScores = "popularityScores"
-        case releaseDate = "releaseDate"
-        case originalTitle = "originalTitle"
-        case live = "live"
-        case productionCountries = "productionCountries"
-        case subtitles = "subtitles"
-        case audioTracks = "audioTracks"
-        case spokenLanguages = "spokenLanguages"
-        case medias = "medias"
-        case parentalRatings = "parentalRatings"
-        case linkedEntities = "linkedEntities"
-        case runtime = "runtime" // The duration of the asset in seconds.,
-        case tvShowId = "tvShowId"
-        case expires = "expires"
-        case customData = "customData"
-        case externalReferences = "externalReferences"
-        case rating = "rating"
-        case markers = "markers"
-        case lastViewedTime = "lastViewedTime"
-        case lastViewedOffset = "lastViewedOffset"
+
+    internal enum CodingKeys: String, CodingKey {
+        case created
+        case changed
+        case assetId
+        case type
+        case localized
+        case tags
+        case publications
+        case episode
+        case season
+        case seasonId
+        case seasons
+        case participants
+        case productionYear
+        case popularityScores
+        case releaseDate
+        case originalTitle
+        case live
+        case productionCountries
+        case subtitles
+        case audioTracks
+        case spokenLanguages
+        case medias
+        case parentalRatings
+        case linkedEntities
+        case runtime
+        case tvShowId
+        case expires
+        case customData
+        case externalReferences
+        case rating
+        case markers
+        case userData
     }
 }
 
@@ -221,7 +209,6 @@ extension Asset {
             case .ad: return "AD"
             case .liveEvent: return "LIVE_EVENT"
             case .other(type: _): return "OTHER"
-            default: return "OTHER"
             }
         }
         

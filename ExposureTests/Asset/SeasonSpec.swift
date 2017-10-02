@@ -19,53 +19,74 @@ class SeasonSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = Season(json: SeasonJSON.valid())
+                let json = SeasonJSON.valid()
+                let result = json.decode(Season.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.created).toNot(beNil())
-                expect(value!.changed).toNot(beNil())
-                expect(value!.season).toNot(beNil())
-                expect(value!.tags).toNot(beNil())
-                expect(value!.localized).toNot(beNil())
-                expect(value!.tvShowId).toNot(beNil())
-                expect(value!.seasonId).toNot(beNil())
-                expect(value!.episodeCount).toNot(beNil())
-                expect(value!.episodes).toNot(beNil())
-                expect(value!.publishedDate).toNot(beNil())
-                expect(value!.availableDate).toNot(beNil())
-                expect(value!.startYear).toNot(beNil())
-                expect(value!.endYear).toNot(beNil())
-                expect(value!.linkedEntities).toNot(beNil())
-                expect(value!.externalReferences).toNot(beNil())
-                expect(value!.customData).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).toNot(beNil())
+                expect(result?.season).toNot(beNil())
+                expect(result?.tags).toNot(beNil())
+                expect(result?.localized).toNot(beNil())
+                expect(result?.tvShowId).toNot(beNil())
+                expect(result?.seasonId).toNot(beNil())
+                expect(result?.episodeCount).toNot(beNil())
+                expect(result?.episodes).toNot(beNil())
+                expect(result?.publishedDate).toNot(beNil())
+                expect(result?.availableDate).toNot(beNil())
+                expect(result?.startYear).toNot(beNil())
+                expect(result?.endYear).toNot(beNil())
+                expect(result?.linkedEntities).toNot(beNil())
+                expect(result?.externalReferences).toNot(beNil())
+                expect(result?.customData).toNot(beNil())
             }
             
             it("should init with partial response") {
-                let value = Season(json: SeasonJSON.missingKeys())
+                let json = SeasonJSON.missingKeys()
+                let result = json.decode(Season.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.created).toNot(beNil())
-                expect(value!.changed).to(beNil())
-                expect(value!.season).to(beNil())
-                expect(value!.tags).to(beNil())
-                expect(value!.localized).to(beNil())
-                expect(value!.tvShowId).to(beNil())
-                expect(value!.seasonId).to(beNil())
-                expect(value!.episodeCount).to(beNil())
-                expect(value!.episodes).to(beNil())
-                expect(value!.publishedDate).to(beNil())
-                expect(value!.availableDate).to(beNil())
-                expect(value!.startYear).to(beNil())
-                expect(value!.endYear).to(beNil())
-                expect(value!.linkedEntities).to(beNil())
-                expect(value!.externalReferences).to(beNil())
-                expect(value!.customData).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                
+                expect(result?.changed).to(beNil())
+                expect(result?.season).to(beNil())
+                expect(result?.tags).to(beNil())
+                expect(result?.localized).to(beNil())
+                expect(result?.tvShowId).to(beNil())
+                expect(result?.seasonId).to(beNil())
+                expect(result?.episodeCount).to(beNil())
+                expect(result?.episodes).to(beNil())
+                expect(result?.publishedDate).to(beNil())
+                expect(result?.availableDate).to(beNil())
+                expect(result?.startYear).to(beNil())
+                expect(result?.endYear).to(beNil())
+                expect(result?.linkedEntities).to(beNil())
+                expect(result?.externalReferences).to(beNil())
+                expect(result?.customData).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = Season(json: SeasonJSON.empty())
+            it("should init with empty response") {
+                let json = SeasonJSON.empty()
+                let result = json.decode(Season.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
+                
+                expect(result?.created).to(beNil())
+                expect(result?.changed).to(beNil())
+                expect(result?.season).to(beNil())
+                expect(result?.tags).to(beNil())
+                expect(result?.localized).to(beNil())
+                expect(result?.tvShowId).to(beNil())
+                expect(result?.seasonId).to(beNil())
+                expect(result?.episodeCount).to(beNil())
+                expect(result?.episodes).to(beNil())
+                expect(result?.publishedDate).to(beNil())
+                expect(result?.availableDate).to(beNil())
+                expect(result?.startYear).to(beNil())
+                expect(result?.endYear).to(beNil())
+                expect(result?.linkedEntities).to(beNil())
+                expect(result?.externalReferences).to(beNil())
+                expect(result?.customData).to(beNil())
             }
         }
     }
@@ -89,7 +110,7 @@ extension SeasonSpec {
         static let linkedEntities = [LinkedEntitySpec.LinkedEntityJSON.valid()]
         static let externalReferences = [ExternalReferenceSpec.ExternalReferenceJSON.valid()]
         static let customData:[String:Any] = [:]
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "created": SeasonJSON.created,
                 "changed": SeasonJSON.changed,
@@ -110,13 +131,13 @@ extension SeasonSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": SeasonJSON.created
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

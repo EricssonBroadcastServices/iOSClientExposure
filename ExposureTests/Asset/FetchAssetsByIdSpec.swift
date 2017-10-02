@@ -23,7 +23,6 @@ class FetchAssetByIdSpec: QuickSpec {
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
         let assetId = AssetSpec.AssetJSON.assetId
-        let assetResponse = AssetSpec.AssetJSON.valid()
         
         let fetchAsset = FetchAsset(environment: env)
         let fetchReq = fetchAsset.filter(assetId: assetId)
@@ -47,7 +46,7 @@ class FetchAssetByIdSpec: QuickSpec {
                     .filter(includeEpisodes: false)
                     .parameters
                 
-                expect(params.count).to(equal(6))
+                expect(params.count).to(equal(7))
                 
                 expect(params["includeEpisodes"]).toNot(beNil())
                 expect(params["includeSeasons"]).toNot(beNil())
@@ -55,6 +54,7 @@ class FetchAssetByIdSpec: QuickSpec {
                 expect(params["excludeFields"]).toNot(beNil())
                 expect(params["includeFields"]).toNot(beNil())
                 expect(params["onlyPublished"]).toNot(beNil())
+                expect(params["includeUserData"]).toNot(beNil())
             }
         }
         

@@ -9,12 +9,17 @@
 import Foundation
 import Alamofire
 
-public protocol ExposureConvertible {
-    init?(json: Any)
+public protocol Serializable: Encodable {
+    func toJSON() -> [String: Any]
 }
 
-public protocol JSONEncodable {
-    func toJSON() -> [String: Any]
+extension Serializable {
+    public func toJSON() -> [String: Any] {
+        guard let data = try? JSONEncoder().encode(self),
+            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                as? [String: Any] else { return [:] }
+        return json ?? [:]
+    }
 }
 
 /// Base protocol detailing the structure required interact with *Exposure*.

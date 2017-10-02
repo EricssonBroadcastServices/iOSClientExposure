@@ -41,7 +41,7 @@ extension SendBatch: Exposure {
     }
     
     public var parameters: [String: Any] {
-        var event = messageBatch.toJSON()
+        var event = messageBatch.jsonParameters()
         
         /// Unix timestamp according to device clock when the batch was sent from the device.
         event[JSONKeys.dispatchTime.rawValue] = Date().millisecondsSince1970

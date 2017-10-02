@@ -19,33 +19,36 @@ class TagsSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let tags = Tag(json: TagsJSON.valid())
+                let json = TagsJSON.valid()
+                let result = json.decode(Tag.self)
                 
-                expect(tags).toNot(beNil())
-                expect(tags!.created).toNot(beNil())
-                expect(tags!.changed).toNot(beNil())
-                expect(tags!.type).toNot(beNil())
-                expect(tags!.tagValues).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.tagValues).toNot(beNil())
                 
-                let tagValue = tags!.tagValues!.first
+                let tagValue = result?.tagValues?.first
                 expect(tagValue).toNot(beNil())
                 expect(tagValue?.tagId).toNot(beNil())
             }
             
             it("should init with partial response") {
-                let tags = Tag(json: TagsJSON.missingKeys())
+                let json = TagsJSON.missingKeys()
+                let result = json.decode(Tag.self)
                 
-                expect(tags).toNot(beNil())
-                expect(tags!.created).toNot(beNil())
-                expect(tags!.changed).to(beNil())
-                expect(tags!.type).to(beNil())
-                expect(tags!.tagValues).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.created).toNot(beNil())
+                expect(result?.changed).to(beNil())
+                expect(result?.type).to(beNil())
+                expect(result?.tagValues).to(beNil())
             }
             
             it("should not init with empty or non matching response") {
-                let tags = Tag(json: TagsJSON.empty())
+                let json = TagsJSON.empty()
+                let result = json.decode(Tag.self)
                 
-                expect(tags).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -57,7 +60,7 @@ extension TagsSpec {
         static let changed = "2016-10-28T12:01:20Z"
         static let type = "genre"
         static let tagValues = [["tagId": "tg002_qwerty"]]
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "created": TagsJSON.created,
                 "changed": TagsJSON.changed,
@@ -66,13 +69,13 @@ extension TagsSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "created": TagsJSON.created
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

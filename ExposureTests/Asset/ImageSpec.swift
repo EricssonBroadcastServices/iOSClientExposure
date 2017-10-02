@@ -19,31 +19,34 @@ class ImageSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let image = Image(json: ImageJSON.valid())
+                let json = ImageJSON.valid()
+                let result = json.decode(Image.self)
                 
-                expect(image).toNot(beNil())
-                expect(image!.height).toNot(beNil())
-                expect(image!.orientation).toNot(beNil())
-                expect(image!.type).toNot(beNil())
-                expect(image!.url).toNot(beNil())
-                expect(image!.width).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.height).toNot(beNil())
+                expect(result?.orientation).toNot(beNil())
+                expect(result?.type).toNot(beNil())
+                expect(result?.url).toNot(beNil())
+                expect(result?.width).toNot(beNil())
             }
             
-            it("should succeed with partial response") {
-                let image = Image(json: ImageJSON.missingKeys())
+            it("should init with partial response") {
+                let json = ImageJSON.missingKeys()
+                let result = json.decode(Image.self)
                 
-                expect(image).toNot(beNil())
-                expect(image!.height).to(beNil())
-                expect(image!.orientation).to(beNil())
-                expect(image!.type).to(beNil())
-                expect(image!.url).to(beNil())
-                expect(image!.width).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.height).to(beNil())
+                expect(result?.orientation).to(beNil())
+                expect(result?.type).to(beNil())
+                expect(result?.url).to(beNil())
+                expect(result?.width).toNot(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let image = Image(json: ImageJSON.empty())
+            it("should init with empty response") {
+                let json = ImageJSON.empty()
+                let result = json.decode(Image.self)
                 
-                expect(image).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -56,7 +59,7 @@ extension ImageSpec {
         static let width = 500
         static let orientation = "PORTRAIT"
         static let type = "other"
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "url": ImageJSON.url,
                 "height": ImageJSON.height,
@@ -66,13 +69,13 @@ extension ImageSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "width": ImageJSON.width
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

@@ -1,9 +1,6 @@
 [submodule "Carthage/Checkouts/Alamofire"]
 	path = Carthage/Checkouts/Alamofire
 	url = ssh://git@github.com/Alamofire/Alamofire.git
-[submodule "Carthage/Checkouts/SwiftyJSON"]
-	path = Carthage/Checkouts/SwiftyJSON
-	url = ssh://git@github.com/SwiftyJSON/SwiftyJSON.git
 [submodule "Carthage/Checkouts/Nimble"]
 	path = Carthage/Checkouts/Nimble
 	url = ssh://git@github.com/Quick/Nimble.git
@@ -16,3 +13,6 @@
 [submodule "Carthage/Checkouts/iOSClientPlayer"]
 	path = Carthage/Checkouts/iOSClientPlayer
 	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientPlayer.git
+[submodule "Carthage/Checkouts/iOSClientDownload"]
+	path = Carthage/Checkouts/iOSClientDownload
+	url = ssh://git@github.com/EricssonBroadcastServices/iOSClientDownload.git

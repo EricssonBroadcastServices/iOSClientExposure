@@ -1,5 +1,5 @@
 //
-//  ExposureFairplayRequester.swift
+//  ExposureStreamFairplayRequester.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2017-07-03.
@@ -11,45 +11,84 @@ import AVFoundation
 import Player
 import Alamofire
 
-/// *Exposure* specific implementation of the `FairplayRequester` protocol.
-///
-/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
-internal class ExposureFairplayRequester: NSObject, FairplayRequester {
+internal protocol ExposureFairplayRequester: class {
     /// Entitlement related to this specific *Fairplay* request.
-    internal let entitlement: PlaybackEntitlement
-    
-    init(entitlement: PlaybackEntitlement) {
-        self.entitlement = entitlement
-    }
+    var entitlement: PlaybackEntitlement { get }
     
     /// The DispatchQueue to use for AVAssetResourceLoaderDelegate callbacks.
-    fileprivate let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.resourcerequests")
+    var resourceLoadingRequestQueue: DispatchQueue { get }
+    
+    /// Options specifying the resource loading request
+    var resourceLoadingRequestOptions: [String : AnyObject]? { get }
     
     /// The URL scheme for FPS content.
-    static let customScheme = "skd"
+    var customScheme: String { get }
     
+    /// Called when `CKC` data was successfully retrieved from remote server
+    ///
+    /// - parameter ckc: The `CKC` data retrieved from server
+    /// - returns: Key data used to finalize the request
+    func onSuccessfulRetrieval(of ckc: Data, for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws-> Data
+    
+    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool
+}
+
+extension ExposureFairplayRequester {
     /// Starting point for the *Fairplay* validation chain. Note that returning `false` from this method does not automatically mean *Fairplay* validation failed.
-    /// 
+    ///
     /// - parameter resourceLoadingRequest: loading request to handle
     /// - returns: ´true` if the requester can handle the request, `false` otherwise.
-    fileprivate func canHandle(resourceLoadingRequest: AVAssetResourceLoadingRequest) -> Bool {
+    internal func canHandle(resourceLoadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         
         guard let url = resourceLoadingRequest.request.url else {
             return false
         }
         
         //EMPFairplayRequester only should handle FPS Content Key requests.
-        if url.scheme != ExposureFairplayRequester.customScheme {
+        if url.scheme != customScheme {
             return false
         }
         
-        resourceLoadingRequestQueue.async { [unowned self] in
-            self.handle(resourceLoadingRequest: resourceLoadingRequest)
+        resourceLoadingRequestQueue.async { [weak self] in
+            guard let weakSelf = self else { return }
+            do {
+                if try weakSelf.shouldContactRemote(for: resourceLoadingRequest) {
+                    weakSelf.handle(resourceLoadingRequest: resourceLoadingRequest)
+                }
+            }
+            catch {
+                resourceLoadingRequest.finishLoading(with: error)
+            }
         }
         
         return true
     }
+}
+
+/// *Exposure* specific implementation of the `FairplayRequester` protocol for streaming purposes.
+///
+/// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.
+internal class ExposureStreamFairplayRequester: NSObject, ExposureFairplayRequester, FairplayRequester {
     
+    init(entitlement: PlaybackEntitlement) {
+        self.entitlement = entitlement
+    }
+    
+    internal let entitlement: PlaybackEntitlement
+    internal let resourceLoadingRequestQueue = DispatchQueue(label: "com.emp.exposure.streaming.fairplay.requests")
+    internal let customScheme = "skd"
+    internal let resourceLoadingRequestOptions: [String : AnyObject]? = nil
+    
+    internal func onSuccessfulRetrieval(of ckc: Data, for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Data {
+        return ckc
+    }
+    
+    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool {
+        return true
+    }
+}
+
+extension ExposureFairplayRequester {
     /// Handling a *Fairplay* validation request is a process in several parts:
     ///
     /// * Fetch and parse the *Application Certificate*
@@ -64,7 +103,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
         guard let url = resourceLoadingRequest.request.url,
             let assetIDString = url.host,
             let contentIdentifier = assetIDString.data(using: String.Encoding.utf8) else {
-                resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .invalidContentIdentifier))
+                resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .invalidContentIdentifier))
                 return
         }
         
@@ -78,13 +117,10 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
                 return
             }
             
-            
-            let resourceLoadingRequestOptions: [String: Any]? = nil// [AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey: true as AnyObject]
-            
             if let certificate = certificate {
                 print("prepare SPC")
                 do {
-                    let spcData = try resourceLoadingRequest.streamingContentKeyRequestData(forApp: certificate, contentIdentifier: contentIdentifier, options: resourceLoadingRequestOptions)
+                    let spcData = try resourceLoadingRequest.streamingContentKeyRequestData(forApp: certificate, contentIdentifier: contentIdentifier, options: self.resourceLoadingRequestOptions)
                     
                     // Content Key Context fetch from licenseUrl requires base64 encoded data
                     let spcBase64 = spcData.base64EncodedData(options: Data.Base64EncodingOptions.endLineWithLineFeed)
@@ -97,19 +133,26 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
                         }
                         
                         guard let dataRequest = resourceLoadingRequest.dataRequest else {
-                            resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .missingDataRequest))
+                            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingDataRequest))
                             return
                         }
                         
                         guard let ckcBase64 = ckcBase64 else {
-                            resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .missingContentKeyContext))
+                            resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingContentKeyContext))
                             return
                         }
                         
-                        // Provide data to the loading request.
-                        dataRequest.respond(with: ckcBase64)
-                        resourceLoadingRequest.finishLoading()  // Treat the processing of the request as complete.
-                        
+                        do {
+                            // Allow implementation specific handling of the returned `CKC`
+                            let contentKey = try self.onSuccessfulRetrieval(of: ckcBase64, for: resourceLoadingRequest)
+                            
+                            // Provide data to the loading request.
+                            dataRequest.respond(with: contentKey)
+                            resourceLoadingRequest.finishLoading() // Treat the processing of the request as complete.
+                        }
+                        catch {
+                            resourceLoadingRequest.finishLoading(with: error)
+                        }
                     }
                 }
                 catch {
@@ -125,7 +168,7 @@ internal class ExposureFairplayRequester: NSObject, FairplayRequester {
                     //                    -42783 The certificate supplied for SPC is not valid and is possibly revoked.
                     print("SPC - ",error.localizedDescription)
                     print("SPC - ",error)
-                    resourceLoadingRequest.finishLoading(with: PlayerError.fairplay(reason: .serverPlaybackContext(error: error)))
+                    resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .serverPlaybackContext(error: error)))
                     return
                 }
             }
@@ -139,7 +182,7 @@ extension ExposureFairplayRequester {
     ///
     /// - note: This method uses a specialized function for parsing the retrieved *Application Certificate* from an *MRR specific* format.
     /// - parameter callback: fires when the certificate is fetched or when an `error` occurs.
-    fileprivate func fetchApplicationCertificate(callback: @escaping (Data?, PlayerError?) -> Void) {
+    fileprivate func fetchApplicationCertificate(callback: @escaping (Data?, ExposureError?) -> Void) {
         guard let url = certificateUrl else {
             callback(nil, .fairplay(reason: .missingApplicationCertificateUrl))
             return
@@ -161,7 +204,7 @@ extension ExposureFairplayRequester {
                     }
                     catch {
                         // parseApplicationCertificate will only throw PlayerError
-                        callback(nil, error as? PlayerError)
+                        callback(nil, error as? ExposureError)
                     }
                 }
         }
@@ -204,7 +247,7 @@ extension ExposureFairplayRequester {
         if let certString = xml["fps"]["cert"].element?.text {
             // http://iosdevelopertips.com/core-services/encode-decode-using-base64.html
             guard let base64 = Data(base64Encoded: certString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
-                throw PlayerError.fairplay(reason: .applicationCertificateDataFormatInvalid)
+                throw ExposureError.fairplay(reason: .applicationCertificateDataFormatInvalid)
             }
             return base64
         }
@@ -212,9 +255,9 @@ extension ExposureFairplayRequester {
             let code = Int(codeString),
             let message = xml["error"]["message"].element?.text {
             
-            throw PlayerError.fairplay(reason: .applicationCertificateServer(code: code, message: message))
+            throw ExposureError.fairplay(reason: .applicationCertificateServer(code: code, message: message))
         }
-        throw PlayerError.fairplay(reason: .applicationCertificateParsing)
+        throw ExposureError.fairplay(reason: .applicationCertificateParsing)
     }
 }
 
@@ -226,7 +269,7 @@ extension ExposureFairplayRequester {
     ///
     /// - parameter spc: *Server Playback Context*
     /// - parameter callback: fires when `CKC` is fetched or when an `error` occurs.
-    fileprivate func fetchContentKeyContext(spc: Data, callback: @escaping (Data?, PlayerError?) -> Void) {
+    fileprivate func fetchContentKeyContext(spc: Data, callback: @escaping (Data?, ExposureError?) -> Void) {
         guard let url = licenseUrl else {
             callback(nil, .fairplay(reason: .missingContentKeyContextUrl))
             return
@@ -259,7 +302,7 @@ extension ExposureFairplayRequester {
                     }
                     catch {
                         // parseContentKeyContext will only throw PlayerError
-                        callback(nil, error as? PlayerError)
+                        callback(nil, error as? ExposureError)
                     }
                 }
         }
@@ -301,7 +344,7 @@ extension ExposureFairplayRequester {
         if let ckc = xml["fps"]["ckc"].element?.text {
             // http://iosdevelopertips.com/core-services/encode-decode-using-base64.html
             guard let base64 = Data(base64Encoded: ckc, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
-                throw PlayerError.fairplay(reason: .contentKeyContextDataFormatInvalid)
+                throw ExposureError.fairplay(reason: .contentKeyContextDataFormatInvalid)
             }
             return base64
         }
@@ -309,15 +352,15 @@ extension ExposureFairplayRequester {
             let code = Int(codeString),
             let message = xml["error"]["message"].element?.text {
             
-            throw PlayerError.fairplay(reason: .contentKeyContextServer(code: code, message: message))
+            throw ExposureError.fairplay(reason: .contentKeyContextServer(code: code, message: message))
         }
-        throw PlayerError.fairplay(reason: .contentKeyContextParsing)
+        throw ExposureError.fairplay(reason: .contentKeyContextParsing)
     }
     
 }
 
 // MARK: - AVAssetResourceLoaderDelegate
-extension ExposureFairplayRequester {
+extension ExposureStreamFairplayRequester {
     public func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
         return canHandle(resourceLoadingRequest: loadingRequest)
     }

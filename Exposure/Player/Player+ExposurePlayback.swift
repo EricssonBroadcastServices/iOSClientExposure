@@ -18,24 +18,19 @@ extension Player {
     /// Please note that a *manually* configured *Session Shift* through `sessionShift(enabledAt: someOffset)` will not be overriden. Use either a manual configuration or *Exposure*.
     ///
     /// - parameter entitlement: *Exposure* provided entitlement
-    /// - throws: `PlayerError`
-    public func stream(playback entitlement: PlaybackEntitlement) throws {
-        guard let mediaLocator = entitlement.mediaLocator else {
-            throw PlayerError.asset(reason: .missingMediaUrl)
-        }
-        
+    public func stream(playback entitlement: PlaybackEntitlement) {
         // Session shift
         handleSessionShift(entitlement: entitlement)
         
         // Fairplay
-        let requester = ExposureFairplayRequester(entitlement: entitlement)
+        let requester = ExposureStreamFairplayRequester(entitlement: entitlement)
         
-        stream(url: mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
+        stream(url: entitlement.mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
     }
     
-    public func offline(playback entitlement: PlaybackEntitlement) throws {
-        
-    }
+//    public func offline(playback entitlement: PlaybackEntitlement) throws {
+//
+//    }
 }
 
 // MARK: - SessionShift

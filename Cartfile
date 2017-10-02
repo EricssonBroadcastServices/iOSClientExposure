@@ -1,3 +1,3 @@
 github "EricssonBroadcastServices/iOSClientPlayer" "development"
+github "EricssonBroadcastServices/iOSClientDownload" "development"
 github "Alamofire/Alamofire" "4.4.0"
-github "SwiftyJSON/SwiftyJSON" "3.1.4"

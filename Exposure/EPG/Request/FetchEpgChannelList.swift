@@ -66,7 +66,7 @@ public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, F
             // Query string is keys separated by ",".
             // Any descending key should include a "-" sign as a prefix.
             params[Keys.sort.rawValue] = sort
-                .map{ $0.ascending ? "" : "-" + $0.key }
+                .map{ $0.ascending ? $0.key : "-" + $0.key }
                 .joined(separator: ",")
         }
         
