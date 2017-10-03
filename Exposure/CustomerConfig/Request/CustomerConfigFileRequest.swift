@@ -1,5 +1,5 @@
 //
-//  CustomerConfigRequest.swift
+//  CustomerConfigFileRequest.swift
 //  Exposure
 //
 //  Created by Viktor Gardart on 2017-10-03.
@@ -9,19 +9,23 @@
 import Foundation
 import Alamofire
 
-/// *Exposure* endpoint integration for *CustomerConfig*.
-public struct CustomerConfigRequest: Exposure {
+/// *Exposure* endpoint integration for *CustomerConfig.File*.
+public struct CustomerConfigFileRequest: Exposure {
   public typealias Response = [String: Any]
 
   /// Environment to use
   public let environment: Environment
 
-  public init(environment: Environment) {
+  /// File to fetch
+  public let fileName: String
+
+  public init(fileName: String, environment: Environment) {
+    self.fileName = fileName
     self.environment = environment
   }
 
   public var endpointUrl: String {
-    return environment.apiUrl + "/config"
+    return environment.apiUrl + "/config/" + fileName
   }
 
   public var parameters: [String: Any]? {
@@ -39,10 +43,5 @@ extension CustomerConfigRequest {
   /// - returns: `ExposureRequest` with request specific data
   public func request() -> ExposureRequest {
     return request(.get)
-  }
-
-  public func fetchFile(withName name: String) -> CustomerConfigFileRequest {
-    return CustomerConfigFileRequest(fileName: name,
-                                     environment: environment)
   }
 }

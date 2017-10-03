@@ -12,4 +12,8 @@ public struct CustomerConfig: Codable {
   let customer: String
   let businessUnit: String
   let fileNames: [String]
+
+  public struct File: Decodable {
+    let data: [String: AnyJSONType]
+  }
 }
