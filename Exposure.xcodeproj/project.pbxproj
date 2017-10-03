@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E48B7631F83AA6A00D345BF /* CustomerConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48B7621F83AA6A00D345BF /* CustomerConfigRequest.swift */; };
+		3E48B7651F83B17F00D345BF /* CustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48B7641F83B17F00D345BF /* CustomerConfig.swift */; };
 		3E8AECEF1F73EFCF004FD57E /* AnyJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */; };
 		3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2701F6FF80700C74093 /* DownloadVod.swift */; };
 		3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */; };
@@ -170,6 +172,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E48B7621F83AA6A00D345BF /* CustomerConfigRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerConfigRequest.swift; sourceTree = "<group>"; };
+		3E48B7641F83B17F00D345BF /* CustomerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerConfig.swift; sourceTree = "<group>"; };
 		3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSONType.swift; sourceTree = "<group>"; };
 		3EB9A2701F6FF80700C74093 /* DownloadVod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVod.swift; sourceTree = "<group>"; };
 		3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVodSpec.swift; sourceTree = "<group>"; };
@@ -354,6 +358,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E48B75E1F83A98800D345BF /* CustomerConfig */ = {
+			isa = PBXGroup;
+			children = (
+				3E48B75F1F83A99D00D345BF /* Parameters */,
+				3E48B7601F83A9A100D345BF /* Request */,
+				3E48B7611F83A9A900D345BF /* Response */,
+			);
+			path = CustomerConfig;
+			sourceTree = "<group>";
+		};
+		3E48B75F1F83A99D00D345BF /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		3E48B7601F83A9A100D345BF /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				3E48B7621F83AA6A00D345BF /* CustomerConfigRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		3E48B7611F83A9A900D345BF /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				3E48B7641F83B17F00D345BF /* CustomerConfig.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		76288CAD1F20B02F004B22AB /* EventSink */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +667,7 @@
 				766FBB5E1EC9816700EBEC53 /* Asset */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
 				76A842D21EA7667D00BDAF2C /* Entitlements */,
+				3E48B75E1F83A98800D345BF /* CustomerConfig */,
 				7697349A1EF17F9A00F6ADC8 /* EPG */,
 				76288CAD1F20B02F004B22AB /* EventSink */,
 				76A842DB1EA7667D00BDAF2C /* Exposure.swift */,
@@ -967,6 +1005,7 @@
 				76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */,
 				76A842EB1EA7667D00BDAF2C /* DeviceInfo.swift in Sources */,
 				3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */,
+				3E48B7631F83AA6A00D345BF /* CustomerConfigRequest.swift in Sources */,
 				76C7DDEE1F23DAEE008FE955 /* Player+ExposurePlayback.swift in Sources */,
 				76288CB21F20B048004B22AB /* AnalyticsPayload.swift in Sources */,
 				76A842FA1EA7667D00BDAF2C /* ExposureError.swift in Sources */,
@@ -1025,6 +1064,7 @@
 				3E8AECEF1F73EFCF004FD57E /* AnyJSONType.swift in Sources */,
 				76344F4F1F7B799C0034AEC0 /* Download+Exposure.swift in Sources */,
 				769734A91EF1833100F6ADC8 /* FetchEpg.swift in Sources */,
+				3E48B7651F83B17F00D345BF /* CustomerConfig.swift in Sources */,
 				76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */,
 				766FBB821ECA2B3D00EBEC53 /* ExternalReference.swift in Sources */,
 				76A842F31EA7667D00BDAF2C /* FairplayConfiguration.swift in Sources */,
