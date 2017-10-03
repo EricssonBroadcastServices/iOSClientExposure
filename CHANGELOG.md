@@ -8,6 +8,7 @@ NO RELEASE DATE SET YET
 
 #### Features
 * `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
+* `EMP-10445` *Downloading* assets now require a unique identifier
 
 #### Changes
 * Moved `FairplayError` from `Player` to `Exposure`.
