@@ -9,11 +9,11 @@
 import Foundation
 
 public struct CustomerConfig: Codable {
-  let customer: String
-  let businessUnit: String
-  let fileNames: [String]
+  public let customer: String
+  public let businessUnit: String
+  public let fileNames: [String]
 
   public struct File: Decodable {
-    let data: [String: AnyJSONType]
+    public let data: [String: AnyJSONType]
   }
 }

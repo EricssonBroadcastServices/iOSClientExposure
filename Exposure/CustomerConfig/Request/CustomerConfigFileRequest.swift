@@ -37,8 +37,8 @@ public struct CustomerConfigFileRequest: Exposure {
   }
 }
 
-extension CustomerConfigRequest {
-  /// `CustomerConfig` request is specified as a `.get`
+extension CustomerConfigFileRequest {
+  /// `CustomerConfigFile` request is specified as a `.get`
   ///
   /// - returns: `ExposureRequest` with request specific data
   public func request() -> ExposureRequest {
