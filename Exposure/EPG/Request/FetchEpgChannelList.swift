@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for fetching *EPG* for a set of channels
-public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
+public struct FetchEpgChannelList: ExposureType, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
     public typealias Response = ChannelEpgList
     
     public var endpointUrl: String {

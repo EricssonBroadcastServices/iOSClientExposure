@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// *Exposure* endpoint integration for handling *Anonymous* login.
-public struct Anonymous: Exposure {
+public struct Anonymous: ExposureType {
     public typealias Response = SessionToken
     
     /// `DeviceInfo` required by *Exposure*

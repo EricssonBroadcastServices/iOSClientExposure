@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for handling *Two Factor Login* with *username* and *password*.
-public struct TwoFactorLogin: Exposure {
+public struct TwoFactorLogin: ExposureType {
     public typealias Response = Credentials
     
     /// Username to authenticate with

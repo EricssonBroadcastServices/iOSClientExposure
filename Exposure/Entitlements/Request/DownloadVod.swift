@@ -16,7 +16,7 @@ import Alamofire
 /// Default streaming format is:
 /// * `drm` FAIRPLAY
 /// * `format` HLS
-public struct DownloadVod: Exposure, DRMRequest {
+public struct DownloadVod: ExposureType, DRMRequest {
     public typealias Response = PlaybackEntitlement
 
     /// Id of the asset to play

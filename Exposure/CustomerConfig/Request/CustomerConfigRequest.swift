@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// *Exposure* endpoint integration for *CustomerConfig*.
-public struct CustomerConfigRequest: Exposure {
+public struct CustomerConfigRequest: ExposureType {
   public typealias Response = [String: Any]
 
   /// Environment to use

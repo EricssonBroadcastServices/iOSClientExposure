@@ -33,7 +33,7 @@ public struct SendBatch {
     }
 }
 
-extension SendBatch: Exposure {
+extension SendBatch: ExposureType {
     public typealias Response = AnalyticsConfigResponse
     
     public var endpointUrl: String {

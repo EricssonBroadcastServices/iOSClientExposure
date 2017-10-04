@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for *CarouselList*.
-public struct FetchCarouselList: Exposure {
+public struct FetchCarouselList: ExposureType {
   public typealias Response = CarouselList
 
   public var parameters: [String: Any]? {

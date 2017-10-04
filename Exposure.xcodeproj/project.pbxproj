@@ -136,7 +136,7 @@
 		76A842F21EA7667D00BDAF2C /* EDRMConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842D81EA7667D00BDAF2C /* EDRMConfiguration.swift */; };
 		76A842F31EA7667D00BDAF2C /* FairplayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842D91EA7667D00BDAF2C /* FairplayConfiguration.swift */; };
 		76A842F41EA7667D00BDAF2C /* PlaybackEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842DA1EA7667D00BDAF2C /* PlaybackEntitlement.swift */; };
-		76A842F51EA7667D00BDAF2C /* Exposure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842DB1EA7667D00BDAF2C /* Exposure.swift */; };
+		76A842F51EA7667D00BDAF2C /* ExposureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842DB1EA7667D00BDAF2C /* ExposureType.swift */; };
 		76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842DD1EA7667D00BDAF2C /* Environment.swift */; };
 		76A842F71EA7667D00BDAF2C /* DataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842DF1EA7667D00BDAF2C /* DataRequest.swift */; };
 		76A842F81EA7667D00BDAF2C /* ExposureRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E01EA7667D00BDAF2C /* ExposureRequest.swift */; };
@@ -310,7 +310,7 @@
 		76A842D81EA7667D00BDAF2C /* EDRMConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EDRMConfiguration.swift; sourceTree = "<group>"; };
 		76A842D91EA7667D00BDAF2C /* FairplayConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FairplayConfiguration.swift; sourceTree = "<group>"; };
 		76A842DA1EA7667D00BDAF2C /* PlaybackEntitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlement.swift; sourceTree = "<group>"; };
-		76A842DB1EA7667D00BDAF2C /* Exposure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exposure.swift; sourceTree = "<group>"; };
+		76A842DB1EA7667D00BDAF2C /* ExposureType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureType.swift; sourceTree = "<group>"; };
 		76A842DD1EA7667D00BDAF2C /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		76A842DF1EA7667D00BDAF2C /* DataRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataRequest.swift; sourceTree = "<group>"; };
 		76A842E01EA7667D00BDAF2C /* ExposureRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureRequest.swift; sourceTree = "<group>"; };
@@ -723,7 +723,7 @@
 				3E48B75E1F83A98800D345BF /* CustomerConfig */,
 				7697349A1EF17F9A00F6ADC8 /* EPG */,
 				76288CAD1F20B02F004B22AB /* EventSink */,
-				76A842DB1EA7667D00BDAF2C /* Exposure.swift */,
+				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
 				3E48B7681F83D65C00D345BF /* Carousel */,
 				76A842DC1EA7667D00BDAF2C /* Parameters */,
 				76A842DE1EA7667D00BDAF2C /* Request */,
@@ -1115,7 +1115,7 @@
 				766FBB721ECA2A1B00EBEC53 /* LocalizedData.swift in Sources */,
 				76288CB41F20B08B004B22AB /* EventSink.swift in Sources */,
 				76009FA11F5D66FC008E1738 /* SessionResponse.swift in Sources */,
-				76A842F51EA7667D00BDAF2C /* Exposure.swift in Sources */,
+				76A842F51EA7667D00BDAF2C /* ExposureType.swift in Sources */,
 				76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */,
 				76AD6FB31F826B600084524A /* PersistedAnalyticsPayload.swift in Sources */,
 				766FBB7A1ECA2AB500EBEC53 /* AssetRights.swift in Sources */,
