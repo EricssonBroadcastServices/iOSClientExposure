@@ -8,12 +8,19 @@
 
 import Foundation
 
+/**
+ * CarouselList
+ *
+ * Stores an array of `CarouselItems`
+ */
 public struct CarouselList: Decodable {
-  public let items: [CarouselItem]?
 
-  public init(from decoder: Decoder) throws {
-    let container = try decoder.singleValueContainer()
-    items = try? container.decode([CarouselItem].self)
-  }
+    /// CarouselItems returned by api
+    public let items: [CarouselItem]?
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        items = try? container.decode([CarouselItem].self)
+    }
 }
 
