@@ -9,10 +9,11 @@
 import Foundation
 
 public struct CarouselList: Decodable {
-  let items: [CarouselItem]
+  public let items: [CarouselItem]?
 
   public init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
-    items = try container.decode([CarouselItem])
+    items = try? container.decode([CarouselItem].self)
   }
 }
+

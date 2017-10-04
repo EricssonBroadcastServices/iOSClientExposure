@@ -8,18 +8,21 @@
 
 import Foundation
 
+/// *Exposure* endpoint integration for *CarouselList*.
 public struct FetchCarouselList: Exposure {
   public typealias Response = CarouselList
 
-  public var parameters: [String: Any] {
-    return [:] //queryParams
+  public var parameters: [String: Any]? {
+    return nil
   }
 
   public var headers: [String: String]? {
-    return nil //userDataFilter.sessionToken?.authorizationHeader
+    return nil
   }
 
   public let environment: Environment
+
+  /// The group id for the carousel
   public let groupId: String
 
   public init(groupId: String, environment: Environment) {
@@ -34,7 +37,11 @@ public struct FetchCarouselList: Exposure {
 }
 
 extension FetchCarouselList {
+  /// `FetchCarouselList` request is specified as a `.get`
+  ///
+  /// - returns: `ExposureRequest` with request specific data
   public func request() -> ExposureRequest {
     return request(.get)
   }
 }
+
