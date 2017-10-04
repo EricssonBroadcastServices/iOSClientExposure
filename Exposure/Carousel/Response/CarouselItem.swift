@@ -9,8 +9,8 @@
 import Foundation
 
 public struct CarouselItem: Decodable {
-  let carouselId: String?
-  let sortOrder: Int?
-  let items: AssetList?
-  let titles: [LocalizedData]?
+  public let carouselId: String?
+  public let sortOrder: Int?
+  public let items: AssetList?
+  public let titles: [LocalizedData]?
 }
