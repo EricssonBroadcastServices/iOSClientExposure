@@ -17,14 +17,14 @@ public struct CustomerConfig: Codable {
     public let customer: String
     public let businessUnit: String
     public let fileName: String
-    public let config: [String: AnyJSONType]
+    public let config: AnyJSONType
     
     public init(from decoder: Decoder) throws {
       let container = try decoder.container(keyedBy: CodingKeys.self)
       customer = try container.decode(String.self, forKey: .customer)
       businessUnit = try container.decode(String.self, forKey: .businessUnit)
       fileName = try container.decode(String.self, forKey: .fileName)
-      config = try container.decode([String: AnyJSONType].self, forKey: .config)
+      config = try container.decode(AnyJSONType.self, forKey: .config)
     }
 
     internal enum CodingKeys: String, CodingKey {
