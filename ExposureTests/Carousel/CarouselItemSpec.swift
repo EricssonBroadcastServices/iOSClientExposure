@@ -21,7 +21,6 @@ class CarouselItemSpec: QuickSpec {
         describe("JSON") {
             it("should succeed with valid response") {
                 let json = CarouselItemJSON.valid()
-                print(json)
                 let result = json.decode(CarouselItem.self)
 
                 expect(result).toNot(beNil())
@@ -77,6 +76,3 @@ extension CarouselItemSpec {
         }
     }
 }
-
-
-
