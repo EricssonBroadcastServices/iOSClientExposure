@@ -17,6 +17,7 @@
 		3E8AECEF1F73EFCF004FD57E /* AnyJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */; };
 		3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2701F6FF80700C74093 /* DownloadVod.swift */; };
 		3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */; };
+		3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */; };
 		76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */; };
 		76009FA11F5D66FC008E1738 /* SessionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009FA01F5D66FC008E1738 /* SessionResponse.swift */; };
 		76009FA31F5D6A44008E1738 /* ValidateSessionTokenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76009FA21F5D6A44008E1738 /* ValidateSessionTokenSpec.swift */; };
@@ -187,6 +188,7 @@
 		3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSONType.swift; sourceTree = "<group>"; };
 		3EB9A2701F6FF80700C74093 /* DownloadVod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVod.swift; sourceTree = "<group>"; };
 		3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVodSpec.swift; sourceTree = "<group>"; };
+		3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemSpec.swift; sourceTree = "<group>"; };
 		76009F9D1F5D44A7008E1738 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSessionToken.swift; sourceTree = "<group>"; };
 		76009FA01F5D66FC008E1738 /* SessionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionResponse.swift; sourceTree = "<group>"; };
@@ -440,6 +442,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6B3B431F84D2140071C10A /* FetchCarouselListSpec.swift */,
+				3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -1170,6 +1173,7 @@
 				769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
+				3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */,
 				764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */,
 				7646D6871EF00A6B009E5C2B /* PlayLiveSpec.swift in Sources */,
 				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
