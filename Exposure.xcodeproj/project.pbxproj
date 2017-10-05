@@ -15,6 +15,7 @@
 		3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E48B7701F83D77800D345BF /* CarouselList.swift */; };
 		3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6B3B431F84D2140071C10A /* FetchCarouselListSpec.swift */; };
 		3E8AECEF1F73EFCF004FD57E /* AnyJSONType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */; };
+		3E9409AF1F862BF800253602 /* CarouselListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9409AE1F862BF800253602 /* CarouselListSpec.swift */; };
 		3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2701F6FF80700C74093 /* DownloadVod.swift */; };
 		3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */; };
 		3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */; };
@@ -186,6 +187,7 @@
 		3E48B7701F83D77800D345BF /* CarouselList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselList.swift; sourceTree = "<group>"; };
 		3E6B3B431F84D2140071C10A /* FetchCarouselListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCarouselListSpec.swift; sourceTree = "<group>"; };
 		3E8AECEE1F73EFCF004FD57E /* AnyJSONType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSONType.swift; sourceTree = "<group>"; };
+		3E9409AE1F862BF800253602 /* CarouselListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselListSpec.swift; sourceTree = "<group>"; };
 		3EB9A2701F6FF80700C74093 /* DownloadVod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVod.swift; sourceTree = "<group>"; };
 		3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadVodSpec.swift; sourceTree = "<group>"; };
 		3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselItemSpec.swift; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 			children = (
 				3E6B3B431F84D2140071C10A /* FetchCarouselListSpec.swift */,
 				3EF75EFE1F86264E00CB3ED4 /* CarouselItemSpec.swift */,
+				3E9409AE1F862BF800253602 /* CarouselListSpec.swift */,
 			);
 			path = Carousel;
 			sourceTree = "<group>";
@@ -1161,6 +1164,7 @@
 				761336AF1ECB860300E316BF /* DeviceRightsSpec.swift in Sources */,
 				7646D6851EF00A6B009E5C2B /* PlaybackEntitlementSpec.swift in Sources */,
 				7646D6821EF00A6B009E5C2B /* SessionTokenSpec.swift in Sources */,
+				3E9409AF1F862BF800253602 /* CarouselListSpec.swift in Sources */,
 				7646D66E1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift in Sources */,
 				7646D6861EF00A6B009E5C2B /* PlayCatchupSpec.swift in Sources */,
 				76009FA71F5D6B94008E1738 /* SessionResponseSpec.swift in Sources */,
