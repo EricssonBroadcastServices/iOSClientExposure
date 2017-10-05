@@ -9,6 +9,7 @@ NO RELEASE DATE SET YET
 #### Features
 * `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
 * `EMP-9697` Carousel integration `FetchCarouselList`
+* Added `CustomerConfig` model
 
 #### Changes
 * Moved `FairplayError` from `Player` to `Exposure`.
