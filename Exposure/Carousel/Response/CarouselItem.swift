@@ -8,9 +8,22 @@
 
 import Foundation
 
+/**
+ * CarouselItem
+ *
+ * Stores the localized title of the carousel and it's assets
+ */
 public struct CarouselItem: Decodable {
-  public let carouselId: String?
-  public let sortOrder: Int?
-  public let items: AssetList?
-  public let titles: [LocalizedData]?
+
+    /// ID of the carousel
+    public let carouselId: String?
+
+    /// ??
+    public let sortOrder: Int?
+
+    /// List of assets
+    public let items: AssetList?
+
+    /// Localized titles for carousel
+    public let titles: [LocalizedData]?
 }
