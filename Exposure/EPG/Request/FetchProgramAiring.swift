@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchProgramAiring: Exposure {
+public struct FetchProgramAiring: ExposureType {
     public typealias Response = Airing
     
     public var endpointUrl: String {

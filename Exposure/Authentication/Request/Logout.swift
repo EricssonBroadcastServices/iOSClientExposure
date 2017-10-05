@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// *Exposure* endpoint integration for *Logout*.
-public struct Logout: Exposure {
+public struct Logout: ExposureType {
     public typealias Response = [String:Any]
     
     /// Auth token to invalidate
