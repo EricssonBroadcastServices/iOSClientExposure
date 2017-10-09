@@ -9,7 +9,7 @@
 import Foundation
 
 /// Content rights for specific assets are subject to change throughout a `PlaybackEntitlement`s life cycle. `ValidateDownload` offers a method to validate if a user is *entitled* to download an asset.
-public struct ValidateDownload: Exposure, DRMRequest {
+public struct ValidateDownload: ExposureType, DRMRequest {
     public typealias Response = DownloadValidation
     
     /// Id for the asset to validate

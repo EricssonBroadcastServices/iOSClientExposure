@@ -18,7 +18,7 @@ public struct EventSinkInit{
     }
 }
 
-extension EventSinkInit: Exposure {
+extension EventSinkInit: ExposureType {
     public typealias Response = AnalyticsConfigResponse
     
     public var endpointUrl: String {

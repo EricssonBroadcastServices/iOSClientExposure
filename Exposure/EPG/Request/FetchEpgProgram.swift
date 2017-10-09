@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for fetching *Program Data* for a specific program.
-public struct FetchEpgProgram: Exposure, FilteredPublish {
+public struct FetchEpgProgram: ExposureType, FilteredPublish {
     public typealias Response = Program
     
     public var endpointUrl: String {

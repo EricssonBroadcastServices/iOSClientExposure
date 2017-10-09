@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public struct FetchAssetById: Exposure, FilteredFields, FilteredPublish, IncludesUserData {
+public struct FetchAssetById: ExposureType, FilteredFields, FilteredPublish, IncludesUserData {
     public typealias Response = Asset
     
     public var endpointUrl: String {

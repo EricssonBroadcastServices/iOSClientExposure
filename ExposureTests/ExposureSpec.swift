@@ -11,7 +11,7 @@ import Nimble
 
 @testable import Exposure
 
-struct ExposureTestRequest: Exposure {
+struct ExposureTestRequest: ExposureType {
     typealias Response = Credentials
     
     var endpointUrl: String {

@@ -18,7 +18,7 @@ import Foundation
 /// * `format` HLS
 ///
 /// If there is no current program live will return `NOT_ENABLED`.
-public struct PlayLive: Exposure, DRMRequest {
+public struct PlayLive: ExposureType, DRMRequest {
     public typealias Response = PlaybackEntitlement
     
     /// Channel of the program to play.
