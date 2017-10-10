@@ -102,18 +102,26 @@ extension Downloader {
     /// If the requested content is *FairPlay* protected, the appropriate `OfflineFairplayRequester` will be created. Configuration will be taken from the supplied `entitlement`.
     ///
     /// - parameter entitlement: *Exposure* provided entitlement
+    /// - parameter assetId: A unique identifier for the entitlement. This is most likely *EMP asset id*
     @available(iOS 10.0, *)
-    public static func download(entitlement: PlaybackEntitlement, named name: String? = nil) throws -> DownloadTask {
+    public static func download(entitlement: PlaybackEntitlement, assetId: String) throws -> DownloadTask {
         let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
         // TODO: Download name should probably be retrieved from *Exposure*
-        return try download(mediaLocator: entitlement.mediaLocator, named: name, artwork: nil, using: fairplayRequester)
+        return try download(mediaLocator: entitlement.mediaLocator, assetId: assetId, using: fairplayRequester, artwork: nil)
     }
     
+    /// Create a `DownloadTask` for an asset as specified by a `PlaybackEntitlement` supplied through exposure.
+    ///
+    /// If the requested content is *FairPlay* protected, the appropriate `OfflineFairplayRequester` will be created. Configuration will be taken from the supplied `entitlement`.
+    ///
+    /// - parameter entitlement: *Exposure* provided entitlement
+    /// - parameter assetId: A unique identifier for the entitlement. This is most likely *EMP asset id*
+    /// - parameter url: Destination URL for the download.
     @available(iOS, introduced: 9.0, deprecated: 10.0)
-    public static func download(entitlement: PlaybackEntitlement, to url: URL) throws -> DownloadTask {
+    public static func download(entitlement: PlaybackEntitlement, assetId: String, to url: URL) throws -> DownloadTask {
         let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement)
         
-        return try download(mediaLocator: entitlement.mediaLocator, to: url, using: fairplayRequester)
+        return try download(mediaLocator: entitlement.mediaLocator, assetId: assetId, to: url, using: fairplayRequester)
     }
 }

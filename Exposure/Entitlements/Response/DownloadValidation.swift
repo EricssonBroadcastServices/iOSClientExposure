@@ -14,12 +14,16 @@ import Foundation
 public struct DownloadValidation: Decodable {
     public typealias Status = PlaybackEntitlement.Status
     
-    public struct Bitrate: Decodable {
+    public struct Bitrate: Equatable, Decodable {
         /// The bitrate to give as the max bitrate to the player given as kb/s
         public let bitrate: Int64?
         
         /// The size of the asset in this bitrate given in bytes
         public let size: Int64?
+        
+        public static func ==(lhs: DownloadValidation.Bitrate, rhs: DownloadValidation.Bitrate) -> Bool {
+            return lhs.bitrate == rhs.bitrate && lhs.size == rhs.size
+        }
     }
     
     /// The status of the entitlement

@@ -7,8 +7,9 @@
 NO RELEASE DATE SET YET
 
 #### Features
-* `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
 * `EMP-9697` Carousel integration `FetchCarouselList`
+* `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
+* `EMP-10445` *Downloading* assets now require a unique identifier
 * Added `CustomerConfig` model
 
 #### Changes
