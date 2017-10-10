@@ -15,7 +15,7 @@ public struct AssetUserData: Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        playHistory = try container.decode(AssetUserPlayHistory.self, forKey: .playHistory)
+        playHistory = try? container.decode(AssetUserPlayHistory.self, forKey: .playHistory)
     }
     
     internal enum CodingKeys: String, CodingKey {
