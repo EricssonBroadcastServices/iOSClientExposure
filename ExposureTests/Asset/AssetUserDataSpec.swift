@@ -29,14 +29,14 @@ class AssetUserDataSpec: QuickSpec {
             it("should init with empty or non matching response") {
                 let result = AssetUserDataJSON.incomplete().decode(AssetUserData.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
             
             it("should init with empty or non matching response") {
                 let json = AssetUserDataJSON.empty()
                 let result = json.decode(AssetUserData.self)
                 
-                expect(result).to(beNil())
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -52,7 +52,7 @@ extension AssetUserDataSpec {
         
         static func incomplete() -> [String: Codable] {
             return [
-                "playHistory": ""
+                "playHistory": [:]
             ]
         }
         
