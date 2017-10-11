@@ -12,6 +12,7 @@ NO RELEASE DATE SET YET
 * `EMP-10445` *Downloading* assets now require a unique identifier
 * Added `CustomerConfig` model
 * `EMP-10474` Several response structs made `Codable` to enable easy persistence on disk.
+* Added `SessionToken.acquired` and `SessionToken.expiration`
 
 #### Changes
 * Moved `FairplayError` from `Player` to `Exposure`.
