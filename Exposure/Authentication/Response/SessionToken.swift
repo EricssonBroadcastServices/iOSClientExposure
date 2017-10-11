@@ -37,15 +37,6 @@ public struct SessionToken: Codable {
         }
         self.value = val
     }
-
-//    public init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        value = try container.decode(String.self, forKey: .sessionToken)
-//    }
-//    
-//    public func encode(to encoder: Encoder) throws {
-//        encoder
-//    }
 }
 
 extension SessionToken: Equatable {
@@ -79,6 +70,20 @@ extension SessionToken {
         let comp = components
         guard comp.count >= 2 else { return nil }
         return comp[2]
+    }
+
+    /// The acquired time
+    public var acquired: TimeInterval? {
+        let comp = components
+        guard comp.count >= 4 else { return nil }
+        return Double(comp[4])
+    }
+
+    /// The expiration time
+    public var expiration: TimeInterval? {
+        let comp = components
+        guard comp.count >= 5 else { return nil }
+        return Double(comp[5])
     }
     
     /// Returns true if this session token is anonymous
