@@ -44,6 +44,8 @@ extension ExposureFairplayRequester {
             return false
         }
         
+        print(resourceLoadingRequest.request.url)
+        print(resourceLoadingRequest.contentInformationRequest)
         //EMPFairplayRequester only should handle FPS Content Key requests.
         if url.scheme != customScheme {
             return false
@@ -84,6 +86,8 @@ extension ExposureFairplayRequester {
                 return
         }
         
+        
+        
         print(url, " - ",assetIDString)
         
         fetchApplicationCertificate{ [unowned self] certificate, certificateError in
@@ -105,16 +109,19 @@ extension ExposureFairplayRequester {
                     self.fetchContentKeyContext(spc: spcBase64) { ckcBase64, ckcError in
                         print("fetchContentKeyContext")
                         if let ckcError = ckcError {
+                            print("CKC Error",ckcError.localizedDescription)
                             resourceLoadingRequest.finishLoading(with: ckcError)
                             return
                         }
                         
                         guard let dataRequest = resourceLoadingRequest.dataRequest else {
+                            print("dataRequest Error",ExposureError.fairplay(reason: .missingDataRequest).localizedDescription)
                             resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingDataRequest))
                             return
                         }
                         
                         guard let ckcBase64 = ckcBase64 else {
+                            print("ckcBase64 Error",ExposureError.fairplay(reason: .missingContentKeyContext).localizedDescription)
                             resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingContentKeyContext))
                             return
                         }
@@ -128,6 +135,7 @@ extension ExposureFairplayRequester {
                             resourceLoadingRequest.finishLoading() // Treat the processing of the request as complete.
                         }
                         catch {
+                            print("onSuccessfulRetrieval Error",error)
                             resourceLoadingRequest.finishLoading(with: error)
                         }
                     }

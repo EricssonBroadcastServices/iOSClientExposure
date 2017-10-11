@@ -9,7 +9,7 @@
 import Foundation
 
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
-public struct PlaybackEntitlement {
+public struct PlaybackEntitlement: Codable {
     // MARK: Required
     /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
     public let playTokenExpiration: String
@@ -78,8 +78,7 @@ public struct PlaybackEntitlement {
     public let productId: String?
 }
 
-extension PlaybackEntitlement: Decodable {
-
+extension PlaybackEntitlement {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Required
@@ -111,6 +110,38 @@ extension PlaybackEntitlement: Decodable {
         mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
         lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
         productId = try container.decodeIfPresent(String.self, forKey: .productId)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(playTokenExpiration, forKey: .playTokenExpiration)
+        try container.encode(mediaLocator, forKey: .mediaLocator)
+        try container.encode(playSessionId, forKey: .playSessionId)
+        
+        try container.encode(live, forKey: .live)
+        try container.encode(ffEnabled, forKey: .ffEnabled)
+        try container.encode(timeshiftEnabled, forKey: .timeshiftEnabled)
+        try container.encode(rwEnabled, forKey: .rwEnabled)
+        try container.encode(airplayBlocked, forKey: .airplayBlocked)
+        
+        try container.encodeIfPresent(playToken, forKey: .playToken)
+        try container.encodeIfPresent(edrm, forKey: .edrm)
+        try container.encodeIfPresent(fairplay, forKey: .fairplay)
+        
+        try container.encodeIfPresent(licenseExpiration, forKey: .licenseExpiration)
+        try container.encodeIfPresent(licenseExpirationReason?.encodableValue, forKey: .licenseExpirationReason)
+        try container.encodeIfPresent(licenseActivation, forKey: .licenseActivation)
+        
+        try container.encodeIfPresent(entitlementType?.encodableValue, forKey: .entitlementType)
+        
+        try container.encodeIfPresent(minBitrate, forKey: .minBitrate)
+        try container.encodeIfPresent(maxBitrate, forKey: .maxBitrate)
+        try container.encodeIfPresent(maxResHeight, forKey: .maxResHeight)
+        
+        try container.encodeIfPresent(mdnRequestRouterUrl, forKey: .mdnRequestRouterUrl)
+        try container.encodeIfPresent(lastViewedOffset, forKey: .lastViewedOffset)
+        try container.encodeIfPresent(productId, forKey: .productId)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -194,6 +225,23 @@ extension PlaybackEntitlement {
             }
         }
         
+        internal var encodableValue: String {
+            switch self {
+            case .success: return "SUCCESS"
+            case .notEntitled: return "NOT_ENTITLED"
+            case .geoBlocked: return "GEO_BLOCKED"
+            case .downloadBlocked: return "DOWNLOAD_BLOCKED"
+            case .deviceBlocked: return "DEVICE_BLOCKED"
+            case .licenseExpired: return "LICENSE_EXPIRED"
+            case .notAvailableInFormat: return "NOT_AVAILABLE_IN_FORMAT"
+            case .concurrentStreamsLimitReached: return "CONCURRENT_STREAMS_LIMIT_REACHED"
+            case .notEnabled: return "NOT_ENABLED"
+            case .gapInEPG: return "GAP_IN_EPG"
+            case .epgPlayMaxHours: return "EPG_PLAY_MAX_HOURS"
+            case .other(reason: let string): return string
+            }
+        }
+        
         public static func == (lhs: Status, rhs: Status) -> Bool {
             switch (lhs, rhs) {
             case (.success, .success): return true
@@ -233,6 +281,15 @@ extension PlaybackEntitlement {
             case "SVOD": self = .svod
             case "FVOD": self = .fvod
             default: self = .other(type: string)
+            }
+        }
+        
+        internal var encodableValue: String {
+            switch self {
+            case .tvod: return "TVOD"
+            case .svod: return "SVOD"
+            case .fvod: return "FVOD"
+            case .other(type: let string): return string
             }
         }
     }
