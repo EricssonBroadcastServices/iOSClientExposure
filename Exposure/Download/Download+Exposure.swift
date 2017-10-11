@@ -136,20 +136,6 @@ extension ExposureDownloadFairplayRequester {
     }
 }
 
-//extension ExposureDownloadFairplayRequester {
-//    func storageDirectoryUrlForPersistedContentKey() throws -> URL {
-//        return try FileManager
-//            .default
-//            .url(for: .documentDirectory,
-//                 in: .userDomainMask,
-//                 appropriateFor: nil,
-//                 create: false)
-//            .appendingPathComponent("emp")
-//            .appendingPathComponent("exposure")
-//            .appendingPathComponent("offlineMedia")
-//    }
-//}
-
 extension Downloader {
     /// Create a `DownloadTask` for an asset as specified by a `PlaybackEntitlement` supplied through exposure.
     ///
