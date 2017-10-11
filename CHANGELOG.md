@@ -8,9 +8,10 @@ NO RELEASE DATE SET YET
 
 #### Features
 * `EMP-9697` Carousel integration `FetchCarouselList`
-* `EMP-10419` *Exposure* specific `OfflineFairplayRequester`
+* `EMP-10419` *Exposure* specific `DownloadFairplayRequester`
 * `EMP-10445` *Downloading* assets now require a unique identifier
 * Added `CustomerConfig` model
+* `EMP-10474` Several response structs made `Codable` to enable easy persistence on disk.
 
 #### Changes
 * Moved `FairplayError` from `Player` to `Exposure`.

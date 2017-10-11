@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Ericsson* `DRM` configuration.
-public struct EDRMConfiguration: Decodable {
+public struct EDRMConfiguration: Codable {
     /// The id of the owner of the media.
     public let ownerId: String?
     
