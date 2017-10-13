@@ -47,6 +47,7 @@ public final class ExposureDownloadTask {
     internal var onDownloadingMediaOption: (ExposureDownloadTask, MediaOption) -> Void = { _ in }
     
     // MARK: Entitlement
+    internal var onEntitlementRequestStarted: (ExposureDownloadTask) -> Void = { _ in }
     internal var onEntitlementResponse: (ExposureDownloadTask, PlaybackEntitlement) -> Void = { _ in }
     internal var onEntitlementRequestCancelled: (ExposureDownloadTask) -> Void = { _ in }
 }
@@ -166,6 +167,8 @@ extension ExposureDownloadTask: DownloadProcess {
             .onDownloadingMediaOption{ [weak self] task, media in
                 if let weakSelf = self { weakSelf.onDownloadingMediaOption(weakSelf, media) }
         }
+        
+        downloadTask?.resume()
     }
     
     
@@ -279,6 +282,12 @@ extension ExposureDownloadTask: DownloadEventPublisher {
 }
 
 extension ExposureDownloadTask {
+    @discardableResult
+    public func onEntitlementRequestStarted(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
+        onEntitlementRequestStarted = callback
+        return self
+    }
+    
     @discardableResult
     public func onEntitlementResponse(callback: @escaping (ExposureDownloadTask, PlaybackEntitlement) -> Void) -> ExposureDownloadTask {
         onEntitlementResponse = callback
