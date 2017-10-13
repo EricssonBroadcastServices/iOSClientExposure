@@ -152,6 +152,8 @@
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A844901EA7A3E000BDAF2C /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */; };
 		76AD6FB31F826B600084524A /* PersistedAnalyticsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */; };
+		76AE64ED1F90AD8F0036933E /* OfflineMediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */; };
+		76AE64EF1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */; };
 		76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */; };
@@ -331,6 +333,8 @@
 		76A8448E1EA7A3E000BDAF2C /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/Alamofire.framework"; sourceTree = "<group>"; };
 		76A8448F1EA7A3E000BDAF2C /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../../../../../Library/Developer/Xcode/DerivedData/iOSClient-gqrtyoluyawgxzelawxywyzbisfk/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedAnalyticsPayload.swift; sourceTree = "<group>"; };
+		76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMediaAsset.swift; sourceTree = "<group>"; };
+		76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureDownloadFairplayRequester.swift; sourceTree = "<group>"; };
 		76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgList.swift; sourceTree = "<group>"; };
 		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
@@ -506,6 +510,8 @@
 			isa = PBXGroup;
 			children = (
 				76344F4E1F7B799C0034AEC0 /* Download+Exposure.swift */,
+				76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */,
+				76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -1092,6 +1098,7 @@
 				769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */,
 				76288CBC1F213A50004B22AB /* EventSinkInit.swift in Sources */,
 				766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */,
+				76AE64ED1F90AD8F0036933E /* OfflineMediaAsset.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
 				76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
@@ -1142,6 +1149,7 @@
 				3E48B76D1F83D69A00D345BF /* CarouselItem.swift in Sources */,
 				3E8AECEF1F73EFCF004FD57E /* AnyJSONType.swift in Sources */,
 				76344F4F1F7B799C0034AEC0 /* Download+Exposure.swift in Sources */,
+				76AE64EF1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift in Sources */,
 				769734A91EF1833100F6ADC8 /* FetchEpg.swift in Sources */,
 				3E48B7651F83B17F00D345BF /* CustomerConfig.swift in Sources */,
 				76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */,
