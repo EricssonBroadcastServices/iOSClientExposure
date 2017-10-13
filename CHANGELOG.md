@@ -13,6 +13,7 @@ NO RELEASE DATE SET YET
 * Added `CustomerConfig` model
 * `EMP-10474` Several response structs made `Codable` to enable easy persistence on disk.
 * Added `SessionToken.acquired` and `SessionToken.expiration`
+* `EMP-10486` Adds `ExposureDownloadTask` which handles asset downloads by `assetId`
 
 #### Changes
 * Moved `FairplayError` from `Player` to `Exposure`.
