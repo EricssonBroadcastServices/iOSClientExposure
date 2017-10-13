@@ -154,6 +154,8 @@
 		76AD6FB31F826B600084524A /* PersistedAnalyticsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */; };
 		76AE64ED1F90AD8F0036933E /* OfflineMediaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */; };
 		76AE64EF1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */; };
+		76AE64F11F90E05B0036933E /* SessionManager+Exposure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F01F90E05B0036933E /* SessionManager+Exposure.swift */; };
+		76AE64F31F90E0DC0036933E /* ExposureDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F21F90E0DC0036933E /* ExposureDownloadTask.swift */; };
 		76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */; };
@@ -335,6 +337,8 @@
 		76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedAnalyticsPayload.swift; sourceTree = "<group>"; };
 		76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMediaAsset.swift; sourceTree = "<group>"; };
 		76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureDownloadFairplayRequester.swift; sourceTree = "<group>"; };
+		76AE64F01F90E05B0036933E /* SessionManager+Exposure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionManager+Exposure.swift"; sourceTree = "<group>"; };
+		76AE64F21F90E0DC0036933E /* ExposureDownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureDownloadTask.swift; sourceTree = "<group>"; };
 		76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgList.swift; sourceTree = "<group>"; };
 		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
@@ -512,6 +516,8 @@
 				76344F4E1F7B799C0034AEC0 /* Download+Exposure.swift */,
 				76AE64EC1F90AD8F0036933E /* OfflineMediaAsset.swift */,
 				76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */,
+				76AE64F01F90E05B0036933E /* SessionManager+Exposure.swift */,
+				76AE64F21F90E0DC0036933E /* ExposureDownloadTask.swift */,
 			);
 			path = Download;
 			sourceTree = "<group>";
@@ -1100,9 +1106,11 @@
 				766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */,
 				76AE64ED1F90AD8F0036933E /* OfflineMediaAsset.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
+				76AE64F11F90E05B0036933E /* SessionManager+Exposure.swift in Sources */,
 				76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				7646D65F1EEFF5BE009E5C2B /* PlayCatchup.swift in Sources */,
+				76AE64F31F90E0DC0036933E /* ExposureDownloadTask.swift in Sources */,
 				76A842FC1EA7667D00BDAF2C /* ExposureResponseMessage.swift in Sources */,
 				7640920C1F7E34680022F6ED /* AssetUserPlayHistory.swift in Sources */,
 				76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */,

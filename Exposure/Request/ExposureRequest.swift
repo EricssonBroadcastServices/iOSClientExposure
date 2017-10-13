@@ -67,6 +67,25 @@ extension ExposureRequest {
 }
 
 extension ExposureRequest {
+    // MARK: State
+    
+    /// Resumes the request.
+    open func resume() {
+        dataRequest.resume()
+    }
+    
+    /// Suspends the request.
+    open func suspend() {
+        dataRequest.suspend()
+    }
+    
+    /// Cancels the request.
+    open func cancel() {
+        dataRequest.cancel()
+    }
+}
+
+extension ExposureRequest {
     /// Validates that the response has a status code in the specified sequence.
     ///
     /// If validation fails, subsequent calls to response handlers will have an associated error.

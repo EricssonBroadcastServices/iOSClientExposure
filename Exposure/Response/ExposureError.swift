@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Download
 
 /// `ExposureError` is the error type returned by the *Exposure Framework*. It can manifest as both *native errors* to the framework and *nested errors* specific to underlying frameworks or concepts such as `ExposureResponseMessage`.
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
@@ -24,6 +25,9 @@ public enum ExposureError: Error {
     
     /// Errors related to *Fairplay* `DRM` validation.
     case fairplay(reason: FairplayError)
+    
+    /// Download Related Errors
+    case download(reason: DownloadError)
 }
 
 extension ExposureError {
@@ -122,6 +126,7 @@ extension ExposureError {
         case .serialization(reason: let reason): return reason.localizedDescription
         case .exposureResponse(reason: let reason): return reason.localizedDescription
         case .fairplay(reason: let reason): return "Fairplay: " + reason.localizedDescription
+        case .download(reason: let reason): return reason.localizedDescription
         }
     }
 }
@@ -170,6 +175,7 @@ extension ExposureError {
         case .serialization(reason: let error): return error.code
         case .exposureResponse(reason: let reason): return reason.httpCode
         case .fairplay(reason: let reason): return reason.code
+        case .download(reason: let reason): return reason.code
         }
     }
 }
