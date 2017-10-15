@@ -12,6 +12,7 @@
     - [Entitlement Requests and Streaming through  `Player`](#entitlement-requests-and-streaming-through-player)
     - [Fetching EPG](#fetching-epg)
     - [Fetching Assets](#fetching-assets)
+    - [Content Search](#content-search)
     - [Analytics Delivery](#analytics-delivery)
     - [Fairplay Integration](#fairplay-integration)
     - [Error Handling](#error-handling)
@@ -30,6 +31,7 @@
 - [x] Server time sync
 - [x] Carousel integration
 - [x] Dynamic customer configuration
+- [x] Content search with autocompletion
 
 ## Requirements
 
@@ -274,6 +276,38 @@ FetchAsset(environment: environment)
     }
 ```
 
+### Content Search
+Client applications can do content search with autocompletion by querying *Exposure*.
+
+```Swift
+Search(environment: environment)
+    .autocomplete(for: "The Amazing TV sh")
+    .filter(locale: "en")
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<[SearchResponseAutocomplete]>) in
+        // Matches "The Amazing TV show"
+    }
+```
+
+When doing querys on assets, many of the `FetchAssetList` filters are applicable.
+
+```Swift
+Search(environment: environment)
+    .query(for: "The Amazing TV sh")
+    .filter(locale: "en")
+    .use(fieldSet: .all)
+    .exclude(fields: ["publications.rights", "tags"])
+    .sort(on: ["-publications.publicationDate","assetId"])
+    .show(page: 1, spanning: 100)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<SearchResponseList>) in
+        // Handle the response
+    }
+```
+
+
 ### Analytics Delivery
 `EventSink` analytics endpoints expose drop-of functionality where client applications can deliver *Analytics Payload*. This payload consists of a `json` object wrapped by an `AnalyticsBatch` envelope. Each batch is self-contained and encapsulates all information required for dispatch.
 
@@ -373,7 +407,7 @@ Updating your dependencies is done by running  `carthage update` with the releva
 No formalised roadmap has yet been established but an extensive backlog of possible items exist. The following represent an unordered *wish list* and is subject to change.
 
 - [x] Carousel integration
-- [ ] Content search
+- [x] Content search
 - [ ] User playback history
 - [ ] User preferences
 - [ ] Device management

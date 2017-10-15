@@ -7,6 +7,7 @@
 NO RELEASE DATE SET YET
 
 #### Features
+* `EMP-9822` Content search with autocompletion
 * `EMP-9697` Carousel integration `FetchCarouselList`
 * `EMP-10419` *Exposure* specific `DownloadFairplayRequester`
 * `EMP-10445` *Downloading* assets now require a unique identifier
