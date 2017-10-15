@@ -1,5 +1,5 @@
 //
-//  SearchAutocompleteSpec.swift
+//  SearchSpellingSpec.swift
 //  ExposureTests
 //
 //  Created by Fredrik Sjöberg on 2017-10-15.
@@ -7,14 +7,13 @@
 //
 
 import Foundation
-
 import Quick
 import Nimble
 import Mockingjay
 
 @testable import Exposure
 
-class SearchAutocompleteSpec: QuickSpec {
+class SearchSpellingSpec: QuickSpec {
     
     override func spec() {
         super.spec()
@@ -25,7 +24,7 @@ class SearchAutocompleteSpec: QuickSpec {
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
         let query = "query"
-        let request = Search(environment: env).autocomplete(for: query)
+        let request = Search(environment: env).spelling(for: query)
         
         describe("Basics") {
             
@@ -34,10 +33,10 @@ class SearchAutocompleteSpec: QuickSpec {
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/content/search/autocomplete/" + query
+                let endpoint = "/content/search/suggestions/" + query
                 expect(request.endpointUrl).to(equal(env.apiUrl + endpoint))
             }
-
+            
             it("should generate paramters if specified") {
                 let params = request
                     .filter(locale: "en")

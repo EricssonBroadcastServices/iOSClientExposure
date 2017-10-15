@@ -84,6 +84,10 @@ public struct SearchQuery: ExposureType, FilteredLocale, SortedResponse, Pageabl
                 .joined(separator: ",")
         }
         
+        if let locale = localeFilter.specifiedLocale {
+            params[Keys.locale.rawValue] = locale
+        }
+        
         if let sort = sortDescription.descriptors {
             // Query string is keys separated by ",".
             // Any descending key should include a "-" sign as a prefix.

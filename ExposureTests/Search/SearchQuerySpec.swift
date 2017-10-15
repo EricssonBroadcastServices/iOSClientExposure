@@ -30,46 +30,43 @@ class SearchQuerySpec: QuickSpec {
         describe("Basics") {
             
             it("should have no headers") {
-                expect(fetchList.headers).to(beNil())
+                expect(request.headers).to(beNil())
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/content/search/autocomplete/" + query
-                expect(fetchList.endpointUrl).to(equal(env.apiUrl + endpoint))
+                let endpoint = "/content/search/query/" + query
+                expect(request.endpointUrl).to(equal(env.apiUrl + endpoint))
             }
             
             it("should generate paramters") {
-                let params = fetchList
+                let params = request
+                    .filter(locale: "en")
+                    .use(fieldSet: .all)
                     .include(fields: ["first"])
                     .exclude(fields: ["notUsed"])
+                    .filter(on: [.movie,.clip])
                     .filter(onlyPublished: true)
                     .show(page: 1, spanning: 10)
-                    .filter(on: .episode)
-                    .filter(on: .mobile)
                     .sort(on: "test")
                     .parameters
                 
-                expect(params.count).to(equal(13))
+                expect(params.count).to(equal(9))
                 
+                expect(params["locale"]).toNot(beNil())
                 expect(params["onlyPublished"]).toNot(beNil())
                 expect(params["fieldSet"]).toNot(beNil())
                 expect(params["excludeFields"]).toNot(beNil())
                 expect(params["includeFields"]).toNot(beNil())
                 expect(params["pageSize"]).toNot(beNil())
                 expect(params["pageNumber"]).toNot(beNil())
-                expect(params["assetType"]).toNot(beNil())
-                expect(params["deviceType"]).toNot(beNil())
+                expect(params["types"]).toNot(beNil())
                 expect(params["sort"]).toNot(beNil())
-                expect(params["query"]).toNot(beNil())
-                expect(params["deviceQuery"]).toNot(beNil())
-                expect(params["publicationQuery"]).toNot(beNil())
-                expect(params["includeUserData"]).toNot(beNil())
             }
         }
         
         describe("PageableResponse") {
             it("should record page size and number") {
-                let size = fetchList.show(page: 1)
+                let size = request.show(page: 1)
                 
                 expect(size.pageNumber).to(equal(1))
                 expect(size.pageSize).to(equal(50))
@@ -83,7 +80,7 @@ class SearchQuerySpec: QuickSpec {
         
         describe("SortedResponse") {
             it("should store sort params") {
-                let sorted = fetchList
+                let sorted = request
                     .sort(on: "first")
                     .thenSort(on: "second", ascending: false)
                     .thenSort(on: SortDescriptor(key: "third"))
@@ -98,18 +95,18 @@ class SearchQuerySpec: QuickSpec {
                 expect(reset.sortDescriptors).toNot(beNil())
                 expect(reset.sortDescriptors!.count).to(equal(1))
                 
-                let regex = fetchList
+                let regex = request
                     .sort(on: ["first","-second","-third"])
                     .thenSort(on: ["fourth"])
                 expect(regex.sortDescriptors).toNot(beNil())
                 expect(regex.sortDescriptors!.count).to(equal(4))
                 
-                let startEmpty = fetchList
+                let startEmpty = request
                     .thenSort(on: SortDescriptor(key: "first"))
                 expect(startEmpty.sortDescriptors).toNot(beNil())
                 expect(startEmpty.sortDescriptors!.count).to(equal(1))
                 
-                let faultyRegex = fetchList
+                let faultyRegex = request
                     .sort(on: SortDescriptor(key: "first"))
                     .thenSort(on: ["-","","-correct"])
                 expect(faultyRegex.sortDescriptors).toNot(beNil())

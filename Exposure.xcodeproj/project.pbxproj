@@ -107,6 +107,7 @@
 		767204151F82901D006D85B0 /* ExposureStreamFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767204141F82901D006D85B0 /* ExposureStreamFairplayRequester.swift */; };
 		7672F25B1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */; };
 		7672F25D1F93A3D800F892C3 /* SearchQuerySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */; };
+		7672F25F1F93A6F900F892C3 /* SearchSpellingSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F25E1F93A6F900F892C3 /* SearchSpellingSpec.swift */; };
 		7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7680EFCE1ED61034008528D1 /* AssetListSpec.swift */; };
 		76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76842F9C1F61B45C00F1A0D3 /* Airing.swift */; };
 		76842F9F1F61B58200F1A0D3 /* FetchProgramAiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76842F9E1F61B58200F1A0D3 /* FetchProgramAiring.swift */; };
@@ -297,6 +298,7 @@
 		767204141F82901D006D85B0 /* ExposureStreamFairplayRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureStreamFairplayRequester.swift; sourceTree = "<group>"; };
 		7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAutocompleteSpec.swift; sourceTree = "<group>"; };
 		7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuerySpec.swift; sourceTree = "<group>"; };
+		7672F25E1F93A6F900F892C3 /* SearchSpellingSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSpellingSpec.swift; sourceTree = "<group>"; };
 		7680EFCE1ED61034008528D1 /* AssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetListSpec.swift; sourceTree = "<group>"; };
 		76842F9C1F61B45C00F1A0D3 /* Airing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Airing.swift; sourceTree = "<group>"; };
 		76842F9E1F61B58200F1A0D3 /* FetchProgramAiring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchProgramAiring.swift; sourceTree = "<group>"; };
@@ -679,6 +681,7 @@
 			children = (
 				7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */,
 				7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */,
+				7672F25E1F93A6F900F892C3 /* SearchSpellingSpec.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -1301,6 +1304,7 @@
 				7646D66D1EF00A20009E5C2B /* FetchAssetListSpec.swift in Sources */,
 				761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */,
 				769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */,
+				7672F25F1F93A6F900F892C3 /* SearchSpellingSpec.swift in Sources */,
 				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
 				7672F25B1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift in Sources */,
 				769734B61EF26D3100F6ADC8 /* ChannelEpgSpec.swift in Sources */,

@@ -21,7 +21,7 @@ extension FilteredLocale {
     public func filter(locale: String?) -> Self {
         var old = self
         old.localeFilter = LocaleFilter(specifiedLocale: locale)
-        return self
+        return old
     }
     
     /// Return the fields specifically specified to be included. Optional
