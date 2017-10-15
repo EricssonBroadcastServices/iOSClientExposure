@@ -105,6 +105,8 @@
 		767030871ECB2B1E0026CD70 /* PersonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767030861ECB2B1E0026CD70 /* PersonSpec.swift */; };
 		767030891ECB2BEB0026CD70 /* ExternalReferenceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767030881ECB2BEB0026CD70 /* ExternalReferenceSpec.swift */; };
 		767204151F82901D006D85B0 /* ExposureStreamFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 767204141F82901D006D85B0 /* ExposureStreamFairplayRequester.swift */; };
+		7672F25B1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */; };
+		7672F25D1F93A3D800F892C3 /* SearchQuerySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */; };
 		7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7680EFCE1ED61034008528D1 /* AssetListSpec.swift */; };
 		76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76842F9C1F61B45C00F1A0D3 /* Airing.swift */; };
 		76842F9F1F61B58200F1A0D3 /* FetchProgramAiring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76842F9E1F61B58200F1A0D3 /* FetchProgramAiring.swift */; };
@@ -293,6 +295,8 @@
 		767030861ECB2B1E0026CD70 /* PersonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonSpec.swift; sourceTree = "<group>"; };
 		767030881ECB2BEB0026CD70 /* ExternalReferenceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExternalReferenceSpec.swift; sourceTree = "<group>"; };
 		767204141F82901D006D85B0 /* ExposureStreamFairplayRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureStreamFairplayRequester.swift; sourceTree = "<group>"; };
+		7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAutocompleteSpec.swift; sourceTree = "<group>"; };
+		7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQuerySpec.swift; sourceTree = "<group>"; };
 		7680EFCE1ED61034008528D1 /* AssetListSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetListSpec.swift; sourceTree = "<group>"; };
 		76842F9C1F61B45C00F1A0D3 /* Airing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Airing.swift; sourceTree = "<group>"; };
 		76842F9E1F61B58200F1A0D3 /* FetchProgramAiring.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchProgramAiring.swift; sourceTree = "<group>"; };
@@ -670,6 +674,15 @@
 			path = Asset;
 			sourceTree = "<group>";
 		};
+		7672F2591F93A2CE00F892C3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7672F25A1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift */,
+				7672F25C1F93A3D800F892C3 /* SearchQuerySpec.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
 		768ED8A51F0EBF62008E8F9B /* actions */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,6 +812,7 @@
 				7670307D1ECB210C0026CD70 /* Asset */,
 				3E6B3B421F84D18E0071C10A /* Carousel */,
 				3E9409B01F862F1100253602 /* CustomerConfig */,
+				7672F2591F93A2CE00F892C3 /* Search */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -1276,6 +1290,7 @@
 				769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
+				7672F25D1F93A3D800F892C3 /* SearchQuerySpec.swift in Sources */,
 				3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */,
 				764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */,
 				7646D6871EF00A6B009E5C2B /* PlayLiveSpec.swift in Sources */,
@@ -1287,6 +1302,7 @@
 				761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */,
 				769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */,
 				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
+				7672F25B1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift in Sources */,
 				769734B61EF26D3100F6ADC8 /* ChannelEpgSpec.swift in Sources */,
 				7646D67F1EF00A6B009E5C2B /* CredentialsSpec.swift in Sources */,
 				3E9409B41F8630CB00253602 /* CustomerConfigFileSpec.swift in Sources */,

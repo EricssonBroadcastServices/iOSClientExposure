@@ -9,10 +9,10 @@
 import Foundation
 
 public struct SearchSpelling: ExposureType, FilteredLocale {
-    public typealias Response = SearchResponseAutocomplete
+    public typealias Response = [SearchResponseAutocomplete]
     
     public var endpointUrl: String {
-        return environment.apiUrl + "content/search/suggestions/" + query
+        return environment.apiUrl + "/content/search/suggestions/" + query
     }
     
     public var parameters: [String: Any]? {
