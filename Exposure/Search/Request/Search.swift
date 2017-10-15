@@ -20,20 +20,29 @@ public struct Search {
 extension Search {
     /// Searches for the query, performing autocomplete to find matches
     ///
-    /// - parameter query: The query to autocomplete
+    /// - parameter for: The query to autocomplete
     /// - returns: `SearchAutocomplete` that handles the request
-    public func autocomplete(query: String) -> SearchAutocomplete {
+    public func autocomplete(for string: String) -> SearchAutocomplete {
         return SearchAutocomplete(environment: environment,
-                                  query: query)
+                                  query: string)
     }
     
     /// Request spelling suggestions for the supplied string
     ///
-    /// - parameter query: The query to autocomplete
+    /// - parameter for: The query to autocomplete
     /// - returns: `SearchSpelling` that handles the request
     public func spelling(for string: String) -> SearchSpelling {
         return SearchSpelling(environment: environment,
                               query: string)
+    }
+    
+    /// Query *Exposure* for a list of assets based on the supplied search strig
+    ///
+    /// - parameter for: The query to search for
+    /// - returns: `SearchQuery` that handles the request
+    public func query(for string: String) -> SearchQuery {
+        return SearchQuery(environment: environment,
+                           query: string)
     }
 }
 

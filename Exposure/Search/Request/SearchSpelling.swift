@@ -41,3 +41,10 @@ public struct SearchSpelling: ExposureType, FilteredLocale {
         return ["locale":locale]
     }
 }
+
+// MARK: - Request
+extension SearchSpelling {
+    public func request() -> ExposureRequest {
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
+    }
+}

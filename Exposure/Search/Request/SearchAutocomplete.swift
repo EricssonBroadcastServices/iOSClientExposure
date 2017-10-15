@@ -41,3 +41,10 @@ public struct SearchAutocomplete: ExposureType, FilteredLocale {
         return ["locale":locale]
     }
 }
+
+// MARK: - Request
+extension SearchAutocomplete {
+    public func request() -> ExposureRequest {
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
+    }
+}
