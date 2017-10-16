@@ -11,6 +11,10 @@ import Foundation
 public struct Search {
     /// Evironment to search in
     public let environment: Environment
+    
+    public init(environment: Environment) {
+        self.environment = environment
+    }
 }
 
 extension Search {

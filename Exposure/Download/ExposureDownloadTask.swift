@@ -56,6 +56,10 @@ extension ExposureDownloadTask: DRMRequest { }
 
 extension ExposureDownloadTask: DownloadProcess {
     public func resume() {
+        if let currentAsset = sessionManager.offline(assetId: assetId) {
+            print("📍 Found bookmark for \(currentAsset.assetId), with url \(currentAsset.urlAsset?.url)")
+        }
+        
         guard let downloadTask = downloadTask else {
             guard let entitlementRequest = entitlementRequest else {
                 startEntitlementRequest(assetId: assetId)
@@ -155,7 +159,10 @@ extension ExposureDownloadTask: DownloadProcess {
                 if let weakSelf = self { weakSelf.onProgress(weakSelf, progress) }
             }
             .onError{ [weak self] task, url, error in
-                if let weakSelf = self { weakSelf.onError(weakSelf, url, ExposureError.download(reason: error)) }
+                if let weakSelf = self {
+                    weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: url)
+                    weakSelf.onError(weakSelf, url, ExposureError.download(reason: error))
+                }
             }
             .onPlaybackReady{ [weak self] task, url in
                 if let weakSelf = self { weakSelf.onPlaybackReady(weakSelf, url) }

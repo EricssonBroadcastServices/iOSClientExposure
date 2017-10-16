@@ -46,7 +46,7 @@ extension SessionManager {
             if let url = media.urlAsset?.url {
                 try FileManager.default.removeItem(at: url)
             }
-            print("✅ SessionManager+Exposure. Cleaned up local media")
+            print("✅ SessionManager+Exposure. Cleaned up local media",media.assetId,"Destination:",media.urlAsset?.url)
         }
         catch {
             print("🚨 SessionManager+Exposure. Failed to clean local media: ",error.localizedDescription)
@@ -61,7 +61,14 @@ extension SessionManager {
     internal func save(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
         do {
             if let currentAsset = offline(assetId: assetId) {
-                print("⚠️ There is another record for an offline asset with id: \(assetId). This data will be overwritten. The location of any downloaded media or content keys will be lost!")
+                if currentAsset.urlAsset?.url != nil {
+                    print("⚠️ There is another record for an offline asset with id: \(assetId). This data will be overwritten. The location of any downloaded media or content keys will be lost!")
+                    print(" x  ",currentAsset.urlAsset?.url)
+                    print(" <- ",url)
+                }
+                else {
+                    print("✅ SessionManager+Exposure. Updated \(assetId) with a destination url \(url)")
+                }
             }
             
             let record = try LocalMediaRecord(assetId: assetId, entitlement: entitlement, completedAt: url)
@@ -86,7 +93,6 @@ extension SessionManager {
             
             let localMedia = try JSONDecoder().decode([LocalMediaRecord].self, from: data)
             
-            localMedia.forEach{ print("📎 Local media id: \($0.assetId)") }
             return localMedia
         }
         catch {
