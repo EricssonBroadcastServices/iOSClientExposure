@@ -160,45 +160,47 @@ extension ExposureDownloadTask {
         downloadTask?
             .use(bitrate: bps)
             .onPrepared{ [weak self] task in
-                if let weakSelf = self { weakSelf.onPrepared(weakSelf) }
+                guard let `self` = self else { return }
+                `self`.onPrepared(`self`)
             }
             .onSuspended{ [weak self] task in
-                if let weakSelf = self { weakSelf.onSuspended(weakSelf) }
+                guard let `self` = self else { return }
+                `self`.onSuspended(`self`)
             }
             .onResumed{ [weak self] task in
-                if let weakSelf = self { weakSelf.onResumed(weakSelf) }
+                guard let `self` = self else { return }
+                `self`.onResumed(`self`)
             }
             .onCanceled{ [weak self] task, url in
-                if let weakSelf = self {
-                    weakSelf.sessionManager.save(assetId: weakSelf.assetId, entitlement: entitlement, url: url)
-                    weakSelf.onCanceled(weakSelf, url)
-                }
+                guard let `self` = self else { return }
+                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
+                `self`.onCanceled(`self`, url)
             }
             .onCompleted{ [weak self] task, url in
-                if let weakSelf = self {
-                    // Update the tracked media with the location of the data
-                    weakSelf.sessionManager.save(assetId: weakSelf.assetId, entitlement: entitlement, url: url)
-                    weakSelf.onCompleted(weakSelf, url)
-                }
+                guard let `self` = self else { return }
+                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
+                `self`.onCompleted(`self`, url)
             }
             .onProgress{ [weak self] task, progress in
-                if let weakSelf = self { weakSelf.onProgress(weakSelf, progress) }
+                guard let `self` = self else { return }
+                `self`.onProgress(`self`, progress)
             }
             .onError{ [weak self] task, url, error in
-                if let weakSelf = self {
-                    weakSelf.sessionManager.save(assetId: weakSelf.assetId, entitlement: entitlement, url: url)
-                    weakSelf.onError(weakSelf, url, ExposureError.download(reason: error))
-                }
+                guard let `self` = self else { return }
+                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
+                `self`.onError(`self`, url, ExposureError.download(reason: error))
             }
             .onPlaybackReady{ [weak self] task, url in
-                if let weakSelf = self { weakSelf.onPlaybackReady(weakSelf, url) }
+                guard let `self` = self else { return }
+                `self`.onPlaybackReady(`self`, url)
             }
             .onShouldDownloadMediaOption{ [weak self] task, media in
-                if let weakSelf = self { return weakSelf.onShouldDownloadMediaOption(weakSelf, media) }
-                else { return nil }
+                guard let `self` = self else { return nil }
+                return `self`.onShouldDownloadMediaOption(`self`, media)
             }
             .onDownloadingMediaOption{ [weak self] task, media in
-                if let weakSelf = self { weakSelf.onDownloadingMediaOption(weakSelf, media) }
+                guard let `self` = self else { return }
+                `self`.onDownloadingMediaOption(`self`, media)
         }
     }
     
