@@ -35,7 +35,6 @@ public struct OfflineMediaAsset {
         }
         
         if #available(iOS 10.0, *) {
-            print("PlayableOffline: ",urlAsset.url,urlAsset.assetCache?.isPlayableOffline)
             if let assetCache = urlAsset.assetCache, assetCache.isPlayableOffline {
                 callback(.completed)
                 return
