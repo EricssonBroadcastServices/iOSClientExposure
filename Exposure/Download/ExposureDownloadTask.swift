@@ -10,18 +10,31 @@ import Foundation
 import AVFoundation
 import Download
 
-public final class ExposureDownloadTask {
-    internal var downloadTask: DownloadTask?
+public final class ExposureDownloadTask: DownloadTaskType {
+    
     internal var entitlementRequest: ExposureRequest?
     fileprivate(set) public var entitlement: PlaybackEntitlement?
     
-    public let assetId: String
+    internal(set) public var task: AVAssetDownloadTask?
+    public var configuration: Configuration
+    public var progression: Progression
+    public var fairplayRequester: DownloadFairplayRequester?
+    public let eventPublishTransmitter = DownloadEventPublishTransmitter<ExposureDownloadTask>()
+    
+    
     public let environment: Environment
     public let sessionToken: SessionToken
-    fileprivate let sessionManager: SessionManager
+    public let sessionManager: SessionManager<ExposureDownloadTask>
     
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, sessionManager: SessionManager) {
-        self.assetId = assetId
+    
+    public lazy var delegate: DownloadTaskDelegate = { [unowned self] in
+        return DownloadTaskDelegate(task: self)
+        }()
+    
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, sessionManager: SessionManager<ExposureDownloadTask>) {
+        self.configuration = Configuration(identifier: assetId)
+        self.progression = Progression()
+        
         self.environment = environment
         self.sessionToken = sessionToken
         self.sessionManager = sessionManager
@@ -34,17 +47,6 @@ public final class ExposureDownloadTask {
     // Configuration
     fileprivate var requiredBitrate: Int64?
     
-    // MARK: DownloadEventPublisher
-    internal var onPrepared: (ExposureDownloadTask) -> Void = { _ in }
-    internal var onSuspended: (ExposureDownloadTask) -> Void = { _ in }
-    internal var onResumed: (ExposureDownloadTask) -> Void = { _ in }
-    internal var onCanceled: (ExposureDownloadTask, URL) -> Void = { _ in }
-    internal var onCompleted: (ExposureDownloadTask, URL) -> Void = { _ in }
-    internal var onProgress: (ExposureDownloadTask, DownloadTask.Progress) -> Void = { _ in }
-    internal var onError: (ExposureDownloadTask, URL?, ExposureError) -> Void = { _ in }
-    internal var onPlaybackReady: (ExposureDownloadTask, URL) -> Void = { _ in }
-    internal var onShouldDownloadMediaOption: ((ExposureDownloadTask, AdditionalMedia) -> MediaOption?) = { _ in return nil }
-    internal var onDownloadingMediaOption: (ExposureDownloadTask, MediaOption) -> Void = { _ in }
     
     // MARK: Entitlement
     internal var onEntitlementRequestStarted: (ExposureDownloadTask) -> Void = { _ in }
@@ -64,14 +66,54 @@ extension ExposureDownloadTask {
             case .completed:
                 weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement)
                 // TODO: Ask for AdditionalMediaSelections?
-                weakSelf.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
+                weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
             case .notPlayable:
-                weakSelf.configureDownloadTask(entitlement: offlineMediaAsset.entitlement, assetId: weakSelf.assetId) { task in
-                    weakSelf.downloadTask = task
-                    weakSelf.downloadTask?.prepare(lazily: lazily)
-                }
+                weakSelf.restoreOrCreate(for: offlineMediaAsset.entitlement, forceNew: lazily)
                 
             }
+        }
+    }
+    
+    fileprivate func restoreOrCreate(for entitlement: PlaybackEntitlement, forceNew: Bool, callback: @escaping () -> Void = { _ in }) {
+        fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: configuration.identifier)
+        
+        guard let targetUrl = URL(string: entitlement.mediaLocator) else {
+            eventPublishTransmitter.onError(self, nil, .exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator)))
+            return
+        }
+        configuration.url = targetUrl
+        
+        sessionManager.restoreTask(with: configuration.identifier) { [weak self] restoredTask in
+            guard let weakSelf = self else { return }
+            if let restoredTask = restoredTask {
+                weakSelf.configureResourceLoader(for: restoredTask)
+                
+                weakSelf.task = restoredTask
+                weakSelf.sessionManager.delegate[restoredTask] = weakSelf
+                
+                weakSelf.handle(restoredTask: restoredTask)
+            }
+            else {
+                if forceNew {
+                    print("✅ No AVAssetDownloadTask prepared, creating new for: \(weakSelf.configuration.identifier)")
+                    // Create a fresh task
+                    let options = weakSelf.configuration.requiredBitrate != nil ? [AVAssetDownloadTaskMinimumRequiredMediaBitrateKey: weakSelf.configuration.requiredBitrate!] : nil
+                    weakSelf.createAndConfigureTask(with: options, using: weakSelf.configuration) { urlTask, error in
+                        if let error = error {
+                            weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.progression.destination, error)
+                            return
+                        }
+                        
+                        if let urlTask = urlTask {
+                            weakSelf.task = urlTask
+                            weakSelf.sessionManager.delegate[urlTask] = weakSelf
+                            print("👍 DownloadTask prepared")
+                            weakSelf.eventPublishTransmitter.onPrepared(weakSelf)
+                        }
+                    }
+                }
+            }
+            callback()
         }
     }
     
@@ -86,7 +128,7 @@ extension ExposureDownloadTask {
             .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
                 guard let weakSelf = self else { return }
                 guard let entitlement = res.value else {
-                    weakSelf.onError(weakSelf, nil, res.error!)
+                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
                     return
                 }
                 
@@ -94,147 +136,35 @@ extension ExposureDownloadTask {
                 weakSelf.entitlement = entitlement
                 weakSelf.onEntitlementResponse(weakSelf, entitlement)
                 
-                weakSelf.configureDownloadTask(entitlement: entitlement, assetId: assetId) { [weak self] task in
-                    self?.downloadTask = task
-                    self?.downloadTask?.prepare(lazily: lazily)
-                }
-        }
-    }
-    
-    fileprivate func configureDownloadTask(entitlement: PlaybackEntitlement, assetId: String, callback: @escaping (DownloadTask?) -> Void) {
-        guard let url = URL(string: entitlement.mediaLocator) else {
-            onError(self, nil, .download(reason: .invalidMediaUrl(path: entitlement.mediaLocator)))
-            callback(nil)
-            return
-        }
-        
-        let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: assetId)
-        
-        // Store an initial locator to indicate download is underway
-        sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
-        
-        tryRestoringTask(using: fairplayRequester, restored: { [weak self] restoredTask in
-            guard let weakSelf = self else { return }
-            
-            // Found and restored a task
-            weakSelf.hookCallbacks(to: restoredTask, entitlement: entitlement)
-            callback(restoredTask)
-        }) { [weak self] in
-            guard let weakSelf = self else { return }
-            
-            // Nothing to restore
-            var downloadTask: DownloadTask?
-            if #available(iOS 10.0, *) {
-                // TODO: Artwork should probably be retrieved from *Exposure*
-                downloadTask = weakSelf.sessionManager
-                    .download(mediaLocator: url,
-                              assetId: assetId,
-                              artwork: nil,
-                              using: fairplayRequester)
-            }
-            else {
-                do {
-                    let destinationUrl = try weakSelf.sessionManager
-                        .baseDirectory()
-                        .appendingPathComponent("\(assetId).m3u8")
-                    
-                    downloadTask = weakSelf.sessionManager
-                        .download(mediaLocator: url,
-                                  assetId: assetId,
-                                  to: destinationUrl,
-                                  using: fairplayRequester)
-                }
-                catch {
-                    weakSelf.onError(weakSelf, nil, .download(reason: .failedToStartTaskWithoutDestination))
-                    callback(nil)
-                }
-            }
-            weakSelf.hookCallbacks(to: downloadTask, entitlement: entitlement)
-            callback(downloadTask)
-        }
-    }
-    
-    private func hookCallbacks(to downloadTask: DownloadTask?, entitlement: PlaybackEntitlement) {
-        let bps = requiredBitrate != nil ? requiredBitrate! : nil
-        
-        downloadTask?
-            .use(bitrate: bps)
-            .onPrepared{ [weak self] task in
-                guard let `self` = self else { return }
-                `self`.onPrepared(`self`)
-            }
-            .onSuspended{ [weak self] task in
-                guard let `self` = self else { return }
-                `self`.onSuspended(`self`)
-            }
-            .onResumed{ [weak self] task in
-                guard let `self` = self else { return }
-                `self`.onResumed(`self`)
-            }
-            .onCanceled{ [weak self] task, url in
-                guard let `self` = self else { return }
-                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
-                `self`.onCanceled(`self`, url)
-            }
-            .onCompleted{ [weak self] task, url in
-                guard let `self` = self else { return }
-                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
-                `self`.onCompleted(`self`, url)
-            }
-            .onProgress{ [weak self] task, progress in
-                guard let `self` = self else { return }
-                `self`.onProgress(`self`, progress)
-            }
-            .onError{ [weak self] task, url, error in
-                guard let `self` = self else { return }
-                `self`.sessionManager.save(assetId: `self`.assetId, entitlement: entitlement, url: url)
-                `self`.onError(`self`, url, ExposureError.download(reason: error))
-            }
-            .onPlaybackReady{ [weak self] task, url in
-                guard let `self` = self else { return }
-                `self`.onPlaybackReady(`self`, url)
-            }
-            .onShouldDownloadMediaOption{ [weak self] task, media in
-                guard let `self` = self else { return nil }
-                return `self`.onShouldDownloadMediaOption(`self`, media)
-            }
-            .onDownloadingMediaOption{ [weak self] task, media in
-                guard let `self` = self else { return }
-                `self`.onDownloadingMediaOption(`self`, media)
-        }
-    }
-    
-    private func tryRestoringTask(using requester: ExposureDownloadFairplayRequester, restored: @escaping (DownloadTask?) -> Void, notFound: @escaping () -> Void) {
-        sessionManager.restoreTask(with: assetId, assigningRequesterFor: {
-            return requester
-        }) { downloadTask in
-            if let task = downloadTask {
-                restored(task)
-            }
-            else {
-                notFound()
-            }
+                weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
+                
+                weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily)
         }
     }
 }
+
 extension ExposureDownloadTask: DownloadProcess {
     /// - parameter lazily: `true` will delay creation of new tasks until the user calls `resume()`. `false` will force create the task if none exists.
     @discardableResult
     public func prepare(lazily: Bool = true) -> ExposureDownloadTask {
-        if let currentAsset = sessionManager.offline(assetId: assetId) {
-            prepareFrom(offlineMediaAsset: currentAsset, lazily: lazily)
+        guard let task = task else {
+            if let currentAsset = sessionManager.offline(assetId: configuration.identifier) {
+                prepareFrom(offlineMediaAsset: currentAsset, lazily: lazily)
+            }
+            else {
+                startEntitlementRequest(assetId: configuration.identifier, lazily: lazily)
+            }
+            return self
         }
-        else {
-            startEntitlementRequest(assetId: assetId, lazily: lazily)
-        }
+        handle(restoredTask: task)
         return self
     }
     
     
     public func resume() {
-        guard let downloadTask = downloadTask else {
+        guard let downloadTask = task else {
             guard let entitlementRequest = entitlementRequest else {
-                startEntitlementRequest(assetId: assetId, lazily: false)
+                startEntitlementRequest(assetId: configuration.identifier, lazily: false)
                 return
             }
             entitlementRequest.resume()
@@ -244,7 +174,7 @@ extension ExposureDownloadTask: DownloadProcess {
     }
     
     public func suspend() {
-        if let downloadTask = downloadTask {
+        if let downloadTask = task {
             downloadTask.suspend()
         }
         else if let entitlementRequest = entitlementRequest {
@@ -253,7 +183,7 @@ extension ExposureDownloadTask: DownloadProcess {
     }
     
     public func cancel() {
-        if let downloadTask = downloadTask {
+        if let downloadTask = task {
             downloadTask.cancel()
         }
         else if let entitlementRequest = entitlementRequest {
@@ -276,9 +206,8 @@ extension ExposureDownloadTask: DownloadProcess {
     }
     
     public var state: State {
-        guard let state = downloadTask?.state else { return .notStarted }
+        guard let state = task?.state else { return .notStarted }
         switch state {
-        case .notStarted: return .notStarted
         case .running: return .running
         case .suspended: return .suspended
         case .canceling: return .canceling
@@ -288,69 +217,7 @@ extension ExposureDownloadTask: DownloadProcess {
 }
 
 extension ExposureDownloadTask: DownloadEventPublisher {
-    public typealias DownloadEventProgress = DownloadTask.Progress
     public typealias DownloadEventError = ExposureError
-    
-    @discardableResult
-    
-    public func onPrepared(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
-        onPrepared = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onSuspended(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
-        onSuspended = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onResumed(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
-        onResumed = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onCanceled(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
-        onCanceled = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onCompleted(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
-        onCompleted = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onProgress(callback: @escaping (ExposureDownloadTask, DownloadTask.Progress) -> Void) -> ExposureDownloadTask {
-        onProgress = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onError(callback: @escaping (ExposureDownloadTask, URL?, ExposureError) -> Void) -> ExposureDownloadTask {
-        onError = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onPlaybackReady(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
-        onPlaybackReady = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onShouldDownloadMediaOption(callback: @escaping (ExposureDownloadTask, AdditionalMedia) -> MediaOption?) -> ExposureDownloadTask {
-        onShouldDownloadMediaOption = callback
-        return self
-    }
-    
-    @discardableResult
-    public func onDownloadingMediaOption(callback: @escaping (ExposureDownloadTask, MediaOption) -> Void) -> ExposureDownloadTask {
-        onDownloadingMediaOption = callback
-        return self
-    }
 }
 
 extension ExposureDownloadTask {
