@@ -30,6 +30,7 @@ NO RELEASE DATE SET YET
 * `EMP-10298` `ExposureRequest.validate()` should now correctly validate on statusCodes and content type.
 * `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`.
 * `EMP-10468` Decoding *Exposure* response no longer fails if `AssetUserPlayHistory` returns an empty dictionary.
+* `ExposureDownloadTask`s restored from a completed state with error now forwards that error.
 
 
 ## 0.2.0
