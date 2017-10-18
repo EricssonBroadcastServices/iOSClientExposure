@@ -155,7 +155,7 @@ extension ExposureDownloadTask {
     }
     
     private func hookCallbacks(to downloadTask: DownloadTask?, entitlement: PlaybackEntitlement) {
-        let bps = requiredBitrate != nil ? requiredBitrate!*1000 : nil
+        let bps = requiredBitrate != nil ? requiredBitrate! : nil
         
         downloadTask?
             .use(bitrate: bps)

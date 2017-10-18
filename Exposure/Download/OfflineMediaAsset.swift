@@ -25,8 +25,9 @@ public struct OfflineMediaAsset {
     
     public let assetId: String
     public let entitlement: PlaybackEntitlement
-    internal let urlAsset: AVURLAsset?
+    public let urlAsset: AVURLAsset?
     internal let fairplayRequester: ExposureDownloadFairplayRequester
+ 
     
     public func state(callback: @escaping (State) -> Void) {
         guard let urlAsset = urlAsset else {
