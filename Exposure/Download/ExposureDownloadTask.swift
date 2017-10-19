@@ -17,7 +17,7 @@ public final class ExposureDownloadTask: DownloadTaskType {
     
     internal(set) public var task: AVAssetDownloadTask?
     public var configuration: Configuration
-    public var progression: Progression
+    public var responseData: ResponseData
     public var fairplayRequester: DownloadFairplayRequester?
     public let eventPublishTransmitter = DownloadEventPublishTransmitter<ExposureDownloadTask>()
     
@@ -33,7 +33,7 @@ public final class ExposureDownloadTask: DownloadTaskType {
     
     internal init(assetId: String, environment: Environment, sessionToken: SessionToken, sessionManager: SessionManager<ExposureDownloadTask>) {
         self.configuration = Configuration(identifier: assetId)
-        self.progression = Progression()
+        self.responseData = ResponseData()
         
         self.environment = environment
         self.sessionToken = sessionToken
@@ -104,7 +104,7 @@ extension ExposureDownloadTask {
                     let options = weakSelf.configuration.requiredBitrate != nil ? [AVAssetDownloadTaskMinimumRequiredMediaBitrateKey: weakSelf.configuration.requiredBitrate!] : nil
                     weakSelf.createAndConfigureTask(with: options, using: weakSelf.configuration) { urlTask, error in
                         if let error = error {
-                            weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.progression.destination, error)
+                            weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.responseData.destination, error)
                             return
                         }
                         
