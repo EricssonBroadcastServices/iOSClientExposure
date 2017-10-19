@@ -44,10 +44,6 @@ public final class ExposureDownloadTask: DownloadTaskType {
     // DRMRequest
     public var playRequest: PlayRequest
     
-    // Configuration
-    fileprivate var requiredBitrate: Int64?
-    
-    
     // MARK: Entitlement
     internal var onEntitlementRequestStarted: (ExposureDownloadTask) -> Void = { _ in }
     internal var onEntitlementResponse: (ExposureDownloadTask, PlaybackEntitlement) -> Void = { _ in }
@@ -216,7 +212,7 @@ extension ExposureDownloadTask {
     }
     
     public func use(bitrate: Int64?) -> Self {
-        self.requiredBitrate = bitrate
+        self.configuration.requiredBitrate = bitrate
         return self
     }
     
