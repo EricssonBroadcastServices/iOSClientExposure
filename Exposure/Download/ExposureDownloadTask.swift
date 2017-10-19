@@ -59,14 +59,14 @@ extension ExposureDownloadTask {
         offlineMediaAsset.state{ [weak self] state in
             guard let weakSelf = self else { return }
             switch state {
-            case .completed:
-                weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement!)
-                weakSelf.entitlement = offlineMediaAsset.entitlement
+            case .completed(entitlement: let entitlement, url: let url):
+                weakSelf.onEntitlementResponse(weakSelf, entitlement)
+                weakSelf.entitlement = entitlement
                 // TODO: Ask for AdditionalMediaSelections?
-                weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
+                weakSelf.eventPublishTransmitter.onCompleted(weakSelf, url)
                 callback()
-            case .notPlayable:
-                if let entitlement = weakSelf.entitlement {
+            case .notPlayable(entitlement: let entitlement, url: _):
+                if let entitlement = entitlement {
                     weakSelf.restoreOrCreate(for: entitlement, forceNew: lazily, callback: callback)
                 }
                 else {

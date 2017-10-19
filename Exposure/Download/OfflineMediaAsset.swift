@@ -37,46 +37,47 @@ public struct OfflineMediaAsset {
  
     
     public func state(callback: @escaping (State) -> Void) {
-        guard entitlement != nil else {
-            callback(.notPlayable)
+        guard let entitlement = entitlement else {
+            callback(.notPlayable(entitlement: self.entitlement, url: self.urlAsset?.url))
             return
         }
         
         guard let urlAsset = urlAsset else {
-            callback(.notPlayable)
+            callback(.notPlayable(entitlement: entitlement, url: self.urlAsset?.url))
             return
         }
         
+        
         if #available(iOS 10.0, *) {
             if let assetCache = urlAsset.assetCache, assetCache.isPlayableOffline {
-                callback(.completed)
+                callback(.completed(entitlement: entitlement, url: urlAsset.url))
                 return
             }
         }
         
-        urlAsset.loadValuesAsynchronously(forKeys: ["playable"]) {
+        urlAsset.loadValuesAsynchronously(forKeys: ["playable"]) { [entitlement, urlAsset] in
             DispatchQueue.main.async {
                 
                 // Check for any issues preparing the loaded values
                 var error: NSError?
                 if urlAsset.statusOfValue(forKey: "playable", error: &error) == .loaded {
                     if urlAsset.isPlayable {
-                        callback(.completed)
+                        callback(.completed(entitlement: entitlement, url: urlAsset.url))
                     }
                     else {
-                        callback(.notPlayable)
+                        callback(.notPlayable(entitlement: entitlement, url: urlAsset.url))
                     }
                 }
                 else {
-                    callback(.notPlayable)
+                    callback(.notPlayable(entitlement: entitlement, url: urlAsset.url))
                 }
             }
         }
     }
     
     public enum State {
-        case completed
-        case notPlayable
+        case completed(entitlement: PlaybackEntitlement, url: URL)
+        case notPlayable(entitlement: PlaybackEntitlement?, url: URL?)
     }
 }
 
