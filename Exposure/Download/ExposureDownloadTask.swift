@@ -65,6 +65,7 @@ extension ExposureDownloadTask {
             switch state {
             case .completed:
                 weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement)
+                weakSelf.entitlement = offlineMediaAsset.entitlement
                 // TODO: Ask for AdditionalMediaSelections?
                 weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
                 callback()
@@ -235,6 +236,24 @@ extension ExposureDownloadTask {
 
 extension ExposureDownloadTask: DownloadEventPublisher {
     public typealias DownloadEventError = ExposureError
+    
+    public func onCompleted(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
+        eventPublishTransmitter.onCompleted = { [weak self] task, url in
+            guard let `self` = self else { return }
+            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement!, url: url)
+            callback(task,url)
+        }
+        return self
+    }
+    
+    public func onError(callback: @escaping (ExposureDownloadTask, URL?, ExposureError) -> Void) -> ExposureDownloadTask {
+        eventPublishTransmitter.onError = { [weak self] task, url, error in
+            guard let `self` = self else { return }
+            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement!, url: url)
+            callback(task,url, error)
+        }
+        return self
+    }
 }
 
 extension ExposureDownloadTask {
