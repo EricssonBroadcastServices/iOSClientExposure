@@ -74,6 +74,10 @@ extension ExposureDownloadTask {
         }
     }
     
+    
+    //"NOTE: Oversee bookmarking save/remove functionality. Use overloaded callbacks or other approach?"
+    
+    
     fileprivate func restoreOrCreate(for entitlement: PlaybackEntitlement, forceNew: Bool, callback: @escaping () -> Void = { _ in }) {
         fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: configuration.identifier)
         
@@ -143,7 +147,7 @@ extension ExposureDownloadTask {
     }
 }
 
-extension ExposureDownloadTask: DownloadProcess {
+extension ExposureDownloadTask {
     /// - parameter lazily: `true` will delay creation of new tasks until the user calls `resume()`. `false` will force create the task if none exists.
     @discardableResult
     public func prepare(lazily: Bool = true) -> ExposureDownloadTask {
