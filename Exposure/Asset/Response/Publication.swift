@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Publication: Decodable {
+public struct Publication: Codable {
     
     public let publicationDate: String?
     public let fromDate: String?
@@ -23,6 +23,23 @@ public struct Publication: Decodable {
     public let rights: AssetRights?
     public let devices: [DeviceRights]?
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(publicationDate, forKey: .publicationDate)
+        try container.encodeIfPresent(fromDate, forKey: .fromDate)
+        try container.encodeIfPresent(toDate, forKey: .toDate)
+        
+        try container.encodeIfPresent(countries, forKey: .countries)
+        try container.encodeIfPresent(services, forKey: .services)
+        try container.encodeIfPresent(products, forKey: .products)
+        try container.encodeIfPresent(publicationId, forKey: .publicationId)
+        
+        try container.encodeIfPresent(customData, forKey: .customData)
+        try container.encodeIfPresent(rights, forKey: .rights)
+        try container.encodeIfPresent(devices, forKey: .devices)
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         publicationDate = try container.decodeIfPresent(String.self, forKey: .publicationDate)

@@ -87,8 +87,53 @@ public struct Asset {
     public let userData: AssetUserData?
 }
 
-extension Asset: Decodable {
-
+extension Asset: Codable {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(created, forKey: .created)
+        try container.encodeIfPresent(changed, forKey: .changed)
+        try container.encodeIfPresent(assetId, forKey: .assetId)
+        try container.encodeIfPresent(type?.queryParam, forKey: .type)
+        try container.encodeIfPresent(localized, forKey: .localized)
+        try container.encodeIfPresent(tags, forKey: .tags)
+        try container.encodeIfPresent(publications, forKey: .publications)
+        
+        try container.encodeIfPresent(episode, forKey: .episode)
+        try container.encodeIfPresent(season, forKey: .season)
+        try container.encodeIfPresent(seasonId, forKey: .seasonId)
+        
+        try container.encodeIfPresent(seasons, forKey: .seasons)
+        
+        try container.encodeIfPresent(participants, forKey: .participants)
+        
+        try container.encodeIfPresent(productionYear, forKey: .productionYear)
+        try container.encodeIfPresent(productionCountries, forKey: .productionCountries)
+        
+        try container.encodeIfPresent(popularityScores, forKey: .popularityScores)
+        
+        try container.encodeIfPresent(releaseDate, forKey: .releaseDate)
+        try container.encodeIfPresent(originalTitle, forKey: .originalTitle)
+        try container.encodeIfPresent(live, forKey: .live)
+        
+        try container.encodeIfPresent(subtitles, forKey: .subtitles)
+        try container.encodeIfPresent(audioTracks, forKey: .audioTracks)
+        try container.encodeIfPresent(spokenLanguages, forKey: .spokenLanguages)
+        try container.encodeIfPresent(medias, forKey: .medias)
+        
+        try container.encodeIfPresent(parentalRatings, forKey: .parentalRatings)
+        try container.encodeIfPresent(linkedEntities, forKey: .linkedEntities)
+        try container.encodeIfPresent(runtime, forKey: .runtime)
+        try container.encodeIfPresent(tvShowId, forKey: .tvShowId)
+        
+        try container.encodeIfPresent(expires, forKey: .expires)
+        try container.encodeIfPresent(customData, forKey: .customData)
+        try container.encodeIfPresent(externalReferences, forKey: .externalReferences)
+        try container.encodeIfPresent(rating, forKey: .rating)
+        try container.encodeIfPresent(markers, forKey: .markers)
+        try container.encodeIfPresent(userData, forKey: .userData)
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
@@ -121,10 +166,12 @@ extension Asset: Decodable {
         audioTracks = try container.decodeIfPresent([String].self, forKey: .audioTracks)
         spokenLanguages = try container.decodeIfPresent([String].self, forKey: .spokenLanguages)
         medias = try container.decodeIfPresent([Media].self, forKey: .medias)
+        
         parentalRatings = try container.decodeIfPresent([ParentalRating].self, forKey: .parentalRatings)
         linkedEntities = try container.decodeIfPresent([LinkedEntity].self, forKey: .linkedEntities)
         runtime = try container.decodeIfPresent(Int.self, forKey: .runtime)
         tvShowId = try container.decodeIfPresent(String.self, forKey: .tvShowId)
+        
         expires = try container.decodeIfPresent(String.self, forKey: .expires)
         customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
         externalReferences = try container.decodeIfPresent([ExternalReference].self, forKey: .externalReferences)

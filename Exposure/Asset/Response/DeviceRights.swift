@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct DeviceRights: Decodable {
+public struct DeviceRights: Codable {
     /// Device type this rights concerns
     public let type: DeviceType?
     
@@ -20,6 +20,12 @@ public struct DeviceRights: Decodable {
     /// Asset rights specific for this device
     public let rights: AssetRights?
 
+    public func encode(to encoder: Encoder) throws {
+        var container = try encoder.container(keyedBy: CodingKeys.self)
+        
+        
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 

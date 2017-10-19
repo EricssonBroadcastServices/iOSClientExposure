@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Marker: Decodable {
+public struct Marker: Codable {
     public let offset: Int?
     public let url: String?
 }

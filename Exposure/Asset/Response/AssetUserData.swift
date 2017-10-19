@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AssetUserData: Decodable {
+public struct AssetUserData: Codable {
     public let playHistory: AssetUserPlayHistory?
     
     

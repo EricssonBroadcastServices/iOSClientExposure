@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Image: Decodable {
+public struct Image: Codable {
     /// Path to where the image is located
     public let url: String?
     
@@ -23,6 +23,16 @@ public struct Image: Decodable {
     
     /// Image type
     public let type: String?
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encodeIfPresent(url, forKey: .url)
+        try container.encodeIfPresent(height, forKey: .height)
+        try container.encodeIfPresent(width, forKey: .width)
+        try container.encodeIfPresent(orientation, forKey: .orientation)
+        try container.encodeIfPresent(type, forKey: .type)
+    }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

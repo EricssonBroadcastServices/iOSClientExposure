@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AssetUserPlayHistory: Decodable {
+public struct AssetUserPlayHistory: Codable {
     /// Last viewed offset, offset in the last play of the asset.
     public let lastViewedOffset: Int
     

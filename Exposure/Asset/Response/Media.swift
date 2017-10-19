@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Media: Decodable {
+public struct Media: Codable {
     /// The id of the media.
     public let mediaId: String?
     

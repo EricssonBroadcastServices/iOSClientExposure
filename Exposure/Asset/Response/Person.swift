@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Person: Decodable {
+public struct Person: Codable {
     /// Identifier for `Person`
     public let personId: String?
     

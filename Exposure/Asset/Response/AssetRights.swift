@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AssetRights: Decodable {
+public struct AssetRights: Codable {
     /// Minimum bitrate allowed
     public let minBitrate: Int?
     
