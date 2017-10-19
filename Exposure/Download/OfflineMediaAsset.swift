@@ -11,10 +11,17 @@ import Download
 import AVFoundation
 
 public struct OfflineMediaAsset {
-    internal init(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
+    internal init(assetId: String, entitlement: PlaybackEntitlement?, url: URL?) {
         self.assetId = assetId
         self.entitlement = entitlement
-        self.fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: assetId)
+        
+        if let entitlement = entitlement {
+            self.fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: assetId)
+        }
+        else {
+            self.fairplayRequester = nil
+        }
+        
         if let url = url {
             self.urlAsset = AVURLAsset(url: url)
         }
@@ -24,12 +31,17 @@ public struct OfflineMediaAsset {
     }
     
     public let assetId: String
-    public let entitlement: PlaybackEntitlement
+    public let entitlement: PlaybackEntitlement?
     public let urlAsset: AVURLAsset?
-    internal let fairplayRequester: ExposureDownloadFairplayRequester
+    internal let fairplayRequester: ExposureDownloadFairplayRequester?
  
     
     public func state(callback: @escaping (State) -> Void) {
+        guard entitlement != nil else {
+            callback(.notPlayable)
+            return
+        }
+        
         guard let urlAsset = urlAsset else {
             callback(.notPlayable)
             return
@@ -67,80 +79,6 @@ public struct OfflineMediaAsset {
         case notPlayable
     }
 }
-
-
-internal struct LocalMediaRecord: Codable {
-    /// URL encoded as bookmark data
-    internal var urlBookmark: Data? {
-        switch downloadState {
-        case .completed(urlBookmark: let data): return data
-        case .inProgress: return nil
-        }
-    }
-    
-    /// State
-    internal let downloadState: DownloadState
-    
-    /// Id for the asset at `bookmarkURL`
-    internal let assetId: String
-    
-    /// Related entitlement
-    internal let entitlement: PlaybackEntitlement
-    
-    internal init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        assetId = try container.decode(String.self, forKey: .assetId)
-        entitlement = try container.decode(PlaybackEntitlement.self, forKey: .entitlement)
-        
-        if let data = try container.decodeIfPresent(Data.self, forKey: .downloadState) {
-            downloadState = .completed(urlBookmark: data)
-        }
-        else {
-            downloadState = .inProgress
-        }
-    }
-    
-    internal func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(assetId, forKey: .assetId)
-        try container.encode(entitlement, forKey: .entitlement)
-        
-        switch downloadState {
-        case .completed(urlBookmark: let data): try container.encode(data, forKey: .downloadState)
-        default: return
-        }
-    }
-    
-    internal init(assetId: String, entitlement: PlaybackEntitlement, completedAt location: URL?) throws {
-        self.assetId = assetId
-        self.entitlement = entitlement
-        
-        if let data = try location?.bookmarkData() {
-            downloadState = .completed(urlBookmark: data)
-        }
-        else {
-            downloadState = .inProgress
-        }
-    }
-    
-    internal enum DownloadState {
-        
-        /// URL encoded as bookmark data
-        case completed(urlBookmark: Data)
-        
-        /// No destination might have been set
-        case inProgress
-    }
-    
-    internal enum CodingKeys: String, CodingKey {
-        case downloadState
-        case assetId
-        case entitlement
-    }
-}
-
 
 extension Data {
     /// Convenience function for persisting a `Data` blob through `FileManager`.

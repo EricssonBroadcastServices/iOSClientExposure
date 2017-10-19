@@ -64,14 +64,18 @@ extension ExposureDownloadTask {
             guard let weakSelf = self else { return }
             switch state {
             case .completed:
-                weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement)
+                weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement!)
                 weakSelf.entitlement = offlineMediaAsset.entitlement
                 // TODO: Ask for AdditionalMediaSelections?
                 weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
                 callback()
             case .notPlayable:
-                weakSelf.restoreOrCreate(for: offlineMediaAsset.entitlement, forceNew: lazily, callback: callback)
-                
+                if let entitlement = weakSelf.entitlement {
+                    weakSelf.restoreOrCreate(for: entitlement, forceNew: lazily, callback: callback)
+                }
+                else {
+                    weakSelf.startEntitlementRequest(assetId: weakSelf.configuration.identifier, lazily: lazily, callback: callback)
+                }
             }
         }
     }
@@ -201,6 +205,7 @@ extension ExposureDownloadTask {
     }
     
     public func cancel() {
+        print(#function,task?.state.rawValue)
         if let downloadTask = task {
             downloadTask.cancel()
         }
@@ -240,7 +245,7 @@ extension ExposureDownloadTask: DownloadEventPublisher {
     public func onCompleted(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onCompleted = { [weak self] task, url in
             guard let `self` = self else { return }
-            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement!, url: url)
+            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement, url: url)
             callback(task,url)
         }
         return self
@@ -249,7 +254,7 @@ extension ExposureDownloadTask: DownloadEventPublisher {
     public func onError(callback: @escaping (ExposureDownloadTask, URL?, ExposureError) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onError = { [weak self] task, url, error in
             guard let `self` = self else { return }
-            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement!, url: url)
+            `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement, url: url)
             callback(task,url, error)
         }
         return self

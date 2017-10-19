@@ -50,7 +50,7 @@ extension SessionManager where Task == ExposureDownloadTask {
     public func delete(media: OfflineMediaAsset) {
         remove(localRecordId: media.assetId)
         do {
-            try media.fairplayRequester.deletePersistedContentKey(for: media.assetId)
+            try media.fairplayRequester?.deletePersistedContentKey(for: media.assetId)
             if let url = media.urlAsset?.url {
                 try FileManager.default.removeItem(at: url)
             }
@@ -66,7 +66,7 @@ extension SessionManager where Task == ExposureDownloadTask {
         delete(media: media)
     }
     
-    internal func save(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
+    internal func save(assetId: String, entitlement: PlaybackEntitlement?, url: URL?) {
         do {
             if let currentAsset = offline(assetId: assetId) {
                 if currentAsset.urlAsset?.url != nil {
