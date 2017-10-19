@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 import Download
 
-public final class ExposureDownloadTask: DownloadTaskType {
+public final class ExposureDownloadTask: TaskType {
     
     internal var entitlementRequest: ExposureRequest?
     fileprivate(set) public var entitlement: PlaybackEntitlement?
@@ -19,7 +19,7 @@ public final class ExposureDownloadTask: DownloadTaskType {
     public var configuration: Configuration
     public var responseData: ResponseData
     public var fairplayRequester: DownloadFairplayRequester?
-    public let eventPublishTransmitter = DownloadEventPublishTransmitter<ExposureDownloadTask>()
+    public let eventPublishTransmitter = Download.EventPublishTransmitter<ExposureDownloadTask>()
     
     
     public let environment: Environment
@@ -27,8 +27,8 @@ public final class ExposureDownloadTask: DownloadTaskType {
     public let sessionManager: SessionManager<ExposureDownloadTask>
     
     
-    public lazy var delegate: DownloadTaskDelegate = { [unowned self] in
-        return DownloadTaskDelegate(task: self)
+    public lazy var delegate: Download.TaskDelegate = { [unowned self] in
+        return Download.TaskDelegate(task: self)
         }()
     
     internal init(assetId: String, environment: Environment, sessionToken: SessionToken, sessionManager: SessionManager<ExposureDownloadTask>) {
@@ -59,14 +59,14 @@ extension ExposureDownloadTask {
         offlineMediaAsset.state{ [weak self] state in
             guard let weakSelf = self else { return }
             switch state {
-            case .completed:
-                weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement!)
-                weakSelf.entitlement = offlineMediaAsset.entitlement
+            case .completed(entitlement: let entitlement, url: let url):
+                weakSelf.onEntitlementResponse(weakSelf, entitlement)
+                weakSelf.entitlement = entitlement
                 // TODO: Ask for AdditionalMediaSelections?
-                weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
+                weakSelf.eventPublishTransmitter.onCompleted(weakSelf, url)
                 callback()
-            case .notPlayable:
-                if let entitlement = weakSelf.entitlement {
+            case .notPlayable(entitlement: let entitlement, url: _):
+                if let entitlement = entitlement {
                     weakSelf.restoreOrCreate(for: entitlement, forceNew: lazily, callback: callback)
                 }
                 else {
@@ -235,7 +235,7 @@ extension ExposureDownloadTask {
     }
 }
 
-extension ExposureDownloadTask: DownloadEventPublisher {
+extension ExposureDownloadTask: Download.EventPublisher {
     public typealias DownloadEventError = ExposureError
     
     public func onCompleted(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
