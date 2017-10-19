@@ -24,6 +24,7 @@ NO RELEASE DATE SET YET
 * `EMP-10322` `Image.Orientation` made `Equatable`.
 * Integrated `Download` entitlement requests and validation.
 * Renamed `Exposure` protocol to `ExposureType`
+* `ExposureDownloadTask` adopts `DownloadTaskType` instead of wrapping `DownloadTask`
 
 #### Bug fixes
 * `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.
