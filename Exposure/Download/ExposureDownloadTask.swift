@@ -58,7 +58,7 @@ extension ExposureDownloadTask: DRMRequest { }
 
 
 extension ExposureDownloadTask {
-    fileprivate func prepareFrom(offlineMediaAsset: OfflineMediaAsset, lazily: Bool) {
+    fileprivate func prepareFrom(offlineMediaAsset: OfflineMediaAsset, lazily: Bool, callback: @escaping () -> Void) {
         print("📍 Preparing ExposureDownloadTask from OfflineMediaAsset: \(offlineMediaAsset.assetId), lazily: \(lazily)")
         offlineMediaAsset.state{ [weak self] state in
             guard let weakSelf = self else { return }
@@ -67,8 +67,9 @@ extension ExposureDownloadTask {
                 weakSelf.onEntitlementResponse(weakSelf, offlineMediaAsset.entitlement)
                 // TODO: Ask for AdditionalMediaSelections?
                 weakSelf.eventPublishTransmitter.onCompleted(weakSelf, offlineMediaAsset.urlAsset!.url)
+                callback()
             case .notPlayable:
-                weakSelf.restoreOrCreate(for: offlineMediaAsset.entitlement, forceNew: lazily)
+                weakSelf.restoreOrCreate(for: offlineMediaAsset.entitlement, forceNew: lazily, callback: callback)
                 
             }
         }
@@ -114,14 +115,14 @@ extension ExposureDownloadTask {
                             print("👍 DownloadTask prepared")
                             weakSelf.eventPublishTransmitter.onPrepared(weakSelf)
                         }
+                        callback()
                     }
                 }
             }
-            callback()
         }
     }
     
-    fileprivate func startEntitlementRequest(assetId: String, lazily: Bool) {
+    fileprivate func startEntitlementRequest(assetId: String, lazily: Bool, callback: @escaping () -> Void) {
         entitlementRequest = Entitlement(environment: environment,
                                          sessionToken: sessionToken)
             .download(assetId: assetId)
@@ -142,7 +143,7 @@ extension ExposureDownloadTask {
                 
                 weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
                 
-                weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily)
+                weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily, callback: callback)
         }
     }
 }
@@ -153,10 +154,14 @@ extension ExposureDownloadTask {
     public func prepare(lazily: Bool = true) -> ExposureDownloadTask {
         guard let task = task else {
             if let currentAsset = sessionManager.offline(assetId: configuration.identifier) {
-                prepareFrom(offlineMediaAsset: currentAsset, lazily: lazily)
+                prepareFrom(offlineMediaAsset: currentAsset, lazily: lazily) {
+                    
+                }
             }
             else {
-                startEntitlementRequest(assetId: configuration.identifier, lazily: lazily)
+                startEntitlementRequest(assetId: configuration.identifier, lazily: lazily) {
+                    
+                }
             }
             return self
         }
@@ -168,21 +173,29 @@ extension ExposureDownloadTask {
     public func resume() {
         guard let downloadTask = task else {
             guard let entitlementRequest = entitlementRequest else {
-                startEntitlementRequest(assetId: configuration.identifier, lazily: false)
+                startEntitlementRequest(assetId: configuration.identifier, lazily: false) { [weak self] in
+                    guard let `self` = self else { return }
+                    `self`.task?.resume()
+                    `self`.eventPublishTransmitter.onResumed(`self`)
+                }
                 return
             }
             entitlementRequest.resume()
+            eventPublishTransmitter.onResumed(self)
             return
         }
         downloadTask.resume()
+        eventPublishTransmitter.onResumed(self)
     }
     
     public func suspend() {
         if let downloadTask = task {
             downloadTask.suspend()
+            eventPublishTransmitter.onSuspended(self)
         }
         else if let entitlementRequest = entitlementRequest {
             entitlementRequest.suspend()
+            eventPublishTransmitter.onSuspended(self)
         }
     }
     
