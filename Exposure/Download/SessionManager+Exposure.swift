@@ -9,7 +9,7 @@
 import Foundation
 import Download
 
-extension SessionManager {
+extension SessionManager where T == ExposureDownloadTask {
     /// Create an `ExposureDownloadTask` by requesting a `PlaybackEntitlement` supplied through exposure.
     ///
     /// If the requested content is *FairPlay* protected, the appropriate `DownloadExposureFairplayRequester` will be created. Configuration will be taken from the `PlaybackEntitlement` response.
@@ -18,16 +18,24 @@ extension SessionManager {
     /// - parameter environment: `Environment` to use when making the request
     /// - parameter sessionToken: `SessionToken` identifying the user making the request
     /// - returns: `ExposureDownloadTask`
-    public func download(assetId: String, environment: Environment, sessionToken: SessionToken) -> ExposureDownloadTask {
-        return ExposureDownloadTask(assetId: assetId,
-                                    environment: environment,
-                                    sessionToken: sessionToken,
-                                    sessionManager: self)
+    public func download(assetId: String, environment: Environment, sessionToken: SessionToken) -> T {
+        if let currentTask = delegate[assetId] {
+            print("♻️ Retrieved ExposureDownloadTask associated with request for: \(assetId)")
+            return currentTask
+        }
+        else {
+            print("✅ Created new ExposureDownloadTask for: \(assetId)")
+            return ExposureDownloadTask(assetId: assetId,
+                                        environment: environment,
+                                        sessionToken: sessionToken,
+                                        sessionManager: self)
+        }
+        
     }
 }
 
 // MARK: - OfflineMediaAsset
-extension SessionManager {
+extension SessionManager where T == ExposureDownloadTask {
     public func offline(assetId: String) -> OfflineMediaAsset? {
         return offlineAssets()
             .filter{ $0.assetId == assetId }
@@ -42,7 +50,7 @@ extension SessionManager {
     public func delete(media: OfflineMediaAsset) {
         remove(localRecordId: media.assetId)
         do {
-            try media.fairplayRequester.deletePersistedContentKey(for: media.assetId)
+            try media.fairplayRequester?.deletePersistedContentKey(for: media.assetId)
             if let url = media.urlAsset?.url {
                 try FileManager.default.removeItem(at: url)
             }
@@ -58,7 +66,7 @@ extension SessionManager {
         delete(media: media)
     }
     
-    internal func save(assetId: String, entitlement: PlaybackEntitlement, url: URL?) {
+    internal func save(assetId: String, entitlement: PlaybackEntitlement?, url: URL?) {
         do {
             if let currentAsset = offline(assetId: assetId) {
                 if currentAsset.urlAsset?.url != nil {
@@ -81,7 +89,7 @@ extension SessionManager {
 }
 
 // MARK: - LocalMediaRecord
-extension SessionManager {
+extension SessionManager where T == ExposureDownloadTask {
     fileprivate var localMediaRecords: [LocalMediaRecord]? {
         do {
             let logFile = try logFileURL()
@@ -126,7 +134,7 @@ extension SessionManager {
 }
 
 // MARK: Directory
-extension SessionManager {
+extension SessionManager where T == ExposureDownloadTask {
     fileprivate var localMediaRecordsFile: String {
         return "localMediaRecords"
     }
@@ -148,7 +156,7 @@ extension SessionManager {
 }
 
 // MARK: Save / Remove
-extension SessionManager {
+extension SessionManager where T == ExposureDownloadTask {
     
     /// This method will ensure `LocalMediaLog` has a unique list of downloads with respect to `assetId`
     fileprivate func save(localRecord: LocalMediaRecord) {

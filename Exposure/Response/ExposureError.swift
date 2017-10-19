@@ -13,7 +13,7 @@ import Download
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
-public enum ExposureError: Error {
+public enum ExposureError: DownloadErrorConvertible {
     /// General Errors
     case generalError(error: Error)
     
@@ -27,7 +27,13 @@ public enum ExposureError: Error {
     case fairplay(reason: FairplayError)
     
     /// Download Related Errors
-    case download(reason: DownloadError)
+    case download(reason: Download.DownloadError)
+    
+    case exposureDownload(reason: DownloadError)
+    
+    public static func downloadError(reason: Download.DownloadError) -> ExposureError {
+        return .download(reason: reason)
+    }
 }
 
 extension ExposureError {
@@ -120,12 +126,20 @@ extension ExposureError {
 }
 
 extension ExposureError {
+    public enum DownloadError {
+        /// Unable to load a valid `URL` from path.
+        case invalidMediaUrl(path: String)
+    }
+}
+
+extension ExposureError {
     public var localizedDescription: String {
         switch self {
         case .generalError(error: let error): return error.localizedDescription
         case .serialization(reason: let reason): return reason.localizedDescription
         case .exposureResponse(reason: let reason): return reason.localizedDescription
         case .fairplay(reason: let reason): return "Fairplay: " + reason.localizedDescription
+        case .exposureDownload(reason: let reason): return reason.localizedDescription
         case .download(reason: let reason): return reason.localizedDescription
         }
     }
@@ -167,6 +181,13 @@ extension ExposureError.FairplayError {
     }
 }
 
+extension ExposureError.DownloadError {
+    public var localizedDescription: String {
+        switch self {
+        case .invalidMediaUrl(path: let path): return "The supplied path does not specify a valid URL: " + path
+        }
+    }
+}
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.
     public var code: Int {
@@ -175,6 +196,7 @@ extension ExposureError {
         case .serialization(reason: let error): return error.code
         case .exposureResponse(reason: let reason): return reason.httpCode
         case .fairplay(reason: let reason): return reason.code
+        case .exposureDownload(reason: let reason): return reason.code
         case .download(reason: let reason): return reason.code
         }
     }
@@ -209,6 +231,15 @@ extension ExposureError.FairplayError {
         case .networking(error: _): return 313
         case .serverPlaybackContext(error: _): return 314
         case .contentInformationRequestMissing: return 315
+        }
+    }
+}
+
+extension ExposureError.DownloadError {
+    /// Defines the `domain` specific code for the underlying error.
+    public var code: Int {
+        switch self {
+        case .invalidMediaUrl(path: _): return 401
         }
     }
 }
