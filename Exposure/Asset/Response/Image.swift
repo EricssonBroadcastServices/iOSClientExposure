@@ -30,7 +30,7 @@ public struct Image: Codable {
         try container.encodeIfPresent(url, forKey: .url)
         try container.encodeIfPresent(height, forKey: .height)
         try container.encodeIfPresent(width, forKey: .width)
-        try container.encodeIfPresent(orientation, forKey: .orientation)
+        try container.encodeIfPresent(orientation?.string, forKey: .orientation)
         try container.encodeIfPresent(type, forKey: .type)
     }
 
@@ -77,6 +77,16 @@ public struct Image: Codable {
             case (.unknown, .unknown): return true
             case (.other(let l), .other(let r)): return l == r
             default: return false
+            }
+        }
+        
+        internal var string: String {
+            switch self {
+            case .portrait: return "PORTRAIT"
+            case .landscape: return "LANDSCAPE"
+            case .square: return "SQUARE"
+            case .unknown: return "UNKNOWN"
+            case .other(type: let other): return other
             }
         }
     }
