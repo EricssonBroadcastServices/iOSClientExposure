@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LocalizedData: Decodable {
+public struct LocalizedData: Codable {
     public let locale: String?
     public let title: String?
     public let sortingTitle: String?

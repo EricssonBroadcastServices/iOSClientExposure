@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol JSONType: Decodable {
+public protocol JSONType: Codable {
     var jsonValue: Any { get }
 }
 
@@ -28,6 +28,29 @@ extension Bool: JSONType {
 public struct AnyJSONType: JSONType {
     public let jsonValue: Any
 
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        
+        if let value = jsonValue as? Int {
+            try container.encode(value)
+        }
+        else if let string = jsonValue as? String {
+            try container.encode(string)
+        }
+        else if let boolValue = jsonValue as? Bool {
+            try container.encode(boolValue)
+        }
+        else if let arrayValue = jsonValue as? [AnyJSONType] {
+            try container.encode(arrayValue)
+        }
+        else if let dictValue = jsonValue as? [String: AnyJSONType] {
+            try container.encode(dictValue)
+        }
+        else {
+            throw DecodingError.typeMismatch(JSONType.self, DecodingError.Context(codingPath: encoder.codingPath, debugDescription: "Unsupported JSON type"))
+        }
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
 
@@ -39,12 +62,12 @@ public struct AnyJSONType: JSONType {
             jsonValue = boolValue
         } else if let doubleValue = try? container.decode(Double.self) {
             jsonValue = doubleValue
-        } else if let doubleValue = try? container.decode(Array<AnyJSONType>.self) {
-            jsonValue = doubleValue
-        } else if let doubleValue = try? container.decode(Dictionary<String, AnyJSONType>.self) {
-            jsonValue = doubleValue
+        } else if let arrayValue = try? container.decode(Array<AnyJSONType>.self) {
+            jsonValue = arrayValue
+        } else if let dictValue = try? container.decode(Dictionary<String, AnyJSONType>.self) {
+            jsonValue = dictValue
         } else {
-            throw DecodingError.typeMismatch(JSONType.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unsupported JSON tyep"))
+            throw DecodingError.typeMismatch(JSONType.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unsupported JSON type"))
         }
     }
 }

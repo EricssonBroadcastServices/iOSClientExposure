@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ExternalReference: Decodable {
+public struct ExternalReference: Codable {
     public let locator: String?
     public let type: String?
     public let value: String?

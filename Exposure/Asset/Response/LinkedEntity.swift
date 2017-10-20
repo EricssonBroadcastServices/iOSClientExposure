@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct LinkedEntity: Decodable {
+public struct LinkedEntity: Codable {
     public let entityId: String?
     public let linkType: String?
     public let entityType: String?

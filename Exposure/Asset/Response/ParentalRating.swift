@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ParentalRating: Decodable {
+public struct ParentalRating: Codable {
     /// The two letter country code this rating is for.
     public let country: String?
     
