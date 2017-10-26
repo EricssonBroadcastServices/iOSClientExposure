@@ -4,7 +4,7 @@
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
 
 ## 0.2.1
-NO RELEASE DATE SET YET
+Released 26 Oct 2017
 
 #### Features
 * `EMP-9822` Content search with autocompletion
@@ -25,6 +25,7 @@ NO RELEASE DATE SET YET
 * Integrated `Download` entitlement requests and validation.
 * Renamed `Exposure` protocol to `ExposureType`
 * `ExposureDownloadTask` adopts `DownloadTaskType` instead of wrapping `DownloadTask`
+* `EMP-10550` Streaming extensions on `Player` in  `Analytics` module moved to `Exposure`.
 
 #### Bug fixes
 * `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.

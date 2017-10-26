@@ -82,6 +82,7 @@
 		766338621F78FBD300D66160 /* ValidateDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766338611F78FBD300D66160 /* ValidateDownload.swift */; };
 		766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766338631F78FC2400D66160 /* DownloadValidation.swift */; };
 		766338661F78FEB700D66160 /* ValidateDownloadSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766338651F78FEB700D66160 /* ValidateDownloadSpec.swift */; };
+		766409651FA2281300A5E6C7 /* ExposureAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766409641FA2281300A5E6C7 /* ExposureAnalyticsProvider.swift */; };
 		7667AEBA1EC1C44100C308FC /* .env in Resources */ = {isa = PBXBuildFile; fileRef = 7667AEB91EC1C44100C308FC /* .env */; };
 		766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB641EC9822B00EBEC53 /* Asset.swift */; };
 		766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766FBB661EC9829200EBEC53 /* FetchAsset.swift */; };
@@ -278,6 +279,7 @@
 		766338611F78FBD300D66160 /* ValidateDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDownload.swift; sourceTree = "<group>"; };
 		766338631F78FC2400D66160 /* DownloadValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadValidation.swift; sourceTree = "<group>"; };
 		766338651F78FEB700D66160 /* ValidateDownloadSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateDownloadSpec.swift; sourceTree = "<group>"; };
+		766409641FA2281300A5E6C7 /* ExposureAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureAnalyticsProvider.swift; sourceTree = "<group>"; };
 		7667AEB91EC1C44100C308FC /* .env */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .env; path = fastlane/.env; sourceTree = SOURCE_ROOT; };
 		766FBB641EC9822B00EBEC53 /* Asset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Asset.swift; sourceTree = "<group>"; };
 		766FBB661EC9829200EBEC53 /* FetchAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAsset.swift; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 				766094A61F0AAD61005E9A70 /* ExposureFairplayRequester.swift */,
 				76C7DDED1F23DAEE008FE955 /* Player+ExposurePlayback.swift */,
 				767204141F82901D006D85B0 /* ExposureStreamFairplayRequester.swift */,
+				766409641FA2281300A5E6C7 /* ExposureAnalyticsProvider.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -1268,6 +1271,7 @@
 				76D7046A1F9396E400D6FC6B /* FilteredLocale.swift in Sources */,
 				76A842F01EA7667D00BDAF2C /* PlayRequest.swift in Sources */,
 				769734A11EF1803200F6ADC8 /* Program.swift in Sources */,
+				766409651FA2281300A5E6C7 /* ExposureAnalyticsProvider.swift in Sources */,
 				76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */,
 				762383F61F98A7830046EF38 /* LocalMediaRecord.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
