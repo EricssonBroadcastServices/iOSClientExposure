@@ -33,7 +33,7 @@ public struct SendBatch {
     }
 }
 
-extension SendBatch: Exposure {
+extension SendBatch: ExposureType {
     public typealias Response = AnalyticsConfigResponse
     
     public var endpointUrl: String {
@@ -41,7 +41,7 @@ extension SendBatch: Exposure {
     }
     
     public var parameters: [String: Any] {
-        var event = messageBatch.toJSON()
+        var event = messageBatch.jsonParameters()
         
         /// Unix timestamp according to device clock when the batch was sent from the device.
         event[JSONKeys.dispatchTime.rawValue] = Date().millisecondsSince1970

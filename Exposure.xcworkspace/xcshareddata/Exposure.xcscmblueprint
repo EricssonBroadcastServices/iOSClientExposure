@@ -16,12 +16,12 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "BFDE0505-122B-4EB9-910F-4DB6639E2D0F",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "6C25B371DC66ADF4587F56D8CF85DD31480F6F3F" : "iOSClientExposure\/Carthage\/Checkouts\/iOSClientPlayer\/Carthage\/Checkouts\/Mockingjay\/",
-    "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/",
-    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Nimble\/",
+    "D0725CAC6FF2D66F2C83C2C48DC12106D42DAA64" : "iOSClientExposure\/Carthage\/Checkouts\/iOSClientPlayer\/Carthage\/Checkouts\/Quick\/",
+    "95438028B10BBB846574013D29F154A00556A9D1" : "iOSClientExposure\/Carthage\/Checkouts\/Quick\/Externals\/Nimble\/",
     "67620B5EFA902936DF04070AF595B76AB0333747" : "iOSClientExposure\/Carthage\/Checkouts\/Alamofire\/",
     "C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3" : "iOSClientExposure\/Carthage\/Checkouts\/SwiftyJSON\/",
     "214A69DBE68449124238BBE07F858F4905887B1B" : "iOSClientExposure\/",
-    "B30894CAEEC5ADF2BD3B0062DFB2EF32B12F989D" : "iOSClientExposure\/Carthage\/Checkouts\/iOSClientPlayer\/",
+    "B30894CAEEC5ADF2BD3B0062DFB2EF32B12F989D" : "iOSClientPlayer\/",
     "2202450528CFA50DD806F0340B3987713E89BFB6" : "iOSClientExposure\/Carthage\/Checkouts\/Mockingjay\/URITemplate\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Exposure",

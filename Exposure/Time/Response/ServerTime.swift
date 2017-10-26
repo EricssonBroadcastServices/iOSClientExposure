@@ -6,10 +6,10 @@
 //  Copyright © 2017 emp. All rights reserved.
 //
 
-import SwiftyJSON
+import Foundation
 
 /// Response struct detailing *server time*
-public struct ServerTime {
+public struct ServerTime: Decodable {
     /// The number of milliseconds since epoch.
     public let epochMillis: UInt64?
     
@@ -17,16 +17,3 @@ public struct ServerTime {
     public let iso8601:String?
 }
 
-extension ServerTime: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = SwiftyJSON.JSON(json)
-        
-        epochMillis = actualJson[JSONKeys.epochMillis.rawValue].uInt64
-        iso8601 = actualJson[JSONKeys.iso8601.rawValue].string
-    }
-    
-    internal enum JSONKeys: String {
-        case epochMillis = "epochMillis"
-        case iso8601 = "iso8601"
-    }
-}

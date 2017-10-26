@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for fetching *EPG* for a set of channels
-public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
+public struct FetchEpgChannelList: ExposureType, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
     public typealias Response = ChannelEpgList
     
     public var endpointUrl: String {
@@ -66,7 +66,7 @@ public struct FetchEpgChannelList: Exposure, SortedResponse, PageableResponse, F
             // Query string is keys separated by ",".
             // Any descending key should include a "-" sign as a prefix.
             params[Keys.sort.rawValue] = sort
-                .map{ $0.ascending ? "" : "-" + $0.key }
+                .map{ $0.ascending ? $0.key : "-" + $0.key }
                 .joined(separator: ",")
         }
         
@@ -80,6 +80,6 @@ extension FetchEpgChannelList {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest {
-        return request(.get, encoding: ExposureURLEncoding.default)
+        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }

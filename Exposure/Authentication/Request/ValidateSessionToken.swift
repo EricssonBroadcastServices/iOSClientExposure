@@ -9,7 +9,7 @@
 import Foundation
 
 /// Validates a session with the underlying CRM to make sure it is still valid.
-public struct ValidateSessionToken: Exposure {
+public struct ValidateSessionToken: ExposureType {
     public typealias Response = SessionResponse
     
     /// Auth token to invalidate

@@ -19,27 +19,31 @@ class ChannelEpgSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let object = ChannelEpg(json: ChannelEpgJSON.valid())
+                let json = ChannelEpgJSON.valid()
                 
-                expect(object).toNot(beNil())
-                expect(object!.channelId).toNot(beNil())
-                expect(object!.programs).toNot(beNil())
-                expect(object!.totalHitsAllChannels).toNot(beNil())
+                let result = json.decode(ChannelEpg.self)
+                
+                expect(result).toNot(beNil())
+                expect(result?.channelId).toNot(beNil())
+                expect(result?.programs).toNot(beNil())
+                expect(result?.totalHitsAllChannels).toNot(beNil())
             }
             
             it("should init with partial response") {
-                let object = ChannelEpg(json: ChannelEpgJSON.missingKeys())
+                let json = ChannelEpgJSON.missingKeys()
                 
-                expect(object).toNot(beNil())
-                expect(object!.channelId).toNot(beNil())
-                expect(object!.programs).to(beNil())
-                expect(object!.totalHitsAllChannels).to(beNil())
+                let result = json.decode(ChannelEpg.self)
+                
+                expect(result).toNot(beNil())
+                expect(result?.channelId).toNot(beNil())
+                expect(result?.programs).to(beNil())
+                expect(result?.totalHitsAllChannels).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let object = ChannelEpg(json: ChannelEpgJSON.empty())
-                
-                expect(object).to(beNil())
+            it("should init with empty response") {
+                let json = ChannelEpgJSON.empty()
+                let result = json.decode(ChannelEpg.self)
+                expect(result).toNot(beNil())
             }
         }
     }
@@ -51,7 +55,7 @@ extension ChannelEpgSpec {
         static let programs = [ProgramSpec.ProgramJSON.valid()]
         static let totalHitsAllChannels = 10
         
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "channelId": ChannelEpgJSON.channelId,
                 "programs": ChannelEpgJSON.programs,
@@ -59,13 +63,13 @@ extension ChannelEpgSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "channelId": ChannelEpgJSON.channelId
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 /// Request *server time*. This may be used to detect client clock drift or simply synchronizing client and server timestamps.
-public struct FetchServerTime: Exposure {
+public struct FetchServerTime: ExposureType {
     public typealias Response = ServerTime
     
     /// `Environment` to use

@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-public struct Media {
+public struct Media: Codable {
     /// The id of the media.
     public let mediaId: String?
     
@@ -36,35 +35,4 @@ public struct Media {
     
     /// The status of the media. "enabled" if playable.
     public let status: String?
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        mediaId = actualJson[JSONKeys.mediaId.rawValue].string
-        name = actualJson[JSONKeys.name.rawValue].string
-        drm = actualJson[JSONKeys.drm.rawValue].string
-        format = actualJson[JSONKeys.format.rawValue].string
-        height = actualJson[JSONKeys.height.rawValue].int
-        width = actualJson[JSONKeys.width.rawValue].int
-        durationMillis = actualJson[JSONKeys.durationMillis.rawValue].int
-        programId = actualJson[JSONKeys.programId.rawValue].string
-        status = actualJson[JSONKeys.status.rawValue].string
-        
-        if mediaId == nil && name == nil && drm == nil && format == nil
-            && height == nil && width == nil && durationMillis == nil
-            && programId == nil && status == nil {
-            return nil
-        }
-    }
-    
-    internal enum JSONKeys: String {
-        case mediaId = "mediaId"
-        case name = "name"
-        case drm = "drm"
-        case format = "format"
-        case height = "height"
-        case width = "width"
-        case durationMillis = "durationMillis"
-        case programId = "programId"
-        case status = "status"
-    }
 }

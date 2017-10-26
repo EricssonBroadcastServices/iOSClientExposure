@@ -46,36 +46,6 @@ class FetchEpgProgramSpec: QuickSpec {
                 expect(params.count).to(equal(1))
                 expect(params["onlyPublished"]).toNot(beNil())
             }
-            
-            it("should not filter on airing only by default") {
-                expect(program.airing).to(beFalse())
-            }
-        }
-        
-        describe("Program Airing") {
-            let airing = program.filter(airingOnly: true)
-            
-            it("should have no headers") {
-                expect(airing.headers).to(beNil())
-            }
-            
-            it("should generate a correct endpoint url") {
-                let endpoint = "/epg/" + channelId + "/program/" + programId + "/airing"
-                expect(airing.endpointUrl).to(equal(env.apiUrl+endpoint))
-            }
-            
-            it("should filter on airing only by default") {
-                expect(airing.airing).to(beTrue())
-            }
-            
-            it("should generate paramters") {
-                let params = airing
-                    .filter(onlyPublished: true)
-                    .parameters
-                
-                expect(params.count).to(equal(1))
-                expect(params["onlyPublished"]).toNot(beNil())
-            }
         }
     }
 }

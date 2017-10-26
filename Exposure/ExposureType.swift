@@ -1,5 +1,5 @@
 //
-//  Exposure.swift
+//  ExposureType.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2017-03-20.
@@ -9,18 +9,23 @@
 import Foundation
 import Alamofire
 
-public protocol ExposureConvertible {
-    init?(json: Any)
+public protocol Serializable: Encodable {
+    func toJSON() -> [String: Any]
 }
 
-public protocol JSONEncodable {
-    func toJSON() -> [String: Any]
+extension Serializable {
+    public func toJSON() -> [String: Any] {
+        guard let data = try? JSONEncoder().encode(self),
+            let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                as? [String: Any] else { return [:] }
+        return json ?? [:]
+    }
 }
 
 /// Base protocol detailing the structure required interact with *Exposure*.
 ///
 /// All requests to *Exposure* should adhere to this format.
-public protocol Exposure {
+public protocol ExposureType {
     /// Response type
     associatedtype Response
     
@@ -48,7 +53,7 @@ let sessionManager: SessionManager = {
 }()
 
 // MARK: - REST API
-extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
+extension ExposureType where Parameters == [String: Any], Headers == HTTPHeaders? {
     /// Convenience method for making *Exposure* requests with a set of parameters and optional headers
     ///
     /// - parameter method: `Alamofire` specified `HTTPMethod`
@@ -66,7 +71,7 @@ extension Exposure where Parameters == [String: Any], Headers == HTTPHeaders? {
 }
 
 
-extension Exposure where Parameters == [String: Any]?, Headers == HTTPHeaders? {
+extension ExposureType where Parameters == [String: Any]?, Headers == HTTPHeaders? {
     /// Convenience method for making *Exposure* requests with an optional set of parameters and headers
     ///
     /// - parameter method: `Alamofire` specified `HTTPMethod`

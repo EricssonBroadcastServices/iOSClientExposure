@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-public struct Image {
+public struct Image: Codable {
     /// Path to where the image is located
     public let url: String?
     
@@ -25,26 +24,30 @@ public struct Image {
     /// Image type
     public let type: String?
     
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        url = actualJson[JSONKeys.url.rawValue].string
-        height = actualJson[JSONKeys.height.rawValue].int
-        width = actualJson[JSONKeys.width.rawValue].int
-        orientation = Orientation(string: actualJson[JSONKeys.orientation.rawValue].string)
-        type = actualJson[JSONKeys.type.rawValue].string
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         
-        if url == nil && height == nil && width == nil && orientation == nil && type == nil { return nil }
+        try container.encodeIfPresent(url, forKey: .url)
+        try container.encodeIfPresent(height, forKey: .height)
+        try container.encodeIfPresent(width, forKey: .width)
+        try container.encodeIfPresent(orientation?.string, forKey: .orientation)
+        try container.encodeIfPresent(type, forKey: .type)
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        url = try container.decodeIfPresent(String.self, forKey: .url)
+        height = try container.decodeIfPresent(Int.self, forKey: .height)
+        width = try container.decodeIfPresent(Int.self, forKey: .width)
+        orientation = Orientation(string: try container.decodeIfPresent(String.self, forKey: .orientation))
+        type = try container.decodeIfPresent(String.self, forKey: .type)
+    }
+
+    internal enum CodingKeys: String, CodingKey {
+        case url, height, width, orientation, type
     }
     
-    internal enum JSONKeys: String {
-        case url = "url"
-        case height = "height"
-        case width = "width"
-        case orientation = "orientation"
-        case type = "type"
-    }
-    
-    public enum Orientation {
+    public enum Orientation: Equatable {
         case portrait
         case landscape
         case square
@@ -63,6 +66,27 @@ public struct Image {
             case "SQUARE": self = .square
             case "UNKNOWN": self = .unknown
             default: self = .other(type: string)
+            }
+        }
+        
+        public static func == (lhs: Orientation, rhs: Orientation) -> Bool {
+            switch (lhs, rhs) {
+            case (.portrait, .portrait): return true
+            case (.landscape, .landscape): return true
+            case (.square, .square): return true
+            case (.unknown, .unknown): return true
+            case (.other(let l), .other(let r)): return l == r
+            default: return false
+            }
+        }
+        
+        internal var string: String {
+            switch self {
+            case .portrait: return "PORTRAIT"
+            case .landscape: return "LANDSCAPE"
+            case .square: return "SQUARE"
+            case .unknown: return "UNKNOWN"
+            case .other(type: let other): return other
             }
         }
     }

@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// Configuration data detailing the *Exposure Analytics Environment* for client applications.
-public struct AnalyticsConfigResponse {
+public struct AnalyticsConfigResponse: Decodable {
     /// The requested time untill next contact with the *Analytics Engine*
     public let secondsUntilNextReport: Int?
     
@@ -28,28 +27,4 @@ public struct AnalyticsConfigResponse {
     
     /// The current timestamp, in unix epoch time.
     public let timestampNow: Int?
-}
-
-extension AnalyticsConfigResponse: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJSON = JSON(json)
-        
-        secondsUntilNextReport = actualJSON[JSONKeys.secondsUntilNextReport.rawValue].int
-        includeApplicationMetrics = actualJSON[JSONKeys.includeApplicationMetrics.rawValue].bool
-        includeNetworkMetrics = actualJSON[JSONKeys.includeNetworkMetrics.rawValue].bool
-        includeGpsMetrics = actualJSON[JSONKeys.includeGpsMetrics.rawValue].bool
-        includeDeviceMetrics = actualJSON[JSONKeys.includeDeviceMetrics.rawValue].bool
-        timestampNow = actualJSON[JSONKeys.timestampNow.rawValue].int
-        
-        if secondsUntilNextReport == nil && includeApplicationMetrics == nil && includeNetworkMetrics == nil && includeGpsMetrics == nil && includeDeviceMetrics == nil && timestampNow == nil { return nil }
-    }
-    
-    internal enum JSONKeys: String {
-        case secondsUntilNextReport = "secondsUntilNextReport"
-        case includeApplicationMetrics = "includeApplicationMetrics"
-        case includeNetworkMetrics = "includeNetworkMetrics"
-        case includeGpsMetrics = "includeGpsMetrics"
-        case includeDeviceMetrics = "includeDeviceMetrics"
-        case timestampNow = "timestampNow"
-    }
 }

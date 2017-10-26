@@ -15,58 +15,88 @@ class PlaybackEntitlementSpec: QuickSpec {
     override func spec() {
         super.spec()
         
+        let edrmJson:[String: Codable] = [
+            "ownerId":"owner",
+            "userToken":"userToken",
+            "requestUrl":"requestUrl",
+            "adParameter":"adParameter"
+        ]
+        let fairplayJson:[String: Codable] = [
+            "secondaryMediaLocator":"secondaryMediaLocator",
+            "certificateUrl":"certificateUrl",
+            "licenseAcquisitionUrl":"licenseAcquisitionUrl"
+        ]
+        let json:[String: Codable] = [
+            "playToken":"playToken",
+            "edrmConfig":edrmJson,
+            "fairplayConfig":fairplayJson,
+            "mediaLocator":"mediaLocator",
+            "licenseExpiration":"licenseExpiration",
+            "licenseExpirationReason":"NOT_ENTITLED",
+            "licenseActivation":"licenseActivation",
+            "playTokenExpiration":"playTokenExpiration",
+            "entitlementType":"TVOD",
+            "live":false,
+            "playSessionId":"playSessionId",
+            "ffEnabled":false,
+            "timeshiftEnabled":false,
+            "rwEnabled":false,
+            "minBitrate":10,
+            "maxBitrate":20,
+            "maxResHeight":30,
+            "airplayBlocked":false,
+            "mdnRequestRouterUrl":"mdnRequestRouterUrl",
+            "lastViewedOffset":10,
+            "productId":"productId"
+        ]
+        
+        let requiredJson:[String: Codable] = [
+            "playToken":"playToken",
+            "mediaLocator":"mediaLocator",
+            "playTokenExpiration":"playTokenExpiration",
+            "playSessionId":"playSessionId",
+            "live":false,
+            "ffEnabled":false,
+            "timeshiftEnabled":false,
+            "rwEnabled":false,
+            "airplayBlocked":false,
+        ]
+        
         describe("PlaybackEntitlement") {
             it("should init with complete json") {
-                let edrmJson:[String: Any] = [
-                    "ownerId":"owner",
-                    "userToken":"userToken",
-                    "requestUrl":"requestUrl",
-                    "adParameter":"adParameter"
-                ]
-                let fairplayJson:[String: Any] = [
-                    "secondaryMediaLocator":"secondaryMediaLocator",
-                    "certificateUrl":"certificateUrl",
-                    "licenseAcquisitionUrl":"licenseAcquisitionUrl"
-                ]
-                let json:[String: Any] = [
-                    "playToken":"playToken",
-                    "edrmConfig":edrmJson,
-                    "fairplayConfig":fairplayJson,
-                    "mediaLocator":"mediaLocator",
-                    "licenseExpiration":"licenseExpiration",
-                    "licenseExpirationReason":"NOT_ENTITLED",
-                    "licenseActivation":"licenseActivation",
-                    "playTokenExpiration":"playTokenExpiration",
-                    "entitlementType":"TVOD",
-                    "live":false,
-                    "playSessionId":"playSessionId",
-                    "ffEnabled":false,
-                    "timeshiftEnabled":false,
-                    "rwEnabled":false,
-                    "minBitrate":10,
-                    "maxBitrate":20,
-                    "maxResHeight":30,
-                    "airplayBlocked":false,
-                    "mdnRequestRouterUrl":"mdnRequestRouterUrl"
-                ]
+                expect(json.decode(PlaybackEntitlement.self)).toNot(beNil())
+            }
+            
+            it("should init with required keys") {
+                expect(requiredJson.decode(PlaybackEntitlement.self)).toNot(beNil())
+            }
+            
+            it("should not init without required properties") {
+                let invalid:[String: Codable] = ["invalid":"JSON"]
                 
-                let entitlement = PlaybackEntitlement(json: json)
+                expect{ try invalid.throwingDecode(PlaybackEntitlement.self) }
+                    .to(throwError(errorType: DecodingError.self))
+            }
+            
+            it("should not init with empty json") {
+                let empty:[String: Codable] = [:]
                 
-                expect(entitlement).toNot(beNil())
+                expect{ try empty.throwingDecode(PlaybackEntitlement.self) }
+                    .to(throwError(errorType: DecodingError.self))
             }
             
             it("should not create invalid EDRMConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let result = requiredJson.decode(PlaybackEntitlement.self)
                 
-                expect(entitlement).toNot(beNil())
-                expect(entitlement?.edrm).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.edrm).to(beNil())
             }
             
             it("should not create invalid FairplayConfiguration") {
-                let entitlement = PlaybackEntitlement(json: [:])
+                let result = requiredJson.decode(PlaybackEntitlement.self)
                 
-                expect(entitlement).toNot(beNil())
-                expect(entitlement?.fairplay).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.fairplay).to(beNil())
             }
         }
         

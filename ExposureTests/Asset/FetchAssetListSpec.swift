@@ -23,8 +23,6 @@ class FetchAssetListSpec: QuickSpec {
         let businessUnit = "Blixt"
         let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         
-        let assetResponse = AssetListSpec.AssetListJSON.valid()
-        
         let fetchAsset = FetchAsset(environment: env)
         let fetchList = fetchAsset.list()
         
@@ -53,7 +51,7 @@ class FetchAssetListSpec: QuickSpec {
                     .elasticSearch(publicationQuery: "publications.countries:ALL")
                     .parameters
                 
-                expect(params.count).to(equal(12))
+                expect(params.count).to(equal(13))
                 
                 expect(params["onlyPublished"]).toNot(beNil())
                 expect(params["fieldSet"]).toNot(beNil())
@@ -67,6 +65,7 @@ class FetchAssetListSpec: QuickSpec {
                 expect(params["query"]).toNot(beNil())
                 expect(params["deviceQuery"]).toNot(beNil())
                 expect(params["publicationQuery"]).toNot(beNil())
+                expect(params["includeUserData"]).toNot(beNil())
             }
         }
         

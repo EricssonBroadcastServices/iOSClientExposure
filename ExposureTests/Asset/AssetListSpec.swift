@@ -19,29 +19,36 @@ class AssetListSpec: QuickSpec {
         
         describe("JSON") {
             it("should succeed with valid response") {
-                let value = AssetList(json: AssetListJSON.valid())
+                let json = AssetListJSON.valid()
+                let result = json.decode(AssetList.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.totalCount).toNot(beNil())
-                expect(value!.pageSize).toNot(beNil())
-                expect(value!.pageNumber).toNot(beNil())
-                expect(value!.items).toNot(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.totalCount).toNot(beNil())
+                expect(result?.pageSize).toNot(beNil())
+                expect(result?.pageNumber).toNot(beNil())
+                expect(result?.items).toNot(beNil())
             }
             
             it("should init with partial response") {
-                let value = AssetList(json: AssetListJSON.missingKeys())
+                let json = AssetListJSON.missingKeys()
+                let result = json.decode(AssetList.self)
                 
-                expect(value).toNot(beNil())
-                expect(value!.totalCount).toNot(beNil())
-                expect(value!.pageSize).to(beNil())
-                expect(value!.pageNumber).to(beNil())
-                expect(value!.items).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.totalCount).toNot(beNil())
+                expect(result?.pageSize).to(beNil())
+                expect(result?.pageNumber).to(beNil())
+                expect(result?.items).to(beNil())
             }
             
-            it("should not init with empty or non matching response") {
-                let value = AssetList(json: AssetListJSON.empty())
+            it("should init with empty response") {
+                let json = AssetListJSON.empty()
+                let result = json.decode(AssetList.self)
                 
-                expect(value).to(beNil())
+                expect(result).toNot(beNil())
+                expect(result?.totalCount).to(beNil())
+                expect(result?.pageSize).to(beNil())
+                expect(result?.pageNumber).to(beNil())
+                expect(result?.items).to(beNil())
             }
         }
     }
@@ -53,7 +60,7 @@ extension AssetListSpec {
         static let pageSize = 1
         static let pageNumber = 1
         static let items = [AssetSpec.AssetJSON.valid()]
-        static func valid() -> Any {
+        static func valid() -> [String: Codable] {
             return [
                 "totalCount": AssetListJSON.totalCount,
                 "pageSize": AssetListJSON.pageSize,
@@ -62,13 +69,13 @@ extension AssetListSpec {
             ]
         }
         
-        static func missingKeys() -> Any {
+        static func missingKeys() -> [String: Codable] {
             return [
                 "totalCount": AssetListJSON.totalCount
             ]
         }
         
-        static func empty() -> Any {
+        static func empty() -> [String: Codable] {
             return [:]
         }
     }

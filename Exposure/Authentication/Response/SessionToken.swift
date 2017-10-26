@@ -7,17 +7,16 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 /// `SessionToken` represents an authenticated *session* as recognized by *Exposure*
 ///
 /// The token itself is by no means guaranteed to be valid, it merely represents the expected form.
 ///
 /// For more information regarding `SessionToken`s, authentication requests and managing user sessions, please see [User Authentication]() in the documentation.
-public struct SessionToken {
+public struct SessionToken: Codable {
     /// Keys used to specify `json` body for the request.
-    fileprivate enum JSONKeys: String {
-        case sessionToken = "sessionToken"
+    fileprivate enum CodingKeys: String, CodingKey {
+        case value = "sessionToken"
     }
     
     public let value: String
@@ -72,6 +71,20 @@ extension SessionToken {
         guard comp.count >= 2 else { return nil }
         return comp[2]
     }
+
+    /// The acquired time
+    public var acquired: TimeInterval? {
+        let comp = components
+        guard comp.count >= 4 else { return nil }
+        return Double(comp[4])
+    }
+
+    /// The expiration time
+    public var expiration: TimeInterval? {
+        let comp = components
+        guard comp.count >= 5 else { return nil }
+        return Double(comp[5])
+    }
     
     /// Returns true if this session token is anonymous
     public var isAnonymous: Bool? {
@@ -90,10 +103,3 @@ extension SessionToken {
     }
 }
 
-extension SessionToken: ExposureConvertible {
-    public init?(json: Any) {
-        let actualJson = SwiftyJSON.JSON(json)
-        guard let jSessionToken = actualJson[JSONKeys.sessionToken.rawValue].string else { return nil }
-        value = jSessionToken
-    }
-}

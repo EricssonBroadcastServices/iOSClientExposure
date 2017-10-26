@@ -8,10 +8,10 @@
       location = "group:Carthage/Checkouts/iOSClientPlayer/Player.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/Alamofire/Alamofire.xcodeproj">
+      location = "group:Carthage/Checkouts/iOSClientDownload/Download.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Carthage/Checkouts/SwiftyJSON/SwiftyJSON.xcodeproj">
+      location = "group:Carthage/Checkouts/Alamofire/Alamofire.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Carthage/Checkouts/Quick/Quick.xcodeproj">

@@ -7,41 +7,14 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-public struct Tag {
+public struct Tag: Codable {
     public let created: String?
     public let changed: String?
     public let type: String?
     public let tagValues: [Values]?
     
-    public struct Values {
+    public struct Values: Codable {
         public let tagId: String?
-        
-        public init?(json: Any) {
-            let actualJson = JSON(json)
-            tagId = actualJson[JSONKeys.tagId.rawValue].string
-        }
-        
-        internal enum JSONKeys: String {
-            case tagId = "tagId"
-        }
-    }
-    
-    public init?(json: Any) {
-        let actualJson = JSON(json)
-        created = actualJson[JSONKeys.created.rawValue].string
-        changed = actualJson[JSONKeys.changed.rawValue].string
-        type = actualJson[JSONKeys.type.rawValue].string
-        tagValues = actualJson[JSONKeys.tagValues.rawValue].arrayObject?.flatMap{ Values(json: $0) }
-        
-        if created == nil && changed == nil && type == nil && tagValues == nil { return nil }
-    }
-    
-    internal enum JSONKeys: String {
-        case created = "created"
-        case changed = "changed"
-        case type = "type"
-        case tagValues = "tagValues"
     }
 }

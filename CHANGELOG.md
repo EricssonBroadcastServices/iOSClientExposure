@@ -1,7 +1,39 @@
 # CHANGELOG
 
-* `0.2.x` Releases - [0.2.0](#020)
+* `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
+
+## 0.2.1
+Released 26 Oct 2017
+
+#### Features
+* `EMP-9822` Content search with autocompletion
+* `EMP-9697` Carousel integration `FetchCarouselList`
+* `EMP-10419` *Exposure* specific `DownloadFairplayRequester`
+* `EMP-10445` *Downloading* assets now require a unique identifier
+* Added `CustomerConfig` model
+* `EMP-10474` Several response structs made `Codable` to enable easy persistence on disk.
+* Added `SessionToken.acquired` and `SessionToken.expiration`
+* `EMP-10486` Adds `ExposureDownloadTask` which handles asset downloads by `assetId`
+
+#### Changes
+* Moved `FairplayError` from `Player` to `Exposure`.
+* Requirements for `Xcode` set to `9.0+` and `Swift` to `4.0+`
+* Removed `SwiftyJSON` in favor of `Decodable` from `Swift` `4.0+`
+* `EMP-10270` `Airing` is now distinct from fetching `Program`
+* `EMP-10322` `Image.Orientation` made `Equatable`.
+* Integrated `Download` entitlement requests and validation.
+* Renamed `Exposure` protocol to `ExposureType`
+* `ExposureDownloadTask` adopts `DownloadTaskType` instead of wrapping `DownloadTask`
+* `EMP-10550` Streaming extensions on `Player` in  `Analytics` module moved to `Exposure`.
+
+#### Bug fixes
+* `EMP-10269` `FetchEPG` now respects the *onlyPublished* parameter. Fixed url encoding.
+* `EMP-10298` `ExposureRequest.validate()` should now correctly validate on statusCodes and content type.
+* `EMP-10299` `PlaybackEntitlement` should not be created with empty or competely invalid `json`.
+* `EMP-10468` Decoding *Exposure* response no longer fails if `AssetUserPlayHistory` returns an empty dictionary.
+* `ExposureDownloadTask`s restored from a completed state with error now forwards that error.
+
 
 ## 0.2.0
 Released 5 Sep 2017

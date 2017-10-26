@@ -12,6 +12,7 @@
     - [Entitlement Requests and Streaming through  `Player`](#entitlement-requests-and-streaming-through-player)
     - [Fetching EPG](#fetching-epg)
     - [Fetching Assets](#fetching-assets)
+    - [Content Search](#content-search)
     - [Analytics Delivery](#analytics-delivery)
     - [Fairplay Integration](#fairplay-integration)
     - [Error Handling](#error-handling)
@@ -24,19 +25,23 @@
 - [x] Asset search
 - [x] Authentication
 - [x] Playback Entitlement requests
+- [x] Download Entitlement requests
 - [x] EPG discovery
 - [x] Analytics drop-off
 - [x] Server time sync
+- [x] Carousel integration
+- [x] Dynamic customer configuration
+- [x] Content search with autocompletion
 
 ## Requirements
 
 * `iOS` 9.0+
-* `Swift` 3.0+
-* `Xcode` 8.2.1+
+* `Swift` 4.0+
+* `Xcode` 9.0+
+
 * Framework dependencies
-    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientExposure)
+    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
-    - [`SwiftyJSON`](https://github.com/SwiftyJSON/SwiftyJSON)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
 ## Installation
@@ -146,6 +151,7 @@ let request = Entitlement(environment: environment, sessionToken: sessionToken)
 let vodRequest = request.vod(assetId: someAsset)
 let liveRequest = request.live(channelId: someChannel)
 let catchupRequest = request.catchup(channelId: someChannel, programId: someProgram)
+let downloadRequest = request.download(assetId: someOfflineAsset)
 ```
 
 Optionally, client applications can request a `DRM` other than the default  `.fairplay`. Please note that the `iOS` platform might not support the requested `DRM`. As for *Fairplay* `DRM`, `Exposure` supplies an out of the box implementation of `FairplayRequester` to handle rights management on the *EMP* platform. For more information, please see [Fairplay Integration](#fairplay-integration).
@@ -270,6 +276,38 @@ FetchAsset(environment: environment)
     }
 ```
 
+### Content Search
+Client applications can do content search with autocompletion by querying *Exposure*.
+
+```Swift
+Search(environment: environment)
+    .autocomplete(for: "The Amazing TV sh")
+    .filter(locale: "en")
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<[SearchResponseAutocomplete]>) in
+        // Matches "The Amazing TV show"
+    }
+```
+
+When doing querys on assets, many of the `FetchAssetList` filters are applicable.
+
+```Swift
+Search(environment: environment)
+    .query(for: "The Amazing TV sh")
+    .filter(locale: "en")
+    .use(fieldSet: .all)
+    .exclude(fields: ["publications.rights", "tags"])
+    .sort(on: ["-publications.publicationDate","assetId"])
+    .show(page: 1, spanning: 100)
+    .request()
+    .validate()
+    .response{ (response: ExposureResponse<SearchResponseList>) in
+        // Handle the response
+    }
+```
+
+
 ### Analytics Delivery
 `EventSink` analytics endpoints expose drop-of functionality where client applications can deliver *Analytics Payload*. This payload consists of a `json` object wrapped by an `AnalyticsBatch` envelope. Each batch is self-contained and encapsulates all information required for dispatch.
 
@@ -300,7 +338,7 @@ EventSink()
 *EMP* provides an out of the box [Analytics module](https://github.com/FredrikSjoberg/iOSClientAnalytics) which integrates seamlessly with the rest of the platform.
 
 ### Fairplay Integration
-`Exposure` provides out of the box integration for managing *EMP* configured *Fairplay* `DRM` protection. By using the `Player.stream(playback:)` function to engage playback the framework automatically configures `player` to use an `ExposureFairplayRequester` as its `FairplayRequester`.
+`Exposure` provides out of the box integration for managing *EMP* configured *Fairplay* `DRM` protection. By using the `Player.stream(playback:)` function to engage playback the framework automatically configures `player` to use an `ExposureStreamFairplayRequester` as its `FairplayRequester`.
 
 ### Error Handling
 Effective error handling when using `Exposure` revolves around responding to three major categories of errors.
@@ -344,6 +382,16 @@ Errors delivered as an `ExposureResponseMessage` should, for the most part, not 
 
 It is up to the client application to decide how to best handle `ExposureResponseMessage`s. Each endpoint may return a slightly different set of response messages. For more in depth information, please consult the documentation related to each individual request.
 
+#### Fairplay DRM Errors
+Another major cause of errors is *Fairplay* `DRM` issues, broadly categorized into two types:
+
+* Server related `DRM` errors
+* Application related
+
+Server related issues most likely stem from an invalid or broken backend configuration. Application issues range from parsing errors, unexpected server response or networking issues.
+
+*Fairplay* `DRM` troubleshooting is highly coupled with the specific application and backend implementations and as such hard to generalize. For more information about *Fairplay* debugging, please see Apple's [documentation](https://developer.apple.com/library/content/technotes/tn2454).
+
 ## Release Notes
 Release specific changes can be found in the [CHANGELOG](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/CHANGELOG.md).
 
@@ -358,11 +406,11 @@ Updating your dependencies is done by running  `carthage update` with the releva
 ## Roadmap
 No formalised roadmap has yet been established but an extensive backlog of possible items exist. The following represent an unordered *wish list* and is subject to change.
 
-- [ ] Carousel integration
-- [ ] Content search
+- [x] Carousel integration
+- [x] Content search
 - [ ] User playback history
 - [ ] User preferences
 - [ ] Device management
-- [ ] Swift 4: Replace SwiftyJSON with native Codable 
+- [x] Swift 4: Replace SwiftyJSON with native Codable 
 
 ## Contributing
