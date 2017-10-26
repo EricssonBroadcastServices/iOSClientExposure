@@ -31,6 +31,8 @@ public enum ExposureError: DownloadErrorConvertible {
     
     case exposureDownload(reason: DownloadError)
     
+    case analytics(reason: AnalyticsError)
+    
     public static func downloadError(reason: Download.DownloadError) -> ExposureError {
         return .download(reason: reason)
     }
@@ -133,6 +135,13 @@ extension ExposureError {
 }
 
 extension ExposureError {
+    public enum AnalyticsError {
+        /// No analytics provider has been supplied
+        case analyticsProviderMissing
+    }
+}
+
+extension ExposureError {
     public var localizedDescription: String {
         switch self {
         case .generalError(error: let error): return error.localizedDescription
@@ -141,6 +150,7 @@ extension ExposureError {
         case .fairplay(reason: let reason): return "Fairplay: " + reason.localizedDescription
         case .exposureDownload(reason: let reason): return reason.localizedDescription
         case .download(reason: let reason): return reason.localizedDescription
+        case .analytics(reason: let reason): return reason.localizedDescription
         }
     }
 }
@@ -188,6 +198,15 @@ extension ExposureError.DownloadError {
         }
     }
 }
+
+extension ExposureError.AnalyticsError {
+    public var localizedDescription: String {
+        switch self {
+        case .analyticsProviderMissing: return "An ExposureAnalyticsProvider is required"
+        }
+    }
+}
+
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.
     public var code: Int {
@@ -198,6 +217,7 @@ extension ExposureError {
         case .fairplay(reason: let reason): return reason.code
         case .exposureDownload(reason: let reason): return reason.code
         case .download(reason: let reason): return reason.code
+        case .analytics(reason: let reason): return reason.code
         }
     }
 }
@@ -240,6 +260,14 @@ extension ExposureError.DownloadError {
     public var code: Int {
         switch self {
         case .invalidMediaUrl(path: _): return 401
+        }
+    }
+}
+
+extension ExposureError.AnalyticsError {
+    public var code: Int  {
+        switch self {
+        case .analyticsProviderMissing: return 501
         }
     }
 }
