@@ -25,7 +25,7 @@ public struct FetchCarouselList: ExposureType {
   /// The group id for the carousel
   public let groupId: String
 
-  public init(groupId: String, environment: Environment) {
+  internal init(groupId: String, environment: Environment) {
     self.groupId = groupId
     self.environment = environment
   }
@@ -33,7 +33,14 @@ public struct FetchCarouselList: ExposureType {
   public var endpointUrl: String {
     return environment.apiUrl + "/carouselgroup/" + groupId
   }
+}
 
+extension FetchCarouselList {
+    public func carousel(id: String) -> FetchCarouselItem {
+        return FetchCarouselItem(groupId: groupId,
+                                 carouselId: id,
+                                 environment: environment)
+    }
 }
 
 extension FetchCarouselList {
