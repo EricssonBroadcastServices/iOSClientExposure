@@ -30,6 +30,7 @@ public struct FetchCarouselItem: ExposureType {
     
     internal init(groupId: String, carouselId: String, environment: Environment) {
         self.groupId = groupId
+        self.carouselId = carouselId
         self.environment = environment
     }
     
