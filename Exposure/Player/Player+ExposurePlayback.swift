@@ -26,13 +26,10 @@ extension Player {
     /// - parameter assetId: EMP asset id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(vod assetId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator as? () -> ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        let provider = generator()
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.vod(assetId: assetId)
@@ -65,13 +62,10 @@ extension Player {
     /// - parameter channelId: EMP channel id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(live channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator as? () -> ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        let provider = generator()
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.live(channelId: channelId)
@@ -124,13 +118,10 @@ extension Player {
     /// - parameter channelId: EMP channel id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(programId: String, channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator as? () -> ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        let provider = generator()
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
@@ -185,7 +176,7 @@ extension Player {
         var events = statupEvents
         events.append(handshake)
         
-        provider.finalizePreparation(for: playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement)
+        provider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement)
         callback(entitlement, nil)
     }
     
