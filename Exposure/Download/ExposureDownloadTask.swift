@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 import Download
 
-typealias ExposureDownloadAnalyticsProvider = ExposureAnalyticsProvider & DownloadAnalyticsProvider
+public typealias ExposureDownloadAnalyticsProvider = ExposureAnalyticsProvider & DownloadAnalyticsProvider
 
 public final class ExposureDownloadTask: TaskType {
     
@@ -24,26 +24,20 @@ public final class ExposureDownloadTask: TaskType {
     public let eventPublishTransmitter = Download.EventPublishTransmitter<ExposureDownloadTask>()
     
     public let sessionManager: SessionManager<ExposureDownloadTask>
-    
-    
-    internal enum AnalyticsConfig {
-        case valid(provider: ExposureDownloadAnalyticsProvider)
-        case invalid
-    }
-    internal let analyticsConfig: AnalyticsConfig
+    public let analyticsProvider: ExposureDownloadAnalyticsProvider
     
     public lazy var delegate: Download.TaskDelegate = { [unowned self] in
         return Download.TaskDelegate(task: self)
         }()
     
-    internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsConfig: AnalyticsConfig) {
+    internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsProvider: ExposureDownloadAnalyticsProvider) {
         self.configuration = Configuration(identifier: assetId)
         self.responseData = ResponseData()
         
         self.sessionManager = sessionManager
         self.playRequest = PlayRequest()
         
-        self.analyticsConfig = analyticsConfig
+        self.analyticsProvider = analyticsProvider
     }
     
     // DRMRequest
@@ -85,7 +79,9 @@ extension ExposureDownloadTask {
         fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: configuration.identifier)
         
         guard let targetUrl = URL(string: entitlement.mediaLocator) else {
-            eventPublishTransmitter.onError(self, nil, .exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator)))
+            let error = ExposureError.exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator))
+            eventPublishTransmitter.onError(self, nil, error)
+            analyticsProvider.exposureError(error: error)
             return
         }
         configuration.url = targetUrl
@@ -108,6 +104,7 @@ extension ExposureDownloadTask {
                     weakSelf.createAndConfigureTask(with: options, using: weakSelf.configuration) { urlTask, error in
                         if let error = error {
                             weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.responseData.destination, error)
+                            weakSelf.analyticsProvider.exposureError(error: error)
                             return
                         }
                         
@@ -125,43 +122,36 @@ extension ExposureDownloadTask {
     }
     
     fileprivate func startEntitlementRequest(assetId: String, lazily: Bool, callback: @escaping () -> Void) {
-        switch analyticsConfig {
-        case .invalid:
-            // No analytics provider
-            eventPublishTransmitter.onError(self, responseData.destination, .analytics(reason: .analyticsProviderMissing))
-            return
-        case .valid(provider: let provider):
-            
-            // Save this assetData for later use
-            let assetIdentifier = AssetIdentifier.download(assetId: assetId)
-            
-            // Prepare the next event
-            let startupEvents = provider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
-            
-            entitlementRequest = Entitlement(environment: provider.environment,
-                                             sessionToken: provider.sessionToken)
-                .download(assetId: assetId)
-                .use(drm: playRequest.drm)
-                .use(format: playRequest.format)
-                .request()
-                .validate()
-                .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
-                    guard let weakSelf = self else { return }
-                    guard let entitlement = res.value else {
-                        weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
-                        return
-                    }
-                    
-                    weakSelf.entitlementRequest = nil
-                    weakSelf.entitlement = entitlement
-                    weakSelf.onEntitlementResponse(weakSelf, entitlement)
-                    
-                    weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
-                    
-                    weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily, callback: callback)
-            }
-        }
         
+        // Save this assetData for later use
+        let assetIdentifier = AssetIdentifier.download(assetId: assetId)
+        
+        // Prepare the next event
+        let startupEvents = analyticsProvider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
+        
+        entitlementRequest = Entitlement(environment: analyticsProvider.environment,
+                                         sessionToken: analyticsProvider.sessionToken)
+            .download(assetId: assetId)
+            .use(drm: playRequest.drm)
+            .use(format: playRequest.format)
+            .request()
+            .validate()
+            .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
+                guard let weakSelf = self else { return }
+                guard let entitlement = res.value else {
+                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
+                    weakSelf.analyticsProvider.exposureError(error: res.error!)
+                    return
+                }
+                
+                weakSelf.entitlementRequest = nil
+                weakSelf.entitlement = entitlement
+                weakSelf.onEntitlementResponse(weakSelf, entitlement)
+                
+                weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
+                
+                weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily, callback: callback)
+        }
     }
 }
 

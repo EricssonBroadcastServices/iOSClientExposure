@@ -44,10 +44,6 @@ extension ExposureFairplayRequester {
             return false
         }
         
-        print(resourceLoadingRequest.request.url)
-        print(resourceLoadingRequest.redirect?.url)
-        print(resourceLoadingRequest.dataRequest)
-        print(resourceLoadingRequest.contentInformationRequest)
         //EMPFairplayRequester only should handle FPS Content Key requests.
         if url.scheme != customScheme {
             return false

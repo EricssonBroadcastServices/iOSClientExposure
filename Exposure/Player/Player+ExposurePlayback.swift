@@ -51,8 +51,7 @@ extension Player {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
                 else if let error = exposureResponse.error {
-                    // TODO: Error reporting should be Provider associated
-//                    provider.playbackErrorEvent(player: self, error: <#T##PlayerError#>)
+                    provider.exposureError(error: error)
                     callback(nil, error)
                 }
         }
@@ -95,6 +94,7 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
+                                    provider.exposureError(error: error)
                                     callback(nil, error)
                                 }
                                 else if let success = exposure.value {
@@ -103,6 +103,7 @@ extension Player {
                         }
                     }
                     else {
+                        provider.exposureError(error: error)
                         callback(nil, error)
                     }
                 }
@@ -153,6 +154,7 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
+                                    provider.exposureError(error: error)
                                     callback(nil, error)
                                 }
                                 else if let success = exposure.value {
@@ -161,6 +163,7 @@ extension Player {
                         }
                     }
                     else {
+                        provider.exposureError(error: error)
                         callback(nil, error)
                     }
                 }

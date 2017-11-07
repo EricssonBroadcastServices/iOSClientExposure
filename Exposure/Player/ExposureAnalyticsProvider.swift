@@ -25,6 +25,8 @@ public protocol ExposureAnalyticsProvider {
     func prepareHandshakeStarted(for asset: AssetIdentifier, with entitlement: PlaybackEntitlement) -> AnalyticsPayload
     
     func finalizePreparation(for playSessionId: String, startupEvents: [AnalyticsPayload], asset: AssetIdentifier, with entitlement: PlaybackEntitlement, heartbeatsProvider: HeartbeatsProvider)
+    
+    func exposureError(error: ExposureError)
 }
 
 
