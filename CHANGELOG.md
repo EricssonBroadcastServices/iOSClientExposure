@@ -8,6 +8,9 @@
 #### Features
 * `EMP-10601` Added fetch of specific carousels by id through `FetchCarouselItem`
 
+#### Changes
+*`EMP-10242` AnalyticsProvider now supplied through a generator to accomodate association with `Player.MediaAsset`.
+
 ## 0.2.1
 Released 26 Oct 2017
 
