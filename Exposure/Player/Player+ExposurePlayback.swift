@@ -14,6 +14,7 @@ public enum AssetIdentifier {
     case live(channelId: String?)
     case catchup(channelId: String?, programId: String?)
     case offline(assetId: String?)
+    case download(assetId: String?)
 }
 
 typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
@@ -50,6 +51,8 @@ extension Player {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
                 else if let error = exposureResponse.error {
+                    // TODO: Error reporting should be Provider associated
+//                    provider.playbackErrorEvent(player: self, error: <#T##PlayerError#>)
                     callback(nil, error)
                 }
         }

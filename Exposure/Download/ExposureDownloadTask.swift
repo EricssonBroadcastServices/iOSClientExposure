@@ -127,11 +127,19 @@ extension ExposureDownloadTask {
     fileprivate func startEntitlementRequest(assetId: String, lazily: Bool, callback: @escaping () -> Void) {
         switch analyticsConfig {
         case .invalid:
+            // No analytics provider
             eventPublishTransmitter.onError(self, responseData.destination, .analytics(reason: .analyticsProviderMissing))
             return
-        case .valid(provider: let analyticsProvider):
-            entitlementRequest = Entitlement(environment: analyticsProvider.environment,
-                                             sessionToken: analyticsProvider.sessionToken)
+        case .valid(provider: let provider):
+            
+            // Save this assetData for later use
+            let assetIdentifier = AssetIdentifier.download(assetId: assetId)
+            
+            // Prepare the next event
+            let startupEvents = provider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
+            
+            entitlementRequest = Entitlement(environment: provider.environment,
+                                             sessionToken: provider.sessionToken)
                 .download(assetId: assetId)
                 .use(drm: playRequest.drm)
                 .use(format: playRequest.format)
