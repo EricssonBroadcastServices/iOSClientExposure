@@ -15,10 +15,13 @@ extension SessionManager where T == ExposureDownloadTask {
     /// If the requested content is *FairPlay* protected, the appropriate `DownloadExposureFairplayRequester` will be created. Configuration will be taken from the `PlaybackEntitlement` response.
     ///
     /// - parameter assetId: A unique identifier for the asset
-    /// - parameter environment: `Environment` to use when making the request
-    /// - parameter sessionToken: `SessionToken` identifying the user making the request
     /// - returns: `ExposureDownloadTask`
-    public func download(assetId: String, environment: Environment, sessionToken: SessionToken) -> T {
+    public func download(assetId: String) -> T {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureDownloadAnalyticsProvider else {
+            return ExposureDownloadTask(assetId: assetId,
+                                        sessionManager: self,
+                                        analyticsConfig: .invalid)
+        }
         if let currentTask = delegate[assetId] {
             print("♻️ Retrieved ExposureDownloadTask associated with request for: \(assetId)")
             return currentTask
@@ -26,9 +29,8 @@ extension SessionManager where T == ExposureDownloadTask {
         else {
             print("✅ Created new ExposureDownloadTask for: \(assetId)")
             return ExposureDownloadTask(assetId: assetId,
-                                        environment: environment,
-                                        sessionToken: sessionToken,
-                                        sessionManager: self)
+                                        sessionManager: self,
+                                        analyticsConfig: .valid(provider: provider))
         }
         
     }

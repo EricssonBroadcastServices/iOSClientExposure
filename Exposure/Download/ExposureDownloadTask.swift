@@ -10,6 +10,8 @@ import Foundation
 import AVFoundation
 import Download
 
+typealias ExposureDownloadAnalyticsProvider = ExposureAnalyticsProvider & DownloadAnalyticsProvider
+
 public final class ExposureDownloadTask: TaskType {
     
     internal var entitlementRequest: ExposureRequest?
@@ -21,24 +23,27 @@ public final class ExposureDownloadTask: TaskType {
     public var fairplayRequester: DownloadFairplayRequester?
     public let eventPublishTransmitter = Download.EventPublishTransmitter<ExposureDownloadTask>()
     
-    
-    public let environment: Environment
-    public let sessionToken: SessionToken
     public let sessionManager: SessionManager<ExposureDownloadTask>
     
+    
+    internal enum AnalyticsConfig {
+        case valid(provider: ExposureDownloadAnalyticsProvider)
+        case invalid
+    }
+    internal let analyticsConfig: AnalyticsConfig
     
     public lazy var delegate: Download.TaskDelegate = { [unowned self] in
         return Download.TaskDelegate(task: self)
         }()
     
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, sessionManager: SessionManager<ExposureDownloadTask>) {
+    internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsConfig: AnalyticsConfig) {
         self.configuration = Configuration(identifier: assetId)
         self.responseData = ResponseData()
         
-        self.environment = environment
-        self.sessionToken = sessionToken
         self.sessionManager = sessionManager
         self.playRequest = PlayRequest()
+        
+        self.analyticsConfig = analyticsConfig
     }
     
     // DRMRequest
@@ -75,10 +80,6 @@ extension ExposureDownloadTask {
             }
         }
     }
-    
-    
-    //"NOTE: Oversee bookmarking save/remove functionality. Use overloaded callbacks or other approach?"
-    
     
     fileprivate func restoreOrCreate(for entitlement: PlaybackEntitlement, forceNew: Bool, callback: @escaping () -> Void = { _ in }) {
         fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: configuration.identifier)
@@ -124,28 +125,35 @@ extension ExposureDownloadTask {
     }
     
     fileprivate func startEntitlementRequest(assetId: String, lazily: Bool, callback: @escaping () -> Void) {
-        entitlementRequest = Entitlement(environment: environment,
-                                         sessionToken: sessionToken)
-            .download(assetId: assetId)
-            .use(drm: playRequest.drm)
-            .use(format: playRequest.format)
-            .request()
-            .validate()
-            .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
-                guard let weakSelf = self else { return }
-                guard let entitlement = res.value else {
-                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
-                    return
-                }
-                
-                weakSelf.entitlementRequest = nil
-                weakSelf.entitlement = entitlement
-                weakSelf.onEntitlementResponse(weakSelf, entitlement)
-                
-                weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
-                
-                weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily, callback: callback)
+        switch analyticsConfig {
+        case .invalid:
+            eventPublishTransmitter.onError(self, responseData.destination, .analytics(reason: .analyticsProviderMissing))
+            return
+        case .valid(provider: let analyticsProvider):
+            entitlementRequest = Entitlement(environment: analyticsProvider.environment,
+                                             sessionToken: analyticsProvider.sessionToken)
+                .download(assetId: assetId)
+                .use(drm: playRequest.drm)
+                .use(format: playRequest.format)
+                .request()
+                .validate()
+                .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
+                    guard let weakSelf = self else { return }
+                    guard let entitlement = res.value else {
+                        weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
+                        return
+                    }
+                    
+                    weakSelf.entitlementRequest = nil
+                    weakSelf.entitlement = entitlement
+                    weakSelf.onEntitlementResponse(weakSelf, entitlement)
+                    
+                    weakSelf.sessionManager.save(assetId: assetId, entitlement: entitlement, url: nil)
+                    
+                    weakSelf.restoreOrCreate(for: entitlement, forceNew: !lazily, callback: callback)
+            }
         }
+        
     }
 }
 
@@ -201,7 +209,6 @@ extension ExposureDownloadTask {
     }
     
     public func cancel() {
-        print(#function,task?.state.rawValue)
         if let downloadTask = task {
             downloadTask.cancel()
         }
