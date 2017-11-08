@@ -29,7 +29,6 @@ public protocol ExposureAnalyticsProvider {
     func exposureError(error: ExposureError)
 }
 
-
 /// Simple protocol responsible for configuring *heartbeats* for the `AnalyticsProvider`.
 public protocol HeartbeatsProvider: class {
     /// Should return a *heartbeat* configured for the current environment
