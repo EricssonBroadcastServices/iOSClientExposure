@@ -62,6 +62,7 @@ extension ExposureDownloadTask {
                 weakSelf.entitlement = entitlement
                 // TODO: Ask for AdditionalMediaSelections?
                 weakSelf.eventPublishTransmitter.onCompleted(weakSelf, url)
+                weakSelf.analyticsConnector.onDownloadCompleted(weakSelf)
                 callback()
             case .notPlayable(entitlement: let entitlement, url: _):
                 if let entitlement = entitlement {
@@ -80,6 +81,7 @@ extension ExposureDownloadTask {
         guard let targetUrl = URL(string: entitlement.mediaLocator) else {
             let error = ExposureError.exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator))
             eventPublishTransmitter.onError(self, nil, error)
+            analyticsConnector.onDownloadError(self, error)
             return
         }
         configuration.url = targetUrl
@@ -102,6 +104,7 @@ extension ExposureDownloadTask {
                     weakSelf.createAndConfigureTask(with: options, using: weakSelf.configuration) { urlTask, error in
                         if let error = error {
                             weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.responseData.destination, error)
+                            weakSelf.analyticsConnector.onDownloadError(weakSelf, error)
                             return
                         }
                         
@@ -110,6 +113,7 @@ extension ExposureDownloadTask {
                             weakSelf.sessionManager.delegate[urlTask] = weakSelf
                             print("👍 DownloadTask prepared")
                             weakSelf.eventPublishTransmitter.onPrepared(weakSelf)
+                            weakSelf.analyticsConnector.onDownloadStarted(weakSelf)
                         }
                         callback()
                     }
@@ -136,8 +140,8 @@ extension ExposureDownloadTask {
             .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
                 guard let weakSelf = self else { return }
                 guard let entitlement = res.value else {
+                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
                     weakSelf.analyticsConnector.provider.finalize(error: res.error!, startupEvents: startupEvents)
-                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!) // TODO: Will transmitt error twice (once from line above and here)
                     return
                 }
                 
@@ -188,25 +192,30 @@ extension ExposureDownloadTask {
                     guard let `self` = self else { return }
                     `self`.task?.resume()
                     `self`.eventPublishTransmitter.onResumed(`self`)
+                    `self`.analyticsConnector.onDownloadResumed(`self`)
                 }
                 return
             }
             entitlementRequest.resume()
             eventPublishTransmitter.onResumed(self) // TODO: Remove pause/resume functionality for entitlementreq
+            analyticsConnector.onDownloadResumed(self)
             return
         }
         downloadTask.resume()
         eventPublishTransmitter.onResumed(self)
+        analyticsConnector.onDownloadResumed(self)
     }
     
     public func suspend() {
         if let downloadTask = task {
             downloadTask.suspend()
             eventPublishTransmitter.onSuspended(self)
+            analyticsConnector.onDownloadPaused(self)
         }
         else if let entitlementRequest = entitlementRequest {
             entitlementRequest.suspend()
             eventPublishTransmitter.onSuspended(self) // TODO: Remove pause/resume functionality for entitlementreq
+            analyticsConnector.onDownloadPaused(self)
         }
     }
     
@@ -249,7 +258,6 @@ extension ExposureDownloadTask: Download.EventPublisher {
     
     public func onResumed(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onResumed = { task in
-            task.analyticsConnector.onDownloadResumed(task)
             callback(task)
         }
         return self
@@ -257,7 +265,6 @@ extension ExposureDownloadTask: Download.EventPublisher {
     
     public func onSuspended(callback: @escaping (ExposureDownloadTask) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onSuspended = { task in
-            task.analyticsConnector.onDownloadPaused(task)
             callback(task)
         }
         return self
@@ -265,7 +272,6 @@ extension ExposureDownloadTask: Download.EventPublisher {
     
     public func onCanceled(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onCanceled = { task, url in
-            task.analyticsConnector.onDownloadCancelled(task)
             callback(task,url)
         }
         return self
@@ -275,7 +281,6 @@ extension ExposureDownloadTask: Download.EventPublisher {
     
     public func onCompleted(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onCompleted = { [weak self] task, url in
-            task.analyticsConnector.onDownloadCompleted(task)
             guard let `self` = self else { return }
             `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement, url: url)
             callback(task,url)
@@ -285,7 +290,6 @@ extension ExposureDownloadTask: Download.EventPublisher {
     
     public func onError(callback: @escaping (ExposureDownloadTask, URL?, ExposureError) -> Void) -> ExposureDownloadTask {
         eventPublishTransmitter.onError = { [weak self] task, url, error in
-            task.analyticsConnector.onDownloadError(task, error)
             guard let `self` = self else { return }
             `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement, url: url)
             callback(task,url, error)
