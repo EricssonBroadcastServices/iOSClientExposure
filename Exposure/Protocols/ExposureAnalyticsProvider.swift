@@ -24,7 +24,25 @@ public protocol ExposureAnalyticsProvider {
     
     func prepareHandshakeStarted(for asset: AssetIdentifier, with entitlement: PlaybackEntitlement) -> AnalyticsPayload
     
+    /// Should prepare and configure the remaining parts of the Analytics environment.
+    /// This step is required because we are dependant on the response from Exposure with regards to the playSessionId. Further more, some analytics events may need to be generated before hand. These are supplied as `startupEvents`.
+    ///
+    /// Once this is called, a Dispatcher should be associated with the session.
+    ///
+    /// - parameter playSessionId: Unique identifier for the current playback session.
+    /// - parameter startupEvents: Events `exposureAnalytics` should deliver as the initial payload
+    /// - parameter asset: *EMP* asset identifiers.
+    /// - parameter entitlement: The entitlement this session concerns
+    /// - parameter heartbeatsProvider: Will deliver heartbeats metadata during the session
     func finalizePreparation(for playSessionId: String, startupEvents: [AnalyticsPayload], asset: AssetIdentifier, with entitlement: PlaybackEntitlement, heartbeatsProvider: HeartbeatsProvider)
+    
+    /// Expected to deliver the error received while trying to finalize a session to the analytics backend.
+    ///
+    /// This step is required because we are dependant on the response from Exposure with regards to the playSessionId. Further more, some analytics events may need to be generated before hand. These are supplied as `startupEvents`.
+    ///
+    /// - parameter error: The encountered error.
+    /// - parameter startupEvents: Events `ExposureAnalytics` should deliver as the initial payload related to the error in question.
+    func finalize(error: ExposureError, startupEvents: [AnalyticsPayload])
     
     func exposureError(error: ExposureError)
 }

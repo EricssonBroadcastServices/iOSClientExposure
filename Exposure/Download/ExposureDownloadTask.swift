@@ -136,9 +136,17 @@ extension ExposureDownloadTask {
             .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
                 guard let weakSelf = self else { return }
                 guard let entitlement = res.value else {
-                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
+                    weakSelf.analyticsConnector.provider.finalize(error: res.error!, startupEvents: startupEvents)
+                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!) // TODO: Will transmitt error twice (once from line above and here)
                     return
                 }
+                
+                let handshake = weakSelf.analyticsConnector.provider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
+                var events = startupEvents
+                events.append(handshake)
+                
+                weakSelf.analyticsConnector.provider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: weakSelf)
+                
                 
                 weakSelf.entitlementRequest = nil
                 weakSelf.entitlement = entitlement

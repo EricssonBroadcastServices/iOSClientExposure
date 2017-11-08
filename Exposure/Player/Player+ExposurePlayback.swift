@@ -51,8 +51,8 @@ extension Player {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
                 else if let error = exposureResponse.error {
-                    provider.exposureError(error: error)
-                    callback(nil, error)
+                    provider.finalize(error: error, startupEvents: startupEvents)
+                    callback(nil, error) // TODO: Trigger onError instead
                 }
         }
     }
@@ -94,8 +94,8 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
-                                    provider.exposureError(error: error)
-                                    callback(nil, error)
+                                    provider.finalize(error: error, startupEvents: startupEvents)
+                                    callback(nil, error) // TODO: Trigger onError instead
                                 }
                                 else if let success = exposure.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
@@ -103,8 +103,8 @@ extension Player {
                         }
                     }
                     else {
-                        provider.exposureError(error: error)
-                        callback(nil, error)
+                        provider.finalize(error: error, startupEvents: startupEvents)
+                        callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
                 else if let success = exposure.value {
@@ -154,8 +154,8 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
-                                    provider.exposureError(error: error)
-                                    callback(nil, error)
+                                    provider.finalize(error: error, startupEvents: startupEvents)
+                                    callback(nil, error) // TODO: Trigger onError instead
                                 }
                                 else if let success = exposure.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
@@ -163,8 +163,8 @@ extension Player {
                         }
                     }
                     else {
-                        provider.exposureError(error: error)
-                        callback(nil, error)
+                        provider.finalize(error: error, startupEvents: startupEvents)
+                        callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
                 else if let success = exposure.value {
