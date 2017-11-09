@@ -47,25 +47,10 @@ class LoginSpec: QuickSpec {
                 expect(params["password"]).toNot(beNil())
                 expect(params["rememberMe"]).toNot(beNil())
             }
-        }
-        
-        describe("Two Factor") {
-            it("should have no headers") {
-                let twoFactor = Authenticate(environment: env)
-                    .twoFactor(username: username, password: password, twoFactor: "token", rememberMe: true)
-                expect(twoFactor.headers).to(beNil())
-            }
             
-            it("should generate a correct endpoint url") {
-                let twoFactor = Authenticate(environment: env)
-                    .twoFactor(username: username, password: password, twoFactor: "token")
-                let endpoint = "/auth/twofactorlogin"
-                expect(twoFactor.endpointUrl).to(equal(env.apiUrl+endpoint))
-            }
-            
-            it("should convert to Two Factor auth") {
-                let params = login.twoFactor(token: "token").parameters
-                
+            it("should generate paramters for twoFactor auth") {
+                let params = Authenticate(environment: env)
+                    .login(username: username, password: password, twoFactor: "Some TwoFactor").parameters
                 expect(params.count).to(equal(login.deviceInfo.toJSON().count+4))
                 
                 expect(params["username"]).toNot(beNil())

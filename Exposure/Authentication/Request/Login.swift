@@ -18,6 +18,9 @@ public struct Login: ExposureType {
     /// Password associated with `username`
     public let password: String
     
+    /// Two factor token to use
+    public let twoFactor: String?
+    
     /// `true` extends period of session validity, `false` uses normal validation period.
     public let rememberMe: Bool
     
@@ -27,9 +30,10 @@ public struct Login: ExposureType {
     /// Environment to use
     public let environment: Environment
     
-    internal init(username: String, password: String, rememberMe: Bool = false, environment: Environment) {
+    internal init(username: String, password: String, twoFactor: String? = nil, rememberMe: Bool = false, environment: Environment) {
         self.username = username
         self.password = password
+        self.twoFactor = twoFactor
         self.rememberMe = rememberMe
         self.environment = environment
     }
@@ -43,6 +47,9 @@ public struct Login: ExposureType {
         
         json[JSONKeys.username.rawValue] = username
         json[JSONKeys.password.rawValue] = password
+        if let mfa = twoFactor {
+            json[JSONKeys.twoFactor.rawValue] = mfa
+        }
         json[JSONKeys.rememberMe.rawValue] = rememberMe
         
         return json
@@ -56,6 +63,7 @@ public struct Login: ExposureType {
     internal enum JSONKeys: String {
         case username = "username"
         case password = "password"
+        case twoFactor = "totp"
         case rememberMe = "rememberMe"
     }
 }
@@ -72,7 +80,11 @@ extension Login {
     ///
     /// - parameter token: two factor token to use
     /// - returns: `TwoFactorLogin` struct used to process the request.
-    public func twoFactor(token: String) -> TwoFactorLogin {
-        return TwoFactorLogin(username: username, password: password, twoFactor: token, rememberMe: rememberMe, environment: environment)
+    public func twoFactor(token: String) -> Login {
+        return Login(username: self.username,
+                     password: self.password,
+                     twoFactor: token,
+                     rememberMe: self.rememberMe,
+                     environment: self.environment)
     }
 }
