@@ -19,7 +19,7 @@ public final class ExposureDownloadTask: TaskType {
     public var responseData: ResponseData
     public var fairplayRequester: DownloadFairplayRequester?
     public let eventPublishTransmitter = Download.EventPublishTransmitter<ExposureDownloadTask>()
-    public var analyticsConnector: AnalyticsConnector<ExposureDownloadTask, ExposureAnalyticsProvider>
+    public var analyticsProvider: ExposureDownloadAnalyticsProvider
     
     public let sessionManager: SessionManager<ExposureDownloadTask>
     
@@ -29,14 +29,14 @@ public final class ExposureDownloadTask: TaskType {
         return Download.TaskDelegate(task: self)
         }()
     
-    internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsProvider: ExposureAnalyticsProvider) {
+    internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsProvider: ExposureDownloadAnalyticsProvider) {
         self.configuration = Configuration(identifier: assetId)
         self.responseData = ResponseData()
         
         self.sessionManager = sessionManager
         self.playRequest = PlayRequest()
         
-        self.analyticsConnector = AnalyticsConnector(provider: analyticsProvider)
+        self.analyticsProvider = analyticsProvider
     }
     
     // DRMRequest
@@ -62,7 +62,7 @@ extension ExposureDownloadTask {
                 weakSelf.entitlement = entitlement
                 // TODO: Ask for AdditionalMediaSelections?
                 weakSelf.eventPublishTransmitter.onCompleted(weakSelf, url)
-                weakSelf.analyticsConnector.onDownloadCompleted(weakSelf)
+                weakSelf.analyticsProvider.downloadCompletedEvent(task: weakSelf)
                 callback()
             case .notPlayable(entitlement: let entitlement, url: _):
                 if let entitlement = entitlement {
@@ -81,7 +81,7 @@ extension ExposureDownloadTask {
         guard let targetUrl = URL(string: entitlement.mediaLocator) else {
             let error = ExposureError.exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator))
             eventPublishTransmitter.onError(self, nil, error)
-            analyticsConnector.onDownloadError(self, error)
+            analyticsProvider.downloadErrorEvent(task: self, error: error)
             return
         }
         configuration.url = targetUrl
@@ -104,7 +104,7 @@ extension ExposureDownloadTask {
                     weakSelf.createAndConfigureTask(with: options, using: weakSelf.configuration) { urlTask, error in
                         if let error = error {
                             weakSelf.eventPublishTransmitter.onError(weakSelf, weakSelf.responseData.destination, error)
-                            weakSelf.analyticsConnector.onDownloadError(weakSelf, error)
+                            weakSelf.analyticsProvider.downloadErrorEvent(task:weakSelf, error: error)
                             return
                         }
                         
@@ -113,7 +113,7 @@ extension ExposureDownloadTask {
                             weakSelf.sessionManager.delegate[urlTask] = weakSelf
                             print("👍 DownloadTask prepared")
                             weakSelf.eventPublishTransmitter.onPrepared(weakSelf)
-                            weakSelf.analyticsConnector.onDownloadStarted(weakSelf)
+                            weakSelf.analyticsProvider.downloadStartedEvent(task: weakSelf)
                         }
                         callback()
                     }
@@ -128,10 +128,10 @@ extension ExposureDownloadTask {
         let assetIdentifier = AssetIdentifier.download(assetId: assetId)
         
         // Prepare the next event
-        let startupEvents = analyticsConnector.provider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
+        let startupEvents = analyticsProvider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
         
-        entitlementRequest = Entitlement(environment: analyticsConnector.provider.environment,
-                                         sessionToken: analyticsConnector.provider.sessionToken)
+        entitlementRequest = Entitlement(environment: analyticsProvider.environment,
+                                         sessionToken: analyticsProvider.sessionToken)
             .download(assetId: assetId)
             .use(drm: playRequest.drm)
             .use(format: playRequest.format)
@@ -141,15 +141,15 @@ extension ExposureDownloadTask {
                 guard let weakSelf = self else { return }
                 guard let entitlement = res.value else {
                     weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
-                    weakSelf.analyticsConnector.provider.finalize(error: res.error!, startupEvents: startupEvents)
+                    weakSelf.analyticsProvider.finalize(error: res.error!, startupEvents: startupEvents)
                     return
                 }
                 
-                let handshake = weakSelf.analyticsConnector.provider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
+                let handshake = weakSelf.analyticsProvider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
                 var events = startupEvents
                 events.append(handshake)
                 
-                weakSelf.analyticsConnector.provider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: weakSelf)
+                weakSelf.analyticsProvider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: weakSelf)
                 
                 
                 weakSelf.entitlementRequest = nil
@@ -192,30 +192,30 @@ extension ExposureDownloadTask {
                     guard let `self` = self else { return }
                     `self`.task?.resume()
                     `self`.eventPublishTransmitter.onResumed(`self`)
-                    `self`.analyticsConnector.onDownloadResumed(`self`)
+                    `self`.analyticsProvider.downloadResumedEvent(task: `self`)
                 }
                 return
             }
             entitlementRequest.resume()
             eventPublishTransmitter.onResumed(self) // TODO: Remove pause/resume functionality for entitlementreq
-            analyticsConnector.onDownloadResumed(self)
+            analyticsProvider.downloadResumedEvent(task: self)
             return
         }
         downloadTask.resume()
         eventPublishTransmitter.onResumed(self)
-        analyticsConnector.onDownloadResumed(self)
+        analyticsProvider.downloadResumedEvent(task: self)
     }
     
     public func suspend() {
         if let downloadTask = task {
             downloadTask.suspend()
             eventPublishTransmitter.onSuspended(self)
-            analyticsConnector.onDownloadPaused(self)
+            analyticsProvider.downloadPausedEvent(task: self)
         }
         else if let entitlementRequest = entitlementRequest {
             entitlementRequest.suspend()
             eventPublishTransmitter.onSuspended(self) // TODO: Remove pause/resume functionality for entitlementreq
-            analyticsConnector.onDownloadPaused(self)
+            analyticsProvider.downloadPausedEvent(task: self)
         }
     }
     

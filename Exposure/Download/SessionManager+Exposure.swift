@@ -19,7 +19,7 @@ extension SessionManager where T == ExposureDownloadTask {
     /// - parameter assetId: A unique identifier for the asset
     /// - parameter analyticsProvider: The specified analytics provider.
     /// - returns: `ExposureDownloadTask`
-    public func download(assetId: String, analyticProvider: ExposureAnalyticsProvider) -> T {
+    public func download(assetId: String, analyticProvider: ExposureDownloadAnalyticsProvider) -> T {
         if let currentTask = delegate[assetId] {
             print("♻️ Retrieved ExposureDownloadTask associated with request for: \(assetId)")
             return currentTask

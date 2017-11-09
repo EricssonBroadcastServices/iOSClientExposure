@@ -43,8 +43,20 @@ public protocol ExposureAnalyticsProvider {
     /// - parameter error: The encountered error.
     /// - parameter startupEvents: Events `ExposureAnalytics` should deliver as the initial payload related to the error in question.
     func finalize(error: ExposureError, startupEvents: [AnalyticsPayload])
-    
-    func exposureError(error: ExposureError)
 }
 
-
+public protocol ExposureDownloadAnalyticsProvider: ExposureAnalyticsProvider {
+    func downloadStartedEvent(task: ExposureDownloadTask)
+    func downloadPausedEvent(task: ExposureDownloadTask)
+    func downloadResumedEvent(task: ExposureDownloadTask)
+    func downloadCancelledEvent(task: ExposureDownloadTask)
+    func downloadStoppedEvent(task: ExposureDownloadTask)
+    func downloadCompletedEvent(task: ExposureDownloadTask)
+    
+    
+    /// Triggered if the download process encounters an error during its lifetime
+    ///
+    /// - parameter ExposureDownloadTask: `ExposureDownloadTask` broadcasting the event
+    /// - parameter error: `ExposureError` causing the event to fire
+    func downloadErrorEvent(task: ExposureDownloadTask, error: ExposureError)
+}
