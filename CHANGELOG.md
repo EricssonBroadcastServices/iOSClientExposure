@@ -10,6 +10,7 @@
 
 #### Changes
 *`EMP-10242` AnalyticsProvider now supplied through a generator to accomodate association with `Player.MediaAsset`.
+* Removed `TwoFactorLogin` as a separate endpoint. Functionality migrated to `Login` which now accepts a `twoFactor` token.
 
 ## 0.2.1
 Released 26 Oct 2017
