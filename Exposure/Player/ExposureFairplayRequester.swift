@@ -102,7 +102,7 @@ extension ExposureFairplayRequester {
                     let spcData = try resourceLoadingRequest.streamingContentKeyRequestData(forApp: certificate, contentIdentifier: contentIdentifier, options: self.resourceLoadingRequestOptions)
                     
                     // Content Key Context fetch from licenseUrl requires base64 encoded data
-                    let spcBase64 = spcData.base64EncodedData(options: Data.Base64EncodingOptions.endLineWithLineFeed)
+                    let spcBase64 = spcData//.base64EncodedData(options: Data.Base64EncodingOptions.endLineWithLineFeed)
                     
                     self.fetchContentKeyContext(spc: spcBase64) { ckcBase64, ckcError in
                         print("fetchContentKeyContext")
@@ -195,8 +195,9 @@ extension ExposureFairplayRequester {
     
     /// Retrieve the `certificateUrl` by parsing the *entitlement*.
     fileprivate var certificateUrl: URL? {
-        guard let urlString = entitlement.fairplay?.certificateUrl else { return nil }
-        return URL(string: urlString)
+        return URL(string: "http://psempfairplayserver.northeurope.cloudapp.azure.com:8080/fps/BlixtGroup/Blixt/")
+//        guard let urlString = entitlement.fairplay?.certificateUrl else { return nil }
+//        return URL(string: urlString)
     }
     
     /// MRR Application Certificate response format is XML
@@ -225,22 +226,47 @@ extension ExposureFairplayRequester {
     /// </error>
     /// ```
     fileprivate func parseApplicationCertificate(response data: Data) throws -> Data {
-        let xml = SWXMLHash.parse(data)
-        // MRR Certifica
-        if let certString = xml["fps"]["cert"].element?.text {
-            // http://iosdevelopertips.com/core-services/encode-decode-using-base64.html
-            guard let base64 = Data(base64Encoded: certString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
-                throw ExposureError.fairplay(reason: .applicationCertificateDataFormatInvalid)
-            }
-            return base64
+        let cert = try JSONDecoder().decode(TempCert.self, from: data)
+        guard let base64 = Data(base64Encoded: cert.certificate, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
+            throw ExposureError.fairplay(reason: .applicationCertificateDataFormatInvalid)
         }
-        else if let codeString = xml["error"]["code"].element?.text,
-            let code = Int(codeString),
-            let message = xml["error"]["message"].element?.text {
-            
-            throw ExposureError.fairplay(reason: .applicationCertificateServer(code: code, message: message))
-        }
-        throw ExposureError.fairplay(reason: .applicationCertificateParsing)
+        return base64
+        
+//        let xml = SWXMLHash.parse(data)
+//        // MRR Certifica
+//        if let certString = xml["fps"]["cert"].element?.text {
+//            // http://iosdevelopertips.com/core-services/encode-decode-using-base64.html
+//            guard let base64 = Data(base64Encoded: certString, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
+//                throw ExposureError.fairplay(reason: .applicationCertificateDataFormatInvalid)
+//            }
+//            return base64
+//        }
+//        else if let codeString = xml["error"]["code"].element?.text,
+//            let code = Int(codeString),
+//            let message = xml["error"]["message"].element?.text {
+//
+//            throw ExposureError.fairplay(reason: .applicationCertificateServer(code: code, message: message))
+//        }
+//        throw ExposureError.fairplay(reason: .applicationCertificateParsing)
+    }
+    
+}
+
+struct TempCert: Decodable {
+    let certificate: String
+}
+
+struct TempCKC: Decodable {
+    let ckc: String
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        print(container.allKeys, container.contains(.ckc))
+        ckc = try container.decode(String.self, forKey: .ckc)
+    }
+    
+    enum CodingKeys: CodingKey {
+        case ckc
     }
 }
 
@@ -257,21 +283,17 @@ extension ExposureFairplayRequester {
             callback(nil, .fairplay(reason: .missingContentKeyContextUrl))
             return
         }
-        
-        guard let playToken = entitlement.playToken else {
-            callback(nil, .fairplay(reason: .missingPlaytoken))
-            return
-        }
-        
-        let headers = ["AzukiApp": playToken, // May not be needed
-            "Content-type": "application/octet-stream"]
-        
+        let spcString = spc.base64EncodedString()
+        let params = [
+            "mediaId":"",
+            "spc":spcString
+        ]
+        print("spcString",spcString)
         Alamofire
-            .upload(spc,
-                    to: url,
-                    method: .post,
-                    headers: headers)
-            .validate()
+            .request(url,
+                     method: .post,
+                     parameters: params,
+                     encoding: JSONEncoding.default)
             .responseData{ response in
                 if let error = response.error {
                     callback(nil, .fairplay(reason:.networking(error: error)))
@@ -280,21 +302,61 @@ extension ExposureFairplayRequester {
                 
                 if let success = response.value {
                     do {
-                        let ckc = try self.parseContentKeyContext(response: success)
-                        callback(ckc, nil)
+                        print(success)
+                        let json = try JSONSerialization.jsonObject(with: success, options: JSONSerialization.ReadingOptions.allowFragments)
+                        print(json)
+                        let ckc = try JSONDecoder().decode(TempCKC.self,
+                                                           from: success)
+                        guard let base64 = Data(base64Encoded: ckc.ckc, options: Data.Base64DecodingOptions.ignoreUnknownCharacters) else {
+                            callback(nil,ExposureError.fairplay(reason: .contentKeyContextDataFormatInvalid))
+                            return
+                        }
+                        callback(base64,nil)
                     }
                     catch {
-                        // parseContentKeyContext will only throw PlayerError
-                        callback(nil, error as? ExposureError)
+                        callback(nil,ExposureError.generalError(error: error))
                     }
                 }
         }
+        
+//        guard let playToken = entitlement.playToken else {
+//            callback(nil, .fairplay(reason: .missingPlaytoken))
+//            return
+//        }
+//
+//        let headers = ["AzukiApp": playToken, // May not be needed
+//            "Content-type": "application/octet-stream"]
+//
+//        Alamofire
+//            .upload(spc,
+//                    to: url,
+//                    method: .post,
+//                    headers: headers)
+//            .validate()
+//            .responseData{ response in
+//                if let error = response.error {
+//                    callback(nil, .fairplay(reason:.networking(error: error)))
+//                    return
+//                }
+//
+//                if let success = response.value {
+//                    do {
+//                        let ckc = try self.parseContentKeyContext(response: success)
+//                        callback(ckc, nil)
+//                    }
+//                    catch {
+//                        // parseContentKeyContext will only throw PlayerError
+//                        callback(nil, error as? ExposureError)
+//                    }
+//                }
+//        }
     }
     
     /// Retrieve the `licenseUrl` by parsing the *entitlement*.
     fileprivate var licenseUrl: URL? {
-        guard let urlString = entitlement.fairplay?.licenseAcquisitionUrl else { return nil }
-        return URL(string: urlString)
+        return certificateUrl
+//        guard let urlString = entitlement.fairplay?.licenseAcquisitionUrl else { return nil }
+//        return URL(string: urlString)
     }
     
     /// MRR Content Key Context response format is XML

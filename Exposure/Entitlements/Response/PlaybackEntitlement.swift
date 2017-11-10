@@ -83,7 +83,7 @@ extension PlaybackEntitlement {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Required
         playTokenExpiration = try container.decode(String.self, forKey: .playTokenExpiration)
-        mediaLocator = try container.decode(String.self, forKey: .mediaLocator)
+        mediaLocator = "http://emp.ebsf.fr/CDN/2/1357624/master.m3u8"//"http://emp.ebsf.fr/CDN/external/Bento4/master.m3u8"//try container.decode(String.self, forKey: .mediaLocator)
         playSessionId = try container.decode(String.self, forKey: .playSessionId)
         
         live = try container.decode(Bool.self, forKey: .live)
