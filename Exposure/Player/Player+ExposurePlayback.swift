@@ -14,7 +14,10 @@ public enum AssetIdentifier {
     case live(channelId: String?)
     case catchup(channelId: String?, programId: String?)
     case offline(assetId: String?)
+    case download(assetId: String?)
 }
+
+typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
 
 extension Player {
     /// Initiates a playback session by requesting a *vod* entitlement and preparing the player.
@@ -26,12 +29,10 @@ extension Player {
     /// - parameter assetId: EMP asset id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(vod assetId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let provider = analyticsProvider as? ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.vod(assetId: assetId)
@@ -50,7 +51,8 @@ extension Player {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
                 else if let error = exposureResponse.error {
-                    callback(nil, error)
+                    provider.finalize(error: error, startupEvents: startupEvents)
+                    callback(nil, error) // TODO: Trigger onError instead
                 }
         }
     }
@@ -64,12 +66,10 @@ extension Player {
     /// - parameter channelId: EMP channel id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(live channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let provider = analyticsProvider as? ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.live(channelId: channelId)
@@ -94,7 +94,8 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
-                                    callback(nil, error)
+                                    provider.finalize(error: error, startupEvents: startupEvents)
+                                    callback(nil, error) // TODO: Trigger onError instead
                                 }
                                 else if let success = exposure.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
@@ -102,7 +103,8 @@ extension Player {
                         }
                     }
                     else {
-                        callback(nil, error)
+                        provider.finalize(error: error, startupEvents: startupEvents)
+                        callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
                 else if let success = exposure.value {
@@ -122,12 +124,10 @@ extension Player {
     /// - parameter channelId: EMP channel id for which to request playback.
     /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
     public func stream(programId: String, channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let provider = analyticsProvider as? ExposureAnalyticsProvider else {
+        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
             callback(nil, .analytics(reason: .analyticsProviderMissing))
             return
         }
-        
-        provider.finalizeCurrent(playSessionId: playSessionId, at: currentTime, timestamp: Date().millisecondsSince1970)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
@@ -154,7 +154,8 @@ extension Player {
                             .validate()
                             .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
                                 if let error = exposure.error {
-                                    callback(nil, error)
+                                    provider.finalize(error: error, startupEvents: startupEvents)
+                                    callback(nil, error) // TODO: Trigger onError instead
                                 }
                                 else if let success = exposure.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
@@ -162,7 +163,8 @@ extension Player {
                         }
                     }
                     else {
-                        callback(nil, error)
+                        provider.finalize(error: error, startupEvents: startupEvents)
+                        callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
                 else if let success = exposure.value {
@@ -173,16 +175,16 @@ extension Player {
     
     
     /// Once an entitlement has been received from the backend, playback is ready to commence. This is a multi stage process involving analytics and player preparation. Streaming through the `Exposure` extensions on `Player` allows us to leverage the setup process related to *Fairplay*.
-    private func finalize(playback entitlement: PlaybackEntitlement, statupEvents: [AnalyticsPayload], assetIdentifier: AssetIdentifier, using provider: ExposureAnalyticsProvider, callback: (PlaybackEntitlement?, ExposureError?) -> Void) {
+    private func finalize(playback entitlement: PlaybackEntitlement, statupEvents: [AnalyticsPayload], assetIdentifier: AssetIdentifier, using provider: ExposureStreamingAnalyticsProvider, callback: (PlaybackEntitlement?, ExposureError?) -> Void) {
         
         // If the startup events are enqueued before the player has initialized using the PlaybackEntitlement, we might not have a reference to the correct playSessionId.
-        stream(playback: entitlement)
+        stream(playback: entitlement, analyticsProvider: provider)
         
         let handshake = provider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
         var events = statupEvents
         events.append(handshake)
         
-        provider.finalizePreparation(for: playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement)
+        provider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: self)
         callback(entitlement, nil)
     }
     
@@ -195,14 +197,14 @@ extension Player {
     /// Please note that a *manually* configured *Session Shift* through `sessionShift(enabledAt: someOffset)` will not be overriden. Use either a manual configuration or *Exposure*.
     ///
     /// - parameter entitlement: *Exposure* provided entitlement
-    private func stream(playback entitlement: PlaybackEntitlement) {
+    private func stream(playback entitlement: PlaybackEntitlement, analyticsProvider: ExposureStreamingAnalyticsProvider? = nil) {
         // Session shift
         handleSessionShift(entitlement: entitlement)
         
         // Fairplay
         let requester = ExposureStreamFairplayRequester(entitlement: entitlement)
         
-        stream(url: entitlement.mediaLocator, using: requester, playSessionId: entitlement.playSessionId)
+        stream(url: entitlement.mediaLocator, using: requester, analyticsProvider: analyticsProvider, playSessionId: entitlement.playSessionId)
     }
 }
 
