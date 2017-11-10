@@ -78,7 +78,6 @@
 		76529CFB1EDBF2FE00318AE2 /* FilteredDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CFA1EDBF2FE00318AE2 /* FilteredDevices.swift */; };
 		76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CFC1EDBF61100318AE2 /* DeviceType.swift */; };
 		76529CFF1EDC23E100318AE2 /* Authenticate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529CFE1EDC23E100318AE2 /* Authenticate.swift */; };
-		76529D011EDC254300318AE2 /* TwoFactorLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529D001EDC254300318AE2 /* TwoFactorLogin.swift */; };
 		76529D031EDC2EB600318AE2 /* SortedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529D021EDC2EB600318AE2 /* SortedResponse.swift */; };
 		76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76529D041EDC4A1E00318AE2 /* ElasticSearch.swift */; };
 		766094A81F0AAD61005E9A70 /* ExposureFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 766094A61F0AAD61005E9A70 /* ExposureFairplayRequester.swift */; };
@@ -280,7 +279,6 @@
 		76529CFA1EDBF2FE00318AE2 /* FilteredDevices.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredDevices.swift; sourceTree = "<group>"; };
 		76529CFC1EDBF61100318AE2 /* DeviceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceType.swift; sourceTree = "<group>"; };
 		76529CFE1EDC23E100318AE2 /* Authenticate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authenticate.swift; sourceTree = "<group>"; };
-		76529D001EDC254300318AE2 /* TwoFactorLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwoFactorLogin.swift; sourceTree = "<group>"; };
 		76529D021EDC2EB600318AE2 /* SortedResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortedResponse.swift; sourceTree = "<group>"; };
 		76529D041EDC4A1E00318AE2 /* ElasticSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElasticSearch.swift; sourceTree = "<group>"; };
 		766094A61F0AAD61005E9A70 /* ExposureFairplayRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureFairplayRequester.swift; sourceTree = "<group>"; };
@@ -893,7 +891,6 @@
 				76529CFE1EDC23E100318AE2 /* Authenticate.swift */,
 				76A842CD1EA7667D00BDAF2C /* Anonymous.swift */,
 				76A842CE1EA7667D00BDAF2C /* Login.swift */,
-				76529D001EDC254300318AE2 /* TwoFactorLogin.swift */,
 				76A44C9A1F16350E008992E9 /* Logout.swift */,
 				76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */,
 			);
@@ -1245,7 +1242,6 @@
 				7640920A1F7E342C0022F6ED /* AssetUserData.swift in Sources */,
 				76A842F41EA7667D00BDAF2C /* PlaybackEntitlement.swift in Sources */,
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
-				76529D011EDC254300318AE2 /* TwoFactorLogin.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
 				76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */,
@@ -1407,7 +1403,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 88;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1466,7 +1462,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 87;
+				CURRENT_PROJECT_VERSION = 88;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1497,7 +1493,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 87;
+				DYLIB_CURRENT_VERSION = 88;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Exposure/Info.plist;
@@ -1520,7 +1516,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 87;
+				DYLIB_CURRENT_VERSION = 88;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Exposure/Info.plist;
