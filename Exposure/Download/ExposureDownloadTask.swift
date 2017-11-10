@@ -271,7 +271,10 @@ extension ExposureDownloadTask: Download.EventPublisher {
     }
     
     public func onCanceled(callback: @escaping (ExposureDownloadTask, URL) -> Void) -> ExposureDownloadTask {
-        eventPublishTransmitter.onCanceled = { task, url in
+        eventPublishTransmitter.onCanceled = { [weak self] task, url in
+            guard let `self` = self else { return }
+            `self`.analyticsProvider.downloadCancelledEvent(task: task)
+            `self`.analyticsProvider.downloadStoppedEvent(task: task)
             callback(task,url)
         }
         return self
@@ -283,6 +286,7 @@ extension ExposureDownloadTask: Download.EventPublisher {
         eventPublishTransmitter.onCompleted = { [weak self] task, url in
             guard let `self` = self else { return }
             `self`.sessionManager.save(assetId: `self`.configuration.identifier, entitlement: `self`.entitlement, url: url)
+            `self`.analyticsProvider.downloadCompletedEvent(task: task)
             callback(task,url)
         }
         return self
