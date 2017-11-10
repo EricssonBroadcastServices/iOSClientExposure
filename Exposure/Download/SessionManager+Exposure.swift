@@ -12,13 +12,14 @@ import Download
 extension SessionManager where T == ExposureDownloadTask {
     /// Create an `ExposureDownloadTask` by requesting a `PlaybackEntitlement` supplied through exposure.
     ///
+    ///  Entitlement requests will be done by using the `Environment` and `SessionToken` associated with `analyticsProvider`
+    ///
     /// If the requested content is *FairPlay* protected, the appropriate `DownloadExposureFairplayRequester` will be created. Configuration will be taken from the `PlaybackEntitlement` response.
     ///
     /// - parameter assetId: A unique identifier for the asset
-    /// - parameter environment: `Environment` to use when making the request
-    /// - parameter sessionToken: `SessionToken` identifying the user making the request
+    /// - parameter analyticsProvider: The specified analytics provider.
     /// - returns: `ExposureDownloadTask`
-    public func download(assetId: String, environment: Environment, sessionToken: SessionToken) -> T {
+    public func download(assetId: String, analyticProvider: ExposureDownloadAnalyticsProvider) -> T {
         if let currentTask = delegate[assetId] {
             print("♻️ Retrieved ExposureDownloadTask associated with request for: \(assetId)")
             return currentTask
@@ -26,9 +27,8 @@ extension SessionManager where T == ExposureDownloadTask {
         else {
             print("✅ Created new ExposureDownloadTask for: \(assetId)")
             return ExposureDownloadTask(assetId: assetId,
-                                        environment: environment,
-                                        sessionToken: sessionToken,
-                                        sessionManager: self)
+                                        sessionManager: self,
+                                        analyticsProvider: analyticProvider)
         }
         
     }
