@@ -57,6 +57,7 @@ internal class ExposureDownloadFairplayRequester: NSObject, ExposureFairplayRequ
         //
         // The value of AVAssetResourceLoadingContentInformationRequest.contentType must be set to AVStreamingKeyDeliveryPersistentContentKeyType when responding with data created with this method.
         var error: NSError?
+        print(#function)
         let persistedCKC = resourceLoadingRequest.persistentContentKey(fromKeyVendorResponse: ckc, options: nil, error: &error)
         
         guard error == nil else {
@@ -64,10 +65,11 @@ internal class ExposureDownloadFairplayRequester: NSObject, ExposureFairplayRequ
             throw error!
         }
         
-        let persistedKeyURL = try contentKeyUrl(for: assetId)
-        print("onSuccessfulRetrieval CKC",assetId,persistedKeyURL)
-        try persistedCKC.write(to: persistedKeyURL)
+        let persistedKeyURL = try contentKeyDirectory()
+        print(#function,assetId,persistedKeyURL)
+        try persistedCKC.persist(as: contentKeyFile(assetId: assetId), at: persistedKeyURL)//.write(to: persistedKeyURL)
         
+        print(#function, "SUCCESS")
         return persistedCKC
     }
     
@@ -84,6 +86,7 @@ internal class ExposureDownloadFairplayRequester: NSObject, ExposureFairplayRequ
         
         // Check if we can handle the request with a previously persisted content key
         if let keyData = try persistedContentKey(for: assetId) {
+            print("✅ Responding with persisted CKC")
             dataRequest.respond(with: keyData)
             resourceLoadingRequest.finishLoading()
             return false
@@ -91,6 +94,21 @@ internal class ExposureDownloadFairplayRequester: NSObject, ExposureFairplayRequ
         return true
     }
 }
+
+//extension Data {
+//    /// Convenience function for persisting a `Data` blob through `FileManager`.
+//    ///
+//    /// - parameter filename: Name of the file, including extension
+//    /// - parameter directoryUrl: `URL` to the storage directory
+//    /// - throws: `FileManager` related `Error` or `Data` related error in the *Cocoa Domain*
+//    internal func persist(as filename: String, at directoryUrl: URL) throws {
+//        if !FileManager.default.fileExists(atPath: directoryUrl.path) {
+//            try FileManager.default.createDirectory(at: directoryUrl, withIntermediateDirectories: true, attributes: nil)
+//        }
+//
+//        try self.write(to: directoryUrl.appendingPathComponent(filename))
+//    }
+//}
 
 // FIX ALL THIS PERSISTING + LOADING PERSISTED KEYS.
 // FIX Offline vs Download Fairplay requester
@@ -102,9 +120,10 @@ extension ExposureDownloadFairplayRequester {
     
     public func deletePersistedContentKey(for assetId: String) throws {
         let url = try contentKeyUrl(for: assetId)
-        print("Persisted CKC",assetId,url)
+        print("#function",assetId,url)
         guard FileManager.default.fileExists(atPath: url.path) else {
-            print("Persisted CKC? : NO")
+            print("⚠️ No CKC exists at path",url.path)
+            print("Persisting CKC Failed")
             return
         }
         try FileManager.default.removeItem(at: url)
@@ -112,18 +131,21 @@ extension ExposureDownloadFairplayRequester {
     
     internal func persistedContentKey(for assetId: String) throws -> Data? {
         let url = try contentKeyUrl(for: assetId)
-        print("Persisted CKC",assetId,url)
+        print(#function,assetId,url)
         guard FileManager.default.fileExists(atPath: url.path) else {
-            print("Persisted CKC? : NO")
+            print("⚠️ No CKC exists at path",url.path)
             return nil
         }
-        print("Persisted CKC? : YES")
+        print("Persisted CKC SUCCESS!")
         return try Data(contentsOf: url)
     }
     
     
 }
 extension ExposureDownloadFairplayRequester {
+    internal func contentKeyFile(assetId: String) -> String {
+        return "\(assetId)-key"
+    }
     internal func contentKeyDirectory() throws -> URL {
         return try FileManager
             .default
@@ -138,7 +160,7 @@ extension ExposureDownloadFairplayRequester {
     }
     
     internal func contentKeyUrl(for assetId: String) throws -> URL {
-        return try contentKeyDirectory().appendingPathComponent("\(assetId)-key")
+        return try contentKeyDirectory().appendingPathComponent(contentKeyFile(assetId: assetId))
     }
 }
 
