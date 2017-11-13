@@ -64,6 +64,23 @@ extension ExposureRequest {
         }
         return self
     }
+    
+    /// Response materialization.
+    ///
+    /// Once the request has been created, calling this method will trigger the request and materialize the response.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    /// - returns: `Self`
+    @discardableResult
+    public func response
+        (queue: DispatchQueue? = nil,
+         completionHandler: @escaping (ExposureError?) -> Void) -> Self {
+        dataRequest.emptyExposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Data>) in
+            completionHandler(ExposureResponse(dataResponse: dataResponse).error)
+        }
+        return self
+    }
 }
 
 extension ExposureRequest {
