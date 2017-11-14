@@ -66,6 +66,24 @@ class RatingSpec: QuickSpec {
             }
         }
         
+        describe("FetchAllRating") {
+            let rating = request.allRatings(for: assetId)
+            
+            it("should have no headers") {
+                expect(rating.headers).toNot(beNil())
+            }
+            
+            it("should generate a correct endpoint url") {
+                let endpoint = "/rating/asset/" + assetId + "/all"
+                expect(rating.endpointUrl).to(equal(env.apiUrl+endpoint))
+            }
+            
+            it("should generate paramters") {
+                let params = rating.parameters
+                expect(params.count).to(equal(0))
+            }
+        }
+        
         describe("PostRating") {
             let rating = request.rate(assetId: assetId, to: 1)
             
@@ -98,7 +116,7 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
-                expect(params.count).to(equal(1))
+                expect(params.count).to(equal(0))
             }
         }
     }

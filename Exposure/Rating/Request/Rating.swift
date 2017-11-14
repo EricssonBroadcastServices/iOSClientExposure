@@ -37,6 +37,12 @@ extension Rating {
                                 sessionToken: sessionToken)
     }
     
+    public func allRatings(for assetId: String) -> FetchAllRatings {
+        return FetchAllRatings(environment: environment,
+                               sessionToken: sessionToken,
+                               assetId: assetId)
+    }
+    
     public func remove(ratingFor assetId: String) -> DeleteRating {
         return DeleteRating(environment: environment,
                             sessionToken: sessionToken,
