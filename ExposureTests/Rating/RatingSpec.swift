@@ -44,7 +44,7 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
-                expect(params.count).to(equal(0))
+                expect(params).to(beNil())
             }
         }
         
@@ -62,7 +62,7 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
-                expect(params.count).to(equal(0))
+                expect(params).to(beNil())
             }
         }
         
@@ -80,7 +80,7 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
-                expect(params.count).to(equal(0))
+                expect(params).to(beNil())
             }
         }
         
@@ -98,12 +98,13 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
+                expect(params).toNot(beNil())
                 expect(params.count).to(equal(1))
             }
         }
         
         describe("DeleteRating") {
-            let rating = request.rate(assetId: assetId, to: 1)
+            let rating = request.remove(ratingFor: assetId)
             
             it("should have no headers") {
                 expect(rating.headers).toNot(beNil())
@@ -116,7 +117,7 @@ class RatingSpec: QuickSpec {
             
             it("should generate paramters") {
                 let params = rating.parameters
-                expect(params.count).to(equal(0))
+                expect(params).to(beNil())
             }
         }
     }
