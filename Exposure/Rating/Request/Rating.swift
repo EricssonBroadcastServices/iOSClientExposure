@@ -25,47 +25,21 @@ extension Rating {
                           assetId: assetId,
                           rating: value)
     }
-}
-
-public struct PostRating: ExposureType {
-    public typealias Response = [String:Any]?
     
-    public var endpointUrl: String {
-        return environment.apiUrl + "/rating/asset/" + assetId
+    public func rating(for assetId: String) -> FetchRating {
+        return FetchRating(environment: environment,
+                           sessionToken: sessionToken,
+                           assetId: assetId)
     }
     
-    public var parameters: [String: Any] {
-        return [JSONKeys.rating.rawValue: rating]
+    public func list() -> FetchRatingsList {
+        return FetchRatingsList(environment: environment,
+                                sessionToken: sessionToken)
     }
     
-    public var headers: [String: String]? {
-        return sessionToken.authorizationHeader
-    }
-    
-    /// `Environment` to use
-    public let environment: Environment
-    
-    /// `SessionToken` identifying the user making the request
-    public let sessionToken: SessionToken
-    
-    /// The asset to rate
-    public let assetId: String
-    
-    /// A rating between [0...1]
-    public let rating: Float
-    
-    /// Keys used to specify `json` body for the request.
-    internal enum JSONKeys: String {
-        case rating = "rating"
-    }
-}
-
-
-extension PostRating {
-    /// `PostRating` request is specified as a `.put`
-    ///
-    /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
-        return request(.put)
+    public func remove(ratingFor assetId: String) -> DeleteRating {
+        return DeleteRating(environment: environment,
+                            sessionToken: sessionToken,
+                            assetId: assetId)
     }
 }
