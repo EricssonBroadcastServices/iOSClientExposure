@@ -54,7 +54,7 @@ extension PostRating {
     /// `PostRating` request is specified as a `.put`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.put)
     }
 }

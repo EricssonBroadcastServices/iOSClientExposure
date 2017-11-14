@@ -80,12 +80,12 @@ class AnonymousSpec: QuickSpec {
                     
                     anonymous
                         .request()
-                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
-                            request = exposureResponse.request
-                            response = exposureResponse.response
-                            data = exposureResponse.data
-                            token = exposureResponse.value
-                            error = exposureResponse.error
+                        .response{
+                            request = $0.request
+                            response = $0.response
+                            data = $0.data
+                            token = $0.value
+                            error = $0.error
                     }
                 }
                 
@@ -115,12 +115,12 @@ class AnonymousSpec: QuickSpec {
                     
                     invalidAnonymous
                         .request()
-                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
-                            request = exposureResponse.request
-                            response = exposureResponse.response
-                            data = exposureResponse.data
-                            token = exposureResponse.value
-                            error = exposureResponse.error
+                        .response{
+                            request = $0.request
+                            response = $0.response
+                            data = $0.data
+                            token = $0.value
+                            error = $0.error
                             
                             if let data = data, let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments)
                                 as? [String: Any] ?? [:] {
@@ -204,12 +204,12 @@ class AnonymousSpec: QuickSpec {
                     invalidAnonymous
                         .request()
                         .validate(statusCode: 403..<405)
-                        .response{ (exposureResponse: ExposureResponse<SessionToken>) in
-                            request = exposureResponse.request
-                            response = exposureResponse.response
-                            data = exposureResponse.data
-                            token = exposureResponse.value
-                            error = exposureResponse.error
+                        .response{
+                            request = $0.request
+                            response = $0.response
+                            data = $0.data
+                            token = $0.value
+                            error = $0.error
                     }
                 }
                 

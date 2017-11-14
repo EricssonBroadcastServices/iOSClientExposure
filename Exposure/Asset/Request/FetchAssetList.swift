@@ -191,7 +191,7 @@ extension FetchAssetList {
 
 // MARK: - Request
 extension FetchAssetList {
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response>{
         return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }

@@ -27,7 +27,7 @@ extension Serializable {
 /// All requests to *Exposure* should adhere to this format.
 public protocol ExposureType {
     /// Response type
-    associatedtype Response
+    associatedtype Response: Decodable
     
     /// Parameter type
     associatedtype Parameters
@@ -59,7 +59,7 @@ extension ExposureType where Parameters == [String: Any], Headers == HTTPHeaders
     /// - parameter method: `Alamofire` specified `HTTPMethod`
     /// - parameter encoding: Parameter encoding to use
     /// - returns: `ExposureRequest` encapsulating the request to make
-    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
+    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest<Response> {
         let dataRequest = sessionManager
             .request(endpointUrl,
                      method: method,
@@ -77,7 +77,7 @@ extension ExposureType where Parameters == [String: Any]?, Headers == HTTPHeader
     /// - parameter method: `Alamofire` specified `HTTPMethod`
     /// - parameter encoding: Parameter encoding to use
     /// - returns: `ExposureRequest` encapsulating the request to make
-    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest {
+    internal func request(_ method: HTTPMethod, encoding: ParameterEncoding = JSONEncoding.default) -> ExposureRequest<Response> {
         if let params = parameters {
             let dataRequest = sessionManager
                 .request(endpointUrl,

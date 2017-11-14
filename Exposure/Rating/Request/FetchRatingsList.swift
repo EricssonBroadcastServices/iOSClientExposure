@@ -40,7 +40,7 @@ extension FetchRatingsList {
     /// `FetchRatingsList` request is specified as a `.get`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response>{
         return request(.get)
     }
 }

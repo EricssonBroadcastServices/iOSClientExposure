@@ -11,7 +11,7 @@ import Alamofire
 
 /// *Exposure* endpoint integration for *CustomerConfig*.
 public struct CustomerConfigRequest: ExposureType {
-  public typealias Response = [String: Any]
+  public typealias Response = CustomerConfig
 
   /// Environment to use
   public let environment: Environment
@@ -37,7 +37,7 @@ extension CustomerConfigRequest {
   /// `CustomerConfig` request is specified as a `.get`
   ///
   /// - returns: `ExposureRequest` with request specific data
-  public func request() -> ExposureRequest {
+  public func request() -> ExposureRequest<Response> {
     return request(.get)
   }
 
