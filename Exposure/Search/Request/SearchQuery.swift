@@ -125,7 +125,7 @@ extension SearchQuery {
 
 // MARK: - Request
 extension SearchQuery {
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }

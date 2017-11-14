@@ -16,8 +16,8 @@ import Foundation
 ///     .vod(assetId)
 ///     .request()
 ///     .validate(statusCode: 200..<399) // Will throw ExposureError on code 400
-///     .response{ (exposureResponse: ExposureResponse<PlaybackEntitlement>) in
-///         if case let .exposureResponse(reason: reason) = exposureResponse.error {
+///     .response{
+///         if case let .exposureResponse(reason: reason) = $0.error {
 ///             // Handle Exposure related error message
 ///         }
 ///     }

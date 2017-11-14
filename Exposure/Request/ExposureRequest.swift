@@ -12,7 +12,7 @@ import Alamofire
 /// Responsible for sending a request and receiving response from the server.
 ///
 /// Errors are mapped to typed *ExposureErrors* by default. Specialized error handling can be performed through the `mapError(callback:)` function.
-public class ExposureRequest {
+public class ExposureRequest<Response: Decodable> {
     /// Internally handled by Alamofire
     internal let dataRequest: DataRequest
     
@@ -56,11 +56,28 @@ extension ExposureRequest {
     /// - parameter completionHandler: The code to be executed once the request has finished.
     /// - returns: `Self`
     @discardableResult
-    public func response<Object>
+    public func response
         (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
-        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Object>) in
+         completionHandler: @escaping (ExposureResponse<Response>) -> Void) -> Self {
+        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Response>) in
             completionHandler(ExposureResponse(dataResponse: dataResponse))
+        }
+        return self
+    }
+    
+    /// Response materialization.
+    ///
+    /// Once the request has been created, calling this method will trigger the request and materialize the response.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    /// - returns: `Self`
+    @discardableResult
+    public func emptyResponse
+        (queue: DispatchQueue? = nil,
+         completionHandler: @escaping (ExposureError?) -> Void) -> Self {
+        dataRequest.emptyExposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Data>) in
+            completionHandler(ExposureResponse(dataResponse: dataResponse).error)
         }
         return self
     }

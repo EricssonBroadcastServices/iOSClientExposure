@@ -63,9 +63,9 @@ class FetchServerTimeSpec: QuickSpec {
                     
                     fetch
                         .request()
-                        .response{ (exposureResponse: ExposureResponse<ServerTime>) in
-                            serverTime = exposureResponse.value
-                            error = exposureResponse.error
+                        .response{
+                            serverTime = $0.value
+                            error = $0.error
                     }
                 }
                 
@@ -96,9 +96,9 @@ class FetchServerTimeSpec: QuickSpec {
                     .mapError{ (error, data) in
                         return ExposureError.generalError(error: MapErrorTestError.expectedMappedError)
                     }
-                    .response{ (exposureResponse: ExposureResponse<ServerTime>) in
-                        result = exposureResponse.value
-                        mappedError = exposureResponse.error
+                    .response{
+                        result = $0.value
+                        mappedError = $0.error
                         
                 }
                 
@@ -115,9 +115,9 @@ class FetchServerTimeSpec: QuickSpec {
                     fetch
                         .request()
                         .validate(contentType: ["application/json"])
-                        .response{ (exposureResponse: ExposureResponse<ServerTime>) in
-                            serverTime = exposureResponse.value
-                            error = exposureResponse.error
+                        .response{
+                            serverTime = $0.value
+                            error = $0.error
                     }
                 }
                 

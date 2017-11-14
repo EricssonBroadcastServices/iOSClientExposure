@@ -11,7 +11,7 @@ import AVFoundation
 import Download
 
 public final class ExposureDownloadTask: TaskType {
-    internal var entitlementRequest: ExposureRequest?
+    internal var entitlementRequest: ExposureRequest<PlaybackEntitlement>?
     fileprivate(set) public var entitlement: PlaybackEntitlement?
     
     internal(set) public var task: AVAssetDownloadTask?
@@ -137,11 +137,11 @@ extension ExposureDownloadTask {
             .use(format: playRequest.format)
             .request()
             .validate()
-            .response{ [weak self] (res: ExposureResponse<PlaybackEntitlement>) in
+            .response{ [weak self] in
                 guard let weakSelf = self else { return }
-                guard let entitlement = res.value else {
-                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, res.error!)
-                    weakSelf.analyticsProvider.finalize(error: res.error!, startupEvents: startupEvents)
+                guard let entitlement = $0.value else {
+                    weakSelf.eventPublishTransmitter.onError(weakSelf, nil, $0.error!)
+                    weakSelf.analyticsProvider.finalize(error: $0.error!, startupEvents: startupEvents)
                     return
                 }
                 
