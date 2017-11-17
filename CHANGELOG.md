@@ -8,6 +8,9 @@
 #### Features
 * `Rating` integration added.
 
+#### Bug fixes
+* Changed `Response` for `Logout` to `AnyJSONType`.
+
 ## 0.2.2
 Released 11 Nov 2017
 

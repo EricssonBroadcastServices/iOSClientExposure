@@ -12,6 +12,8 @@ import Download
 
 public final class ExposureDownloadTask: TaskType {
     internal var entitlementRequest: ExposureRequest<PlaybackEntitlement>?
+    
+    /// The `PlaybackEntitlement` granted for this download request.
     fileprivate(set) public var entitlement: PlaybackEntitlement?
     
     internal(set) public var task: AVAssetDownloadTask?
@@ -27,7 +29,7 @@ public final class ExposureDownloadTask: TaskType {
     
     public lazy var delegate: Download.TaskDelegate = { [unowned self] in
         return Download.TaskDelegate(task: self)
-        }()
+    }()
     
     internal init(assetId: String, sessionManager: SessionManager<ExposureDownloadTask>, analyticsProvider: ExposureDownloadAnalyticsProvider) {
         self.configuration = Configuration(identifier: assetId)

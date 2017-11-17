@@ -17,6 +17,9 @@ public protocol HeartbeatsProvider: class {
 }
 
 public protocol HeartbeatData {
+    /// Timestamp defining when the heartbeat took place
     var timestamp: Int64 { get }
+    
+    /// Analytics related payload as `json`
     var payload: [String: Any]  { get }
 }
