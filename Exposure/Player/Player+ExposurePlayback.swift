@@ -46,11 +46,11 @@ extension Player {
             .vod(assetId: assetId)
             .request()
             .validate()
-            .response{ [weak self] (exposureResponse: ExposureResponse<PlaybackEntitlement>) in
-                if let success = exposureResponse.value {
+            .response{ [weak self] in
+                if let success = $0.value {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
-                else if let error = exposureResponse.error {
+                else if let error = $0.error {
                     provider.finalize(error: error, startupEvents: startupEvents)
                     callback(nil, error) // TODO: Trigger onError instead
                 }
@@ -84,20 +84,20 @@ extension Player {
         entitlement
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
-                if let error = exposure.error {
+            .response{ [weak self] in
+                if let error = $0.error {
                     // Workaround until EMP-10023 is fixed
                     if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NO_MEDIA_ON_CHANNEL") {
                         entitlement
                             .use(drm: .unencrypted)
                             .request()
                             .validate()
-                            .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
-                                if let error = exposure.error {
+                            .response{ [weak self] in
+                                if let error = $0.error {
                                     provider.finalize(error: error, startupEvents: startupEvents)
                                     callback(nil, error) // TODO: Trigger onError instead
                                 }
-                                else if let success = exposure.value {
+                                else if let success = $0.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                                 }
                         }
@@ -107,7 +107,7 @@ extension Player {
                         callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
-                else if let success = exposure.value {
+                else if let success = $0.value {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
         }
@@ -144,20 +144,20 @@ extension Player {
         entitlement
             .request()
             .validate()
-            .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
-                if let error = exposure.error {
+            .response{ [weak self] in
+                if let error = $0.error {
                     // Workaround until EMP-10023 is fixed
                     if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NO_MEDIA_FOR_PROGRAM") {
                         entitlement
                             .use(drm: .unencrypted)
                             .request()
                             .validate()
-                            .response{ [weak self] (exposure: ExposureResponse<PlaybackEntitlement>) in
-                                if let error = exposure.error {
+                            .response{ [weak self] in
+                                if let error = $0.error {
                                     provider.finalize(error: error, startupEvents: startupEvents)
                                     callback(nil, error) // TODO: Trigger onError instead
                                 }
-                                else if let success = exposure.value {
+                                else if let success = $0.value {
                                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                                 }
                         }
@@ -167,7 +167,7 @@ extension Player {
                         callback(nil, error) // TODO: Trigger onError instead
                     }
                 }
-                else if let success = exposure.value {
+                else if let success = $0.value {
                     self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
                 }
         }

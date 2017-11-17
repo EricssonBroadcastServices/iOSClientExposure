@@ -28,7 +28,7 @@ struct ExposureTestRequest: ExposureType {
 }
 
 extension ExposureTestRequest {
-    func request() -> ExposureRequest {
+    func request() -> ExposureRequest<Response>{
         return request(.get)
     }
 }

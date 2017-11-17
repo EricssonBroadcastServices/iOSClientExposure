@@ -11,7 +11,7 @@ import Alamofire
 
 /// *Exposure* endpoint integration for *Logout*.
 public struct Logout: ExposureType {
-    public typealias Response = [String:Any]
+    public typealias Response = AnyJSONType
     
     /// Auth token to invalidate
     public let sessionToken: SessionToken
@@ -41,7 +41,7 @@ extension Logout {
     /// `Logout` request is specified as a `.delete`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.delete)
     }
 }

@@ -21,9 +21,14 @@ public struct DeviceRights: Codable {
     public let rights: AssetRights?
 
     public func encode(to encoder: Encoder) throws {
-        var container = try encoder.container(keyedBy: CodingKeys.self)
+        var container = encoder.container(keyedBy: CodingKeys.self)
         
-        
+        try container.encodeIfPresent(type?.queryParam, forKey: .type)
+        try container.encodeIfPresent(model, forKey: .model)
+        try container.encodeIfPresent(manufacturer, forKey: .manufacturer)
+        try container.encodeIfPresent(os, forKey: .os)
+        try container.encodeIfPresent(osVersion, forKey: .osVersion)
+        try container.encodeIfPresent(rights, forKey: .rights)
     }
     
     public init(from decoder: Decoder) throws {

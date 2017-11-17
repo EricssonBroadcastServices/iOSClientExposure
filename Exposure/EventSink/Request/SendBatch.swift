@@ -67,7 +67,7 @@ extension SendBatch {
     /// `SendBatch` request is specified as a `.post`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.post)
     }
 }

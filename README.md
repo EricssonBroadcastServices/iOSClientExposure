@@ -107,12 +107,12 @@ Authenticate(environment: exposureEnv)
            password: somePassword)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<Credentials>) in
-        if let error = response.error {
+    .response{
+        if let error = $0.error {
            // Handle Error
         }
            
-        if let credentials = response.value {
+        if let credentials = $0.value {
            let sessionToken: SessionToken = credentials.sessionToken
            
            // Store/pass along the returned SessionToken
@@ -127,12 +127,12 @@ Authenticate(environment: exposureEnv)
     .validate(sessionToken: someToken)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<SessionResponse>) in
-        if let case .exposureResponse(reason: reason) = error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
+    .response{
+        if let case .exposureResponse(reason: reason) = $0.error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
             // Session is no longer valid.
         }
         
-        if let stillValid = response.value {
+        if let stillValid = $0.value {
             // Optionally handle the data returned by Exposure in the form of a SessionResponse
         }
     }
@@ -164,12 +164,12 @@ Entitlement(environment: environment,
     .use(drm: .unencrypted)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<PlaybackEntitlement>) in
-        if let error = response.error {
+    .response{
+        if let error = $0.error {
             // Handle error
         }
         
-        if let entitlement = response.value {
+        if let entitlement = $0.value {
             // Forward entitlement to playback view
         }
     }
@@ -206,7 +206,7 @@ FetchEpg(environment: environment)
     .show(page: 1, spanning: 100)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<ChannelEpgList>) in
+    .response{
         // Handle response
     }
 ```
@@ -218,7 +218,7 @@ FetchEpg(environment: environment)
     .channel(id: "great_series", programId: "amazing_show_s01_e01")
     .request()
     .validate()
-    .response{ (response: ExposureResponse<Program>) in
+    .response{
         // Handle response
     }
 ```
@@ -258,7 +258,7 @@ let elasticSearchRequest = deviceFilteredRequest
     .elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
     .request()
     .validate()
-    .response{ (response: ExposureResponse<AssetList>) in
+    .response{
         // Handle response
     }
 ```
@@ -271,7 +271,7 @@ FetchAsset(environment: environment)
     .filter(assetId: "amazing_show_s01_e01")
     .request()
     .validate()
-    .response{ (response: ExposureResponse<Asset>) in
+    .response{
         // Handle response
     }
 ```
@@ -285,7 +285,7 @@ Search(environment: environment)
     .filter(locale: "en")
     .request()
     .validate()
-    .response{ (response: ExposureResponse<[SearchResponseAutocomplete]>) in
+    .response{
         // Matches "The Amazing TV show"
     }
 ```
@@ -302,7 +302,7 @@ Search(environment: environment)
     .show(page: 1, spanning: 100)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<SearchResponseList>) in
+    .response{
         // Handle the response
     }
 ```
@@ -318,7 +318,7 @@ EventSink()
     .initialize(using: myEnvironment)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<AnalyticsInitializationResponse>) in
+    .response{
         // Handle response
     }
 ```
@@ -330,7 +330,7 @@ EventSink()
     .send(analytics: batch, clockOffset: unixEpochOffset)
     .request()
     .validate()
-    .response{ (response: ExposureResponse<AnalyticsConfigResponse>) in
+    .response{
         // Handle response
     }
 ```
@@ -369,8 +369,8 @@ sessionToken: sessionToken)
     .use(drm: .unencrypted)
     .request()
     .validate(statusCode: 200..<299)
-    .response{ [weak self] (response: ExposureResponse<PlaybackEntitlement>) in
-        if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 401) {
+    .response{ [weak self] in
+        if case let .exposureResponse(reason: reason) = $0.error, (reason.httpCode == 401) {
             // Handle error
             self?.notifyUser(errorCode: reason.httpCode, withReason: reason.message)
         }

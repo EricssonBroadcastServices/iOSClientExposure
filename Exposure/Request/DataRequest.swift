@@ -39,4 +39,28 @@ extension DataRequest {
 
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
+    
+    /// Extends `DataRequest` to enable *Exposure* specific parsing.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter mapError: The error mapping function to convert between *untyped* `Error` and `ExposureError`.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    ///
+    /// - returns: The request.
+    @discardableResult
+    public func emptyExposureResponse(
+        queue: DispatchQueue? = nil,
+        mapError: @escaping (Error, Data?) -> ExposureError,
+        completionHandler: @escaping (DataResponse<Data>) -> Void)
+        -> Self
+    {
+        let responseSerializer = DataResponseSerializer<Data> { request, response, data, error in
+            guard error == nil, let jsonData = data else {
+                return .failure(mapError(error!, data))
+            }
+            return .success(jsonData)
+        }
+        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
+    }
+    
 }

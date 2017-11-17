@@ -19,7 +19,7 @@ public struct EventSinkInit{
 }
 
 extension EventSinkInit: ExposureType {
-    public typealias Response = AnalyticsConfigResponse
+    public typealias Response = AnalyticsInitializationResponse
     
     public var endpointUrl: String {
         return environment.baseUrl + "/eventsink/init"
@@ -38,7 +38,7 @@ extension EventSinkInit {
     /// `EventSinkInit` request is specified as a `.post`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.post)
     }
 }

@@ -44,7 +44,7 @@ public struct SearchSpelling: ExposureType, FilteredLocale {
 
 // MARK: - Request
 extension SearchSpelling {
-    public func request() -> ExposureRequest {
+    public func request() -> ExposureRequest<Response> {
         return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
     }
 }
