@@ -19,6 +19,30 @@ public enum AssetIdentifier {
 
 typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
 
+public class ExposureContext: MediaContext {
+    public typealias ContextError = ExposureError
+    
+    public typealias Source = MediaSource
+    
+    public var analyticsGenerator: (ExposureContext.Source) -> [AnalyticsProvider] = { _ in [] }
+}
+
+public class ExposureSource: MediaSource {
+    public var analyticsConnector: AnalyticsConnector = PassThroughConnector()
+    
+    public var drmAgent: DrmAgent
+    
+    public var playSessionId: String {
+        
+    }
+    
+    public var url: URL {
+        
+    }
+    
+    let entitlement: PlaybackEntitlement
+}
+
 extension Player {
     /// Initiates a playback session by requesting a *vod* entitlement and preparing the player.
     ///
