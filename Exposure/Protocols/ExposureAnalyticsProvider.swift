@@ -10,6 +10,8 @@ import Foundation
 import Player
 
 public protocol ExposureAnalyticsProvider {
+    init(environment: Environment, sessionToken: SessionToken)
+    
     /// Exposure environment used for the active session.
     ///
     /// - Important: should match the `environment` used to authenticate the user.
@@ -20,9 +22,10 @@ public protocol ExposureAnalyticsProvider {
     /// - Important: should match the `environment` used to authenticate the user.
     var sessionToken: SessionToken { get }
     
-    func prepareStartupEvents(for asset: AssetIdentifier, autoplay: Bool) -> [AnalyticsPayload]
     
-    func prepareHandshakeStarted(for asset: AssetIdentifier, with entitlement: PlaybackEntitlement) -> AnalyticsPayload
+    func onEntitlementRequested<Tech>(tech: Tech, request: AssetIdentifier) where Tech: PlaybackTech
+    
+    func onHandshakeStarted<Tech, Source>(tech: Tech, source: Source, request: AssetIdentifier) where Tech: PlaybackTech, Source: MediaSource
     
     /// Should prepare and configure the remaining parts of the Analytics environment.
     /// This step is required because we are dependant on the response from Exposure with regards to the playSessionId. Further more, some analytics events may need to be generated before hand. These are supplied as `startupEvents`.
@@ -42,7 +45,7 @@ public protocol ExposureAnalyticsProvider {
     ///
     /// - parameter error: The encountered error.
     /// - parameter startupEvents: Events `ExposureAnalytics` should deliver as the initial payload related to the error in question.
-    func finalize(error: ExposureError, startupEvents: [AnalyticsPayload])
+//    func finalize(error: ExposureError, startupEvents: [AnalyticsPayload])
 }
 
 public protocol ExposureDownloadAnalyticsProvider: ExposureAnalyticsProvider {

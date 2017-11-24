@@ -17,92 +17,41 @@ public enum AssetIdentifier {
     case download(assetId: String?)
 }
 
-typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
+public typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
 
 public class ExposureContext: MediaContext {
     public typealias ContextError = ExposureError
+    public typealias Source = ExposureSource
     
-    public typealias Source = MediaSource
+    public var analyticsGenerator: (ExposureContext.Source?) -> [AnalyticsProvider] = { _ in [] }
     
-    public var analyticsGenerator: (ExposureContext.Source) -> [AnalyticsProvider] = { _ in [] }
-}
-
-public class ExposureSource: MediaSource {
-    public var analyticsConnector: AnalyticsConnector = PassThroughConnector()
+    public let environment: Environment
+    public let sessionToken: SessionToken
     
-    public var drmAgent: DrmAgent
-    
-    public var playSessionId: String {
-        
+    public init(environment: Environment, sessionToken: SessionToken, generator: @escaping () -> ExposureStreamingAnalyticsProvider) {
+        self.environment = environment
+        self.sessionToken = sessionToken
+        self.exposureAnalyticsGenerator = generator
     }
     
-    public var url: URL {
-        
-    }
-    
-    let entitlement: PlaybackEntitlement
+    internal let exposureAnalyticsGenerator: () -> ExposureStreamingAnalyticsProvider
 }
 
-extension Player {
-    /// Initiates a playback session by requesting a *vod* entitlement and preparing the player.
-    ///
-    /// Ensuring *EMP Analytics* works as intended requires this to be the only **entry point** for starting vod playback. Using any other means to start a streaming session may result in unwanted or inconsistent event reporting.
-    ///
-    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
-    ///
-    /// - parameter assetId: EMP asset id for which to request playback.
-    /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
-    public func stream(vod assetId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
-            callback(nil, .analytics(reason: .analyticsProviderMissing))
-            return
-        }
-        
-        // Save this assetData for later use
-        let assetIdentifier = AssetIdentifier.vod(assetId: assetId)
-        
-        // Prepare the next event
-        let startupEvents = provider.prepareStartupEvents(for: assetIdentifier, autoplay: autoplay)
-        
-        
-        Entitlement(environment: provider.environment,
-                    sessionToken: provider.sessionToken)
+extension ExposureContext {
+    internal func request(vod assetId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
+        Entitlement(environment: environment,
+                    sessionToken: sessionToken)
             .vod(assetId: assetId)
             .request()
             .validate()
             .response{ [weak self] in
-                if let success = $0.value {
-                    self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
-                }
-                else if let error = $0.error {
-                    provider.finalize(error: error, startupEvents: startupEvents)
-                    callback(nil, error) // TODO: Trigger onError instead
-                }
+                self?.handle(response: $0, callback: callback)
         }
     }
     
-    /// Initiates a playback session by requesting a *live* entitlement and preparing the player.
-    ///
-    /// Ensuring *EMP Analytics* works as intended requires this to be the only **entry point** for starting live playback. Using any other means to start a streaming session may result in unwanted or inconsistent event reporting.
-    ///
-    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
-    ///
-    /// - parameter channelId: EMP channel id for which to request playback.
-    /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
-    public func stream(live channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
-            callback(nil, .analytics(reason: .analyticsProviderMissing))
-            return
-        }
-        
-        // Save this assetData for later use
-        let assetIdentifier = AssetIdentifier.live(channelId: channelId)
-        
-        // Prepare the next event
-        let startupEvents = provider.prepareStartupEvents(for: assetIdentifier, autoplay: autoplay)
-        
-        let entitlement = Entitlement(environment: provider.environment,
-                                      sessionToken: provider.sessionToken)
+    internal func request(live channelId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
+        let entitlement = Entitlement(environment: environment,
+                                      sessionToken: sessionToken)
             .live(channelId: channelId)
         
         entitlement
@@ -117,51 +66,22 @@ extension Player {
                             .request()
                             .validate()
                             .response{ [weak self] in
-                                if let error = $0.error {
-                                    provider.finalize(error: error, startupEvents: startupEvents)
-                                    callback(nil, error) // TODO: Trigger onError instead
-                                }
-                                else if let success = $0.value {
-                                    self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
-                                }
+                                self?.handle(response: $0, callback: callback)
                         }
                     }
                     else {
-                        provider.finalize(error: error, startupEvents: startupEvents)
-                        callback(nil, error) // TODO: Trigger onError instead
+                        callback(nil,error)
                     }
                 }
-                else if let success = $0.value {
-                    self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
+                else if let entitlement = $0.value {
+                    callback(ExposureSource(entitlement: entitlement), nil)
                 }
         }
     }
     
-    
-    /// Initiates a playback session by requesting a *cathcup* entitlement and preparing the player.
-    ///
-    /// Ensuring *EMP Analytics* works as intended requires this to be the only **entry point** for starting cathcup playback. Using any other means to start a streaming session may result in unwanted or inconsistent event reporting.
-    ///
-    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
-    ///
-    /// - parameter programId: EMP program id for which to request playback.
-    /// - parameter channelId: EMP channel id for which to request playback.
-    /// - parameter callback: `PlaybackEntitlement` if the request was successful, `AnalyticsError` otherwise.
-    public func stream(programId: String, channelId: String, callback: @escaping (PlaybackEntitlement?, ExposureError?) -> Void) {
-        guard let generator = analyticsProviderGenerator, let provider = generator() as? ExposureStreamingAnalyticsProvider else {
-            callback(nil, .analytics(reason: .analyticsProviderMissing))
-            return
-        }
-        
-        // Save this assetData for later use
-        let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
-        
-        // Prepare the next event
-        let startupEvents = provider.prepareStartupEvents(for: assetIdentifier, autoplay: autoplay)
-        
-        
-        let entitlement = Entitlement(environment: provider.environment,
-                                      sessionToken: provider.sessionToken)
+    internal func request(program programId: String, channelId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
+        let entitlement = Entitlement(environment: environment,
+                                      sessionToken: sessionToken)
             .catchup(channelId: channelId,
                      programId: programId)
         
@@ -177,73 +97,176 @@ extension Player {
                             .request()
                             .validate()
                             .response{ [weak self] in
-                                if let error = $0.error {
-                                    provider.finalize(error: error, startupEvents: startupEvents)
-                                    callback(nil, error) // TODO: Trigger onError instead
-                                }
-                                else if let success = $0.value {
-                                    self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
-                                }
+                                self?.handle(response: $0, callback: callback)
                         }
                     }
                     else {
-                        provider.finalize(error: error, startupEvents: startupEvents)
-                        callback(nil, error) // TODO: Trigger onError instead
+                        callback(nil,error)
                     }
                 }
-                else if let success = $0.value {
-                    self?.finalize(playback: success, statupEvents: startupEvents, assetIdentifier: assetIdentifier, using: provider, callback: callback)
+                else if let entitlement = $0.value {
+                    callback(ExposureSource(entitlement: entitlement), nil)
                 }
         }
     }
     
+    private func handle(response: ExposureResponse<PlaybackEntitlement>, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
+        if let entitlement = response.value {
+            callback(ExposureSource(entitlement: entitlement), nil)
+        }
+        else {
+            callback(nil,response.error!)
+        }
+    }
+}
+
+public class ExposureSource: MediaSource {
+    public var analyticsConnector: AnalyticsConnector = PassThroughConnector()
     
-    /// Once an entitlement has been received from the backend, playback is ready to commence. This is a multi stage process involving analytics and player preparation. Streaming through the `Exposure` extensions on `Player` allows us to leverage the setup process related to *Fairplay*.
-    private func finalize(playback entitlement: PlaybackEntitlement, statupEvents: [AnalyticsPayload], assetIdentifier: AssetIdentifier, using provider: ExposureStreamingAnalyticsProvider, callback: (PlaybackEntitlement?, ExposureError?) -> Void) {
+    public var drmAgent: DrmAgent
+    
+    public var playSessionId: String {
+        return ""
+    }
+    
+    public var url: URL {
+        return URL(fileURLWithPath: "")
+    }
+    
+    public let entitlement: PlaybackEntitlement
+    
+    internal init(entitlement: PlaybackEntitlement) {
+        self.entitlement = entitlement
+        self.drmAgent = .external(agent: ExposureStreamFairplayRequester(entitlement: entitlement))
+    }
+}
+
+extension ExposureSource: HLSNativeConfigurable {
+    public var hlsNativeConfiguration: HLSNativeConfiguration {
+        let drmAgent = ExposureStreamFairplayRequester(entitlement: entitlement)
+        return HLSNativeConfiguration(url: url,
+                                      playSessionId: entitlement.playSessionId,
+                                      drm: drmAgent)
+    }
+}
+
+
+
+extension Player where Tech == HLSNative<ExposureContext> {
+    /// Initiates a playback session by requesting a *vod* entitlement and preparing the player.
+    ///
+    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
+    ///
+    /// - parameter assetId: EMP asset id for which to request playback.
+    public func stream(vod assetId: String) {
+        // Generate the analytics providers
+        let providers = context.analyticsGenerator(nil)
         
-        // If the startup events are enqueued before the player has initialized using the PlaybackEntitlement, we might not have a reference to the correct playSessionId.
-        stream(playback: entitlement, analyticsProvider: provider)
+        // Save this assetData for later use
+        let assetIdentifier = AssetIdentifier.vod(assetId: assetId)
         
-        let handshake = provider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
-        var events = statupEvents
-        events.append(handshake)
+        // Initial analytics
+        providers.forEach{
+            if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
+                exposureProvider.onEntitlementRequested(tech: tech, request: assetIdentifier)
+            }
+        }
         
-        provider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: self)
-        callback(entitlement, nil)
+        context.request(vod: assetId) { [weak self] source, error in
+            guard let `self` = self else { return }
+            `self`.handle(source: source, error: error, assetIdentifier: assetIdentifier, providers: providers)
+        }
+    }
+    
+    /// Initiates a playback session by requesting a *live* entitlement and preparing the player.
+    ///
+    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
+    ///
+    /// - parameter channelId: EMP channel id for which to request playback.
+    public func stream(live channelId: String) {
+        // Generate the analytics providers
+        let providers = context.analyticsGenerator(nil)
+        
+        // Save this assetData for later use
+        let assetIdentifier = AssetIdentifier.live(channelId: channelId)
+        
+        // Initial analytics
+        providers.forEach{
+            if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
+                exposureProvider.onEntitlementRequested(tech: tech, request: assetIdentifier)
+            }
+        }
+        
+        context.request(live: channelId) { [weak self] source, error in
+            guard let `self` = self else { return }
+            `self`.handle(source: source, error: error, assetIdentifier: assetIdentifier, providers: providers)
+        }
     }
     
     
-    /// Prepare the `player` for playback by configuring it with a `PlaybackEntitlement` supplied by exposure.
+    /// Initiates a playback session by requesting a *cathcup* entitlement and preparing the player.
     ///
-    /// If the requested content is *FairPlay* protected, the appropriate `FairplayRequester` will be created. Configuration will be taken from the supplied `entitlement`.
+    /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
     ///
-    /// Likewise, if `sessionShift(enabled: true)` has been specified, this method will attempt to configure playback to start at the `lastViewedOffset` in the supplied `entitlement`.
-    /// Please note that a *manually* configured *Session Shift* through `sessionShift(enabledAt: someOffset)` will not be overriden. Use either a manual configuration or *Exposure*.
-    ///
-    /// - parameter entitlement: *Exposure* provided entitlement
-    private func stream(playback entitlement: PlaybackEntitlement, analyticsProvider: ExposureStreamingAnalyticsProvider? = nil) {
-        // Session shift
-        handleSessionShift(entitlement: entitlement)
+    /// - parameter programId: EMP program id for which to request playback.
+    /// - parameter channelId: EMP channel id for which to request playback.
+    public func stream(programId: String, channelId: String) {
+        // Generate the analytics providers
+        let providers = context.analyticsGenerator(nil)
         
-        // Fairplay
-        let requester = ExposureStreamFairplayRequester(entitlement: entitlement)
+        // Save this assetData for later use
+        let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
         
-        stream(url: entitlement.mediaLocator, using: requester, analyticsProvider: analyticsProvider, playSessionId: entitlement.playSessionId)
+        // Initial analytics
+        providers.forEach{
+            if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
+                exposureProvider.onEntitlementRequested(tech: tech, request: assetIdentifier)
+            }
+        }
+        
+        context.request(program: programId, channelId: channelId) { [weak self] source, error in
+            guard let `self` = self else { return }
+            `self`.handle(source: source, error: error, assetIdentifier: assetIdentifier, providers: providers)
+        }
+    }
+    
+    
+    private func handle(source: ExposureSource?, error: ExposureError?, assetIdentifier: AssetIdentifier, providers: [AnalyticsProvider]) {
+        if let source = source {
+            /// Make sure SessionShift is configured if specified by user
+            `self`.handleSessionShift(entitlement: source.entitlement)
+            
+            /// Load tech
+            `self`.tech.load(source: source)
+            source.analyticsConnector.providers.forEach{
+                if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
+                    exposureProvider.onHandshakeStarted(tech: `self`.tech, source: source, request: assetIdentifier)
+                }
+            }
+        }
+        
+        if let error = error {
+            /// Deliver error
+            let contextError = PlayerError<Tech, ExposureContext>.context(error: error)
+            let nilSource: ExposureSource? = nil
+            providers.forEach{ $0.onError(tech: `self`.tech, source: nilSource, error: contextError) }
+            `self`.tech.eventDispatcher.onError(`self`.tech, nilSource, contextError)
+        }
     }
 }
 
 // MARK: - SessionShift
-extension Player {
+extension Player where Tech: SessionShift {
     fileprivate func handleSessionShift(entitlement: PlaybackEntitlement) {
         // Make sure the user has specified sessionShift enabled
-        guard sessionShiftEnabled else { return }
+        guard tech.sessionShiftEnabled else { return }
         
         // Make sure we do not override a manually set bookmark
-        guard sessionShiftOffset == nil else { return }
+        guard tech.sessionShiftOffset == nil else { return }
         
         // Did the entitlement specify a `lastViewedOffset`?
         guard let offset = entitlement.lastViewedOffset else { return }
         
-        sessionShift(enabledAt: Int64(offset))
+        tech.sessionShift(enabledAt: Int64(offset))
     }
 }
