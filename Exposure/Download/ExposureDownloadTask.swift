@@ -125,12 +125,8 @@ extension ExposureDownloadTask {
     }
     
     fileprivate func startEntitlementRequest(assetId: String, lazily: Bool, callback: @escaping () -> Void) {
-        
-        // Save this assetData for later use
-        let assetIdentifier = AssetIdentifier.download(assetId: assetId)
-        
         // Prepare the next event
-        let startupEvents = analyticsProvider.prepareStartupEvents(for: assetIdentifier, autoplay: false)
+        analyticsProvider.onEntitlementRequested(tech: self, assetId: assetId)
         
         entitlementRequest = Entitlement(environment: analyticsProvider.environment,
                                          sessionToken: analyticsProvider.sessionToken)
@@ -143,15 +139,12 @@ extension ExposureDownloadTask {
                 guard let weakSelf = self else { return }
                 guard let entitlement = $0.value else {
                     weakSelf.eventPublishTransmitter.onError(weakSelf, nil, $0.error!)
-                    weakSelf.analyticsProvider.finalize(error: $0.error!, startupEvents: startupEvents)
+                    weakSelf.analyticsProvider.downloadErrorEvent(task: weakSelf, error: $0.error!)
                     return
                 }
                 
-                let handshake = weakSelf.analyticsProvider.prepareHandshakeStarted(for: assetIdentifier, with: entitlement)
-                var events = startupEvents
-                events.append(handshake)
-                
-                weakSelf.analyticsProvider.finalizePreparation(for: entitlement.playSessionId, startupEvents: events, asset: assetIdentifier, with: entitlement, heartbeatsProvider: weakSelf)
+                weakSelf.analyticsProvider.onHandshakeStarted(tech: weakSelf, source: entitlement, assetId: assetId)
+                weakSelf.analyticsProvider.finalizePreparation(assetId: assetId, with: entitlement, heartbeatsProvider: weakSelf)
                 
                 
                 weakSelf.entitlementRequest = nil

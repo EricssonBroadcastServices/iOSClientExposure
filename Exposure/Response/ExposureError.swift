@@ -8,12 +8,13 @@
 
 import Foundation
 import Download
+import Player
 
 /// `ExposureError` is the error type returned by the *Exposure Framework*. It can manifest as both *native errors* to the framework and *nested errors* specific to underlying frameworks or concepts such as `ExposureResponseMessage`.
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
-public enum ExposureError: DownloadErrorConvertible {
+public enum ExposureError: ErrorCode, DownloadErrorConvertible {
     /// General Errors
     case generalError(error: Error)
     

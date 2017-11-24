@@ -123,10 +123,8 @@ extension ExposureContext {
 public class ExposureSource: MediaSource {
     public var analyticsConnector: AnalyticsConnector = PassThroughConnector()
     
-    public var drmAgent: DrmAgent
-    
     public var playSessionId: String {
-        return ""
+        return entitlement.playSessionId
     }
     
     public var url: URL {
@@ -137,7 +135,6 @@ public class ExposureSource: MediaSource {
     
     internal init(entitlement: PlaybackEntitlement) {
         self.entitlement = entitlement
-        self.drmAgent = .external(agent: ExposureStreamFairplayRequester(entitlement: entitlement))
     }
 }
 
@@ -241,6 +238,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             source.analyticsConnector.providers.forEach{
                 if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
                     exposureProvider.onHandshakeStarted(tech: `self`.tech, source: source, request: assetIdentifier)
+                    exposureProvider.finalizePreparation(for: source.entitlement.playSessionId, asset: assetIdentifier, with: source.entitlement, heartbeatsProvider: `self`.tech)
                 }
             }
         }
