@@ -7,6 +7,7 @@
 
 #### Features
 * `Rating` integration added.
+* `Carousel` fetch now supports filtering on *fields*, *publication* and *pagination*
 
 #### Bug fixes
 * Changed `Response` for `Logout` to `AnyJSONType`.
