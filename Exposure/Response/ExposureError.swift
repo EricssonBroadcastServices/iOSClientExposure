@@ -129,13 +129,6 @@ extension ExposureError {
 }
 
 extension ExposureError {
-    public enum DownloadError {
-        /// Unable to load a valid `URL` from path.
-        case invalidMediaUrl(path: String)
-    }
-}
-
-extension ExposureError {
     public enum AnalyticsError {
         /// No analytics provider has been supplied
         case analyticsProviderMissing
@@ -192,14 +185,6 @@ extension ExposureError.FairplayError {
     }
 }
 
-extension ExposureError.DownloadError {
-    public var localizedDescription: String {
-        switch self {
-        case .invalidMediaUrl(path: let path): return "The supplied path does not specify a valid URL: " + path
-        }
-    }
-}
-
 extension ExposureError.AnalyticsError {
     public var localizedDescription: String {
         switch self {
@@ -252,15 +237,6 @@ extension ExposureError.FairplayError {
         case .networking(error: _): return 313
         case .serverPlaybackContext(error: _): return 314
         case .contentInformationRequestMissing: return 315
-        }
-    }
-}
-
-extension ExposureError.DownloadError {
-    /// Defines the `domain` specific code for the underlying error.
-    public var code: Int {
-        switch self {
-        case .invalidMediaUrl(path: _): return 401
         }
     }
 }

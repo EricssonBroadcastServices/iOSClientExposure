@@ -20,10 +20,13 @@ public enum AssetIdentifier {
 public typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
 
 extension Player where Tech == HLSNative<ExposureContext> {
-    public convenience init(environment: Environment, sessionToken: SessionToken) {
+    public convenience init<Analytics: ExposureStreamingAnalyticsProvider>(environment: Environment, sessionToken: SessionToken, analytics: Analytics.Type) {
+        let generator: (Tech.Context.Source?) -> AnalyticsProvider = { _ in return analytics.init(environment: environment, sessionToken: sessionToken) }
+        let context = ExposureContext(environment: environment,
+                                     sessionToken: sessionToken)
+        context.analyticsGenerators.append(generator)
         self.init(tech: HLSNative<ExposureContext>(),
-                  context:  ExposureContext(environment: environment,
-                                            sessionToken: sessionToken))
+                  context: context)
     }
 }
 
@@ -134,7 +137,7 @@ public class ExposureSource: MediaSource {
     }
     
     public var url: URL {
-        return URL(fileURLWithPath: "")
+        return entitlement.mediaLocator
     }
     
     public let entitlement: PlaybackEntitlement
@@ -241,6 +244,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             
             /// Load tech
             `self`.tech.load(source: source)
+            source.analyticsConnector.providers = providers
             source.analyticsConnector.providers.forEach{
                 if let exposureProvider = $0 as? ExposureStreamingAnalyticsProvider {
                     exposureProvider.onHandshakeStarted(tech: `self`.tech, source: source, request: assetIdentifier)

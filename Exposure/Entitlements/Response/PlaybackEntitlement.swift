@@ -14,8 +14,8 @@ public struct PlaybackEntitlement: Codable {
     /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
     public let playTokenExpiration: String
     
-    /// The information needed to locate the media. FOR EDRM this will be the media uid, for other formats it's the URL of the media.
-    public let mediaLocator: String
+    /// The `URL` location for the media.
+    public let mediaLocator: URL
     
     /// Unique id of this playback session, all analytics events for this session should be reported on with this id
     public let playSessionId: String
@@ -83,7 +83,7 @@ extension PlaybackEntitlement {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Required
         playTokenExpiration = try container.decode(String.self, forKey: .playTokenExpiration)
-        mediaLocator = try container.decode(String.self, forKey: .mediaLocator)
+        mediaLocator = try container.decode(URL.self, forKey: .mediaLocator)
         playSessionId = try container.decode(String.self, forKey: .playSessionId)
         
         live = try container.decode(Bool.self, forKey: .live)

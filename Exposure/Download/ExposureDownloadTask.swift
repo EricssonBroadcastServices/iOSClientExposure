@@ -80,13 +80,7 @@ extension ExposureDownloadTask {
     fileprivate func restoreOrCreate(for entitlement: PlaybackEntitlement, forceNew: Bool, callback: @escaping () -> Void = { _ in }) {
         fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: configuration.identifier)
         
-        guard let targetUrl = URL(string: entitlement.mediaLocator) else {
-            let error = ExposureError.exposureDownload(reason: .invalidMediaUrl(path: entitlement.mediaLocator))
-            eventPublishTransmitter.onError(self, nil, error)
-            analyticsProvider.downloadErrorEvent(task: self, error: error)
-            return
-        }
-        configuration.url = targetUrl
+        configuration.url = entitlement.mediaLocator
         
         sessionManager.restoreTask(with: configuration.identifier) { [weak self] restoredTask in
             guard let weakSelf = self else { return }
