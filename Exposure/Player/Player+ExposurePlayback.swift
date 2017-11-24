@@ -19,22 +19,28 @@ public enum AssetIdentifier {
 
 public typealias ExposureStreamingAnalyticsProvider = ExposureAnalyticsProvider & AnalyticsProvider
 
+extension Player where Tech == HLSNative<ExposureContext> {
+    public convenience init(environment: Environment, sessionToken: SessionToken) {
+        self.init(tech: HLSNative<ExposureContext>(),
+                  context:  ExposureContext(environment: environment,
+                                            sessionToken: sessionToken))
+    }
+}
+
 public class ExposureContext: MediaContext {
     public typealias ContextError = ExposureError
     public typealias Source = ExposureSource
     
-    public var analyticsGenerator: (ExposureContext.Source?) -> [AnalyticsProvider] = { _ in [] }
+    public var analyticsGenerators: [(Source?) -> AnalyticsProvider] = []
     
     public let environment: Environment
     public let sessionToken: SessionToken
     
-    public init(environment: Environment, sessionToken: SessionToken, generator: @escaping () -> ExposureStreamingAnalyticsProvider) {
+    public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
-        self.exposureAnalyticsGenerator = generator
     }
     
-    internal let exposureAnalyticsGenerator: () -> ExposureStreamingAnalyticsProvider
 }
 
 extension ExposureContext {
@@ -157,7 +163,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// - parameter assetId: EMP asset id for which to request playback.
     public func stream(vod assetId: String) {
         // Generate the analytics providers
-        let providers = context.analyticsGenerator(nil)
+        let providers = context.analyticsProviders(for: nil)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.vod(assetId: assetId)
@@ -182,7 +188,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// - parameter channelId: EMP channel id for which to request playback.
     public func stream(live channelId: String) {
         // Generate the analytics providers
-        let providers = context.analyticsGenerator(nil)
+        let providers = context.analyticsProviders(for: nil)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.live(channelId: channelId)
@@ -209,7 +215,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// - parameter channelId: EMP channel id for which to request playback.
     public func stream(programId: String, channelId: String) {
         // Generate the analytics providers
-        let providers = context.analyticsGenerator(nil)
+        let providers = context.analyticsProviders(for: nil)
         
         // Save this assetData for later use
         let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
