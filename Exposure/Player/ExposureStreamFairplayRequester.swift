@@ -28,7 +28,8 @@ internal class ExposureStreamFairplayRequester: NSObject, ExposureFairplayReques
         return ckc
     }
     
-    func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool {
+    /// Streaming requests normally always contact the remote for license and certificates.
+    internal func shouldContactRemote(for resourceLoadingRequest: AVAssetResourceLoadingRequest) throws -> Bool {
         return true
     }
 }
