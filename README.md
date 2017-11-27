@@ -150,7 +150,7 @@ let request = Entitlement(environment: environment, sessionToken: sessionToken)
 
 let vodRequest = request.vod(assetId: someAsset)
 let liveRequest = request.live(channelId: someChannel)
-let catchupRequest = request.catchup(channelId: someChannel, programId: someProgram)
+let catchupRequest = request.program(programId: someProgram, channelId: someChannel)
 let downloadRequest = request.download(assetId: someOfflineAsset)
 ```
 
@@ -159,8 +159,8 @@ Optionally, client applications can request a `DRM` other than the default  `.fa
 ```Swift
 Entitlement(environment: environment,
            sessionToken: sessionToken)
-    .catchup(channelId: someChannel,
-             programId: someProgram)
+    .program(programId: someProgram,
+             channelId: someChannel)
     .use(drm: .unencrypted)
     .request()
     .validate()
@@ -177,19 +177,16 @@ Entitlement(environment: environment,
 
 A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. Client applications should be aware of the importance of using `ExposureRequest.validate()` and handling the response as appropriate. For more information, please see [Error Handling](#error-handling).
 
-#### Playback through `Player`
-`Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase.
+#### Playback through `Player` using `ExposureContext`
+`Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase. Context sensitive playback allows for constrained extensions on the `PlaybackTech` and `MediaContext`, encapsulating all logic for an entitlement request.
+
+*Client Applications* can make use of `ExposureContext` which provides out of the box integration with the *EMP* backend, allowing playback from asset identifiers.
 
 ```Swift
-do {
-    player.stream(playback: anEntitlement)
-}
-catch {
-    // Handle errors
-}
+player.stream(live: "someEMPLiveChannel")
 ```
 
-Using the `Player.stream(playback:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
+Using the `Player.stream(live:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
 
 ### Fetching EPG
 *EPG*, or the *electronic programming guide*, details previous, current and upcomming programs on a specific channel. Client applications may request *EPG* data through the `FetchEpg` endpoint.

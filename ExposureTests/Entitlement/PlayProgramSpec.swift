@@ -11,7 +11,7 @@ import Nimble
 
 @testable import Exposure
 
-class PlayCatchupSpec: QuickSpec {
+class PlayProgramSpec: QuickSpec {
     override func spec() {
         super.spec()
         
@@ -29,7 +29,7 @@ class PlayCatchupSpec: QuickSpec {
         let entitlement = Entitlement(environment: env,
                                       sessionToken: sessionToken)
         let play = entitlement
-            .catchup(channelId: channelId, programId: programId)
+            .program(programId: programId, channelId: channelId)
             .use(drm: .unencrypted)
             .use(format: .hls)
         
@@ -59,7 +59,7 @@ class PlayCatchupSpec: QuickSpec {
             it("should transform PlayLive to PlayCatchup") {
                 let transformed = entitlement
                     .live(channelId: channelId)
-                    .catchup(programId: programId)
+                    .program(programId: programId)
                 
                 expect(transformed.endpointUrl).to(equal(env.apiUrl+endpoint))
             }

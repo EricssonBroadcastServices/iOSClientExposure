@@ -8,12 +8,13 @@
 
 import Foundation
 import Download
+import Player
 
 /// `ExposureError` is the error type returned by the *Exposure Framework*. It can manifest as both *native errors* to the framework and *nested errors* specific to underlying frameworks or concepts such as `ExposureResponseMessage`.
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
-public enum ExposureError: DownloadErrorConvertible {
+public enum ExposureError: ErrorCode, DownloadErrorConvertible {
     /// General Errors
     case generalError(error: Error)
     
@@ -30,8 +31,6 @@ public enum ExposureError: DownloadErrorConvertible {
     case download(reason: Download.DownloadError)
     
     case exposureDownload(reason: DownloadError)
-    
-    case analytics(reason: AnalyticsError)
     
     public static func downloadError(reason: Download.DownloadError) -> ExposureError {
         return .download(reason: reason)
@@ -128,20 +127,6 @@ extension ExposureError {
 }
 
 extension ExposureError {
-    public enum DownloadError {
-        /// Unable to load a valid `URL` from path.
-        case invalidMediaUrl(path: String)
-    }
-}
-
-extension ExposureError {
-    public enum AnalyticsError {
-        /// No analytics provider has been supplied
-        case analyticsProviderMissing
-    }
-}
-
-extension ExposureError {
     public var localizedDescription: String {
         switch self {
         case .generalError(error: let error): return error.localizedDescription
@@ -150,7 +135,6 @@ extension ExposureError {
         case .fairplay(reason: let reason): return "Fairplay: " + reason.localizedDescription
         case .exposureDownload(reason: let reason): return reason.localizedDescription
         case .download(reason: let reason): return reason.localizedDescription
-        case .analytics(reason: let reason): return reason.localizedDescription
         }
     }
 }
@@ -191,22 +175,6 @@ extension ExposureError.FairplayError {
     }
 }
 
-extension ExposureError.DownloadError {
-    public var localizedDescription: String {
-        switch self {
-        case .invalidMediaUrl(path: let path): return "The supplied path does not specify a valid URL: " + path
-        }
-    }
-}
-
-extension ExposureError.AnalyticsError {
-    public var localizedDescription: String {
-        switch self {
-        case .analyticsProviderMissing: return "An ExposureAnalyticsProvider is required"
-        }
-    }
-}
-
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.
     public var code: Int {
@@ -217,7 +185,6 @@ extension ExposureError {
         case .fairplay(reason: let reason): return reason.code
         case .exposureDownload(reason: let reason): return reason.code
         case .download(reason: let reason): return reason.code
-        case .analytics(reason: let reason): return reason.code
         }
     }
 }
@@ -255,19 +222,3 @@ extension ExposureError.FairplayError {
     }
 }
 
-extension ExposureError.DownloadError {
-    /// Defines the `domain` specific code for the underlying error.
-    public var code: Int {
-        switch self {
-        case .invalidMediaUrl(path: _): return 401
-        }
-    }
-}
-
-extension ExposureError.AnalyticsError {
-    public var code: Int  {
-        switch self {
-        case .analyticsProviderMissing: return 501
-        }
-    }
-}

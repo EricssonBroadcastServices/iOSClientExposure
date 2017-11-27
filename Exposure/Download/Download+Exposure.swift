@@ -15,7 +15,7 @@ extension Player {
     public func offline(entitlement: PlaybackEntitlement, assetId: String, urlAsset: AVURLAsset) {
         let fairplayRequester = ExposureDownloadFairplayRequester(entitlement: entitlement, assetId: assetId)
         
-        stream(urlAsset: urlAsset, using: fairplayRequester, playSessionId: nil)
+//        stream(urlAsset: urlAsset, using: fairplayRequester, playSessionId: nil)
     }
 }
 

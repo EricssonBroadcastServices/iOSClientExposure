@@ -63,8 +63,8 @@ extension Entitlement {
     /// - parameter channelId: channel broadcasting the program
     /// - parameter programId: program to request
     /// - returns: `PlayCatchup` struct used to process the request
-    public func catchup(channelId: String, programId: String) -> PlayCatchup {
-        return PlayCatchup(channelId: channelId,
+    public func program(programId: String, channelId: String) -> PlayProgram {
+        return PlayProgram(channelId: channelId,
                            programId: programId,
                            environment: environment,
                            sessionToken: sessionToken)
