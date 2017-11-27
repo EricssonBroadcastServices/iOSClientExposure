@@ -1,3 +1,3 @@
-github "EricssonBroadcastServices/iOSClientPlayer" "development"
-github "EricssonBroadcastServices/iOSClientDownload" "development"
+github "EricssonBroadcastServices/iOSClientPlayer"
+github "EricssonBroadcastServices/iOSClientDownload"
 github "Alamofire/Alamofire" "4.4.0"
