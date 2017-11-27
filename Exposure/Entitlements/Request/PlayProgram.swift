@@ -17,7 +17,7 @@ import Foundation
 /// * `format` HLS
 ///
 /// If there is no current program live will return `NOT_ENABLED`.
-public struct PlayCatchup: ExposureType, DRMRequest {
+public struct PlayProgram: ExposureType, DRMRequest {
     public typealias Response = PlaybackEntitlement
     
     /// Channel of the program to play.
@@ -56,7 +56,7 @@ public struct PlayCatchup: ExposureType, DRMRequest {
     }
 }
 
-extension PlayCatchup {
+extension PlayProgram {
     /// `PlayCatchup` request is specified as a `.post`
     ///
     /// - returns: `ExposureRequest` with request specific data

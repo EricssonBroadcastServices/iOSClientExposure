@@ -65,8 +65,8 @@ extension PlayLive {
     ///
     /// - parameter programId: program to request
     /// - returns: `PlayCatchup` struct used to process the request.
-    public func catchup(programId: String) -> PlayCatchup {
-        return PlayCatchup(channelId: channelId,
+    public func program(programId: String) -> PlayProgram {
+        return PlayProgram(channelId: channelId,
                            programId: programId,
                            environment: environment,
                            sessionToken: sessionToken)

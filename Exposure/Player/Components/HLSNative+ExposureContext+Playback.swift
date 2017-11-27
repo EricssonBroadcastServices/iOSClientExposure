@@ -12,7 +12,7 @@ import Player
 public enum AssetIdentifier {
     case vod(assetId: String?)
     case live(channelId: String?)
-    case catchup(channelId: String?, programId: String?)
+    case program(programId: String?, channelId: String?)
     case offline(assetId: String?)
     case download(assetId: String?)
 }
@@ -81,7 +81,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
         let providers = context.analyticsProviders(for: nil)
         
         // Save this assetData for later use
-        let assetIdentifier = AssetIdentifier.catchup(channelId: channelId, programId: programId)
+        let assetIdentifier = AssetIdentifier.program(programId: programId, channelId: channelId)
         
         // Initial analytics
         providers.forEach{

@@ -93,8 +93,8 @@ extension ExposureContext {
     internal func request(program programId: String, channelId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
         let entitlement = Entitlement(environment: environment,
                                       sessionToken: sessionToken)
-            .catchup(channelId: channelId,
-                     programId: programId)
+            .program(programId: programId,
+                     channelId: channelId)
         
         entitlement
             .request()
