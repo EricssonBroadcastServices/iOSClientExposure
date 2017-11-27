@@ -9,6 +9,7 @@
 #### Features
 * `Rating` integration added.
 * `EMP-10650` Context sensitive playback using `ExposureContext`
+* `Carousel` fetch now supports filtering on *fields*, *publication* and *pagination*
 
 #### Bug fixes
 * Changed `Response` for `Logout` to `AnyJSONType`.
