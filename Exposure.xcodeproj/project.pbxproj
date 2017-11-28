@@ -177,7 +177,6 @@
 		76AE64EF1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */; };
 		76AE64F11F90E05B0036933E /* SessionManager+Exposure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F01F90E05B0036933E /* SessionManager+Exposure.swift */; };
 		76AE64F31F90E0DC0036933E /* ExposureDownloadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AE64F21F90E0DC0036933E /* ExposureDownloadTask.swift */; };
-		76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */; };
 		76B04F1E1FBAC7FF007011E6 /* FetchRatingsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F1D1FBAC7FF007011E6 /* FetchRatingsList.swift */; };
@@ -399,7 +398,6 @@
 		76AE64EE1F90B4D10036933E /* ExposureDownloadFairplayRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureDownloadFairplayRequester.swift; sourceTree = "<group>"; };
 		76AE64F01F90E05B0036933E /* SessionManager+Exposure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionManager+Exposure.swift"; sourceTree = "<group>"; };
 		76AE64F21F90E0DC0036933E /* ExposureDownloadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureDownloadTask.swift; sourceTree = "<group>"; };
-		76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpgList.swift; sourceTree = "<group>"; };
 		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRating.swift; sourceTree = "<group>"; };
 		76B04F1D1FBAC7FF007011E6 /* FetchRatingsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRatingsList.swift; sourceTree = "<group>"; };
@@ -836,7 +834,6 @@
 		7697349D1EF17FB400F6ADC8 /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				76AF2F0F1F13A9ED0014F007 /* ChannelEpgList.swift */,
 				7697349E1EF1801000F6ADC8 /* ChannelEpg.swift */,
 				769734A01EF1803200F6ADC8 /* Program.swift */,
 				76842F9C1F61B45C00F1A0D3 /* Airing.swift */,
@@ -1350,7 +1347,6 @@
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
-				76AF2F101F13A9ED0014F007 /* ChannelEpgList.swift in Sources */,
 				76B04F281FBADBDF007011E6 /* UserRating.swift in Sources */,
 				762804941FB33F2000DB54CC /* ExposureStreamingAnalyticsProvider.swift in Sources */,
 				766338621F78FBD300D66160 /* ValidateDownload.swift in Sources */,

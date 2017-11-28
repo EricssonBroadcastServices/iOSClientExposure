@@ -10,11 +10,12 @@ import Foundation
 
 /// *Exposure* endpoint integration for fetching *EPG* for a set of channels
 public struct FetchEpgChannelList: ExposureType, SortedResponse, PageableResponse, FilteredPublish, FilteredDates, FilteredAssetIds {
-    public typealias Response = ChannelEpgList
+    public typealias Response = [ChannelEpg]
     
     public var endpointUrl: String {
-        let channelIds = assetIdFilter.assetIds?.joined(separator: ",")
-        return environment.apiUrl + "/epg/" + (channelIds != nil ? "\(channelIds!)" : "")
+        let channelIds = assetIdFilter.assetIds?.joined(separator: ",") ?? ""
+        let escaped = ExposureURLEncoding.queryString.escape(channelIds)
+        return environment.apiUrl + "/epg/" + escaped
     }
     
     public var parameters: [String: Any] {
