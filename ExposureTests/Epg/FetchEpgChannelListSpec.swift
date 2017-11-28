@@ -70,8 +70,7 @@ class FetchEpgSpec: QuickSpec {
             
             let channels = allChannels.filter(onlyAssetIds: channelIds)
             it("should generate a correct endpoint url with filter on channelId") {
-                let channelIds = assetIdFilter.assetIds?.joined(separator: ",") ?? ""
-                let escaped = ExposureURLEncoding.queryString.escape(channelIds)
+                let escaped = ExposureURLEncoding.queryString.escape(channelIds.joined(separator: ","))
                 
                 let endpoint = "/epg" + "/" + escaped
                 expect(channels.endpointUrl).to(equal(env.apiUrl+endpoint))

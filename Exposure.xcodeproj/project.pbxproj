@@ -45,6 +45,7 @@
 		762804901FB33EBE00DB54CC /* HLSNative+HeartbeatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7628048F1FB33EBE00DB54CC /* HLSNative+HeartbeatsProvider.swift */; };
 		762804921FB33EEB00DB54CC /* ExposureDownloadTask+HeartbeatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762804911FB33EEB00DB54CC /* ExposureDownloadTask+HeartbeatsProvider.swift */; };
 		762804941FB33F2000DB54CC /* ExposureStreamingAnalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 762804931FB33F2000DB54CC /* ExposureStreamingAnalyticsProvider.swift */; };
+		762808CC1FCDDEF3005610DF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762808CD1FCDDEF3005610DF /* Alamofire.framework */; };
 		76288CB21F20B048004B22AB /* AnalyticsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB11F20B048004B22AB /* AnalyticsPayload.swift */; };
 		76288CB41F20B08B004B22AB /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB31F20B08B004B22AB /* EventSink.swift */; };
 		76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB51F20B0D3004B22AB /* SendBatch.swift */; };
@@ -262,6 +263,7 @@
 		7628048F1FB33EBE00DB54CC /* HLSNative+HeartbeatsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+HeartbeatsProvider.swift"; sourceTree = "<group>"; };
 		762804911FB33EEB00DB54CC /* ExposureDownloadTask+HeartbeatsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExposureDownloadTask+HeartbeatsProvider.swift"; sourceTree = "<group>"; };
 		762804931FB33F2000DB54CC /* ExposureStreamingAnalyticsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureStreamingAnalyticsProvider.swift; sourceTree = "<group>"; };
+		762808CD1FCDDEF3005610DF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76288CB11F20B048004B22AB /* AnalyticsPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsPayload.swift; sourceTree = "<group>"; };
 		76288CB31F20B08B004B22AB /* EventSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSink.swift; sourceTree = "<group>"; };
 		76288CB51F20B0D3004B22AB /* SendBatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendBatch.swift; sourceTree = "<group>"; };
@@ -450,6 +452,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				762808CC1FCDDEF3005610DF /* Alamofire.framework in Frameworks */,
 				76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */,
 				76BBFB781EA8C11B001DBDDB /* Quick.framework in Frameworks */,
 				76BBFB7A1EA8C11F001DBDDB /* Nimble.framework in Frameworks */,
@@ -932,6 +935,7 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				762808CD1FCDDEF3005610DF /* Alamofire.framework */,
 				76344F4D1F7B78C50034AEC0 /* Download.framework */,
 				766094AA1F0AE614005E9A70 /* Player.framework */,
 				76BBFBCE1EAA0A8A001DBDDB /* Mockingjay.framework */,
