@@ -34,7 +34,7 @@ class SearchQuerySpec: QuickSpec {
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/content/search/query/" + query
+                let endpoint = "/content/search/query/" + ExposureURLEncoding.queryString.escape(query)
                 expect(request.endpointUrl).to(equal(env.apiUrl + endpoint))
             }
             

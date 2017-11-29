@@ -30,7 +30,7 @@ class ExposureErrorSpec: QuickSpec {
                 
                 let desc = reason.message
                 
-                expect(desc).to(equal("JSON Serialization error: \(anyError.message)"))
+                expect(desc).to(equal("JSON Serialization error: \(anyError.localizedDescription)"))
             }
         }
     }
