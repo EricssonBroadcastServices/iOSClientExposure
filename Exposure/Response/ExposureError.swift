@@ -14,7 +14,7 @@ import Player
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
-public enum ExposureError: ErrorCode, DownloadErrorConvertible {
+public enum ExposureError: ExpandedError, DownloadErrorConvertible {
     /// General Errors
     case generalError(error: Error)
     
@@ -127,20 +127,20 @@ extension ExposureError {
 }
 
 extension ExposureError {
-    public var localizedDescription: String {
+    public var message: String {
         switch self {
-        case .generalError(error: let error): return error.localizedDescription
-        case .serialization(reason: let reason): return reason.localizedDescription
-        case .exposureResponse(reason: let reason): return reason.localizedDescription
-        case .fairplay(reason: let reason): return "Fairplay: " + reason.localizedDescription
-        case .exposureDownload(reason: let reason): return reason.localizedDescription
-        case .download(reason: let reason): return reason.localizedDescription
+        case .generalError(error: let error): return "Exposure: " + error.localizedDescription
+        case .serialization(reason: let reason): return "Exposure: " + reason.message
+        case .exposureResponse(reason: let reason): return "Exposure: " + reason.message
+        case .fairplay(reason: let reason): return "Exposure: " + reason.message
+        case .exposureDownload(reason: let reason): return "Exposure: " + reason.message
+        case .download(reason: let reason): return "Exposure: " + reason.message
         }
     }
 }
 
 extension ExposureError.SerializationFailureReason {
-    public var localizedDescription: String {
+    public var message: String {
         switch self {
         case .jsonSerialization(error: let error): return "JSON Serialization error: \(error.localizedDescription)"
         case .objectSerialization(reason: let reason, json: let json): return "Object Serialization error: \(reason) for json: \(json)"
@@ -149,7 +149,7 @@ extension ExposureError.SerializationFailureReason {
 }
 
 extension ExposureError.FairplayError {
-    public var localizedDescription: String {
+    public var message: String {
         switch self {
         // Application Certificate
         case .missingApplicationCertificateUrl: return "Application Certificate Url not found"

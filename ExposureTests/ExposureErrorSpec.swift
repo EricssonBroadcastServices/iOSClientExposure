@@ -19,7 +19,7 @@ class ExposureErrorSpec: QuickSpec {
             it("should describe object error") {
                 let reason = ExposureError.serialization(reason: ExposureError.SerializationFailureReason.objectSerialization(reason: "REASON", json: [:]))
                 
-                let desc = reason.localizedDescription
+                let desc = reason.message
                 
                 expect(desc).to(equal("Object Serialization error: REASON for json: \([:])"))
             }
@@ -28,9 +28,9 @@ class ExposureErrorSpec: QuickSpec {
                 let anyError = NSError(domain: "domain", code: 1, userInfo: nil)
                 let reason = ExposureError.serialization(reason: ExposureError.SerializationFailureReason.jsonSerialization(error: anyError))
                 
-                let desc = reason.localizedDescription
+                let desc = reason.message
                 
-                expect(desc).to(equal("JSON Serialization error: \(anyError.localizedDescription)"))
+                expect(desc).to(equal("JSON Serialization error: \(anyError.message)"))
             }
         }
     }

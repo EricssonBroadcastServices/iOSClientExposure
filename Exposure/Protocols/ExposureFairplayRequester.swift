@@ -91,7 +91,7 @@ extension ExposureFairplayRequester {
         fetchApplicationCertificate{ [unowned self] certificate, certificateError in
             print("fetchApplicationCertificate")
             if let certificateError = certificateError {
-                print("fetchApplicationCertificate ",certificateError.localizedDescription)
+                print("fetchApplicationCertificate ",certificateError.message)
                 resourceLoadingRequest.finishLoading(with: certificateError)
                 return
             }
@@ -113,13 +113,13 @@ extension ExposureFairplayRequester {
                         }
                         
                         guard let dataRequest = resourceLoadingRequest.dataRequest else {
-                            print("dataRequest Error",ExposureError.fairplay(reason: .missingDataRequest).localizedDescription)
+                            print("dataRequest Error",ExposureError.fairplay(reason: .missingDataRequest).message)
                             resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingDataRequest))
                             return
                         }
                         
                         guard let ckcBase64 = ckcBase64 else {
-                            print("ckcBase64 Error",ExposureError.fairplay(reason: .missingContentKeyContext).localizedDescription)
+                            print("ckcBase64 Error",ExposureError.fairplay(reason: .missingContentKeyContext).message)
                             resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .missingContentKeyContext))
                             return
                         }
@@ -150,7 +150,6 @@ extension ExposureFairplayRequester {
                     //                    -42681 The version list supplied to SPC creation is not valid.
                     //                    -42783 The certificate supplied for SPC is not valid and is possibly revoked.
                     print("SPC - ",error.localizedDescription)
-                    print("SPC - ",error)
                     resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .serverPlaybackContext(error: error)))
                     return
                 }
