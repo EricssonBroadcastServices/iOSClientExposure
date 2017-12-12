@@ -33,6 +33,9 @@ public class ExposureContext: MediaContext {
         self.sessionToken = sessionToken
     }
     
+    deinit {
+        print("ExposureContext deinit")
+    }
 }
 
 extension ExposureContext {

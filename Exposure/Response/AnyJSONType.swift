@@ -27,6 +27,9 @@ extension Bool: JSONType {
 
 public struct AnyJSONType: JSONType {
     public let jsonValue: Any
+    public init(_ value: Any) {
+        jsonValue = value
+    }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
