@@ -10,6 +10,9 @@
 #### Bug fixes
 * Search strings now properly *escaped*
 
+#### Changes
+* `AnalyticsBatch` no longer conforms to `Codable`. Persistence now handled the *old fashioned way*.
+
 ## 0.72.0
 
 #### Features

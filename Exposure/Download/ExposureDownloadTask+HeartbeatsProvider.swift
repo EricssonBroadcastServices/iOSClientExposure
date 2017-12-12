@@ -12,7 +12,7 @@ import Download
 extension ExposureDownloadTask: HeartbeatsProvider {
     internal struct DownloadHeartbeatData: HeartbeatData {
         let timestamp: Int64
-        let payload: [String: Any]
+        let payload: [String: AnyJSONType]
     }
     
     public func requestHeatbeat() -> HeartbeatData {

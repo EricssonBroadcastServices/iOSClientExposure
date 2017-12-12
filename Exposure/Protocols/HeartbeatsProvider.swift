@@ -21,5 +21,5 @@ public protocol HeartbeatData {
     var timestamp: Int64 { get }
     
     /// Analytics related payload as `json`
-    var payload: [String: Any]  { get }
+    var payload: [String: AnyJSONType]  { get }
 }

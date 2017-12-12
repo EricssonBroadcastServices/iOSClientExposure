@@ -30,6 +30,10 @@ public class ExposureSource: MediaSource {
     internal init(entitlement: PlaybackEntitlement) {
         self.entitlement = entitlement
     }
+    
+    deinit {
+        print("ExposureSource deinit")
+    }
 }
 
 extension ExposureSource: HLSNativeConfigurable {
