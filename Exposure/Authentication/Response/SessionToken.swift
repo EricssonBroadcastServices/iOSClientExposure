@@ -61,35 +61,35 @@ extension SessionToken {
     /// The id of the account in the CRM.
     public var accountId: String? {
         let comp = components
-        guard comp.count >= 1 else { return nil }
+        guard comp.count > 1 else { return nil }
         return comp[1]
     }
     
     /// The user id
     public var userId: String? {
         let comp = components
-        guard comp.count >= 2 else { return nil }
+        guard comp.count > 2 else { return nil }
         return comp[2]
     }
 
     /// The acquired time
     public var acquired: TimeInterval? {
         let comp = components
-        guard comp.count >= 4 else { return nil }
+        guard comp.count > 4 else { return nil }
         return Double(comp[4])
     }
 
     /// The expiration time
     public var expiration: TimeInterval? {
         let comp = components
-        guard comp.count >= 5 else { return nil }
+        guard comp.count > 5 else { return nil }
         return Double(comp[5])
     }
     
     /// Returns true if this session token is anonymous
     public var isAnonymous: Bool? {
         let comp = components
-        guard comp.count >= 6 else { return nil }
+        guard comp.count > 6 else { return nil }
         switch comp[6] {
         case "true": return true
         case "false": return false
