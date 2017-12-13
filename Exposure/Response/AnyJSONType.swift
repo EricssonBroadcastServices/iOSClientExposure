@@ -15,6 +15,9 @@ public protocol JSONType: Codable {
 extension Int: JSONType {
     public var jsonValue: Any { return self }
 }
+extension Int64: JSONType {
+    public var jsonValue: Any { return self }
+}
 extension String: JSONType {
     public var jsonValue: Any { return self }
 }
@@ -35,6 +38,9 @@ public struct AnyJSONType: JSONType {
         var container = encoder.singleValueContainer()
         
         if let value = jsonValue as? Int {
+            try container.encode(value)
+        }
+        else if let value = jsonValue as? Int64 {
             try container.encode(value)
         }
         else if let string = jsonValue as? String {
@@ -58,6 +64,8 @@ public struct AnyJSONType: JSONType {
         let container = try decoder.singleValueContainer()
 
         if let intValue = try? container.decode(Int.self) {
+            jsonValue = intValue
+        } else if let intValue = try? container.decode(Int64.self) {
             jsonValue = intValue
         } else if let stringValue = try? container.decode(String.self) {
             jsonValue = stringValue
