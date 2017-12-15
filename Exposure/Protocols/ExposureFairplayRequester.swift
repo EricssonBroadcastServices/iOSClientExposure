@@ -149,7 +149,7 @@ extension ExposureFairplayRequester {
                     //                    -42679 The certificate supplied for SPC creation is not valid.
                     //                    -42681 The version list supplied to SPC creation is not valid.
                     //                    -42783 The certificate supplied for SPC is not valid and is possibly revoked.
-                    print("SPC - ",error.localizedDescription, error.message, error.code)
+                    print("SPC - ",error.localizedDescription)
                     resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .serverPlaybackContext(error: error)))
                     return
                 }
