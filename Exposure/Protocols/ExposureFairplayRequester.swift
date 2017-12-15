@@ -107,7 +107,7 @@ extension ExposureFairplayRequester {
                     self.fetchContentKeyContext(spc: spcBase64) { ckcBase64, ckcError in
                         print("fetchContentKeyContext")
                         if let ckcError = ckcError {
-                            print("CKC Error",ckcError.localizedDescription)
+                            print("CKC Error",ckcError.localizedDescription, ckcError.message, ckcError.code)
                             resourceLoadingRequest.finishLoading(with: ckcError)
                             return
                         }
@@ -149,7 +149,7 @@ extension ExposureFairplayRequester {
                     //                    -42679 The certificate supplied for SPC creation is not valid.
                     //                    -42681 The version list supplied to SPC creation is not valid.
                     //                    -42783 The certificate supplied for SPC is not valid and is possibly revoked.
-                    print("SPC - ",error.localizedDescription)
+                    print("SPC - ",error.localizedDescription, error.message, error.code)
                     resourceLoadingRequest.finishLoading(with: ExposureError.fairplay(reason: .serverPlaybackContext(error: error)))
                     return
                 }

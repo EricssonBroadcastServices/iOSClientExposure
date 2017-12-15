@@ -13,12 +13,12 @@ import Player
 extension HLSNative: HeartbeatsProvider {
     internal struct PlayerHeartbeatData: HeartbeatData {
         let timestamp: Int64
-        let payload: [String: AnyJSONType]
+        let payload: [String: Any]
     }
     
     /// Configure a `Heartbeat` with associated data.
     public func requestHeatbeat() -> HeartbeatData {
-        return PlayerHeartbeatData(timestamp: Date().millisecondsSince1970, payload: ["OffsetTime": AnyJSONType(self.currentTime)])
+        return PlayerHeartbeatData(timestamp: Date().millisecondsSince1970, payload: ["OffsetTime": self.currentTime])
     }
 }
 
