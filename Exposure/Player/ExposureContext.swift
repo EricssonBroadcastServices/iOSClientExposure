@@ -13,9 +13,9 @@ import Player
 public class MonotonicTimeService {
     internal let refreshInterval: Int
     internal let exposureDownInterval: Int
+    internal var serverTimeProvider: ServerTimeProvider
     
-    
-    public init(environment: Environment, refreshInterval: Int = 60000 * 30, errorRetryInterval: Int = 1000) {
+    public init(environment: Environment, refreshInterval: Int = 1000 * 60 * 30, errorRetryInterval: Int = 1000) {
         self.environment = environment
         self.refreshInterval = refreshInterval
         self.exposureDownInterval = errorRetryInterval
@@ -24,19 +24,27 @@ public class MonotonicTimeService {
                                   qos: DispatchQoS.background,
                                   attributes: DispatchQueue.Attributes.concurrent)
         self.queue = queue
-        timer = DispatchSource.makeTimerSource(queue: queue)
         
+        serverTimeProvider = ExposureServerTimeProvider()
     }
     
     deinit {
-        timer.setEventHandler{}
-        timer.cancel()
+        timer?.setEventHandler{}
+        timer?.cancel()
     }
     
     private var environment: Environment
     private let queue: DispatchQueue
-    private let timer: DispatchSourceTimer
+    private var timer: DispatchSourceTimer?
     
+    
+    internal struct ExposureServerTimeProvider: ServerTimeProvider {
+        func fetchServerTime(using environment: Environment, callback: @escaping (ServerTime?, ExposureError?) -> Void) {
+            FetchServerTime(environment: environment)
+                .request()
+                .response{ callback($0.value, $0.error) }
+        }
+    }
     
     private var state: State = .notStarted
     private enum State {
@@ -65,7 +73,7 @@ public class MonotonicTimeService {
     public var currentTime: Int64? {
         switch state {
         case .notStarted:
-            startTimer{ _ in }
+            startTimer()
             return nil
         case .running(latest: let difference):
             return difference?.monotonicTime
@@ -77,8 +85,11 @@ public class MonotonicTimeService {
     public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?) -> Void) {
         switch state {
         case .notStarted:
-            startTimer(callback: callback)
+            print("notStarted")
+            startTimer()
+            fetchServerTime(callback: callback)
         case .running(latest: let latest):
+            print("running",latest?.monotonicTime)
             if forceRefresh {
                 fetchServerTime(callback: callback)
             }
@@ -95,47 +106,50 @@ public class MonotonicTimeService {
         }
     }
     
-    private func startTimer(callback: @escaping (Int64?) -> Void) {
-        timer.scheduleOneshot(deadline: .now(), leeway: .seconds(1))
+    private func startTimer() {
         
-        timer.setEventHandler{ [weak self] in
+        timer = DispatchSource.makeTimerSource(queue: queue)
+        
+        timer?.scheduleRepeating(deadline: .now() + .milliseconds(self.refreshInterval), interval: .milliseconds(self.refreshInterval))
+        print("START TIMER,",refreshInterval)
+        timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
-            self.fetchServerTime(callback: callback)
+            self.fetchServerTime{ _ in }
         }
         
         state = .running(latest: nil)
-        timer.resume()
+        timer?.resume()
     }
     
     private func fetchServerTime(callback: @escaping (Int64?) -> Void) {
-        FetchServerTime(environment: self.environment)
-            .request()
-            .response{ [weak self] in
-                guard let `self` = self else { return }
-                if let value = $0.value?.epochMillis {
-                    self.queue.sync {
-                        self.state = .running(latest: Difference(serverStartTime: Int64(value), localStartTime: Date().millisecondsSince1970))
-                        self.timer.scheduleOneshot(deadline: .now() + .milliseconds(self.refreshInterval), leeway: .seconds(1))
-                        callback(self.state.currentDifference?.monotonicTime)
-                        print("Fired Refresh")
-                    }
+        serverTimeProvider.fetchServerTime(using: environment) { [weak self] serverTime, error in
+            guard let `self` = self else { return }
+            self.queue.sync {
+                if let value = serverTime?.epochMillis {
+                    self.state = .running(latest: Difference(serverStartTime: Int64(value), localStartTime: Date().millisecondsSince1970))
+                    
+//                    self.timer = DispatchSource.makeTimerSource(queue: self.queue)
+//                    self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.refreshInterval), leeway: .seconds(1))
+                    callback(self.state.currentDifference?.monotonicTime)
+                    print("Fired Refresh")
                 }
-                else if $0.error != nil {
-                    self.queue.sync {
-                        self.state = .retrying(previous: self.state.currentDifference)
-                        self.timer.scheduleOneshot(deadline: .now() + .milliseconds(self.exposureDownInterval), leeway: .seconds(1))
-                        print("Error during refresh. Rescheduling")
-                        callback(self.state.currentDifference?.monotonicTime)
-                    }
+                else if error != nil {
+                    self.state = .retrying(previous: self.state.currentDifference)
+                    
+                    self.timer?.scheduleRepeating(deadline: .now(), interval: DispatchTimeInterval.milliseconds(self.exposureDownInterval))
+//                    self.timer = DispatchSource.makeTimerSource(queue: self.queue)
+//                    self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.exposureDownInterval), leeway: .seconds(1))
+                    print("Error during refresh. Rescheduling")
+                    callback(self.state.currentDifference?.monotonicTime)
                 }
+            }
         }
     }
 }
 
-//internal protocol MonotonicTimeNetworkHandler {
-//    func fetchServerTime(using environment: Environment, callback: @escaping (ServerTime?, ExposureError?) -> Void)
-//}
-
+internal protocol ServerTimeProvider {
+    func fetchServerTime(using environment: Environment, callback: @escaping (ServerTime?, ExposureError?) -> Void)
+}
 
 
 /// Defines the `MediaContext` to be used when contacting *Exposure*.
