@@ -28,9 +28,6 @@ public class ExposureContext: MediaContext {
     /// Token identifying the active session.
     public let sessionToken: SessionToken
     
-    ///
-    
-    
     public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
