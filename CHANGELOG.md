@@ -11,6 +11,9 @@
 #### Features
 * `EMP-10646` `ExposureContext` exposes cached server time
 
+#### Changes
+* `EMP-10852` API changes to `ExposureContext` playback extensions starting playback by *EMP* assetId has been renamed.
+
 ## 0.73.0
 
 #### Bug fixes

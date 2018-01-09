@@ -18,7 +18,7 @@ extension HLSNative: HeartbeatsProvider {
     
     /// Configure a `Heartbeat` with associated data.
     public func requestHeatbeat() -> HeartbeatData {
-        return PlayerHeartbeatData(timestamp: Date().millisecondsSince1970, payload: ["OffsetTime": self.playheadTime])
+        return PlayerHeartbeatData(timestamp: Date().millisecondsSince1970, payload: ["OffsetTime": self.playheadPosition])
     }
 }
 
