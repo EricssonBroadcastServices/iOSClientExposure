@@ -27,27 +27,23 @@ class MockedServerTimeProvider: ServerTimeProvider {
                 mode = .delayFirstRequest(first: false)
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(150)) {
                     let serverTime = ServerTime(epochMillis: UInt64(Date().millisecondsSince1970), iso8601: nil)
-                    print("fetchServerTime delay",serverTime.epochMillis)
                     self.times.append(serverTime)
                     callback(serverTime, nil)
                 }
             }
             else {
                 let serverTime = ServerTime(epochMillis: UInt64(Date().millisecondsSince1970), iso8601: nil)
-                print("fetchServerTime","[\(times.count)]",serverTime.epochMillis)
                 times.append(serverTime)
                 callback(serverTime, nil)
             }
         case .errorFirstRequest:
             if errors < 4 {
-                print("errorFirstRequest ERROR",errors,times.count)
                 errors += 1
                 callback(nil, ExposureError.generalError(error: MockedError.sampleError))
             }
             else {
                 let serverTime = ServerTime(epochMillis: UInt64(Date().millisecondsSince1970), iso8601: nil)
                 times.append(serverTime)
-                print("errorFirstRequest RECONNECT",errors,times.count,serverTime.epochMillis)
                 callback(serverTime, nil)
             }
         }
