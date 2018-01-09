@@ -17,6 +17,7 @@ class MockedServerTimeProvider: ServerTimeProvider {
     var mode: Mode = .delayFirstRequest(first: true)
     enum Mode {
         case delayFirstRequest(first: Bool)
+        case errorFirstRequest
     }
     
     func fetchServerTime(using environment: Environment, callback: @escaping (ServerTime?, ExposureError?) -> Void) {
@@ -37,10 +38,27 @@ class MockedServerTimeProvider: ServerTimeProvider {
                 times.append(serverTime)
                 callback(serverTime, nil)
             }
+        case .errorFirstRequest:
+            if errors < 4 {
+                print("errorFirstRequest ERROR",errors,times.count)
+                errors += 1
+                callback(nil, ExposureError.generalError(error: MockedError.sampleError))
+            }
+            else {
+                let serverTime = ServerTime(epochMillis: UInt64(Date().millisecondsSince1970), iso8601: nil)
+                times.append(serverTime)
+                print("errorFirstRequest RECONNECT",errors,times.count,serverTime.epochMillis)
+                callback(serverTime, nil)
+            }
         }
         
     }
     var times: [ServerTime] = []
+    var errors: Int = 0
+    
+    enum MockedError: Error {
+        case sampleError
+    }
 }
 
 class MonotonicTimeServiceSpec: QuickSpec {
@@ -52,27 +70,57 @@ class MonotonicTimeServiceSpec: QuickSpec {
         
         describe("MonotonicTimeService") {
             
+            context("synchronous currentTime") {
+                let service = MonotonicTimeService(environment: environment, refreshInterval: 100, errorRetryInterval: 1000)
+                let provider = MockedServerTimeProvider()
+                service.serverTimeProvider = provider
+
+                it("should return no current time if not started") {
+                    expect(service.currentTime).to(beNil())
+                }
+
+                it("should eventually return current time when running") {
+                    expect(service.currentTime).toEventuallyNot(beNil())
+                }
+            }
+
+            context("sync fails") {
+                let service = MonotonicTimeService(environment: environment, refreshInterval: 500, errorRetryInterval: 100)
+                let provider = MockedServerTimeProvider()
+                service.serverTimeProvider = provider
+                provider.mode = .errorFirstRequest
+                it("should apply retry interval") {
+                    service.currentTime{ time in
+                        expect(time).to(beNil())
+                    }
+
+                    expect(provider.errors).toEventually(equal(4))
+                    expect(provider.times.count).toEventually(equal(1))
+                }
+            }
+            
             context("forcing updates disabled") {
                 let service = MonotonicTimeService(environment: environment, refreshInterval: 100, errorRetryInterval: 1000)
                 let provider = MockedServerTimeProvider()
                 service.serverTimeProvider = provider
-                
-                var otherTimes: [Int64] = []
+
+
                 it("should not do network call when no server time is cached") {
+                    var times: [Int64] = []
                     service.currentTime{ time in
                         if let time = time {
-                            otherTimes.append(time)
+                            times.append(time)
                         }
                     }
-                    
+
                     service.currentTime(forceRefresh: false) { time in
                         if let time = time {
-                            otherTimes.append(time)
+                            times.append(time)
                         }
                     }
-                    
+
                     expect(provider.times.count).toEventually(equal(5))
-                    expect(otherTimes.count).toEventually(equal(1))
+                    expect(times.count).toEventually(equal(1))
                 }
             }
 
@@ -81,8 +129,8 @@ class MonotonicTimeServiceSpec: QuickSpec {
                 let provider = MockedServerTimeProvider()
                 service.serverTimeProvider = provider
 
-                var times: [Int64] = []
                 it("should do network call when no server time is cached") {
+                    var times: [Int64] = []
                     service.currentTime{ time in
                         if let time = time {
                             times.append(time)

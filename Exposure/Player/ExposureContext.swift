@@ -74,12 +74,10 @@ public class MonotonicTimeService {
         switch state {
         case .notStarted:
             startTimer()
-            return nil
-        case .running(latest: let difference):
-            return difference?.monotonicTime
-        case .retrying(previous: let difference):
-            return difference?.monotonicTime
+        default:
+            break
         }
+        return state.currentDifference?.monotonicTime
     }
     
     public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?) -> Void) {
@@ -87,18 +85,18 @@ public class MonotonicTimeService {
         case .notStarted:
             print("notStarted")
             startTimer()
-            fetchServerTime(callback: callback)
+            fetchServerTime{ callback($0?.monotonicTime) }
         case .running(latest: let latest):
             print("running",latest?.monotonicTime)
             if forceRefresh {
-                fetchServerTime(callback: callback)
+                fetchServerTime{ callback($0?.monotonicTime) }
             }
             else {
                 callback(latest?.monotonicTime)
             }
         case .retrying(previous: let previous):
             if forceRefresh {
-                fetchServerTime(callback: callback)
+                fetchServerTime{ callback($0?.monotonicTime) }
             }
             else {
                 callback(previous?.monotonicTime)
@@ -114,34 +112,40 @@ public class MonotonicTimeService {
         print("START TIMER,",refreshInterval)
         timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
-            self.fetchServerTime{ _ in }
+            self.fetchServerTime{ [weak self] difference in
+                guard let `self` = self else { return }
+                DispatchQueue.main.async {
+                    if let difference = difference {
+                        print("setEventHandler",difference.monotonicTime)
+                        self.state = .running(latest: difference)
+                        
+                        self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.refreshInterval))
+                    }
+                    else {
+                        print("setEventHandler ERROR")
+                        self.state = .retrying(previous: self.state.currentDifference)
+                        
+                        self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.exposureDownInterval))
+                    }
+                }
+            }
         }
         
         state = .running(latest: nil)
         timer?.resume()
     }
     
-    private func fetchServerTime(callback: @escaping (Int64?) -> Void) {
+    private func fetchServerTime(callback: @escaping (Difference?) -> Void) {
         serverTimeProvider.fetchServerTime(using: environment) { [weak self] serverTime, error in
             guard let `self` = self else { return }
-            self.queue.sync {
-                if let value = serverTime?.epochMillis {
-                    self.state = .running(latest: Difference(serverStartTime: Int64(value), localStartTime: Date().millisecondsSince1970))
-                    
-//                    self.timer = DispatchSource.makeTimerSource(queue: self.queue)
-//                    self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.refreshInterval), leeway: .seconds(1))
-                    callback(self.state.currentDifference?.monotonicTime)
-                    print("Fired Refresh")
-                }
-                else if error != nil {
-                    self.state = .retrying(previous: self.state.currentDifference)
-                    
-                    self.timer?.scheduleRepeating(deadline: .now(), interval: DispatchTimeInterval.milliseconds(self.exposureDownInterval))
-//                    self.timer = DispatchSource.makeTimerSource(queue: self.queue)
-//                    self.timer?.scheduleOneshot(deadline: .now() + .milliseconds(self.exposureDownInterval), leeway: .seconds(1))
-                    print("Error during refresh. Rescheduling")
-                    callback(self.state.currentDifference?.monotonicTime)
-                }
+            if let value = serverTime?.epochMillis {
+                let difference = Difference(serverStartTime: Int64(value), localStartTime: Date().millisecondsSince1970)
+                print("fetchServerTime",difference.monotonicTime)
+                callback(difference)
+            }
+            else if error != nil {
+                print("fetchServerTime Error",self.state.currentDifference?.monotonicTime)
+                callback(nil)
             }
         }
     }
