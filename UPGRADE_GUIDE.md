@@ -8,7 +8,5 @@ Context sensitive playback with *Features as Components* introduces a clear, dis
 
 Constrained extensions on `Player` and the newly introduced `PlaybackTech` and `ExposureContext` protocol allows new features to be developed with strict tech targets in mind.
 
-
-
 ## Adopting 0.2.0
 Please consult the [Installation](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/README.md#installation) and [Usage](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/README.md#getting-started) guides for information about this initial release.

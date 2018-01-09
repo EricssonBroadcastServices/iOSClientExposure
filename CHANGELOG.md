@@ -8,6 +8,7 @@
 
 ## 0.75.0
 
+#### Features
 * `EMP-10646` `ExposureContext` exposes cached server time
 
 ## 0.73.0

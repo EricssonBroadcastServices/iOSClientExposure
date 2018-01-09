@@ -35,7 +35,7 @@ public class MonotonicTimeService {
     }
     
     /// Keeps track of the current retry attempt for the `.retry(_,_)` `ErrorPolicy`
-    private var currentRetryAttempt: Int = 0
+    fileprivate var currentRetryAttempt: Int = 0
     
     /// Provides `MonotonicTimeService` with `ServerTime` on request
     internal var serverTimeProvider: ServerTimeProvider
@@ -58,13 +58,13 @@ public class MonotonicTimeService {
     }
     
     /// `Environment` in which the `ServerTime` request will be made
-    private var environment: Environment
+    fileprivate var environment: Environment
     
     /// Queue where `timer` runs
-    private let queue: DispatchQueue
+    fileprivate let queue: DispatchQueue
     
     /// The oneShot timer used to trigger `ServerTime` refresh requests
-    private var timer: DispatchSourceTimer?
+    fileprivate var timer: DispatchSourceTimer?
     
     /// Internal implementation of `ServerTimeProvider` using `Exposure`Type`
     internal struct ExposureServerTimeProvider: ServerTimeProvider {
@@ -76,13 +76,13 @@ public class MonotonicTimeService {
     }
     
     /// The currently stored server time `Difference`
-    private var currentDifference: Difference?
+    fileprivate var currentDifference: Difference?
     
     /// State tracking if the serivce has been started or not
-    private var state: State = .notStarted
+    fileprivate var state: State = .notStarted
     
     /// Tracks `MonotonicTimeSerive` state
-    private enum State {
+    fileprivate enum State {
         /// Not yet started
         case notStarted
         
