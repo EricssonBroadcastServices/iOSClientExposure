@@ -71,7 +71,8 @@ class MonotonicTimeServiceSpec: QuickSpec {
         describe("MonotonicTimeService") {
             
             context("synchronous currentTime") {
-                let service = MonotonicTimeService(environment: environment, refreshInterval: 100, errorRetryInterval: 1000)
+                let service = MonotonicTimeService(environment: environment, refreshInterval: 500)
+                service.onErrorPolicy = .retry(attempts: 5, interval: 100)
                 let provider = MockedServerTimeProvider()
                 service.serverTimeProvider = provider
 
@@ -85,27 +86,44 @@ class MonotonicTimeServiceSpec: QuickSpec {
             }
 
             context("sync fails") {
-                let service = MonotonicTimeService(environment: environment, refreshInterval: 500, errorRetryInterval: 100)
-                let provider = MockedServerTimeProvider()
-                service.serverTimeProvider = provider
-                provider.mode = .errorFirstRequest
-                it("should apply retry interval") {
+                it("should apply retry policy if active") {
+                    let service = MonotonicTimeService(environment: self.environment, refreshInterval: 500)
+                    service.onErrorPolicy = .retry(attempts: 2, interval: 100)
+                    let provider = MockedServerTimeProvider()
+                    service.serverTimeProvider = provider
+                    provider.mode = .errorFirstRequest
+
                     service.currentTime{ time in
                         expect(time).to(beNil())
                     }
 
-                    expect(provider.errors).toEventually(equal(4))
+                    expect(provider.errors).toEventually(equal(2))
                     expect(provider.times.count).toEventually(equal(1))
                 }
+
+                it("should retain default refresh policy if active") {
+                    let service = MonotonicTimeService(environment: self.environment, refreshInterval: 500)
+                    service.onErrorPolicy = .retainRefreshInterval
+                    let provider = MockedServerTimeProvider()
+                    service.serverTimeProvider = provider
+                    provider.mode = .errorFirstRequest
+
+                    service.currentTime{ time in
+                        expect(time).to(beNil())
+                    }
+
+                    expect(provider.errors).toEventually(equal(2))
+                    expect(provider.times.count).toEventually(equal(0))
+                }
             }
-            
+
             context("forcing updates disabled") {
-                let service = MonotonicTimeService(environment: environment, refreshInterval: 100, errorRetryInterval: 1000)
-                let provider = MockedServerTimeProvider()
-                service.serverTimeProvider = provider
-
-
                 it("should not do network call when no server time is cached") {
+                    let service = MonotonicTimeService(environment: self.environment, refreshInterval: 100)
+                    service.onErrorPolicy = .retry(attempts: 5, interval: 100)
+                    let provider = MockedServerTimeProvider()
+                    service.serverTimeProvider = provider
+
                     var times: [Int64] = []
                     service.currentTime{ time in
                         if let time = time {
@@ -125,7 +143,8 @@ class MonotonicTimeServiceSpec: QuickSpec {
             }
 
             context("forcing updates enabled") {
-                let service = MonotonicTimeService(environment: environment, refreshInterval: 100, errorRetryInterval: 1000)
+                let service = MonotonicTimeService(environment: environment, refreshInterval: 100)
+                service.onErrorPolicy = .retry(attempts: 5, interval: 100)
                 let provider = MockedServerTimeProvider()
                 service.serverTimeProvider = provider
 
@@ -147,8 +166,17 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     expect(times.count).toEventually(equal(2))
                 }
             }
+        }
 
-            
+        describe("MonotonicTimeService Difference") {
+            let tolerance: Int64 = 210
+            let date = Date().millisecondsSince1970
+            let difference = MonotonicTimeService.Difference(serverStartTime: date + 400, localStartTime: date + 200)
+            let monotonicTime = difference.monotonicTime
+            it("should calculate servertime within reasonable bounds") {
+                expect(monotonicTime).to(beGreaterThan(date-tolerance))
+                expect(monotonicTime).to(beLessThan(date+tolerance))
+            }
         }
     }
 }
