@@ -121,17 +121,17 @@ extension MonotonicTimeService {
     /// Fetches the latest *MonotonicTime*, in unix epoch time (in milliseconds). If the service is not running, calling this method (with or without `forceRefresh`) will start it and cause an immediate fetch request.
     ///
     /// - parameter forceRefresh: Specifying `true` will force a server request fetching an up to date `MonotonicTime` if the service is running. `false` will return the cached `MonotonicTime`.
-    public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?) -> Void) {
+    public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?, ExposureError?) -> Void) {
         switch state {
         case .notStarted:
             startTimer()
-            fetchServerTime{ callback($0?.monotonicTime) }
+            fetchServerTime{ callback($0?.monotonicTime, $1) }
         case .running:
             if forceRefresh {
-                fetchServerTime{ callback($0?.monotonicTime) }
+                fetchServerTime{ callback($0?.monotonicTime, $1) }
             }
             else {
-                callback(currentDifference?.monotonicTime)
+                callback(currentDifference?.monotonicTime, nil)
             }
         }
     }
@@ -143,7 +143,7 @@ extension MonotonicTimeService {
         state = .running
         timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
-            self.fetchServerTime{ [weak self] difference in
+            self.fetchServerTime{ [weak self] difference, error in
                 guard let `self` = self else { return }
                 DispatchQueue.main.async {
                     if let difference = difference {
@@ -175,14 +175,16 @@ extension MonotonicTimeService {
     }
     
     /// Convenience method for fetching the server time and perparing the `Difference` struct
-    private func fetchServerTime(callback: @escaping (Difference?) -> Void) {
+    private func fetchServerTime(callback: @escaping (Difference?, ExposureError?) -> Void) {
         serverTimeProvider.fetchServerTime(using: environment) { serverTime, error in
             guard let serverTime = serverTime?.epochMillis else {
-                callback(nil)
+                callback(nil, error)
                 return
             }
+            
             let difference = Difference(serverStartTime: Int64(serverTime), localStartTime: Date().millisecondsSince1970)
-            callback(difference)
+            callback(difference, nil)
         }
     }
 }
+

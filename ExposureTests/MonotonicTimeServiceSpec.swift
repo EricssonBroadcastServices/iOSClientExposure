@@ -89,7 +89,7 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
                     provider.mode = .errorFirstRequest
 
-                    service.currentTime{ time in
+                    service.currentTime{ time, error in
                         expect(time).to(beNil())
                     }
 
@@ -104,7 +104,7 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
                     provider.mode = .errorFirstRequest
 
-                    service.currentTime{ time in
+                    service.currentTime{ time, error in
                         expect(time).to(beNil())
                     }
 
@@ -121,13 +121,13 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
 
                     var times: [Int64] = []
-                    service.currentTime{ time in
+                    service.currentTime{ time, error in
                         if let time = time {
                             times.append(time)
                         }
                     }
 
-                    service.currentTime(forceRefresh: false) { time in
+                    service.currentTime(forceRefresh: false) { time, error in
                         if let time = time {
                             times.append(time)
                         }
@@ -146,13 +146,13 @@ class MonotonicTimeServiceSpec: QuickSpec {
 
                 it("should do network call when no server time is cached") {
                     var times: [Int64] = []
-                    service.currentTime{ time in
+                    service.currentTime{ time, error in
                         if let time = time {
                             times.append(time)
                         }
                     }
 
-                    service.currentTime(forceRefresh: true) { time in
+                    service.currentTime(forceRefresh: true) { time, error in
                         if let time = time {
                             times.append(time)
                         }
