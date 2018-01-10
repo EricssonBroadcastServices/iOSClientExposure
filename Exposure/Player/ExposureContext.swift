@@ -31,6 +31,9 @@ public class ExposureContext: MediaContext {
     /// Service that handles synchronization of local device time with server time
     public let monotonicTimeService: MonotonicTimeService
     
+    /// Service that 
+    public let programService: ProgramService
+    
     public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
