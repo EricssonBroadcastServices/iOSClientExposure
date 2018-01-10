@@ -85,13 +85,6 @@ public struct PlaybackEntitlement: Codable {
 }
 
 extension PlaybackEntitlement {
-    /// Checks if the manifest comes from the *Unified Packager*
-    internal var isUnifiedPackager: Bool {
-        return components.reduce(false) { $0 || $1.contains(".isml") }
-    }
-}
-
-extension PlaybackEntitlement {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         // Required

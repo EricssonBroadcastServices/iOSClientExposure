@@ -12,7 +12,21 @@ import Player
 
 // MARK: - Timeshift
 extension Player where Tech == HLSNative<ExposureContext> {
-//    public var timeshiftDelay: Int {
-//        tech.currentSource?.entitlement
-//    }
+    /// Specifies the timeshift delay *in seconds* associated with the current `MediaSource` (if available).
+    ///
+    /// Setting a value will cause the stream to reload starting from the new, timeshifted live point. Negative timeshift delays will be clamped at zero.
+    ///
+    /// - note: Requires a *Unified Packager* sourced stream.
+    public var timeshiftDelay: Int64? {
+        get {
+            return tech.currentSource?.timeshiftDelay
+        }
+        set {
+            // TODO: Shouldnt this be limited to playback of *live* entitlements?
+            guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else { return }
+            
+            currentSource.timeshiftDelay = newValue
+            tech.reloadSource()
+        }
+    }
 }

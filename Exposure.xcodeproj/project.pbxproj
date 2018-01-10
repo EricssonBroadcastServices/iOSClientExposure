@@ -63,6 +63,7 @@
 		7640920E1F7E35970022F6ED /* AssetUserDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920D1F7E35970022F6ED /* AssetUserDataSpec.swift */; };
 		764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */; };
 		7645C56120062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */; };
+		7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5622006BFAA00133955 /* URL+Extensions.swift */; };
 		7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */; };
 		7646D65F1EEFF5BE009E5C2B /* PlayProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65E1EEFF5BE009E5C2B /* PlayProgram.swift */; };
 		7646D6631EEFFDBD009E5C2B /* ValidateEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */; };
@@ -286,6 +287,7 @@
 		7640920D1F7E35970022F6ED /* AssetUserDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserDataSpec.swift; sourceTree = "<group>"; };
 		7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserPlayHistorySpec.swift; sourceTree = "<group>"; };
 		7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+Timeshift.swift"; sourceTree = "<group>"; };
+		7645C5622006BFAA00133955 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureErrorSpec.swift; sourceTree = "<group>"; };
 		7646D65E1EEFF5BE009E5C2B /* PlayProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayProgram.swift; sourceTree = "<group>"; };
 		7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateEntitlement.swift; sourceTree = "<group>"; };
@@ -763,6 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				766FBB6B1EC9A19B00EBEC53 /* Sequence+Extensions.swift */,
+				7645C5622006BFAA00133955 /* URL+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1427,6 +1430,7 @@
 				76D7046A1F9396E400D6FC6B /* FilteredLocale.swift in Sources */,
 				76A842F01EA7667D00BDAF2C /* PlayRequest.swift in Sources */,
 				769734A11EF1803200F6ADC8 /* Program.swift in Sources */,
+				7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */,
 				76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */,
 				762383F61F98A7830046EF38 /* LocalMediaRecord.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
