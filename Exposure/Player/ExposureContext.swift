@@ -28,9 +28,13 @@ public class ExposureContext: MediaContext {
     /// Token identifying the active session.
     public let sessionToken: SessionToken
     
+    /// Service that handles synchronization of local device time with server time
+    public let monotonicTimeService: MonotonicTimeService
+    
     public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
+        self.monotonicTimeService = MonotonicTimeService(environment: environment)
     }
     
     deinit {
