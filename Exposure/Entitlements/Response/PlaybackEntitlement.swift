@@ -74,8 +74,21 @@ public struct PlaybackEntitlement: Codable {
     /// Last viewed offset. Used by *Session Shift*
     public let lastViewedOffset: Int?
     
+    /// Last viewed time
+    public let lastViewedTime: Int?
+    
+    /// Live timestamp
+    public let liveTime: Int?
+    
     /// Identity of the product that permitted playback of the asset
     public let productId: String?
+}
+
+extension PlaybackEntitlement {
+    /// Checks if the manifest comes from the *Unified Packager*
+    internal var isUnifiedPackager: Bool {
+        return components.reduce(false) { $0 || $1.contains(".isml") }
+    }
 }
 
 extension PlaybackEntitlement {
@@ -109,6 +122,8 @@ extension PlaybackEntitlement {
         
         mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
         lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
+        lastViewedTime = try container.decodeIfPresent(Int.self, forKey: .lastViewedTime)
+        liveTime = try container.decodeIfPresent(Int.self, forKey: .liveTime)
         productId = try container.decodeIfPresent(String.self, forKey: .productId)
     }
     
@@ -141,6 +156,8 @@ extension PlaybackEntitlement {
         
         try container.encodeIfPresent(mdnRequestRouterUrl, forKey: .mdnRequestRouterUrl)
         try container.encodeIfPresent(lastViewedOffset, forKey: .lastViewedOffset)
+        try container.encodeIfPresent(lastViewedTime, forKey: .lastViewedTime)
+        try container.encodeIfPresent(liveTime, forKey: .liveTime)
         try container.encodeIfPresent(productId, forKey: .productId)
     }
     
@@ -165,6 +182,8 @@ extension PlaybackEntitlement {
         case airplayBlocked
         case mdnRequestRouterUrl
         case lastViewedOffset
+        case lastViewedTime
+        case liveTime
         case productId
     }
 }
