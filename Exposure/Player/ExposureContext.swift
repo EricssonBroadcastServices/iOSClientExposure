@@ -119,11 +119,11 @@ extension ExposureContext {
                         }
                     }
                     else {
-                        callback(nil,error)
+                        self?.handle(response: $0, callback: callback)
                     }
                 }
                 else if let entitlement = $0.value {
-                    callback(ExposureSource(entitlement: entitlement), nil)
+                    self?.handle(response: $0, callback: callback)
                 }
         }
     }
