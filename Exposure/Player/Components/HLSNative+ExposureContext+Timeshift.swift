@@ -26,6 +26,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else { return }
             
             currentSource.timeshiftDelay = newValue
+            print(#function,currentSource.url)
             tech.reloadSource()
         }
     }

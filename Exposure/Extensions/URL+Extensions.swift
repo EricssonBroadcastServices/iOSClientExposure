@@ -40,6 +40,7 @@ extension URL {
                 return urlComponents.url
             }
             queryItems.append(itemToAdd)
+            urlComponents.queryItems = queryItems
             return urlComponents.url
         }
     }
