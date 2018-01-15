@@ -139,7 +139,7 @@ extension MonotonicTimeService {
     /// Starts the internal timer guiding the refresh process.
     private func startTimer() {
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now() + .milliseconds(self.refreshInterval), interval: .milliseconds(self.refreshInterval))
+        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(self.refreshInterval))
         state = .running
         timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
