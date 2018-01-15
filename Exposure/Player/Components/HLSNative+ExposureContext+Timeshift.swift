@@ -30,4 +30,12 @@ extension Player where Tech == HLSNative<ExposureContext> {
             tech.reloadSource()
         }
     }
+    
+    /// Returns the playhead position mapped to the cached server synced `currentTime` in unix epoch (milliseconds)
+    ///
+    /// Will return `nil` if no server time has been synched yet.
+    public var playheadTime: Int64? {
+        guard let current = currentTime else { return nil }
+        return current - (timeshiftDelay ?? 0)*1000
+    }
 }
