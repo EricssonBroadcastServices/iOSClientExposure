@@ -16,8 +16,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// Returns the cached, *server wallclock timestamp* in unix epoch (milliseconds)
     ///
     /// Will return `nil` if no server time has been synched yet.
-    public var currentTime: Int64? {
-        return context.monotonicTimeService.currentTime
+    public var serverTime: Int64? {
+        return context.monotonicTimeService.serverTime
     }
     
     /// Fetches the latest *server wallclock timestamp* in unix epoch time (milliseconds).

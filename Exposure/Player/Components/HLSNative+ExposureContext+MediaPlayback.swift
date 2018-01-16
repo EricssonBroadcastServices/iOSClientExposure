@@ -17,8 +17,13 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// Will return `nil` if no server time has been synched yet.
     public var playheadTime: Int64? {
         guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else {
+            
             return tech.playheadTime
         }
+        
+        // TODO: Must account for playheadPosition in the dvr_window
+        
+        
         guard let current = currentTime else { return nil }
         return current - (timeshiftDelay ?? 0)*1000
     }

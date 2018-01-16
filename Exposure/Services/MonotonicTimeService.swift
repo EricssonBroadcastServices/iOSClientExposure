@@ -112,7 +112,7 @@ extension MonotonicTimeService {
     /// Accessing this property when the service is not yet running will start it.
     ///
     /// May return `nil` if no server time has been cached.
-    public var currentTime: Int64? {
+    public var serverTime: Int64? {
         switch state {
         case .notStarted:
             startTimer()
