@@ -9,7 +9,6 @@
 import Foundation
 import Player
 
-
 // MARK: - Timeshift
 extension Player where Tech == HLSNative<ExposureContext> {
     /// Specifies the timeshift delay *in seconds* associated with the current `MediaSource` (if available).
@@ -29,16 +28,5 @@ extension Player where Tech == HLSNative<ExposureContext> {
             print(#function,currentSource.url)
             tech.reloadSource()
         }
-    }
-    
-    /// Returns the playhead position mapped to the server synced `currentTime` in unix epoch (milliseconds)
-    ///
-    /// Will return `nil` if no server time has been synched yet.
-    public var playheadTime: Int64? {
-        if let currentSource = tech.currentSource, currentSource.isUnifiedPackager {
-            guard let current = currentTime else { return nil }
-            return current - (timeshiftDelay ?? 0)*1000
-        }
-        return nil
     }
 }
