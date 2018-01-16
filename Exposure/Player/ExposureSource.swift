@@ -36,7 +36,7 @@ public class ExposureSource: MediaSource {
         /// Specifies timeshift will be provided by `entitlement`
         case entitlement
         
-        /// User action has changed the `entitlement` provided timeshift delays
+        /// User action has changed the `entitlement` provided timeshift delay
         case userSpecified(value: Int64)
     }
     

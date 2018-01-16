@@ -12,24 +12,6 @@ import Player
 
 // MARK: - MediaPlayback overrides
 extension Player where Tech == HLSNative<ExposureContext> {
-    /// Returns the playhead position mapped to the server synced `currentTime` in unix epoch (milliseconds)
-    ///
-    /// Will return `nil` if no server time has been synched yet.
-    public var playheadTime: Int64? {
-        guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else {
-            
-            return tech.playheadTime
-        }
-        
-        // TODO: Must account for playheadPosition in the dvr_window
-        
-        
-        guard let current = currentTime else { return nil }
-        return current - (timeshiftDelay ?? 0)*1000
-    }
-    
-    
-    
     /// Should perform seeking to `timeInterval` as specified in relation to the current `wallclock` time.
     ///
     /// Seeking will fail if the supplied date is outside the range or if the content is not associated with a range of dates.
