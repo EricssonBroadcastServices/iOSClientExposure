@@ -96,26 +96,30 @@ public class MonotonicTimeService {
         internal var localStartTime: Int64
         
         /// Calculates the `MonotonicTime` at this moment
-        var monotonicTime: Int64 {
-            return serverStartTime + Date().millisecondsSince1970 - localStartTime
+        internal func monotonicTime(date: Date) -> Int64 {
+            return serverStartTime + date.millisecondsSince1970 - localStartTime
         }
     }
 }
 
 extension MonotonicTimeService {
+//    public func monotonicTime(date: Date) -> Int64? {
+//        return currentDifference?.monotonicTime(date: date)
+//    }
+ 
     /// Retrieve the latest *MonotonicTime*, in unix epoch time, as cached by the service. (in milliseconds)
     ///
     /// Accessing this property when the service is not yet running will start it.
     ///
     /// May return `nil` if no server time has been cached.
-    public var currentTime: Int64? {
+    public var serverTime: Int64? {
         switch state {
         case .notStarted:
             startTimer()
         default:
             break
         }
-        return currentDifference?.monotonicTime
+        return currentDifference?.monotonicTime(date: Date())
     }
     
     /// Fetches the latest *MonotonicTime*, in unix epoch time (in milliseconds). If the service is not running, calling this method (with or without `forceRefresh`) will start it and cause an immediate fetch request.
@@ -125,13 +129,13 @@ extension MonotonicTimeService {
         switch state {
         case .notStarted:
             startTimer()
-            fetchServerTime{ callback($0?.monotonicTime, $1) }
+            fetchServerTime{ callback($0?.monotonicTime(date: Date()), $1) }
         case .running:
             if forceRefresh {
-                fetchServerTime{ callback($0?.monotonicTime, $1) }
+                fetchServerTime{ callback($0?.monotonicTime(date: Date()), $1) }
             }
             else {
-                callback(currentDifference?.monotonicTime, nil)
+                callback(currentDifference?.monotonicTime(date: Date()), nil)
             }
         }
     }
@@ -139,7 +143,7 @@ extension MonotonicTimeService {
     /// Starts the internal timer guiding the refresh process.
     private func startTimer() {
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now() + .milliseconds(self.refreshInterval), interval: .milliseconds(self.refreshInterval))
+        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(self.refreshInterval))
         state = .running
         timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
