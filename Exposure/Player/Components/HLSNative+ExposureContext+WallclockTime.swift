@@ -25,8 +25,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// Will perform server time synchronization before returning any cached results unless `forceRefresh` is set to `false`.
     ///
     /// - parameter forceRefresh: Specifying `true` will force a server request fetching an up to date `MonotonicTime` if the service is running. `false` will return the cached `MonotonicTime`.
-    public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?) -> Void) {
-        context.monotonicTimeService.currentTime(forceRefresh: forceRefresh) { serverTime, error in
+    public func serverTime(forceRefresh: Bool = true, callback: @escaping (Int64?) -> Void) {
+        context.monotonicTimeService.serverTime(forceRefresh: forceRefresh) { serverTime, error in
             callback(serverTime)
         }
     }

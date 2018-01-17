@@ -125,7 +125,7 @@ extension MonotonicTimeService {
     /// Fetches the latest *MonotonicTime*, in unix epoch time (in milliseconds). If the service is not running, calling this method (with or without `forceRefresh`) will start it and cause an immediate fetch request.
     ///
     /// - parameter forceRefresh: Specifying `true` will force a server request fetching an up to date `MonotonicTime` if the service is running. `false` will return the cached `MonotonicTime`.
-    public func currentTime(forceRefresh: Bool = true, callback: @escaping (Int64?, ExposureError?) -> Void) {
+    public func serverTime(forceRefresh: Bool = true, callback: @escaping (Int64?, ExposureError?) -> Void) {
         switch state {
         case .notStarted:
             startTimer()
