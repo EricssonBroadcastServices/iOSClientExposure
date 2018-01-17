@@ -8,7 +8,7 @@
 
 import Quick
 import Nimble
-
+import Player
 import Foundation
 
 @testable import Exposure
@@ -66,18 +66,18 @@ class MonotonicTimeServiceSpec: QuickSpec {
         
         describe("MonotonicTimeService") {
             
-            context("synchronous currentTime") {
+            context("synchronous serverTime") {
                 let service = MonotonicTimeService(environment: environment, refreshInterval: 500)
                 service.onErrorPolicy = .retry(attempts: 5, interval: 100)
                 let provider = MockedServerTimeProvider()
                 service.serverTimeProvider = provider
 
                 it("should return no current time if not started") {
-                    expect(service.currentTime).to(beNil())
+                    expect(service.serverTime).to(beNil())
                 }
 
                 it("should eventually return current time when running") {
-                    expect(service.currentTime).toEventuallyNot(beNil())
+                    expect(service.serverTime).toEventuallyNot(beNil())
                 }
             }
 
@@ -89,7 +89,7 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
                     provider.mode = .errorFirstRequest
 
-                    service.currentTime{ time in
+                    service.serverTime{ time, error in
                         expect(time).to(beNil())
                     }
 
@@ -104,7 +104,7 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
                     provider.mode = .errorFirstRequest
 
-                    service.currentTime{ time in
+                    service.serverTime{ time, error in
                         expect(time).to(beNil())
                     }
 
@@ -121,13 +121,13 @@ class MonotonicTimeServiceSpec: QuickSpec {
                     service.serverTimeProvider = provider
 
                     var times: [Int64] = []
-                    service.currentTime{ time in
+                    service.serverTime{ time, error in
                         if let time = time {
                             times.append(time)
                         }
                     }
 
-                    service.currentTime(forceRefresh: false) { time in
+                    service.serverTime(forceRefresh: false) { time, error in
                         if let time = time {
                             times.append(time)
                         }
@@ -146,13 +146,13 @@ class MonotonicTimeServiceSpec: QuickSpec {
 
                 it("should do network call when no server time is cached") {
                     var times: [Int64] = []
-                    service.currentTime{ time in
+                    service.serverTime{ time, error in
                         if let time = time {
                             times.append(time)
                         }
                     }
 
-                    service.currentTime(forceRefresh: true) { time in
+                    service.serverTime(forceRefresh: true) { time, error in
                         if let time = time {
                             times.append(time)
                         }
@@ -168,7 +168,7 @@ class MonotonicTimeServiceSpec: QuickSpec {
             let tolerance: Int64 = 210
             let date = Date().millisecondsSince1970
             let difference = MonotonicTimeService.Difference(serverStartTime: date + 400, localStartTime: date + 200)
-            let monotonicTime = difference.monotonicTime
+            let monotonicTime = difference.monotonicTime(date: Date())
             it("should calculate servertime within reasonable bounds") {
                 expect(monotonicTime).to(beGreaterThan(date-tolerance))
                 expect(monotonicTime).to(beLessThan(date+tolerance))

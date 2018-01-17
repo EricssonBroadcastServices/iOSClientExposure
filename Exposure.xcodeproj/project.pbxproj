@@ -64,6 +64,8 @@
 		764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */; };
 		7645C55D2006146500133955 /* ProgramService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C55C2006146500133955 /* ProgramService.swift */; };
 		7645C55F2006240F00133955 /* HLSNative+ExposureContext+Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */; };
+		7645C56120062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */; };
+		7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5622006BFAA00133955 /* URL+Extensions.swift */; };
 		7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */; };
 		7646D65F1EEFF5BE009E5C2B /* PlayProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65E1EEFF5BE009E5C2B /* PlayProgram.swift */; };
 		7646D6631EEFFDBD009E5C2B /* ValidateEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */; };
@@ -288,6 +290,8 @@
 		7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserPlayHistorySpec.swift; sourceTree = "<group>"; };
 		7645C55C2006146500133955 /* ProgramService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramService.swift; sourceTree = "<group>"; };
 		7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+Program.swift"; sourceTree = "<group>"; };
+		7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+Timeshift.swift"; sourceTree = "<group>"; };
+		7645C5622006BFAA00133955 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureErrorSpec.swift; sourceTree = "<group>"; };
 		7646D65E1EEFF5BE009E5C2B /* PlayProgram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayProgram.swift; sourceTree = "<group>"; };
 		7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidateEntitlement.swift; sourceTree = "<group>"; };
@@ -574,6 +578,7 @@
 				7628048F1FB33EBE00DB54CC /* HLSNative+HeartbeatsProvider.swift */,
 				76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+WallclockTime.swift */,
 				7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */,
+				7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -765,6 +770,7 @@
 			isa = PBXGroup;
 			children = (
 				766FBB6B1EC9A19B00EBEC53 /* Sequence+Extensions.swift */,
+				7645C5622006BFAA00133955 /* URL+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1431,6 +1437,7 @@
 				76D7046A1F9396E400D6FC6B /* FilteredLocale.swift in Sources */,
 				76A842F01EA7667D00BDAF2C /* PlayRequest.swift in Sources */,
 				769734A11EF1803200F6ADC8 /* Program.swift in Sources */,
+				7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */,
 				76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */,
 				762383F61F98A7830046EF38 /* LocalMediaRecord.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
@@ -1439,6 +1446,7 @@
 				76529CFB1EDBF2FE00318AE2 /* FilteredDevices.swift in Sources */,
 				761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */,
 				76529D031EDC2EB600318AE2 /* SortedResponse.swift in Sources */,
+				7645C56120062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift in Sources */,
 				76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */,
 				7619E55D1FCC16F800ACACAE /* HLSNative+ExposureContext+SessionShift.swift in Sources */,
 			);
@@ -1551,7 +1559,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 113;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1610,7 +1618,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 111;
+				CURRENT_PROJECT_VERSION = 113;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1641,7 +1649,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 111;
+				DYLIB_CURRENT_VERSION = 113;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Exposure/Info.plist;
@@ -1664,7 +1672,7 @@
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 111;
+				DYLIB_CURRENT_VERSION = 113;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Exposure/Info.plist;
