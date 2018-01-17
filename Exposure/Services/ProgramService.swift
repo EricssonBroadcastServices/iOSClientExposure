@@ -12,10 +12,14 @@ internal protocol ProgramProvider {
     func fetchProgram(programId: String, channelId: String, using environment: Environment, callback: @escaping (Program?, ExposureError?) -> Void)
 }
 
-public class ProgramService {
+internal class ProgramService {
     /// `Environment` to use when requesting program data
     fileprivate var environment: Environment
     
+    internal init(environment: Environment) {
+        self.environment = environment
+        self.provider = ExposureProgramProvider()
+    }
     
     internal var provider: ProgramProvider
     internal struct ExposureProgramProvider: ProgramProvider {
@@ -31,11 +35,11 @@ public class ProgramService {
 }
 
 extension ProgramService {
-    public var currentProgram: Program? {
+    internal var currentProgram: Program? {
         
     }
 
-    public func currentProgram(callback: @escaping (Program?, ExposureError?) -> Void) {
+    internal func currentProgram(callback: @escaping (Program?, ExposureError?) -> Void) {
         
     }
 }
