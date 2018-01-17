@@ -10,7 +10,7 @@
 
 #### Features
 * `EMP-10646` `ExposureContext` exposes cached server walltime.
-* `EMP-10861` Timeshift delay implemented for `ExposureContext`.
+* `EMP-10861` Internal management of *timeshift delay* implemented for `ExposureContext`.
 
 #### Changes
 * `EMP-10852` API changes to `ExposureContext` playback extensions starting playback by *EMP* assetId has been renamed.
