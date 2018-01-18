@@ -10,6 +10,7 @@
 
 #### Features
 * `EMP-10646` `ExposureContext` exposes cached server walltime.
+* `EMP-10852` `playheadTime` of streams associated with a *unix epoch timestamp* are synched with server walltime.
 * `EMP-10861` Internal management of *timeshift delay* implemented for `ExposureContext`.
 
 #### Changes
