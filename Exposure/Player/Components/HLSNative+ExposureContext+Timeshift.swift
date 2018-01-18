@@ -8,14 +8,17 @@
 
 import Foundation
 import Player
+#if DEBUG
 
+#else
+
+#endif
 // MARK: - Timeshift
 extension Player where Tech == HLSNative<ExposureContext> {
     /// Specifies the timeshift delay *in seconds* associated with the current `MediaSource` (if available).
     ///
-    /// Setting a value will cause the stream to reload starting from the new, timeshifted live point. Negative timeshift delays will be clamped at zero.
-    ///
     /// - note: Requires a *Unified Packager* sourced stream.
+    #if DEBUG
     public var timeshiftDelay: Int64? {
         get {
             return tech.currentSource?.timeshiftDelay
@@ -28,5 +31,14 @@ extension Player where Tech == HLSNative<ExposureContext> {
             print(#function,currentSource.url)
             tech.reloadSource()
         }
+    }
+    #else
+    public var timeshiftDelay: Int64? {
+        return tech.currentSource?.timeshiftDelay
+    }
+    #endif
+    
+    public var dvrWindowLength: Int64? {
+        return tech.currentSource?.dvrWindowLength
     }
 }
