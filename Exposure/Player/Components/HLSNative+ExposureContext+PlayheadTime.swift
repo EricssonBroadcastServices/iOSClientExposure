@@ -17,36 +17,28 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// - Parameter timeInterval: target timestamp in unix epoch time (milliseconds)
     public func seek(toTime timeInterval: Int64) {
+        let date = Date(milliseconds: timeInterval)
+        let timestamp = context.monotonicTimeService.monotonicTime(date: date) ?? timeInterval
         
-        // TODO: `timeInterval` is in unix epoch worldclock time. This needs to be synced with the serverTime.
-        
-        
-        
-//        let date = Date(milliseconds: timeInterval)
-//        currentAsset?.playerItem.seek(to: date) { [weak self] success in
-//            guard let `self` = self else { return }
-//            if success {
-//                if let source = self.currentAsset?.source {
-//                    self.eventDispatcher.onPlaybackScrubbed(self, source, timeInterval)
-//                    source.analyticsConnector.onScrubbedTo(tech: self, source: source, offset: timeInterval) }
-//            }
-//        }
+        tech.seek(toTime: timestamp)
     }
     
-    /// Returns the playhead position mapped current time, in unix epoch (milliseconds)
+    /// Returns the playhead position mapped to wallclock time, in unix epoch (milliseconds)
     ///
-    /// Requires a stream expressing the `EXT-X-PROGRAM-DATE-TIME` tag.
-    ///
-    /// Will return `nil` if playback is not mapped to any date.
-//    public var playheadTime: Int64? {
-//        guard let streamTime = tech.playheadTime else { return nil }
-//        
-//        /// Buffer end
-//        guard let bufferEnd = tech.bufferedRange.last?.end.seconds else { return nil }
-//        
-//        // bufferEndTimestamp - playheadPosition
-//        
-//        
-//        // TODO: Playhead time needs to be synched with the MonotonicTime
-//    }
+    /// Will return `nil` if playback is not mapped to any date or if no syched servertime exists
+    public var playheadTime: Int64? {
+        guard let current = tech.playheadTime else { return nil }
+        let date = Date(milliseconds: current)
+        return context.monotonicTimeService.monotonicTime(date: date) ?? current
+        
+//        guard let source = tech.currentSource, source.isUnifiedPackager else {
+//            return tech.playheadTime
+//        }
+//
+//        guard let wallclock = serverTime else { return nil }
+//        guard let dvrWindow = dvrWindowLength else { return nil }
+//        let timeshift = timeshiftDelay ?? 0
+//
+//        return wallclock - timeshift*1000 - dvrWindow*1000 + playheadPosition
+    }
 }
