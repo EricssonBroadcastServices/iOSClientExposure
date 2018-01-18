@@ -20,7 +20,14 @@ extension Player where Tech == HLSNative<ExposureContext> {
         let date = Date(milliseconds: timeInterval)
         let timestamp = context.monotonicTimeService.monotonicTime(date: date) ?? timeInterval
         
-        tech.seek(toTime: timestamp)
+        
+        // TODO: Seeking needs to update the 
+        if let programService = context.programService {
+            
+        }
+        else {
+            tech.seek(toTime: timestamp)
+        }
     }
     
     /// Returns the playhead position mapped to wallclock time, in unix epoch (milliseconds)

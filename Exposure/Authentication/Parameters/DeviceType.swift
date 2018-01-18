@@ -8,15 +8,11 @@
 
 import Foundation
 
-/// *Exposure* defines a set of *device types*. For the joint `iOS`/`tvOS` platform only a handful of them are relevant. All of them are included here for completeness sake but this is subject to change.
+/// *Exposure* defines a set of *device types*.
 public enum DeviceType {
-    case web
     case mobile
     case tablet
     case appleTv
-    case smartTv
-    case console
-    case stb
     case other(string: String)
     
     internal init?(string: String?) {
@@ -26,13 +22,9 @@ public enum DeviceType {
     
     internal init(string: String) {
         switch string {
-        case "WEB": self = .web
         case "MOBILE": self = .mobile
         case "TABLET": self = .tablet
         case "APPLE_TV": self = .appleTv
-        case "SMART_TV": self = .smartTv
-        case "CONSOLE": self = .console
-        case "STB": self = .stb
         default: self = .other(string: string)
         }
     }
@@ -54,13 +46,9 @@ public enum DeviceType {
     /// Keys used to specify `DeviceType` as a query parameter for the request.
     internal var queryParam: String {
         switch self {
-        case .web: return "WEB"
         case .mobile: return "MOBILE"
         case .tablet: return "TABLET"
         case .appleTv: return "APPLE_TV"
-        case .smartTv: return "SMART_TV"
-        case .console: return "CONSOLE"
-        case .stb: return "STB"
         case .other(string: let value): return value
         }
     }

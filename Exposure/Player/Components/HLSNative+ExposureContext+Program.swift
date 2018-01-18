@@ -12,19 +12,34 @@ import Player
 // MARK: - Program Data
 extension Player where Tech == HLSNative<ExposureContext> {
     public var currentProgram: Program? {
-        return context.programService.currentProgram
+        return context.programService?.currentProgram
     }
     
     public func currentProgram(callback: @escaping (Program?, ExposureError?) -> Void) {
-        context.programService.currentProgram(callback: callback)
+        guard let service = context.programService else {
+            callback(nil, nil)
+            return
+        }
+        context.monotonicTimeService.serverTime{ [weak service] serverTime, error in
+            if let serverTime = serverTime {
+                service?.currentProgram(for: serverTime, callback: callback)
+            }
+            
+            if let error = error {
+                callback(nil, error)
+            }
+        }
     }
     
-    public func fetch(programId: String, channelId: String, callback: @escaping (Program?, ExposureError?) -> Void) {
-        context
-            .programService
-            .provider
-            .fetchProgram(programId: programId,
-                          channelId: channelId,
-                          using: context.environment) { callback($0,$1) }
+    /// Sets the callback to fire once program change triggers
+    ///
+    /// - parameter callback: callback to fire once the event is fired.
+    /// - returns: `Self`
+    public func onProgramChanged(callback: @escaping (Tech, ExposureContext.Source, Program) -> Void) -> Self {
+        context.onProgramChanged = { [weak self] program, source in
+            guard let `self` = self else { return }
+            callback(self.tech, source, program)
+        }
+        return self
     }
 }

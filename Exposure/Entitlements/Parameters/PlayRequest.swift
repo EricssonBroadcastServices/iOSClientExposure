@@ -19,7 +19,9 @@ extension DRMRequest {
     public typealias DRM = PlayRequest.DRM
     public typealias Format = PlayRequest.Format
     
-    /// Requested `DRM`
+    /// Requested *DRM*
+    ///
+    /// This is normaly `FairPlay`
     public var drm: DRM {
         return playRequest.drm
     }

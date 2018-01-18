@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Service that syncs local device clock with server time
 public class MonotonicTimeService {
     /// Refresh rate for contacting the server requesting an updated timestamp
@@ -147,7 +146,7 @@ extension MonotonicTimeService {
     /// Starts the internal timer guiding the refresh process.
     private func startTimer() {
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(self.refreshInterval))
+        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(refreshInterval))
         state = .running
         timer?.setEventHandler{ [weak self] in
             guard let `self` = self else { return }
