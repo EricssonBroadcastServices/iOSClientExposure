@@ -103,9 +103,13 @@ public class MonotonicTimeService {
 }
 
 extension MonotonicTimeService {
-//    public func monotonicTime(date: Date) -> Int64? {
-//        return currentDifference?.monotonicTime(date: date)
-//    }
+    /// Synchronizes `date` with server wallclock time
+    ///
+    /// - parameter date: date to synchronize
+    /// - returns: synchronized unix epoch timestamp if server time is available, else `nil`
+    public func monotonicTime(date: Date) -> Int64? {
+        return currentDifference?.monotonicTime(date: date)
+    }
  
     /// Retrieve the latest *MonotonicTime*, in unix epoch time, as cached by the service. (in milliseconds)
     ///
