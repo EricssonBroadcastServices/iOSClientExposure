@@ -35,7 +35,7 @@ public class ExposureContext: MediaContext {
     internal var programService: ProgramService?
     
     /// Tracks the internal programChanged callback
-    internal var onProgramChanged: (Program, Source) -> Void = { _,_ in }
+    internal var onProgramChanged: (Program?, Source) -> Void = { _,_ in }
     
     
     public init(environment: Environment, sessionToken: SessionToken) {

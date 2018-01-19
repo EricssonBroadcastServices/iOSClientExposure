@@ -160,7 +160,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             self.context.onProgramChanged(program, source)
         }
         service.onNotEntitled = { [weak self] in
-            
+            // TODO: Stop playback and unload source
         }
         
         service.startMonitoring()

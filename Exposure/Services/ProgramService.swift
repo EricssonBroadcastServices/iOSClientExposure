@@ -31,7 +31,7 @@ internal class ProgramService {
     
     internal var currentPlayheadTime: () -> Int64? = { _ in return nil }
     internal var onNotEntitled: () -> Void = { _ in}
-    internal var onProgramChanged: (Program) -> Void = { _ in }
+    internal var onProgramChanged: (Program?) -> Void = { _ in }
     
     fileprivate var activeProgram: Program?
     internal init(environment: Environment, sessionToken: SessionToken, channelId: String) {
@@ -82,27 +82,52 @@ extension ProgramService {
         provider.fetchProgram(on: channelId, timestamp: timestamp, using: environment) { [weak self] newProgram, error in
             guard let `self` = self else { return }
             if let program = newProgram, let assetId = program.assetId {
-                self.activeProgram = program
-                self.onProgramChanged(program)
+                self.handleProgramChanged(program: program)
                 
                 self.provider.validate(entitlementFor: assetId, environment: self.environment, sessionToken: self.sessionToken) { validation, error in
-                    // TODO: What about errors? Should we be permissive or restrictive with errors on validation?
                     guard let expirationReason = validation?.status else {
+                        // TODO: What about errors? Should we be permissive or restrictive with errors on validation?
                         callback(nil)
                         return
                     }
                     
                     guard expirationReason == "SUCCESS" else {
+                        /// Failure, playback is no longer allowed
                         callback(expirationReason)
                         return
                     }
                     
+                    /// Success, playback is validated
                     callback(nil)
                 }
             }
             else {
-                callback(nil)
+                if let error = error {
+                    /// TODO: How do we handle errors when fetching Epg?
+                    /// This is not the same as *no epg on channel*
+                    /// Retry?
+                }
+                else {
+                    /// Validation on program level requires the channel has Epg attached.
+                    ///
+                    /// If we are missing Epg, playback is allowed to continue.
+                    self.handleProgramChanged(program: nil)
+                    callback(nil)
+                    
+                    /// TODO: How do we handle successful fetches of Epg that return no program for the current timestamp?
+                    /// No Epg means we allow playback to continue.
+                    /// But what about *gaps in epg*?
+                    /// Should we *retry* after a certain amount of time to check if Epg eventually exists for the channel?
+                }
             }
+        }
+    }
+    
+    fileprivate func handleProgramChanged(program: Program?) {
+        let current = self.activeProgram
+        self.activeProgram = program
+        if current?.assetId != program?.assetId {
+            onProgramChanged(program)
         }
     }
 }
