@@ -120,7 +120,7 @@ extension PlaybackEntitlement {
         fairplay = try container.decodeIfPresent(FairplayConfiguration.self, forKey: .fairplay)
         
         licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
-        licenseExpirationReason = try container.decode(String.self, forKey: .licenseExpirationReason)
+        licenseExpirationReason = try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason)
         licenseActivation = try container.decodeIfPresent(String.self, forKey: .licenseActivation)
         
         entitlementType = try container.decodeIfPresent(String.self, forKey: .entitlementType)
