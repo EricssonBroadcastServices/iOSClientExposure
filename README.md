@@ -176,10 +176,10 @@ A failed entitlement request where the user is not entitled to play an asset wil
 *Client Applications* can make use of `ExposureContext` which provides out of the box integration with the *EMP* backend, allowing playback from asset identifiers.
 
 ```Swift
-player.stream(live: "someEMPLiveChannel")
+player.startPlayback(channelId: "someEMPLiveChannel")
 ```
 
-Using the `Player.stream(live:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
+Using the `Player.startPlayback(channelId:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
 
 ### Fetching EPG
 *EPG*, or the *electronic programming guide*, details previous, current and upcomming programs on a specific channel. Client applications may request *EPG* data through the `FetchEpg` endpoint.
@@ -210,6 +210,19 @@ FetchEpg(environment: environment)
         // Handle response
     }
 ```
+
+Client applications relying obn `ExposureContext` may also fetch the currently playing `Program` directly from the `player` object.
+
+```Swift
+let nowPlaying = player.currentProgram
+```
+
+Or listen to the `onProgramChanged` event.
+
+```Swift
+player.onProgramChanged { tech, source, program in
+    // Update userfacing program information
+}
 
 ### Fetching Assets
 Client applications can fetch and filter assets on a variety of properties.
