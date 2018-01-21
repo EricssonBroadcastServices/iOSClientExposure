@@ -41,6 +41,7 @@
 
 * Framework dependencies
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
+    - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
@@ -84,12 +85,7 @@ Besides an `Environment`, a valid `SessionToken` is required for accessing most 
 Authenticate(environment: exposureEnv)
     .login(username: someUser,
            password: somePassword)
-
-Authenticate(environment: exposureEnv)
-    .twoFactor(username: someUser,
-               password: somePassword,
-              twoFactor: mfaCode)
-
+           
 Authenticate(environment: exposureEnv)
     .anonymous()
 ```
@@ -106,7 +102,6 @@ Authenticate(environment: exposureEnv)
     .login(username: someUser,
            password: somePassword)
     .request()
-    .validate()
     .response{
         if let error = $0.error {
            // Handle Error
@@ -126,7 +121,6 @@ A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports va
 Authenticate(environment: exposureEnv)
     .validate(sessionToken: someToken)
     .request()
-    .validate()
     .response{
         if let case .exposureResponse(reason: reason) = $0.error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
             // Session is no longer valid.
@@ -163,7 +157,6 @@ Entitlement(environment: environment,
              channelId: someChannel)
     .use(drm: .unencrypted)
     .request()
-    .validate()
     .response{
         if let error = $0.error {
             // Handle error
@@ -175,7 +168,7 @@ Entitlement(environment: environment,
     }
 ```
 
-A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. Client applications should be aware of the importance of using `ExposureRequest.validate()` and handling the response as appropriate. For more information, please see [Error Handling](#error-handling).
+A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. For more information, please see [Error Handling](#error-handling).
 
 #### Playback through `Player` using `ExposureContext`
 `Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase. Context sensitive playback allows for constrained extensions on the `PlaybackTech` and `MediaContext`, encapsulating all logic for an entitlement request.
@@ -202,7 +195,6 @@ FetchEpg(environment: environment)
     .sort(on: ["-channelId"])
     .show(page: 1, spanning: 100)
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -214,7 +206,6 @@ It is also possible to fetch *EPG* data for a specific program on a channel.
 FetchEpg(environment: environment)
     .channel(id: "great_series", programId: "amazing_show_s01_e01")
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -254,7 +245,6 @@ Finally, advanced queries can be performed using *elastic search* on related pro
 let elasticSearchRequest = deviceFilteredRequest
     .elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -267,7 +257,6 @@ It is also possible to fetch an asset by Id
 FetchAsset(environment: environment)
     .filter(assetId: "amazing_show_s01_e01")
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -281,7 +270,6 @@ Search(environment: environment)
     .autocomplete(for: "The Amazing TV sh")
     .filter(locale: "en")
     .request()
-    .validate()
     .response{
         // Matches "The Amazing TV show"
     }
@@ -298,7 +286,6 @@ Search(environment: environment)
     .sort(on: ["-publications.publicationDate","assetId"])
     .show(page: 1, spanning: 100)
     .request()
-    .validate()
     .response{
         // Handle the response
     }
@@ -314,7 +301,6 @@ Initializing analytics returns a response with the configuration parameters deta
 EventSink()
     .initialize(using: myEnvironment)
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -326,7 +312,6 @@ EventSink()
 EventSink()
     .send(analytics: batch, clockOffset: unixEpochOffset)
     .request()
-    .validate()
     .response{
         // Handle response
     }
