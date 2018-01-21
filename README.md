@@ -115,7 +115,7 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
-A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)`. Please note that `Exposure` will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid. It is thus a good idea to use the `validate()` method on `ExposureRequest`s. For more information about validation and `ExposureResponse`, please see [Error Handling](#error-handling)
+A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)` and will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid.
 
 ```Swift
 Authenticate(environment: exposureEnv)
