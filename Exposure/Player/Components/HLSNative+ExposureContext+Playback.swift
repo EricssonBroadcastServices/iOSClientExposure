@@ -23,6 +23,13 @@ public enum AssetIdentifier {
         default: return nil
         }
     }
+    
+    public var programId: String? {
+        switch self {
+        case .program(programId: let value, channelId: _): return value
+        default: return nil
+        }
+    }
 }
 
 extension Player where Tech == HLSNative<ExposureContext> {
@@ -123,7 +130,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             handleSessionShift(entitlement: source.entitlement)
             
             /// Start ProgramService
-            prepareProgramService(source: source, channelId: assetIdentifier.channelId)
+            prepareProgramService(source: source, assetIdentifier: assetIdentifier)
             
             /// Load tech
             tech.load(source: source)
@@ -148,8 +155,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
 
 
 extension Player where Tech == HLSNative<ExposureContext> {
-    fileprivate func prepareProgramService(source: ExposureSource, channelId: String?) {
-        guard let channelId = channelId else  { return }
+    fileprivate func prepareProgramService(source: ExposureSource, assetIdentifier: AssetIdentifier) {
+        guard let channelId = assetIdentifier.channelId else  { return }
         let service = ProgramService(environment: context.environment, sessionToken: context.sessionToken, channelId: channelId)
         
         context.programService = service
@@ -159,10 +166,13 @@ extension Player where Tech == HLSNative<ExposureContext> {
             guard let `self` = self else { return }
             self.context.onProgramChanged(program, source)
         }
-        service.onNotEntitled = { [weak self] in
+        service.onNotEntitled = { message in
             // TODO: Stop playback and unload source
+            print("NOT ENTITLED",message)
         }
         
+        
+        // TODO: Should be started once playback has started.
         service.startMonitoring()
     }
 }

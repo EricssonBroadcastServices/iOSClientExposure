@@ -30,7 +30,7 @@ internal class ProgramService {
     fileprivate let refreshInterval: Int = 1000 * 3
     
     internal var currentPlayheadTime: () -> Int64? = { _ in return nil }
-    internal var onNotEntitled: () -> Void = { _ in}
+    internal var onNotEntitled: (String) -> Void = { _ in}
     internal var onProgramChanged: (Program?) -> Void = { _ in }
     
     fileprivate var activeProgram: Program?
@@ -73,6 +73,8 @@ extension ProgramService {
     fileprivate func validate(timestamp: Int64, callback: @escaping (String?) -> Void) {
         if let current = activeProgram, let start = current.startDate?.millisecondsSince1970, let end = current.endDate?.millisecondsSince1970 {
             if timestamp > start && timestamp < end {
+                print("ProgramService: validate inBounds",start,timestamp,end)
+                startValidationTimer(onTimestamp: timestamp, for: current)
                 callback(nil)
                 return
             }
@@ -81,10 +83,15 @@ extension ProgramService {
         // We do not have a current program or the timestamp in question is outside the program bounds
         provider.fetchProgram(on: channelId, timestamp: timestamp, using: environment) { [weak self] newProgram, error in
             guard let `self` = self else { return }
+            print("ProgramService: fetchProgram",timestamp,self.channelId)
             if let program = newProgram, let assetId = program.assetId {
-                self.handleProgramChanged(program: program)
+                DispatchQueue.main.async { [weak self] in
+                    self?.handleProgramChanged(program: program)
+                    self?.startValidationTimer(onTimestamp: timestamp, for: program)
+                }
                 
                 self.provider.validate(entitlementFor: assetId, environment: self.environment, sessionToken: self.sessionToken) { validation, error in
+                    print("ProgramService: validate",timestamp,validation?.status)
                     guard let expirationReason = validation?.status else {
                         // TODO: What about errors? Should we be permissive or restrictive with errors on validation?
                         callback(nil)
@@ -98,10 +105,12 @@ extension ProgramService {
                     }
                     
                     /// Success, playback is validated
+                    print("ProgramService: VALID")
                     callback(nil)
                 }
             }
             else {
+                print("ProgramService: no EPG",timestamp)
                 if let error = error {
                     /// TODO: How do we handle errors when fetching Epg?
                     /// This is not the same as *no epg on channel*
@@ -111,7 +120,11 @@ extension ProgramService {
                     /// Validation on program level requires the channel has Epg attached.
                     ///
                     /// If we are missing Epg, playback is allowed to continue.
-                    self.handleProgramChanged(program: nil)
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.handleProgramChanged(program: nil)
+                        self?.startValidationTimer(onTimestamp: timestamp, for: nil)
+                    }
                     callback(nil)
                     
                     /// TODO: How do we handle successful fetches of Epg that return no program for the current timestamp?
@@ -124,8 +137,9 @@ extension ProgramService {
     }
     
     fileprivate func handleProgramChanged(program: Program?) {
-        let current = self.activeProgram
-        self.activeProgram = program
+        let current = activeProgram
+        print("ProgramService: handleProgramChanged",current?.assetId,"-->",program?.assetId)
+        activeProgram = program
         if current?.assetId != program?.assetId {
             onProgramChanged(program)
         }
@@ -138,13 +152,69 @@ extension ProgramService {
         timer?.cancel()
     }
     
+    internal func isEntitled(toPlay timestamp: Int64) {
+        print("ProgramService: isEntitled",timestamp)
+        validate(timestamp: timestamp) { message in
+            print("ProgramService: isEntitled.validate",timestamp,message)
+            if let invalidMessage = message {
+                DispatchQueue.main.async { [weak self] in
+                    self?.onNotEntitled(invalidMessage)
+                }
+            }
+        }
+    }
+    
     internal func startMonitoring() {
+        guard let timestamp = self.currentPlayheadTime() else {
+            print("ProgramService: startMonitoring.retry",Date().millisecondsSince1970)
+            /// Retry untill we have a
+            stopTimer()
+            timer = DispatchSource.makeTimerSource(queue: queue)
+            timer?.scheduleOneshot(deadline: .now() + .milliseconds(2000))
+            timer?.setEventHandler { [weak self] in
+                self?.startMonitoring()
+            }
+            timer?.resume()
+            return
+        }
+        
+        stopTimer()
+        provider.fetchProgram(on: channelId, timestamp: timestamp, using: environment) { [weak self] program, error in
+            print("ProgramService: timestamp",timestamp,program?.programId,error?.code,error?.localizedDescription)
+            if let program = program {
+                self?.handleProgramChanged(program: program)
+                
+                self?.startValidationTimer(onTimestamp: timestamp, for: program)
+            }
+            if let error = error {
+                
+            }
+        }
+    }
+    
+    fileprivate func startValidationTimer(onTimestamp timestamp: Int64, for program: Program?) {
+        print("ProgramService: startValidationTimer.start",timestamp,program?.programId)
+        guard let end = program?.endDate?.millisecondsSince1970 else { return }
+        let delta = 2000//Int(end - timestamp)
         stopTimer()
         timer = DispatchSource.makeTimerSource(queue: queue)
-        timer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(refreshInterval))
-        
+        timer?.scheduleOneshot(deadline: .now() + .milliseconds(delta))
+        print("ProgramService: startValidationTimer schedule")
+        timer?.setEventHandler { [weak self] in
+            print("ProgramService: startValidationTimer eventHandler")
+            guard let `self` = self else { return }
+            guard let timestamp = self.currentPlayheadTime() else { return }
+            self.validate(timestamp: timestamp) { invalidMessage in
+                print("ProgramService: startValidationTimer.validate",invalidMessage)
+                if let invalidMessage = invalidMessage {
+                    DispatchQueue.main.async { [weak self] in
+                        self?.onNotEntitled(invalidMessage)
+                    }
+                }
+            }
+        }
+        timer?.resume()
     }
-//    internal func isEntitled(toPlay timestamp: Int64, callback: ())
 }
 
 extension ProgramService {

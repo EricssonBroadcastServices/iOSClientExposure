@@ -17,18 +17,32 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// - Parameter timeInterval: target timestamp in unix epoch time (milliseconds)
     public func seek(toTime timeInterval: Int64) {
-        let date = Date(milliseconds: timeInterval)
-        let timestamp = context.monotonicTimeService.monotonicTime(date: date) ?? timeInterval
+        /// 1. Contract Restrictions
         
+        /// 2. Seekable Range
+        if let first = seekableTimeRange.first?.0, let last = seekableTimeRange.last?.1, let source = tech.currentSource {
+            if source.entitlement.live {
+                if timeInterval < first {
+                    // Before seekable range, new entitlement request required
+                }
+                else if timeInterval > last {
+                    // After seekable range
+                }
+                else {
+                    // Within bounds
+                    
+                }
+            }
+        }
+        
+        tech.seek(toTime: timeInterval)
         
         // TODO: Seeking needs to update the 
         if let programService = context.programService {
-            
-        }
-        else {
-            tech.seek(toTime: timestamp)
+            programService.isEntitled(toPlay: timeInterval)
         }
     }
+    
     
     /// Returns the playhead position mapped to wallclock time, in unix epoch (milliseconds)
     ///
