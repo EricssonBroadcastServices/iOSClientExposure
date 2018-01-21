@@ -50,14 +50,30 @@ public struct PlaybackEntitlement: Codable {
     /// The datetime of expiration of the drm license.
     public let licenseExpiration: String?
     
-    ///The reason of expiration of the drm license.
-    public let licenseExpirationReason: Status?
+    /// The reason of expiration of the drm license.
+    ///
+    ///     * SUCCESS: If the user is entitled
+    ///     * NOT_ENTITLED: If the user is not entitled
+    ///     * GEO_BLOCKED: If the user is in a country that is not allowed for the asset
+    ///     * DOWNLOAD_BLOCKED: If downloading is not allowed
+    ///     * DEVICE_BLOCKED: If the user device is not allowed to play the asset
+    ///     * LICENSE_EXPIRED: If the asset has expired.
+    ///     * NOT_AVAILABLE_IN_FORMAT: If there is not registered media for the asset in the format
+    ///     * CONCURRENT_STREAMS_LIMIT_REACHED: If the maximum number of concurrent stream limit is reached
+    ///     * NOT_ENABLED: If the media is registered but the current status is not enabled
+    ///     * GAP_IN_EPG: If there is a gap in the Epg
+    ///     * EPG_PLAY_MAX_HOURS:
+    public let licenseExpirationReason: String?
     
     /// The datetime of activation of the drm license.
     public let licenseActivation: String?
     
     /// The type of entitlement that granted access to this play.
-    public let entitlementType: EntitlementType?
+    ///
+    ///     * TVOD
+    ///     * SVOD
+    ///     * FVOD
+    public let entitlementType: String?
     
     /// Min bitrate to use
     public let minBitrate: Int?
@@ -104,10 +120,10 @@ extension PlaybackEntitlement {
         fairplay = try container.decodeIfPresent(FairplayConfiguration.self, forKey: .fairplay)
         
         licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
-        licenseExpirationReason = Status(string: try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason))
+        licenseExpirationReason = try container.decodeIfPresent(String.self, forKey: .licenseExpirationReason)
         licenseActivation = try container.decodeIfPresent(String.self, forKey: .licenseActivation)
         
-        entitlementType = EntitlementType(string: try container.decodeIfPresent(String.self, forKey: .entitlementType))
+        entitlementType = try container.decodeIfPresent(String.self, forKey: .entitlementType)
         
         minBitrate = try container.decodeIfPresent(Int.self, forKey: .minBitrate)
         maxBitrate = try container.decodeIfPresent(Int.self, forKey: .maxBitrate)
@@ -138,10 +154,10 @@ extension PlaybackEntitlement {
         try container.encodeIfPresent(fairplay, forKey: .fairplay)
         
         try container.encodeIfPresent(licenseExpiration, forKey: .licenseExpiration)
-        try container.encodeIfPresent(licenseExpirationReason?.encodableValue, forKey: .licenseExpirationReason)
+        try container.encodeIfPresent(licenseExpirationReason, forKey: .licenseExpirationReason)
         try container.encodeIfPresent(licenseActivation, forKey: .licenseActivation)
         
-        try container.encodeIfPresent(entitlementType?.encodableValue, forKey: .entitlementType)
+        try container.encodeIfPresent(entitlementType, forKey: .entitlementType)
         
         try container.encodeIfPresent(minBitrate, forKey: .minBitrate)
         try container.encodeIfPresent(maxBitrate, forKey: .maxBitrate)
@@ -178,131 +194,5 @@ extension PlaybackEntitlement {
         case lastViewedTime
         case liveTime
         case productId
-    }
-}
-
-extension PlaybackEntitlement {
-    
-    /// Details the `PlaybackEntitlement`s *license* status
-    public enum Status: Equatable {
-        /// If the user is entitled.
-        case success
-        
-        /// If the user is not entitled.
-        case notEntitled
-        
-        /// If the user is in a country that is not allowed for the country.
-        case geoBlocked
-        
-        case downloadBlocked
-        
-        ///  If the user device is not allowed to play the asset.
-        case deviceBlocked
-        
-        /// If the asset has expired.
-        case licenseExpired
-        
-        /// If there is not registered media for the asset in the format.
-        case notAvailableInFormat
-        
-        /// If the maximum number of concurrent stream limit is reached.
-        case concurrentStreamsLimitReached
-        
-        /// If the media is registered but the current status is not enabled
-        case notEnabled
-        
-        case gapInEPG
-        case epgPlayMaxHours
-        case other(reason: String)
-        
-        internal init?(string: String?) {
-            guard let value = string else { return nil }
-            self = Status(string: value)
-        }
-        
-        internal init(string: String) {
-            switch string {
-            case "SUCCESS": self = .success
-            case "NOT_ENTITLED": self = .notEntitled
-            case "GEO_BLOCKED": self = .geoBlocked
-            case "DOWNLOAD_BLOCKED": self = .downloadBlocked
-            case "DEVICE_BLOCKED": self = .deviceBlocked
-            case "LICENSE_EXPIRED": self = .licenseExpired
-            case "NOT_AVAILABLE_IN_FORMAT": self = .notAvailableInFormat
-            case "CONCURRENT_STREAMS_LIMIT_REACHED": self = .concurrentStreamsLimitReached
-            case "NOT_ENABLED": self = .notEnabled
-            case "GAP_IN_EPG": self = .gapInEPG
-            case "EPG_PLAY_MAX_HOURS": self = .epgPlayMaxHours
-            default: self = .other(reason: string)
-            }
-        }
-        
-        internal var encodableValue: String {
-            switch self {
-            case .success: return "SUCCESS"
-            case .notEntitled: return "NOT_ENTITLED"
-            case .geoBlocked: return "GEO_BLOCKED"
-            case .downloadBlocked: return "DOWNLOAD_BLOCKED"
-            case .deviceBlocked: return "DEVICE_BLOCKED"
-            case .licenseExpired: return "LICENSE_EXPIRED"
-            case .notAvailableInFormat: return "NOT_AVAILABLE_IN_FORMAT"
-            case .concurrentStreamsLimitReached: return "CONCURRENT_STREAMS_LIMIT_REACHED"
-            case .notEnabled: return "NOT_ENABLED"
-            case .gapInEPG: return "GAP_IN_EPG"
-            case .epgPlayMaxHours: return "EPG_PLAY_MAX_HOURS"
-            case .other(reason: let string): return string
-            }
-        }
-        
-        public static func == (lhs: Status, rhs: Status) -> Bool {
-            switch (lhs, rhs) {
-            case (.success, .success): return true
-            case (.notEntitled, .notEntitled): return true
-            case (.geoBlocked, .geoBlocked): return true
-            case (.downloadBlocked, .downloadBlocked): return true
-            case (.deviceBlocked, .deviceBlocked): return true
-            case (.licenseExpired, .licenseExpired): return true
-            case (.notAvailableInFormat, .notAvailableInFormat): return true
-            case (.concurrentStreamsLimitReached, .concurrentStreamsLimitReached): return true
-            case (.notEnabled, .notEnabled): return true
-            case (.gapInEPG, .gapInEPG): return true
-            case (.epgPlayMaxHours, .epgPlayMaxHours): return true
-            case (.other(let l), .other(let r)): return l == r
-            default: return false
-            }
-        }
-    }
-}
-
-extension PlaybackEntitlement {
-    public enum EntitlementType {
-        case tvod
-        case svod
-        case fvod
-        case other(type: String)
-        
-        
-        internal init?(string: String?) {
-            guard let value = string else { return nil }
-            self = EntitlementType(string: value)
-        }
-        
-        internal init(string: String) {
-            switch string {
-            case "TVOD": self = .tvod
-            case "SVOD": self = .svod
-            case "FVOD": self = .fvod
-            default: self = .other(type: string)
-            }
-        }
-        
-        internal var encodableValue: String {
-            switch self {
-            case .tvod: return "TVOD"
-            case .svod: return "SVOD"
-            case .fvod: return "FVOD"
-            case .other(type: let string): return string
-            }
-        }
     }
 }

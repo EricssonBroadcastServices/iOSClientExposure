@@ -12,17 +12,15 @@ import Foundation
 ///
 /// Will return 200 even if user is not entitled with the result being in the `status` message.
 public struct EntitlementValidation: Decodable {
-    public typealias Status = PlaybackEntitlement.Status
-    
     /// The status of the entitlement
-    public let status: Status
+    public let status: String
     
     /// The status of the payment
     public let paymentDone: Bool?
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        status = Status(string: try container.decode(String.self, forKey: .status))
+        status = try container.decode(String.self, forKey: .status)
         paymentDone = try container.decodeIfPresent(Bool.self, forKey: .paymentDone)
     }
     

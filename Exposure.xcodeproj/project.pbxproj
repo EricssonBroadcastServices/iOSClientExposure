@@ -62,6 +62,8 @@
 		7640920C1F7E34680022F6ED /* AssetUserPlayHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920B1F7E34680022F6ED /* AssetUserPlayHistory.swift */; };
 		7640920E1F7E35970022F6ED /* AssetUserDataSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920D1F7E35970022F6ED /* AssetUserDataSpec.swift */; };
 		764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */; };
+		7645C55D2006146500133955 /* ProgramService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C55C2006146500133955 /* ProgramService.swift */; };
+		7645C55F2006240F00133955 /* HLSNative+ExposureContext+Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */; };
 		7645C56120062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */; };
 		7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645C5622006BFAA00133955 /* URL+Extensions.swift */; };
 		7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */; };
@@ -217,6 +219,7 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
+		76EB9EE42015259300493198 /* simple-player.md in Resources */ = {isa = PBXBuildFile; fileRef = 76EB9EE32015259300493198 /* simple-player.md */; };
 		76FA1DAE2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -287,6 +290,8 @@
 		7640920B1F7E34680022F6ED /* AssetUserPlayHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserPlayHistory.swift; sourceTree = "<group>"; };
 		7640920D1F7E35970022F6ED /* AssetUserDataSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserDataSpec.swift; sourceTree = "<group>"; };
 		7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserPlayHistorySpec.swift; sourceTree = "<group>"; };
+		7645C55C2006146500133955 /* ProgramService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramService.swift; sourceTree = "<group>"; };
+		7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+Program.swift"; sourceTree = "<group>"; };
 		7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+Timeshift.swift"; sourceTree = "<group>"; };
 		7645C5622006BFAA00133955 /* URL+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extensions.swift"; sourceTree = "<group>"; };
 		7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureErrorSpec.swift; sourceTree = "<group>"; };
@@ -448,6 +453,7 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
+		76EB9EE32015259300493198 /* simple-player.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "simple-player.md"; sourceTree = "<group>"; };
 		76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeServiceSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -575,6 +581,7 @@
 				7619E55C1FCC16F800ACACAE /* HLSNative+ExposureContext+SessionShift.swift */,
 				7628048F1FB33EBE00DB54CC /* HLSNative+HeartbeatsProvider.swift */,
 				76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+WallclockTime.swift */,
+				7645C55E2006240F00133955 /* HLSNative+ExposureContext+Program.swift */,
 				7645C56020062A0800133955 /* HLSNative+ExposureContext+Timeshift.swift */,
 				7649790D200FB271000258F2 /* HLSNative+ExposureContext+PlayheadTime.swift */,
 			);
@@ -900,6 +907,7 @@
 				76009F9D1F5D44A7008E1738 /* README.md */,
 				76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */,
 				76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */,
+				76EB9EE02015251100493198 /* Documentation */,
 				76380DA51EBC784800691342 /* fastlane */,
 				76A842C11EA7604F00BDAF2C /* Cartfile */,
 				76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */,
@@ -1131,6 +1139,7 @@
 			children = (
 				76D257E52004CF2F007FDB56 /* MonotonicTimeService.swift */,
 				76D257E82004CFBA007FDB56 /* ServerTimeProvider.swift */,
+				7645C55C2006146500133955 /* ProgramService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1189,6 +1198,14 @@
 			);
 			path = Parameters;
 			sourceTree = "<group>";
+		};
+		76EB9EE02015251100493198 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				76EB9EE32015259300493198 /* simple-player.md */,
+			);
+			path = Documentation;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -1287,6 +1304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76380D9A1EB8A7C600691342 /* Fastfile in Resources */,
+				76EB9EE42015259300493198 /* simple-player.md in Resources */,
 				76B305D51F5E855100EF2567 /* UPGRADE_GUIDE.md in Resources */,
 				76380D991EB8A7C600691342 /* Appfile in Resources */,
 				76A842C21EA7604F00BDAF2C /* Cartfile in Resources */,
@@ -1346,6 +1364,7 @@
 				3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */,
 				76B04F2A1FBADCE3007011E6 /* UserContentRating.swift in Sources */,
 				7661F8791FACBAFB00643FDB /* FetchCarousel.swift in Sources */,
+				7645C55D2006146500133955 /* ProgramService.swift in Sources */,
 				7619E5521FCC0C5300ACACAE /* SWXMLHash+TypeConversion.swift in Sources */,
 				76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */,
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
@@ -1439,6 +1458,7 @@
 				762383F61F98A7830046EF38 /* LocalMediaRecord.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
 				769734AD1EF1852C00F6ADC8 /* FilteredAssetIds.swift in Sources */,
+				7645C55F2006240F00133955 /* HLSNative+ExposureContext+Program.swift in Sources */,
 				76529CFB1EDBF2FE00318AE2 /* FilteredDevices.swift in Sources */,
 				761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */,
 				76529D031EDC2EB600318AE2 /* SortedResponse.swift in Sources */,
