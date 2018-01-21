@@ -41,6 +41,7 @@
 
 * Framework dependencies
     - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
+    - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
@@ -84,12 +85,7 @@ Besides an `Environment`, a valid `SessionToken` is required for accessing most 
 Authenticate(environment: exposureEnv)
     .login(username: someUser,
            password: somePassword)
-
-Authenticate(environment: exposureEnv)
-    .twoFactor(username: someUser,
-               password: somePassword,
-              twoFactor: mfaCode)
-
+           
 Authenticate(environment: exposureEnv)
     .anonymous()
 ```
@@ -106,7 +102,6 @@ Authenticate(environment: exposureEnv)
     .login(username: someUser,
            password: somePassword)
     .request()
-    .validate()
     .response{
         if let error = $0.error {
            // Handle Error
@@ -120,13 +115,12 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
-A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)`. Please note that `Exposure` will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid. It is thus a good idea to use the `validate()` method on `ExposureRequest`s. For more information about validation and `ExposureResponse`, please see [Error Handling](#error-handling)
+A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)` and will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid.
 
 ```Swift
 Authenticate(environment: exposureEnv)
     .validate(sessionToken: someToken)
     .request()
-    .validate()
     .response{
         if let case .exposureResponse(reason: reason) = $0.error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
             // Session is no longer valid.
@@ -163,7 +157,6 @@ Entitlement(environment: environment,
              channelId: someChannel)
     .use(drm: .unencrypted)
     .request()
-    .validate()
     .response{
         if let error = $0.error {
             // Handle error
@@ -175,7 +168,7 @@ Entitlement(environment: environment,
     }
 ```
 
-A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. Client applications should be aware of the importance of using `ExposureRequest.validate()` and handling the response as appropriate. For more information, please see [Error Handling](#error-handling).
+A failed entitlement request where the user is not entitled to play an asset will manifest as an `ExposureResponse` encapsulated in an `ExposureError`. For more information, please see [Error Handling](#error-handling).
 
 #### Playback through `Player` using `ExposureContext`
 `Exposure` module is designed to integrate seamlessly with `Player` enabling a smooth transition between the request phase and the playback phase. Context sensitive playback allows for constrained extensions on the `PlaybackTech` and `MediaContext`, encapsulating all logic for an entitlement request.
@@ -183,10 +176,10 @@ A failed entitlement request where the user is not entitled to play an asset wil
 *Client Applications* can make use of `ExposureContext` which provides out of the box integration with the *EMP* backend, allowing playback from asset identifiers.
 
 ```Swift
-player.stream(live: "someEMPLiveChannel")
+player.startPlayback(channelId: "someEMPLiveChannel")
 ```
 
-Using the `Player.stream(live:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
+Using the `Player.startPlayback(channelId:)` method ensures playback will be configured with `Exposure` related functionality. This includes *Fairplay* configuration and *Session Shift* management.
 
 ### Fetching EPG
 *EPG*, or the *electronic programming guide*, details previous, current and upcomming programs on a specific channel. Client applications may request *EPG* data through the `FetchEpg` endpoint.
@@ -202,7 +195,6 @@ FetchEpg(environment: environment)
     .sort(on: ["-channelId"])
     .show(page: 1, spanning: 100)
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -214,11 +206,24 @@ It is also possible to fetch *EPG* data for a specific program on a channel.
 FetchEpg(environment: environment)
     .channel(id: "great_series", programId: "amazing_show_s01_e01")
     .request()
-    .validate()
     .response{
         // Handle response
     }
 ```
+
+Client applications relying obn `ExposureContext` may also fetch the currently playing `Program` directly from the `player` object.
+
+```Swift
+let nowPlaying = player.currentProgram
+```
+
+Or listen to the `onProgramChanged` event.
+
+```Swift
+player.onProgramChanged { tech, source, program in
+    // Update userfacing program information
+}
+
 
 ### Fetching Assets
 Client applications can fetch and filter assets on a variety of properties.
@@ -254,7 +259,6 @@ Finally, advanced queries can be performed using *elastic search* on related pro
 let elasticSearchRequest = deviceFilteredRequest
     .elasticSearch(query: "medias.drm:FAIRPLAY AND medias.format:HLS")
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -267,7 +271,6 @@ It is also possible to fetch an asset by Id
 FetchAsset(environment: environment)
     .filter(assetId: "amazing_show_s01_e01")
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -281,7 +284,6 @@ Search(environment: environment)
     .autocomplete(for: "The Amazing TV sh")
     .filter(locale: "en")
     .request()
-    .validate()
     .response{
         // Matches "The Amazing TV show"
     }
@@ -298,7 +300,6 @@ Search(environment: environment)
     .sort(on: ["-publications.publicationDate","assetId"])
     .show(page: 1, spanning: 100)
     .request()
-    .validate()
     .response{
         // Handle the response
     }
@@ -314,7 +315,6 @@ Initializing analytics returns a response with the configuration parameters deta
 EventSink()
     .initialize(using: myEnvironment)
     .request()
-    .validate()
     .response{
         // Handle response
     }
@@ -326,7 +326,6 @@ EventSink()
 EventSink()
     .send(analytics: batch, clockOffset: unixEpochOffset)
     .request()
-    .validate()
     .response{
         // Handle response
     }
