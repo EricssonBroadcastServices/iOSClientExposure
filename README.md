@@ -224,6 +224,7 @@ player.onProgramChanged { tech, source, program in
     // Update userfacing program information
 }
 
+
 ### Fetching Assets
 Client applications can fetch and filter assets on a variety of properties.
 
