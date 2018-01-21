@@ -219,6 +219,7 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
+		76EB9EE42015259300493198 /* simple-player.md in Resources */ = {isa = PBXBuildFile; fileRef = 76EB9EE32015259300493198 /* simple-player.md */; };
 		76FA1DAE2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */; };
 /* End PBXBuildFile section */
 
@@ -452,6 +453,7 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
+		76EB9EE32015259300493198 /* simple-player.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "simple-player.md"; sourceTree = "<group>"; };
 		76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeServiceSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -905,6 +907,7 @@
 				76009F9D1F5D44A7008E1738 /* README.md */,
 				76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */,
 				76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */,
+				76EB9EE02015251100493198 /* Documentation */,
 				76380DA51EBC784800691342 /* fastlane */,
 				76A842C11EA7604F00BDAF2C /* Cartfile */,
 				76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */,
@@ -1196,6 +1199,14 @@
 			path = Parameters;
 			sourceTree = "<group>";
 		};
+		76EB9EE02015251100493198 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				76EB9EE32015259300493198 /* simple-player.md */,
+			);
+			path = Documentation;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1293,6 +1304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76380D9A1EB8A7C600691342 /* Fastfile in Resources */,
+				76EB9EE42015259300493198 /* simple-player.md in Resources */,
 				76B305D51F5E855100EF2567 /* UPGRADE_GUIDE.md in Resources */,
 				76380D991EB8A7C600691342 /* Appfile in Resources */,
 				76A842C21EA7604F00BDAF2C /* Cartfile in Resources */,
