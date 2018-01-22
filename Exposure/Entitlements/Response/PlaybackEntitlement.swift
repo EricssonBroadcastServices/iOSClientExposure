@@ -87,7 +87,7 @@ public struct PlaybackEntitlement: Codable {
     /// MDN Request Router Url
     public let mdnRequestRouterUrl: String?
     
-    /// Last viewed offset. Used by *Session Shift*
+    /// Last viewed offset.
     public let lastViewedOffset: Int?
     
     /// Last viewed time
