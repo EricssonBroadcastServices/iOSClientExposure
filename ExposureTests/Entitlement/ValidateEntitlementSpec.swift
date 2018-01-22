@@ -64,7 +64,7 @@ class ValidateEntitlementSpec: QuickSpec {
                 
                 expect(result).toNot(beNil())
                 
-                expect(result?.status).to(equal(.success))
+                expect(result?.status).to(equal("SUCCESS"))
                 
                 expect(result?.paymentDone).to(equal(false))
             }

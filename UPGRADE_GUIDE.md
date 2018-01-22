@@ -1,6 +1,6 @@
 # Upgrade Guide
 
-## 0.720 to 0.75.0
+## 0.720 to 0.76.0
 
 #### API changes
 Several API changes where introduced to streamline with *Android* and *HTML5* platforms.

@@ -36,7 +36,11 @@ extension Player where Tech == HLSNative<ExposureContext> {
             }
             else if timeInterval > last {
                 // After seekable range
-                print("SEEK timeInterval > end", date(date: Date(milliseconds: timeInterval), format: "HH:mm:ss"), date(date: Date(milliseconds: last), format: "HH:mm:ss"))
+                
+                let timeFormatter = DateFormatter()
+                timeFormatter.dateFormat = "HH:mm:ss"
+                
+                print("SEEK timeInterval > end", timeFormatter.string(from: Date(milliseconds: timeInterval)),timeFormatter.string(from: Date(milliseconds: last)))
             }
             else {
                 // Within bounds

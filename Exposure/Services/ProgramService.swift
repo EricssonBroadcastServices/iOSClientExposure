@@ -89,7 +89,8 @@ extension ProgramService {
                 return
             }
             
-            if let program = newProgram, let assetId = program.assetId {
+            if let program = newProgram {
+                guard let assetId = program.assetId else { return }
                 DispatchQueue.main.async { [weak self] in
                     self?.handleProgramChanged(program: program)
                     self?.startValidationTimer(onTimestamp: timestamp, for: program)
@@ -183,18 +184,15 @@ extension ProgramService {
                 return
             }
             
-            if let program = program {
-                self?.handleProgramChanged(program: program)
-                
-                self?.startValidationTimer(onTimestamp: timestamp, for: program)
-            }
+            self?.handleProgramChanged(program: program)
+            self?.startValidationTimer(onTimestamp: timestamp, for: program)
         }
     }
     
     fileprivate func startValidationTimer(onTimestamp timestamp: Int64, for program: Program?) {
         print("ProgramService: startValidationTimer.start",timestamp,program?.programId)
         guard let end = program?.endDate?.millisecondsSince1970 else {
-            // There is no program, validation can not occur
+            // There is no program, validation can not occur, allow playback
             return
         }
         let delta = Int(end - timestamp)

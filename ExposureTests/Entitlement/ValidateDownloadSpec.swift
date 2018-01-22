@@ -71,7 +71,7 @@ class ValidateDownloadSpec: QuickSpec {
                 let result = json.decode(DownloadValidation.self)
                 
                 expect(result).toNot(beNil())
-                expect(result?.status).to(equal(.success))
+                expect(result?.status).to(equal("SUCCESS"))
                 expect(result?.paymentDone).to(equal(false))
                 expect(result?.downloadMaxSecondsAfterPlay).to(equal(100))
                 expect(result?.downloadMaxSecondsAfterDownload).to(equal(200))
