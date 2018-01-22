@@ -8,8 +8,8 @@ Several API changes where introduced to streamline with *Android* and *HTML5* pl
 ##### `ExposureContext`
 Playback related functionality associated with `ExposureContext` received a renovation which improved *shared api consistency* between *iOS*, *Android* and the *HTML5* platforms.
 
-* `stream(vod assetId: String)`: renamed to `startPlayback(assetId: String, useBookmark: Bool = true)`
-* `stream(live channelId: String)` and `stream(programId: String, channelId: String)`: renamed to `startPlayback(channelId: String)` and `startPlayback(channelId: String, programId: String? = nil, useBookmark: Bool = true)` respectivley.
+* `stream(vod assetId: String)`: renamed to `startPlayback(assetId: String, properties: PlaybackProperties = PlaybackProperties())`
+* `stream(live channelId: String)` and `stream(programId: String, channelId: String)`: renamed to `startPlayback(channelId: String, properties: PlaybackProperties = PlaybackProperties())` and `startPlayback(channelId: String, programId: String, properties: PlaybackProperties = PlaybackProperties())` respectivley.
 
 Additionaly, managing *Exposure* bookmarking functionality can now optionally be specified in the playback call.
 

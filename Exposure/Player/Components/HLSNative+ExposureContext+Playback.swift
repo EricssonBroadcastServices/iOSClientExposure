@@ -35,13 +35,14 @@ public enum AssetIdentifier {
 extension Player where Tech == HLSNative<ExposureContext> {
     /// Initiates a playback session by requesting a *vod* entitlement and preparing the player.
     ///
+    /// Specifying `useBookmark = true` will resume playback of the requested program from the previously saved position. If no bookmark is available playback will start from the beginning.
+    ///
     /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
     ///
     /// - parameter assetId: EMP asset id for which to request playback.
-    /// - parameter useBookmark: `true` if playback should start from the bookmarked position (if available). `false` will restart playback from the begining.
-    public func startPlayback(assetId: String, useBookmark: Bool = true) {
-        // Activate session shifting
-        sessionShift(enabled: useBookmark)
+    /// - parameter properties: Properties specifying additional configuration for the playback
+    public func startPlayback(assetId: String, properties: PlaybackProperties = PlaybackProperties()) {
+        context.playbackProperties = properties
         
         // Generate the analytics providers
         let providers = context.analyticsProviders(for: nil)
@@ -64,13 +65,15 @@ extension Player where Tech == HLSNative<ExposureContext> {
     
     /// Initiates a live playback session by requesting an entitlement for `channelId`.
     ///
-    /// Playback will start from the live edge.
+    /// Specifying `useBookmark = true` will resume playback of the requested program from the previously saved position. If no bookmark is available the channel will start from the live edge.
     ///
     /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
     ///
     /// - parameter programId: EMP program id for which to request playback.
-    /// - parameter programId: EMP channel id for which to request playback.
-    public func startPlayback(channelId: String) {
+    /// - parameter properties: Properties specifying additional configuration for the playback
+    public func startPlayback(channelId: String, properties: PlaybackProperties = PlaybackProperties()) {
+        context.playbackProperties = properties
+        
         // Generate the analytics providers
         let providers = context.analyticsProviders(for: nil)
         
@@ -94,16 +97,13 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// Specifying `useBookmark = true` will resume playback of the requested program from the previously saved position. If no bookmark is available the program will start from the begining.
     ///
-    /// Specifying `useBookmark = true` will start playback from the program start time.
-    ///
     /// Calling this method during an active playback session will terminate that session and dispatch the appropriate *Aborted* events.
     ///
     /// - parameter programId: EMP program id for which to request playback.
     /// - parameter programId: EMP channel id for which to request playback.
-    /// - parameter useBookmark: `true` if playback should start from the bookmarked position (if available).
-    public func startPlayback(channelId: String, programId: String, useBookmark: Bool = true) {
-        // Activate session shifting
-        sessionShift(enabled: useBookmark)
+    /// - parameter properties: Properties specifying additional configuration for the playback
+    public func startPlayback(channelId: String, programId: String, properties: PlaybackProperties = PlaybackProperties()) {
+        context.playbackProperties = properties
         
         // Generate the analytics providers
         let providers = context.analyticsProviders(for: nil)
@@ -126,8 +126,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
     
     private func handle(source: ExposureSource?, error: ExposureError?, assetIdentifier: AssetIdentifier, providers: [AnalyticsProvider]) {
         if let source = source {
-            /// Make sure SessionShift is configured if specified by user
-            handleSessionShift(entitlement: source.entitlement)
+            /// Make sure StartTime is configured if specified by user
+            handleStartTime(source: source, assetIdentifier: assetIdentifier)
             
             /// Start ProgramService
             prepareProgramService(source: source, assetIdentifier: assetIdentifier)

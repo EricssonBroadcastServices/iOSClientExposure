@@ -15,6 +15,7 @@
 
 #### Changes
 * `EMP-10852` API changes to `ExposureContext` playback extensions starting playback by *EMP* assetId has been renamed.
+* `SessionShift` protocol has been reamed to `StartTime` 
 
 ## 0.73.0
 

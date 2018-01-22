@@ -37,6 +37,7 @@ public class ExposureContext: MediaContext {
     /// Tracks the internal programChanged callback
     internal var onProgramChanged: (Program?, Source) -> Void = { _,_ in }
     
+    internal var playbackProperties: PlaybackProperties = PlaybackProperties()
     
     public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
