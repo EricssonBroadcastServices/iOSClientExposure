@@ -84,6 +84,11 @@ extension ProgramService {
         provider.fetchProgram(on: channelId, timestamp: timestamp, using: environment) { [weak self] newProgram, error in
             guard let `self` = self else { return }
             print("ProgramService: fetchProgram",timestamp,self.channelId)
+            guard error == nil else {
+                // There was an error fetching the program. Be permissive and allow playback
+                return
+            }
+            
             if let program = newProgram, let assetId = program.assetId {
                 DispatchQueue.main.async { [weak self] in
                     self?.handleProgramChanged(program: program)
@@ -93,7 +98,7 @@ extension ProgramService {
                 self.provider.validate(entitlementFor: assetId, environment: self.environment, sessionToken: self.sessionToken) { validation, error in
                     print("ProgramService: validate",timestamp,validation?.status)
                     guard let expirationReason = validation?.status else {
-                        // TODO: What about errors? Should we be permissive or restrictive with errors on validation?
+                        // We are permissive on validation errors, allow playback to continue.
                         callback(nil)
                         return
                     }
@@ -110,28 +115,20 @@ extension ProgramService {
                 }
             }
             else {
-                print("ProgramService: no EPG",timestamp)
-                if let error = error {
-                    /// TODO: How do we handle errors when fetching Epg?
-                    /// This is not the same as *no epg on channel*
-                    /// Retry?
+                /// Validation on program level requires the channel has Epg attached.
+                ///
+                /// If we are missing Epg, playback is allowed to continue.
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.handleProgramChanged(program: nil)
+                    self?.startValidationTimer(onTimestamp: timestamp, for: nil)
                 }
-                else {
-                    /// Validation on program level requires the channel has Epg attached.
-                    ///
-                    /// If we are missing Epg, playback is allowed to continue.
-                    
-                    DispatchQueue.main.async { [weak self] in
-                        self?.handleProgramChanged(program: nil)
-                        self?.startValidationTimer(onTimestamp: timestamp, for: nil)
-                    }
-                    callback(nil)
-                    
-                    /// TODO: How do we handle successful fetches of Epg that return no program for the current timestamp?
-                    /// No Epg means we allow playback to continue.
-                    /// But what about *gaps in epg*?
-                    /// Should we *retry* after a certain amount of time to check if Epg eventually exists for the channel?
-                }
+                callback(nil)
+                
+                /// TODO: How do we handle successful fetches of Epg that return no program for the current timestamp?
+                /// No Epg means we allow playback to continue.
+                /// But what about *gaps in epg*?
+                /// Should we *retry* after a certain amount of time to check if Epg eventually exists for the channel?
             }
         }
     }
@@ -167,7 +164,7 @@ extension ProgramService {
     internal func startMonitoring() {
         guard let timestamp = self.currentPlayheadTime() else {
             print("ProgramService: startMonitoring.retry",Date().millisecondsSince1970)
-            /// Retry untill we have a
+            /// Retry untill we receive a current playhead time. This is only possible when playback has started
             stopTimer()
             timer = DispatchSource.makeTimerSource(queue: queue)
             timer?.scheduleOneshot(deadline: .now() + .milliseconds(2000))
@@ -181,21 +178,26 @@ extension ProgramService {
         stopTimer()
         provider.fetchProgram(on: channelId, timestamp: timestamp, using: environment) { [weak self] program, error in
             print("ProgramService: timestamp",timestamp,program?.programId,error?.code,error?.localizedDescription)
+            guard error == nil else {
+                // We are permissive on errors, allow playback
+                return
+            }
+            
             if let program = program {
                 self?.handleProgramChanged(program: program)
                 
                 self?.startValidationTimer(onTimestamp: timestamp, for: program)
-            }
-            if let error = error {
-                
             }
         }
     }
     
     fileprivate func startValidationTimer(onTimestamp timestamp: Int64, for program: Program?) {
         print("ProgramService: startValidationTimer.start",timestamp,program?.programId)
-        guard let end = program?.endDate?.millisecondsSince1970 else { return }
-        let delta = 2000//Int(end - timestamp)
+        guard let end = program?.endDate?.millisecondsSince1970 else {
+            // There is no program, validation can not occur
+            return
+        }
+        let delta = Int(end - timestamp)
         stopTimer()
         timer = DispatchSource.makeTimerSource(queue: queue)
         timer?.scheduleOneshot(deadline: .now() + .milliseconds(delta))
@@ -208,6 +210,7 @@ extension ProgramService {
                 print("ProgramService: startValidationTimer.validate",invalidMessage)
                 if let invalidMessage = invalidMessage {
                     DispatchQueue.main.async { [weak self] in
+                        // The user is not entitled to play this program
                         self?.onNotEntitled(invalidMessage)
                     }
                 }
