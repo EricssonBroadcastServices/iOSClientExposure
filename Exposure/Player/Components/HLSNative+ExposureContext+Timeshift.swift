@@ -29,6 +29,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
             
             currentSource.timeshiftDelay = newValue
             print(#function,currentSource.url)
+            let tempDelta = (playheadTime ?? Date().millisecondsSince1970) - (timeshiftDelay ?? 0) * 1000
+            context.programService?.isEntitled(toPlay: tempDelta)
             tech.reloadSource()
         }
     }

@@ -63,13 +63,9 @@ class DeviceRightsSpec: QuickSpec {
                 let stb = DeviceType(string: "STB")
                 let other = DeviceType(string: "Unkown or new type")
                 
-                expect(self.test(value: web, against: DeviceType.web)).to(beTrue())
                 expect(self.test(value: mobile, against: DeviceType.mobile)).to(beTrue())
                 expect(self.test(value: tablet, against: DeviceType.tablet)).to(beTrue())
                 expect(self.test(value: appleTv, against: DeviceType.appleTv)).to(beTrue())
-                expect(self.test(value: smartTv, against: DeviceType.smartTv)).to(beTrue())
-                expect(self.test(value: console, against: DeviceType.console)).to(beTrue())
-                expect(self.test(value: stb, against: DeviceType.stb)).to(beTrue())
                 expect(self.test(value: other, against: DeviceType.other(string: "Unkown or new type"))).to(beTrue())
                 expect(self.test(value: other, against: DeviceType.other(string: "Not Matching"))).to(beFalse())
                 
@@ -79,13 +75,9 @@ class DeviceRightsSpec: QuickSpec {
     
     func test(value: DeviceType, against: DeviceType) -> Bool {
         switch (value, against) {
-        case (.web, .web): return true
         case (.mobile, .mobile): return true
         case (.tablet, .tablet): return true
         case (.appleTv, .appleTv): return true
-        case (.smartTv, .smartTv): return true
-        case (.console, .console): return true
-        case (.stb, .stb): return true
         case (.other(let first), .other(let second)): return first == second
         default: return false
         }

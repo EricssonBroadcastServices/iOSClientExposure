@@ -195,6 +195,7 @@
 		76B04F2E1FBADDFE007011E6 /* FetchAllRatings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F2D1FBADDFE007011E6 /* FetchAllRatings.swift */; };
 		76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */; };
 		76B305D51F5E855100EF2567 /* UPGRADE_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */; };
+		76BAF3A42015FF3300E48206 /* ProgramServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */; };
 		76BBFB761EA8C039001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB751EA8C039001DBDDB /* Cartfile.resolved */; };
 		76BBFB781EA8C11B001DBDDB /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFB771EA8C11B001DBDDB /* Quick.framework */; };
 		76BBFB7A1EA8C11F001DBDDB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76BBFB791EA8C11F001DBDDB /* Nimble.framework */; };
@@ -428,6 +429,7 @@
 		76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = SOURCE_ROOT; };
 		76B305D61F5E924D00EF2567 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../iOSClientPlayer/LICENSE; sourceTree = "<group>"; };
+		76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramServiceSpec.swift; sourceTree = "<group>"; };
 		76BBFB751EA8C039001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76BBFB771EA8C11B001DBDDB /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = "Carthage/Checkouts/Quick/build/Debug-iphoneos/Quick.framework"; sourceTree = "<group>"; };
 		76BBFB791EA8C11F001DBDDB /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = "Carthage/Checkouts/Nimble/build/Debug-iphoneos/Nimble.framework"; sourceTree = "<group>"; };
@@ -956,6 +958,7 @@
 				7672F2591F93A2CE00F892C3 /* Search */,
 				76B04F231FBACAF4007011E6 /* Rating */,
 				76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */,
+				76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -1531,6 +1534,7 @@
 				7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */,
 				7646D6801EF00A6B009E5C2B /* DeviceInfoSpec.swift in Sources */,
 				766338661F78FEB700D66160 /* ValidateDownloadSpec.swift in Sources */,
+				76BAF3A42015FF3300E48206 /* ProgramServiceSpec.swift in Sources */,
 				76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
