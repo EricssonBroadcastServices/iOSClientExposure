@@ -8,17 +8,13 @@
 
 import Foundation
 import Player
-#if DEBUG
 
-#else
-
-#endif
 // MARK: - Timeshift
 extension Player where Tech == HLSNative<ExposureContext> {
+    #if DEBUG
     /// Specifies the timeshift delay *in seconds* associated with the current `MediaSource` (if available).
     ///
     /// - note: Requires a *Unified Packager* sourced stream.
-    #if DEBUG
     public var timeshiftDelay: Int64? {
         get {
             return tech.currentSource?.timeshiftDelay
@@ -28,19 +24,19 @@ extension Player where Tech == HLSNative<ExposureContext> {
             guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else { return }
             
             currentSource.timeshiftDelay = newValue
-            print(#function,currentSource.url)
+            
             let tempDelta = (playheadTime ?? Date().millisecondsSince1970) - (timeshiftDelay ?? 0) * 1000
             context.programService?.isEntitled(toPlay: tempDelta)
             tech.reloadSource()
         }
     }
-    #else
-    public var timeshiftDelay: Int64? {
-        return tech.currentSource?.timeshiftDelay
-    }
-    #endif
     
     public var dvrWindowLength: Int64? {
         return tech.currentSource?.dvrWindowLength
+    }
+    #endif
+    
+    public var tParameter: (Int64, Int64?)? {
+        return tech.currentSource?.tParam
     }
 }

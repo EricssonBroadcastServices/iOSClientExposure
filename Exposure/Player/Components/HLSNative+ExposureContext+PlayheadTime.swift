@@ -13,6 +13,13 @@ import Player
 extension Player where Tech == HLSNative<ExposureContext> {
     
     public var timeBehindLive: Int64? {
+        if let currentProgramStart = currentProgram?.startDate, let tParam = tech.currentSource?.tParam?.0 {
+            let tStart = Date(milliseconds: tParam)
+            
+            let timeFormatter = DateFormatter()
+            timeFormatter.dateFormat = "HH:mm:ss"
+            print("PROGRAM",timeFormatter.string(from: currentProgramStart),"| T",timeFormatter.string(from: tStart))
+        }
         if let last = seekableTimeRange.last?.1, let serverTime = serverTime {
             print("timeBehindLive",(last-serverTime)/1000)
             return last-serverTime

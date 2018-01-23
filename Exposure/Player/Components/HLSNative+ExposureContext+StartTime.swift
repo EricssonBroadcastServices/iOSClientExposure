@@ -9,52 +9,152 @@
 import Foundation
 import Player
 
-public struct PlaybackProperties {
-    
-    /// When autoplay is enabled, playback will resume as soon as the stream is loaded and prepared.
-    public let autoplay: Bool
-    
-    /// `true` if playback should start from the bookmarked position (if available) or the default position if `false`.
-    ///
-    /// The default behaviour when bookmarks are disabled depends on the type of playback action taken.
-    public let useBookmarks: Bool
-    
-    
-    public init(autoplay: Bool = true, useBookmarks: Bool = true) {
-        self.autoplay = autoplay
-        self.useBookmarks = useBookmarks
-    }
-}
-
 // MARK: - StartTime
 extension Player where Tech == HLSNative<ExposureContext> {
     internal func handleStartTime(source: ExposureSource, assetIdentifier: AssetIdentifier) {
-        let useBookmarks = context.playbackProperties.useBookmarks
         switch assetIdentifier {
-        case .vod(assetId: _):
-            let offset = useBookmarks ? source.entitlement.lastViewedOffset : nil
-            tech.startOffset(atPosition: offset != nil ? Int64(offset!) : nil)
-        case .live(channelId: _):
-            if source.isUnifiedPackager {
-                let offset = useBookmarks ? source.entitlement.liveTime : nil
-                tech.startOffset(atTime: offset != nil ? Int64(offset!) : nil)
+        case .live(channelId: _): liveStartTime(source: source)
+        case .program(programId: _, channelId: _): programStartTime(source: source)
+        case .vod(assetId: _): vodStarTime(source: source)
+        default: return
+        }
+    }
+    
+    private static let segmentLength: Int64 = 6000
+    private func vodStarTime(source: ExposureSource) {
+        switch context.playbackProperties.playFrom {
+        case .defaultBehaviour:
+            defaultVodStartTime(source: source)
+        case .beginning:
+            // Start from offset 0
+            tech.startOffset(atPosition: 0)
+        case .bookmark:
+            // Use *EMP* supplied bookmark, else default behaviour (ie nil bookmark)
+            if let offset = source.entitlement.lastViewedOffset {
+                tech.startOffset(atPosition: Int64(offset))
             }
             else {
-                let offset = useBookmarks ? source.entitlement.lastViewedOffset : nil
-                tech.startOffset(atPosition: offset != nil ? Int64(offset!) : nil)
+                defaultVodStartTime(source: source)
             }
-        case .program(programId: _, channelId: _):
+        case .custom(offset: let offset):
+            // Use the custom supplied offset
+            tech.startOffset(atPosition: offset)
+        }
+    }
+    
+    private func defaultVodStartTime(source: ExposureSource) {
+        // Default is to start from the beginning
+        tech.startOffset(atPosition: nil)
+    }
+    
+    private func programStartTime(source: ExposureSource) {
+        switch context.playbackProperties.playFrom {
+        case .defaultBehaviour:
+            defaultProgramStartTime(source: source)
+        case .beginning:
             if source.isUnifiedPackager {
-                let offset = useBookmarks ? source.entitlement.liveTime : nil
-                tech.startOffset(atTime: offset != nil ? Int64(offset!) : nil)
+                // Start from  program start (using a t-param with stream start at program start)
+                tech.startOffset(atPosition: 0 + Player.segmentLength)
             }
             else {
-                let offset = useBookmarks ? source.entitlement.lastViewedOffset : nil
-                tech.startOffset(atPosition: offset != nil ? Int64(offset!) : nil)
+                // Relies on traditional vod manifest
+                tech.startOffset(atPosition: nil)
             }
-        default:
+        case .bookmark:
+            // Use *EMP* supplied bookmark
+            if let offset = source.entitlement.lastViewedOffset {
+                if source.isUnifiedPackager {
+                    tech.startOffset(atPosition: Int64(offset))
+                    // Wallclock timestamp
+//                    tech.startOffset(atTime: Int64(offset))
+                }
+                else {
+                    // 0 based offset
+                    tech.startOffset(atPosition: Int64(offset))
+                }
+            }
+            else {
+                defaultProgramStartTime(source: source)
+            }
+        case .custom(offset: let offset):
+            // Use the custom supplied offset
+            if source.isUnifiedPackager {
+                // Wallclock timestamp
+                tech.startOffset(atTime: offset)
+            }
+            else {
+                // 0 based offset
+                tech.startOffset(atPosition: offset)
+            }
+        }
+    }
+    
+    private func defaultProgramStartTime(source: ExposureSource) {
+        if source.isUnifiedPackager {
+            if source.entitlement.live {
+                // Start from the live edge (relying on live manifest)
+                tech.startOffset(atTime: nil)
+            }
+            else {
+                // Start from program start (using a t-param with stream start at program start)
+                tech.startOffset(atPosition: 0 + Player.segmentLength)
+            }
+        }
+        else {
+            // Default is to start from program start (relying on traditional vod manifest)
             tech.startOffset(atPosition: nil)
         }
     }
     
+    private func liveStartTime(source: ExposureSource) {
+        switch context.playbackProperties.playFrom {
+        case .defaultBehaviour:
+            defaultLiveStartTime(source: source)
+        case .beginning:
+            if source.isUnifiedPackager {
+                // Start from  program start (using a t-param with stream start at program start)
+                tech.startOffset(atPosition: 0 + Player.segmentLength)
+            }
+            else {
+                // Relies on traditional vod manifest
+                tech.startOffset(atPosition: nil)
+            }
+        case .bookmark:
+            // Use *EMP* supplied bookmark
+            if let offset = source.entitlement.lastViewedOffset {
+                if source.isUnifiedPackager {
+                    // Wallclock timestamp
+                    tech.startOffset(atTime: Int64(offset))
+                }
+                else {
+                    // 0 based offset
+                    tech.startOffset(atPosition: Int64(offset))
+                }
+            }
+            else {
+                defaultLiveStartTime(source: source)
+            }
+        case .custom(offset: let offset):
+            // Use the custom supplied offset
+            if source.isUnifiedPackager {
+                // Wallclock timestamp
+                tech.startOffset(atTime: offset)
+            }
+            else {
+                // 0 based offset
+                tech.startOffset(atPosition: offset)
+            }
+        }
+    }
+    
+    private func defaultLiveStartTime(source: ExposureSource) {
+        if source.isUnifiedPackager {
+            // Start from the live edge (relying on live manifest)
+            tech.startOffset(atTime: nil)
+        }
+        else {
+            // Default is to start from  live edge (relying on live manifest)
+            tech.startOffset(atPosition: nil)
+        }
+    }
 }

@@ -63,6 +63,7 @@ extension ExposureSource {
     private enum UnifiedPackageParams: String {
         case dvrWindowLength = "dvr_window_length"
         case timeshift = "time_shift"
+        case tParam = "t"
     }
     
     /// Modifies `PlaybackEntitlement`s `mediaLocator` with any user specified *timeshift delay* and returns an updated manifest `URL` that can be used to reload the source.
@@ -73,6 +74,20 @@ extension ExposureSource {
         case .userSpecified(value: let value):
             return entitlement.mediaLocator.queryParam(key: UnifiedPackageParams.timeshift.rawValue, value: "\(value)") ?? entitlement.mediaLocator
         }
+    }
+    
+    internal var tParam: (Int64, Int64?)? {
+        if let param:String = entitlement
+            .mediaLocator
+            .queryParam(for: UnifiedPackageParams.tParam.rawValue) {
+            let formatter = Program.exposureDateFormatter
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            if let ms = formatter.date(from: param)?.millisecondsSince1970 {
+                return (ms, nil)
+            }
+            return nil
+        }
+        return nil
     }
     
     /// Retrieves the *DVR* window
