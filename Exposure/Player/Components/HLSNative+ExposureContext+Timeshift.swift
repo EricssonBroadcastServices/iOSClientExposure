@@ -16,19 +16,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// - note: Requires a *Unified Packager* sourced stream.
     public var timeshiftDelay: Int64? {
-        get {
-            return tech.currentSource?.timeshiftDelay
-        }
-        set {
-            // TODO: Shouldnt this be limited to playback of *live* entitlements?
-            guard let currentSource = tech.currentSource, currentSource.isUnifiedPackager else { return }
-            
-            currentSource.timeshiftDelay = newValue
-            
-            let tempDelta = (playheadTime ?? Date().millisecondsSince1970) - (timeshiftDelay ?? 0) * 1000
-            context.programService?.isEntitled(toPlay: tempDelta)
-            tech.reloadSource()
-        }
+        return tech.currentSource?.timeshiftDelay
     }
     
     public var dvrWindowLength: Int64? {
@@ -37,6 +25,6 @@ extension Player where Tech == HLSNative<ExposureContext> {
     #endif
     
     public var tParameter: (Int64, Int64?)? {
-        return tech.currentSource?.tParam
+        return tech.currentSource?.tParameter
     }
 }

@@ -21,24 +21,11 @@ public class ExposureSource: MediaSource {
     
     /// Media locator
     public var url: URL {
-        guard isUnifiedPackager else {
-            return entitlement.mediaLocator
-        }
-        return unifiedPackagerUrl
+        return entitlement.mediaLocator
     }
     
     /// Entitlement related to this playback request.
     public let entitlement: PlaybackEntitlement
-    
-    /// Tracks the timeshift setting
-    fileprivate var timeshiftSetting: TimeshiftSetting = .entitlement
-    fileprivate enum TimeshiftSetting {
-        /// Specifies timeshift will be provided by `entitlement`
-        case entitlement
-        
-        /// User action has changed the `entitlement` provided timeshift delay
-        case userSpecified(value: Int64)
-    }
     
     internal init(entitlement: PlaybackEntitlement) {
         self.entitlement = entitlement
@@ -66,17 +53,7 @@ extension ExposureSource {
         case tParam = "t"
     }
     
-    /// Modifies `PlaybackEntitlement`s `mediaLocator` with any user specified *timeshift delay* and returns an updated manifest `URL` that can be used to reload the source.
-    fileprivate var unifiedPackagerUrl: URL {
-        switch timeshiftSetting {
-        case .entitlement:
-            return entitlement.mediaLocator
-        case .userSpecified(value: let value):
-            return entitlement.mediaLocator.queryParam(key: UnifiedPackageParams.timeshift.rawValue, value: "\(value)") ?? entitlement.mediaLocator
-        }
-    }
-    
-    internal var tParam: (Int64, Int64?)? {
+    internal var tParameter: (Int64, Int64?)? {
         if let param:String = entitlement
             .mediaLocator
             .queryParam(for: UnifiedPackageParams.tParam.rawValue) {
@@ -103,24 +80,9 @@ extension ExposureSource {
     ///
     /// - note: Requires a *Unified Packager* sourced stream.
     internal var timeshiftDelay: Int64? {
-        get {
-            switch timeshiftSetting {
-            case .entitlement:
-                return entitlement
-                    .mediaLocator
-                    .queryParam(for: UnifiedPackageParams.timeshift.rawValue)
-            case .userSpecified(value: let value):
-                return value
-            }
-        }
-        set {
-            if let value = newValue {
-                timeshiftSetting = .userSpecified(value: max(0, value))
-            }
-            else {
-                timeshiftSetting = .entitlement
-            }
-        }
+        return entitlement
+            .mediaLocator
+            .queryParam(for: UnifiedPackageParams.timeshift.rawValue)
     }
 }
 
