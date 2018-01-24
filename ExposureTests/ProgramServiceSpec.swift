@@ -14,7 +14,7 @@ import Foundation
 @testable import Exposure
 
 class MockedProgramProvider: ProgramProvider {
-    func program(for channelId: String, start: Int64, end: Int64, programId: String? = nil, assetId: String = "anAssetId") -> Program {
+    func program(for channelId: String, start: Int64, end: Int64, programId: String, assetId: String = "anAssetId") -> Program {
         let currentTime = Date().millisecondsSince1970
         let formatter = Program.exposureDateFormatter
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
@@ -31,14 +31,14 @@ class MockedProgramProvider: ProgramProvider {
         else if channelId == "validationTrigger" {
             if fetchNumber == 0 {
                 fetchNumber += 1
-                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "validationTriggerFirstProgram"),nil)
+                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId" ,assetId: "validationTriggerFirstProgram"),nil)
             }
             else {
-                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "validationTriggerSecondProgram"),nil)
+                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId", assetId: "validationTriggerSecondProgram"),nil)
             }
         }
         else if channelId == "validationTriggerNotEntitled" {
-            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "notEntitledProgram"),nil)
+            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId", assetId: "notEntitledProgram"),nil)
         }
         else if channelId == "noEpgChannel" {
             callback(nil, nil)
@@ -49,17 +49,17 @@ class MockedProgramProvider: ProgramProvider {
         else if channelId == "errorOnProgramValidation" {
             if fetchNumber == 0 {
                 fetchNumber += 1
-                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "errorOnProgramValidationFirstProgram"),nil)
+                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId", assetId: "errorOnProgramValidationFirstProgram"),nil)
             }
             else {
-                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "errorOnProgramValidationSecondProgram"),nil)
+                callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId", assetId: "errorOnProgramValidationSecondProgram"),nil)
             }
         }
         else if channelId == "timestampWithinActiveProgram" {
-            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 30*60*1000, assetId: "timestampWithinActiveProgram"),nil)
+            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 30*60*1000, programId: "programId", assetId: "timestampWithinActiveProgram"),nil)
         }
         else if channelId == "isEntitledNotEntitled" {
-            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, assetId: "isEntitledNotEntitledProgram"),nil)
+            callback(program(for: channelId, start: timestamp - 30*60*1000, end: timestamp + 1000, programId: "programId", assetId: "isEntitledNotEntitledProgram"),nil)
         }
     }
     
@@ -198,7 +198,7 @@ class ProgramServiceSpec: QuickSpec {
 
                     service.startMonitoring()
                     expect(service.currentProgram?.assetId).toEventually(equal("notEntitledProgram"), timeout: 1)
-                    expect(notEntitledMessage).toEventually(equal("NOT_ENTITLED"))
+                    expect(notEntitledMessage).toEventually(equal("NOT_ENTITLED"), timeout: 2)
                     expect(programs.count).toEventually(equal(1))
                     expect(programs.last?.assetId).toEventually(equal(service.currentProgram?.assetId))
                 }

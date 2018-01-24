@@ -59,18 +59,25 @@ class AssetSpec: QuickSpec {
                 expect(result?.userData).toNot(beNil())
             }
             
-            it("should init with partial response") {
-                let json = AssetJSON.missingKeys()
+            it("should init with required keys") {
+                let json = AssetJSON.requiredKeys()
                 let result = json.decode(Asset.self)
                 
                 expect(result).toNot(beNil())
             }
             
-            it("should init with empty response") {
+            it("should not init with missing keys response") {
+                let json = AssetJSON.missingKeys()
+                let result = json.decode(Asset.self)
+                
+                expect(result).to(beNil())
+            }
+            
+            it("should not init with empty response") {
                 let json = AssetJSON.empty()
                 let result = json.decode(Asset.self)
                 
-                expect(result).toNot(beNil())
+                expect(result).to(beNil())
             }
         }
         
@@ -190,6 +197,12 @@ extension AssetSpec {
                 "rating": AssetJSON.rating,
                 "markers": AssetJSON.markers,
                 "userData": AssetJSON.userData
+            ]
+        }
+        
+        static func requiredKeys() -> [String: Codable] {
+            return [
+                "assetId": AssetJSON.assetId
             ]
         }
         

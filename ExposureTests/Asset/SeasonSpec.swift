@@ -102,7 +102,7 @@ extension SeasonSpec {
         static let tvShowId = "QASeriesId_972aa354-428b-45bf-9cd8-04912abdb13a_qwerty"
         static let seasonId = "QASeasonId_43863db1-6c2d-4c44-9872-1c069a94e27a_qwerty"
         static let episodeCount = 3
-        static let episodes = [AssetSpec.AssetJSON.missingKeys()]
+        static let episodes = [AssetSpec.AssetJSON.requiredKeys()]
         static let publishedDate = "2017-05-17T07:36:06Z"
         static let availableDate = "2017-05-17T07:36:06Z"
         static let startYear = 2012

@@ -57,10 +57,10 @@ class ProgramSpec: QuickSpec {
                 expect(result?.blackout).to(beNil())
             }
             
-            it("should init with empty response") {
+            it("should not init with empty response") {
                 let json = ProgramJSON.empty()
                 let result = json.decode(Program.self)
-                expect(result).toNot(beNil())
+                expect(result).to(beNil())
             }
         }
     }
