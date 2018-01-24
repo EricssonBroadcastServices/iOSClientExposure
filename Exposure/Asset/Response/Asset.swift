@@ -16,7 +16,7 @@ public struct Asset {
     public let changed: String?
     
     /// Identifier for the asset
-    public let assetId: String?
+    public let assetId: String
     
     /// Asset type
     public var type: AssetType?
@@ -93,7 +93,7 @@ extension Asset: Codable {
         
         try container.encodeIfPresent(created, forKey: .created)
         try container.encodeIfPresent(changed, forKey: .changed)
-        try container.encodeIfPresent(assetId, forKey: .assetId)
+        try container.encode(assetId, forKey: .assetId)
         try container.encodeIfPresent(type?.queryParam, forKey: .type)
         try container.encodeIfPresent(localized, forKey: .localized)
         try container.encodeIfPresent(tags, forKey: .tags)
@@ -139,7 +139,7 @@ extension Asset: Codable {
 
         created = try container.decodeIfPresent(String.self, forKey: .created)
         changed = try container.decodeIfPresent(String.self, forKey: .changed)
-        assetId = try container.decodeIfPresent(String.self, forKey: .assetId)
+        assetId = try container.decode(String.self, forKey: .assetId)
         type = AssetType(string: try container.decodeIfPresent(String.self, forKey: .type))
         localized = try container.decodeIfPresent([LocalizedData].self, forKey: .localized)
         tags = try container.decodeIfPresent([Tag].self, forKey: .tags)

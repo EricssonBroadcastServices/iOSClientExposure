@@ -90,13 +90,12 @@ extension ProgramService {
             }
             
             if let program = newProgram {
-                guard let assetId = program.assetId else { return }
                 DispatchQueue.main.async { [weak self] in
                     self?.handleProgramChanged(program: program)
                     self?.startValidationTimer(onTimestamp: timestamp, for: program)
                 }
                 
-                self.provider.validate(entitlementFor: assetId, environment: self.environment, sessionToken: self.sessionToken) { validation, error in
+                self.provider.validate(entitlementFor: program.assetId, environment: self.environment, sessionToken: self.sessionToken) { validation, error in
                     print("ProgramService: validate",timestamp,validation?.status)
                     guard let expirationReason = validation?.status else {
                         // We are permissive on validation errors, allow playback to continue.
