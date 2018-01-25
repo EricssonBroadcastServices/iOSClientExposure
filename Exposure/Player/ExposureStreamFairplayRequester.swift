@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import Player
 
+
 /// *Exposure* specific implementation of the `FairplayRequester` protocol for streaming purposes.
 ///
 /// This class handles any *Exposure* related `DRM` validation with regards to *Fairplay*. It is designed to be *plug-and-play* and should require no configuration to use.

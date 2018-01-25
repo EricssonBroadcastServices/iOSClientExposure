@@ -21,7 +21,8 @@ public class ExposureSource: MediaSource {
     
     /// Media locator
     public var url: URL {
-        return entitlement.mediaLocator
+        return URL(string: "https://nl-hvs-dev-cache2.cdn.ebsd.ericsson.net/L24/sbs6/sbs6.isml/live.m3u8")!
+//        return entitlement.mediaLocator
     }
     
     /// Entitlement related to this playback request.
@@ -89,6 +90,7 @@ extension ExposureSource {
 extension ExposureSource: HLSNativeConfigurable {
     public var hlsNativeConfiguration: HLSNativeConfiguration {
         let drmAgent = ExposureStreamFairplayRequester(entitlement: entitlement)
+        let drmAgent = USPFairPlayRequester(entitlement: entitlement)
         return HLSNativeConfiguration(url: url,
                                       playSessionId: entitlement.playSessionId,
                                       drm: drmAgent)
