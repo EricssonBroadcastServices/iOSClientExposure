@@ -89,7 +89,7 @@ extension ExposureSource {
 
 extension ExposureSource: HLSNativeConfigurable {
     public var hlsNativeConfiguration: HLSNativeConfiguration {
-        let drmAgent = ExposureStreamFairplayRequester(entitlement: entitlement)
+//        let drmAgent = ExposureStreamFairplayRequester(entitlement: entitlement)
         let drmAgent = USPFairPlayRequester(entitlement: entitlement)
         return HLSNativeConfiguration(url: url,
                                       playSessionId: entitlement.playSessionId,
