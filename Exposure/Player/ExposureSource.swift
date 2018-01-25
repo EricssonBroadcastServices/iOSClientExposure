@@ -9,6 +9,49 @@
 import Foundation
 import Player
 
+public protocol Playable {
+    var assetId: String { get }
+}
+
+public protocol ProgramPlayable: Playable {
+    var channelId: String { get }
+}
+
+public protocol ChannelPlayable: Playable {
+    
+}
+
+public protocol AssetPlayable: Playable {
+    
+}
+
+public class ProgramSource: ExposureSource {
+    public let playable: ProgramPlayable
+    
+    public init(entitlement: PlaybackEntitlement, playable: ProgramPlayable) {
+        self.playable = playable
+        super.init(entitlement: entitlement)
+    }
+}
+
+public class ChannelSource: ExposureSource {
+    public let playable: ChannelPlayable
+    
+    public init(entitlement: PlaybackEntitlement, playable: ChannelPlayable) {
+        self.playable = playable
+        super.init(entitlement: entitlement)
+    }
+}
+
+public class AssetSource: ExposureSource {
+    public let playable: AssetPlayable
+    
+    public init(entitlement: PlaybackEntitlement, playable: AssetPlayable) {
+        self.playable = playable
+        super.init(entitlement: entitlement)
+    }
+}
+
 /// `MediaSource` object defining the response from a successful playback request in the `ExposureContext`
 public class ExposureSource: MediaSource {
     /// Connector used to process Analytics Events
