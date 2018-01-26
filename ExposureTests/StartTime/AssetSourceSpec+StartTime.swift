@@ -1,5 +1,5 @@
 //
-//  HLSNative+ExposureContext+StartTime.swift
+//  AssetSourceSpec+StartTime.swift
 //  ExposureTests
 //
 //  Created by Fredrik Sjöberg on 2018-01-26.
@@ -12,10 +12,9 @@ import Player
 
 @testable import Exposure
 
-class HLSNativeStartTimeSpec: QuickSpec {
+class AssetSourceStartTimeSpec: QuickSpec {
     override func spec() {
         super.spec()
-        
         
         describe("AssetSource") {
             let environment = Environment(baseUrl: "url", customer: "customer", businessUnit: "businessUnit")
@@ -284,3 +283,4 @@ class HLSNativeStartTimeSpec: QuickSpec {
         }
     }
 }
+
