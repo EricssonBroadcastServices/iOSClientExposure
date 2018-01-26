@@ -43,7 +43,7 @@ class FetchAssetListSpec: QuickSpec {
                     .exclude(fields: ["notUsed"])
                     .filter(onlyPublished: true)
                     .show(page: 1, spanning: 10)
-                    .filter(on: .episode)
+                    .filter(on: "EPISODE")
                     .filter(on: .mobile)
                     .sort(on: "test")
                     .elasticSearch(query: "type:(TV_CHANNEL MOVIE)")
