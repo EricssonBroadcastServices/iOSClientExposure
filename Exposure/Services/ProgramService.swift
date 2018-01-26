@@ -13,6 +13,10 @@ internal protocol ProgramProvider {
     func validate(entitlementFor assetId: String, environment: Environment, sessionToken: SessionToken, callback: @escaping (EntitlementValidation?, ExposureError?) -> Void)
 }
 
+public protocol ProgramServiceEnabled {
+    var programServiceChannelId: String { get }
+}
+
 internal class ProgramService {
     /// `Environment` to use when requesting program data
     fileprivate var environment: Environment

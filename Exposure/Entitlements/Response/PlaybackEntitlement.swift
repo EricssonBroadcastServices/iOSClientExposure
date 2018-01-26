@@ -41,9 +41,6 @@ public struct PlaybackEntitlement: Codable {
     /// Play token to use for either PlayReady or MRR. Will be empty if the asset is unencrypted.
     public let playToken: String?
     
-    /// The EDRM specific configuration. Will be empty if the status is not SUCCESS.
-    public let edrm: EDRMConfiguration?
-    
     /// The Fairplay specific configuration. Will be empty if the status is not SUCCESS or nor Fairplay configurations.
     public let fairplay: FairplayConfiguration?
     
@@ -116,7 +113,6 @@ extension PlaybackEntitlement {
         
         // Optional
         playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
-        edrm = try container.decodeIfPresent(EDRMConfiguration.self, forKey: .edrm)
         fairplay = try container.decodeIfPresent(FairplayConfiguration.self, forKey: .fairplay)
         
         licenseExpiration = try container.decodeIfPresent(String.self, forKey: .licenseExpiration)
@@ -150,7 +146,6 @@ extension PlaybackEntitlement {
         try container.encode(airplayBlocked, forKey: .airplayBlocked)
         
         try container.encodeIfPresent(playToken, forKey: .playToken)
-        try container.encodeIfPresent(edrm, forKey: .edrm)
         try container.encodeIfPresent(fairplay, forKey: .fairplay)
         
         try container.encodeIfPresent(licenseExpiration, forKey: .licenseExpiration)
@@ -172,7 +167,6 @@ extension PlaybackEntitlement {
     
     internal enum CodingKeys: String, CodingKey {
         case playToken
-        case edrm = "edrmConfig"
         case fairplay = "fairplayConfig"
         case mediaLocator
         case licenseExpiration
