@@ -209,6 +209,7 @@
 		76CD3538201B68BA00255003 /* ProgramPlayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3537201B68BA00255003 /* ProgramPlayable.swift */; };
 		76CD353B201B68E600255003 /* ChannelPlayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD353A201B68E600255003 /* ChannelPlayable.swift */; };
 		76CD353D201B68F500255003 /* AssetPlayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD353C201B68F500255003 /* AssetPlayable.swift */; };
+		76CD353F201B69A700255003 /* HLSNative+ExposureContext+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD353E201B69A700255003 /* HLSNative+ExposureContext+StartTime.swift */; };
 		76D257E62004CF2F007FDB56 /* MonotonicTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257E52004CF2F007FDB56 /* MonotonicTimeService.swift */; };
 		76D257E92004CFBA007FDB56 /* ServerTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257E82004CFBA007FDB56 /* ServerTimeProvider.swift */; };
 		76D257EB2005EFE2007FDB56 /* HLSNative+ExposureContext+WallclockTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+WallclockTime.swift */; };
@@ -450,6 +451,7 @@
 		76CD3537201B68BA00255003 /* ProgramPlayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramPlayable.swift; sourceTree = "<group>"; };
 		76CD353A201B68E600255003 /* ChannelPlayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelPlayable.swift; sourceTree = "<group>"; };
 		76CD353C201B68F500255003 /* AssetPlayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPlayable.swift; sourceTree = "<group>"; };
+		76CD353E201B69A700255003 /* HLSNative+ExposureContext+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+StartTime.swift"; sourceTree = "<group>"; };
 		76D257E52004CF2F007FDB56 /* MonotonicTimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeService.swift; sourceTree = "<group>"; };
 		76D257E82004CFBA007FDB56 /* ServerTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTimeProvider.swift; sourceTree = "<group>"; };
 		76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+WallclockTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+WallclockTime.swift"; sourceTree = "<group>"; };
@@ -963,6 +965,7 @@
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
+				76CD353E201B69A700255003 /* HLSNative+ExposureContext+StartTime.swift */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
 				769734B41EF26CF500F6ADC8 /* Epg */,
@@ -1516,6 +1519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76CD353F201B69A700255003 /* HLSNative+ExposureContext+StartTime.swift in Sources */,
 				3E9409B21F862F2800253602 /* CustomerConfigSpec.swift in Sources */,
 				769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */,
 				7646D68A1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift in Sources */,
