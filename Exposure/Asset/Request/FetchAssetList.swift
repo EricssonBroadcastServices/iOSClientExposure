@@ -93,7 +93,7 @@ public struct FetchAssetList: ExposureType, FilteredFields, FilteredPublish, Pag
         }
         
         if let assetType = internalQuery.assetType {
-            params[Keys.assetType.rawValue] = assetType.queryParam
+            params[Keys.assetType.rawValue] = assetType
         }
         
         if let sort = sortDescription.descriptors {
@@ -129,14 +129,12 @@ public struct FetchAssetList: ExposureType, FilteredFields, FilteredPublish, Pag
 
 // MARK: - Query
 extension FetchAssetList {
-    public typealias AssetType = Asset.AssetType
-    
     // MARK: AssetType
-    public var assetType: AssetType? {
+    public var assetType: String? {
         return internalQuery.assetType
     }
     
-    public func filter(on assetType: AssetType) -> FetchAssetList {
+    public func filter(on assetType: String) -> FetchAssetList {
         var old = self
         old.internalQuery = Query(previous: internalQuery, assetType: assetType)
         return old
@@ -170,18 +168,18 @@ extension FetchAssetList {
 // MARK: - Internal Query
 extension FetchAssetList {
     internal struct Query {
-        internal let assetType: AssetType?
+        internal let assetType: String?
         
         internal let deviceQuery: String?
         internal let publicationQuery: String?
         
-        internal init(assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
+        internal init(assetType: String? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
             self.assetType = assetType
             self.deviceQuery = deviceQuery
             self.publicationQuery = publicationQuery
         }
         
-        internal init(previous: Query, assetType: AssetType? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
+        internal init(previous: Query, assetType: String? = nil, deviceQuery: String? = nil, publicationQuery: String? = nil) {
             self.assetType = assetType ?? previous.assetType
             self.deviceQuery = deviceQuery ?? previous.deviceQuery
             self.publicationQuery = publicationQuery ?? previous.publicationQuery

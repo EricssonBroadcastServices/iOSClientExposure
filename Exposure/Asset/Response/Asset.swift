@@ -19,7 +19,7 @@ public struct Asset {
     public let assetId: String
     
     /// Asset type
-    public var type: AssetType?
+    public var type: String?
     
     /// Localization data
     public let localized: [LocalizedData]?
@@ -94,7 +94,7 @@ extension Asset: Codable {
         try container.encodeIfPresent(created, forKey: .created)
         try container.encodeIfPresent(changed, forKey: .changed)
         try container.encode(assetId, forKey: .assetId)
-        try container.encodeIfPresent(type?.queryParam, forKey: .type)
+        try container.encodeIfPresent(type, forKey: .type)
         try container.encodeIfPresent(localized, forKey: .localized)
         try container.encodeIfPresent(tags, forKey: .tags)
         try container.encodeIfPresent(publications, forKey: .publications)
@@ -140,7 +140,7 @@ extension Asset: Codable {
         created = try container.decodeIfPresent(String.self, forKey: .created)
         changed = try container.decodeIfPresent(String.self, forKey: .changed)
         assetId = try container.decode(String.self, forKey: .assetId)
-        type = AssetType(string: try container.decodeIfPresent(String.self, forKey: .type))
+        type = try container.decodeIfPresent(String.self, forKey: .type)
         localized = try container.decodeIfPresent([LocalizedData].self, forKey: .localized)
         tags = try container.decodeIfPresent([Tag].self, forKey: .tags)
         publications = try container.decodeIfPresent([Publication].self, forKey: .publications)
@@ -213,61 +213,5 @@ extension Asset: Codable {
         case rating
         case markers
         case userData
-    }
-}
-
-extension Asset {
-    public enum AssetType: Equatable, Hashable {
-        case movie
-        case tvShow
-        case episode
-        case clip
-        case tvChannel
-        case ad
-        case liveEvent
-        case other(type: String)
-        
-        internal init?(string: String?) {
-            guard let value = string else { return nil }
-            self = AssetType(string: value)
-        }
-        
-        internal init(string: String) {
-            switch string {
-            case "MOVIE": self = .movie
-            case "TV_SHOW": self = .tvShow
-            case "EPISODE": self = .episode
-            case "CLIP": self = .clip
-            case "TV_CHANNEL": self = .tvChannel
-            case "AD": self = .ad
-            case "LIVE_EVENT": self = .liveEvent
-            case "OTHER": self = .other(type: string)
-            default: self = .other(type: string)
-            }
-        }
-        
-        internal var queryParam: String {
-            switch self {
-            case .movie: return "MOVIE"
-            case .tvShow: return "TV_SHOW"
-            case .episode: return "EPISODE"
-            case .clip: return "CLIP"
-            case .tvChannel: return "TV_CHANNEL"
-            case .ad: return "AD"
-            case .liveEvent: return "LIVE_EVENT"
-            case .other(type: _): return "OTHER"
-            }
-        }
-        
-        public static func == (lhs: AssetType, rhs: AssetType) -> Bool {
-            return lhs.hashValue == rhs.hashValue
-        }
-        
-        public var hashValue: Int {
-            switch self {
-            case .other(type: let value): return (queryParam+"_"+value).hashValue
-            default: return queryParam.hashValue
-            }
-        }
     }
 }

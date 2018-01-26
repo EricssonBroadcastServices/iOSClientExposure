@@ -7,8 +7,11 @@
 //
 
 import Foundation
-
 import Player
+
+extension HLSNative where Context == ExposureContext {
+    
+}
 
 // MARK: - Wallclock Time
 extension Player where Tech == HLSNative<ExposureContext> {

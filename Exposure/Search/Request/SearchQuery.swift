@@ -79,9 +79,7 @@ public struct SearchQuery: ExposureType, FilteredLocale, SortedResponse, Pageabl
         }
         
         if let types = internalQuery.types {
-            params[Keys.types.rawValue] = types
-                .map{ $0.queryParam }
-                .joined(separator: ",")
+            params[Keys.types.rawValue] = types.joined(separator: ",")
         }
         
         if let locale = localeFilter.specifiedLocale {
@@ -100,14 +98,12 @@ public struct SearchQuery: ExposureType, FilteredLocale, SortedResponse, Pageabl
 }
 
 extension SearchQuery {
-    public typealias AssetType = Asset.AssetType
-    
     // MARK: AssetType
-    public var types: [AssetType]? {
+    public var types: [String]? {
         return internalQuery.types
     }
     
-    public func filter(on assetTypes: [AssetType]?) -> SearchQuery {
+    public func filter(on assetTypes: [String]?) -> SearchQuery {
         var old = self
         old.internalQuery = Query(types: assetTypes)
         return old
@@ -116,8 +112,8 @@ extension SearchQuery {
 
 extension SearchQuery {
     internal struct Query {
-        internal let types: [AssetType]?
-        internal init(types: [AssetType]? = nil) {
+        internal let types: [String]?
+        internal init(types: [String]? = nil) {
             self.types = types
         }
     }
