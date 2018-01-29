@@ -24,7 +24,7 @@ internal class ProgramService {
     fileprivate var sessionToken: SessionToken
     
     /// The channel to monitor
-    fileprivate let channelId: String
+    internal let channelId: String
     
     /// Queue where `timer` runs
     fileprivate let queue: DispatchQueue
@@ -153,13 +153,16 @@ extension ProgramService {
         timer?.cancel()
     }
     
-    internal func isEntitled(toPlay timestamp: Int64) {
+    internal func isEntitled(toPlay timestamp: Int64, onSuccess: @escaping () -> Void) {
         print("ProgramService: isEntitled",timestamp)
         validate(timestamp: timestamp) { message in
             print("ProgramService: isEntitled.validate",timestamp,message)
-            if let invalidMessage = message {
-                DispatchQueue.main.async { [weak self] in
-                    self?.onNotEntitled(invalidMessage)
+            DispatchQueue.main.async { [weak self] in
+                if let notEntitledMessage = message {
+                    self?.onNotEntitled(notEntitledMessage)
+                }
+                else {
+                    onSuccess()
                 }
             }
         }

@@ -60,6 +60,8 @@ extension Player where Tech == HLSNative<ExposureContext> {
     
     private func handle(source: ExposureSource?, error: ExposureError?, providers: [AnalyticsProvider]) {
         if let source = source {
+            context.onEntitlementResponse(source.entitlement, source)
+            
             /// Make sure StartTime is configured if specified by user
             source.handleStartTime(for: tech, in: context)
             
@@ -84,6 +86,22 @@ extension Player where Tech == HLSNative<ExposureContext> {
             providers.forEach{ $0.onError(tech: tech, source: nilSource, error: contextError) }
             tech.eventDispatcher.onError(tech, nilSource, contextError)
         }
+    }
+}
+
+// MARK: Entitlement response
+extension Player where Tech == HLSNative<ExposureContext> {
+    
+    /// Sets the callback to fire once an entitlement response is received
+    ///
+    /// - parameter callback: callback to fire once the event is fired.
+    /// - returns: `Self`
+    @discardableResult
+    public func onEntitlementResponse(callback: @escaping (Player<Tech>, ExposureContext.Source, PlaybackEntitlement) -> Void) -> Self {
+        context.onEntitlementResponse = { entitlement, source in
+            callback(self,source,entitlement)
+        }
+        return self
     }
 }
 
