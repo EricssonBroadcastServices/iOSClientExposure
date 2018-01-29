@@ -212,6 +212,7 @@
 		76CD3544201B724800255003 /* ChannelSourceSpec+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */; };
 		76CD3546201F548000255003 /* ContractRestrictionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3545201F548000255003 /* ContractRestrictionsService.swift */; };
 		76CD3548201F604300255003 /* ContractRestrictionsServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3547201F604300255003 /* ContractRestrictionsServiceSpec.swift */; };
+		76CD354A201F63DB00255003 /* ProgramSource+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */; };
 		76D257E62004CF2F007FDB56 /* MonotonicTimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257E52004CF2F007FDB56 /* MonotonicTimeService.swift */; };
 		76D257E92004CFBA007FDB56 /* ServerTimeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257E82004CFBA007FDB56 /* ServerTimeProvider.swift */; };
 		76D257EB2005EFE2007FDB56 /* HLSNative+ExposureContext+ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+ServerTime.swift */; };
@@ -456,6 +457,7 @@
 		76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelSourceSpec+StartTime.swift"; sourceTree = "<group>"; };
 		76CD3545201F548000255003 /* ContractRestrictionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractRestrictionsService.swift; sourceTree = "<group>"; };
 		76CD3547201F604300255003 /* ContractRestrictionsServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractRestrictionsServiceSpec.swift; sourceTree = "<group>"; };
+		76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgramSource+StartTime.swift"; sourceTree = "<group>"; };
 		76D257E52004CF2F007FDB56 /* MonotonicTimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeService.swift; sourceTree = "<group>"; };
 		76D257E82004CFBA007FDB56 /* ServerTimeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerTimeProvider.swift; sourceTree = "<group>"; };
 		76D257EA2005EFE2007FDB56 /* HLSNative+ExposureContext+ServerTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HLSNative+ExposureContext+ServerTime.swift"; sourceTree = "<group>"; };
@@ -1183,6 +1185,7 @@
 			children = (
 				76CD3541201B721C00255003 /* AssetSourceSpec+StartTime.swift */,
 				76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */,
+				76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */,
 			);
 			path = StartTime;
 			sourceTree = "<group>";
@@ -1562,6 +1565,7 @@
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
 				7672F25D1F93A3D800F892C3 /* SearchQuerySpec.swift in Sources */,
+				76CD354A201F63DB00255003 /* ProgramSource+StartTime.swift in Sources */,
 				3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */,
 				764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */,
 				7672F2671F93A9E700F892C3 /* SearchResponseListSpec.swift in Sources */,
