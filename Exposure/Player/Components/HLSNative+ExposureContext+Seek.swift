@@ -12,6 +12,19 @@ import AVFoundation
 
 extension CMTime {
     public var milliseconds: Int64 {
+        guard isValid else {
+//            kCMTimeFlags_Valid Must be set, or the CMTime is considered invalid.
+//            Allows simple clearing (eg. with calloc or memset) for initialization
+//                of arrays of CMTime structs to "invalid". This flag must be set, even
+//            if other flags are set as well.
+//            @constant    kCMTimeFlags_HasBeenRounded Set whenever a CMTime value is rounded, or is derived from another rounded CMTime.
+//            @constant    kCMTimeFlags_PositiveInfinity Set if the CMTime is +inf.    "Implied value" flag (other struct fields are ignored).
+//            @constant    kCMTimeFlags_NegativeInfinity Set if the CMTime is -inf.    "Implied value" flag (other struct fields are ignored).
+//            @constant    kCMTimeFlags_Indefinite Set if the CMTime is indefinite/unknown. Example of usage: duration of a live broadcast.
+//            "Implied value" flag (other struct fields are ignored)
+            fatalError("Invalid CMTime")
+            return 0
+        }
         return Int64(seconds*1000)
     }
     
@@ -43,10 +56,12 @@ extension Player where Tech == HLSNative<ExposureContext> {
             let first = ranges.first!.start.milliseconds
             let last = ranges.first!.end.milliseconds
             if timeInterval < first {
+                print("timeInterval < first")
                 // Before seekable range, new entitlement request required
                 handleProgramServiceBasedSeek(timestamp: timeInterval)
             }
             else if timeInterval > last {
+                print("timeInterval > last")
                 // After seekable range. If this is a live manifest, we asume the intention is to find the livepoint. Ignore other seeks
                 if let programService = context.programService {
                     // TODO: Should always be possible to "GO-LIVE"
@@ -56,6 +71,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
                 }
             }
             else {
+                print("Within bounds")
                 // Within bounds
                 guard let source = tech.currentSource else { return }
                 guard context.contractRestrictionsService.canSeek(from: playheadPosition, to: timeInterval, using: source.entitlement) else { return }
@@ -114,6 +130,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     }
     
     internal func handleProgramServiceBasedSeek(timestamp: Int64) {
+        print("handleProgramServiceBasedSeek")
         guard let programService = context.programService else {
             // TODO: What happens then?
             return
@@ -123,6 +140,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
             guard let `self` = self else { return }
             if let program = program {
                 let properties = PlaybackProperties(autoplay: self.context.playbackProperties.autoplay, playFrom: PlaybackProperties.PlayFrom.custom(offset: timestamp))
+                print("handleProgramServiceBasedSeek startPlayback")
                 self.startPlayback(channelId: programService.channelId, programId: program.assetId, properties: properties)
             }
             
