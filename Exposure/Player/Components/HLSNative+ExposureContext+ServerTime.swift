@@ -1,5 +1,5 @@
 //
-//  HLSNative+ExposureContext+WallclockTime.swift
+//  HLSNative+ExposureContext+ServerTime.swift
 //  Exposure
 //
 //  Created by Fredrik Sjöberg on 2018-01-10.
@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 import Player
 
 // MARK: - Wallclock Time

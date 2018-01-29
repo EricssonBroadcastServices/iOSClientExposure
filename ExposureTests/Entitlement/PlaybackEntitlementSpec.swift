@@ -15,12 +15,6 @@ class PlaybackEntitlementSpec: QuickSpec {
     override func spec() {
         super.spec()
         
-        let edrmJson:[String: Codable] = [
-            "ownerId":"owner",
-            "userToken":"userToken",
-            "requestUrl":"requestUrl",
-            "adParameter":"adParameter"
-        ]
         let fairplayJson:[String: Codable] = [
             "secondaryMediaLocator":"secondaryMediaLocator",
             "certificateUrl":"certificateUrl",
@@ -28,7 +22,6 @@ class PlaybackEntitlementSpec: QuickSpec {
         ]
         let json:[String: Codable] = [
             "playToken":"playToken",
-            "edrmConfig":edrmJson,
             "fairplayConfig":fairplayJson,
             "mediaLocator":"mediaLocator",
             "licenseExpiration":"licenseExpiration",
@@ -47,11 +40,12 @@ class PlaybackEntitlementSpec: QuickSpec {
             "airplayBlocked":false,
             "mdnRequestRouterUrl":"mdnRequestRouterUrl",
             "lastViewedOffset":10,
+            "lastViewedTime":10,
+            "liveTime":10,
             "productId":"productId"
         ]
         
         let requiredJson:[String: Codable] = [
-            "playToken":"playToken",
             "mediaLocator":"mediaLocator",
             "playTokenExpiration":"playTokenExpiration",
             "playSessionId":"playSessionId",
@@ -85,18 +79,47 @@ class PlaybackEntitlementSpec: QuickSpec {
                     .to(throwError(errorType: DecodingError.self))
             }
             
-            it("should not create invalid EDRMConfiguration") {
-                let result = requiredJson.decode(PlaybackEntitlement.self)
-                
-                expect(result).toNot(beNil())
-                expect(result?.edrm).to(beNil())
-            }
-            
             it("should not create invalid FairplayConfiguration") {
                 let result = requiredJson.decode(PlaybackEntitlement.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.fairplay).to(beNil())
+            }
+            
+            it("Should encode and decode properly") {
+                let entitlement = json.decode(PlaybackEntitlement.self)
+                expect(entitlement).toNot(beNil())
+                
+                let encoded = try? JSONEncoder().encode(entitlement!)
+                expect(encoded).toNot(beNil())
+                
+                let decoded = try? JSONDecoder().decode(PlaybackEntitlement.self, from: encoded!)
+                expect(decoded).toNot(beNil())
+                
+                expect(decoded!.playTokenExpiration).to(equal(entitlement!.playTokenExpiration))
+                expect(decoded!.mediaLocator).to(equal(entitlement!.mediaLocator))
+                expect(decoded!.playSessionId).to(equal(entitlement!.playSessionId))
+                expect(decoded!.live).to(equal(entitlement!.live))
+                expect(decoded!.ffEnabled).to(equal(entitlement!.ffEnabled))
+                expect(decoded!.timeshiftEnabled).to(equal(entitlement!.timeshiftEnabled))
+                expect(decoded!.rwEnabled).to(equal(entitlement!.rwEnabled))
+                expect(decoded!.airplayBlocked).to(equal(entitlement!.airplayBlocked))
+                expect(decoded!.playToken).to(equal(entitlement!.playToken))
+                expect(decoded!.fairplay?.secondaryMediaLocator).to(equal(entitlement!.fairplay?.secondaryMediaLocator))
+                expect(decoded!.fairplay?.certificateUrl).to(equal(entitlement!.fairplay?.certificateUrl))
+                expect(decoded!.fairplay?.licenseAcquisitionUrl).to(equal(entitlement!.fairplay?.licenseAcquisitionUrl))
+                expect(decoded!.licenseExpiration).to(equal(entitlement!.licenseExpiration))
+                expect(decoded!.licenseExpirationReason).to(equal(entitlement!.licenseExpirationReason))
+                expect(decoded!.licenseActivation).to(equal(entitlement!.licenseActivation))
+                expect(decoded!.entitlementType).to(equal(entitlement!.entitlementType))
+                expect(decoded!.minBitrate).to(equal(entitlement!.minBitrate))
+                expect(decoded!.maxBitrate).to(equal(entitlement!.maxBitrate))
+                expect(decoded!.maxResHeight).to(equal(entitlement!.maxResHeight))
+                expect(decoded!.mdnRequestRouterUrl).to(equal(entitlement!.mdnRequestRouterUrl))
+                expect(decoded!.lastViewedOffset).to(equal(entitlement!.lastViewedOffset))
+                expect(decoded!.lastViewedTime).to(equal(entitlement!.lastViewedTime))
+                expect(decoded!.liveTime).to(equal(entitlement!.liveTime))
+                expect(decoded!.productId).to(equal(entitlement!.productId))
             }
         }
     }

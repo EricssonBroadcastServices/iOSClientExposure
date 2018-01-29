@@ -11,6 +11,8 @@ import Player
 
 /// `MediaSource` object defining the response from a successful playback request in the `ExposureContext`
 public class ExposureSource: MediaSource {
+    internal static let segmentLength: Int64 = 6000
+    
     /// Connector used to process Analytics Events
     public var analyticsConnector: AnalyticsConnector = PassThroughConnector()
     
@@ -27,12 +29,20 @@ public class ExposureSource: MediaSource {
     /// Entitlement related to this playback request.
     public let entitlement: PlaybackEntitlement
     
-    internal init(entitlement: PlaybackEntitlement) {
+    /// *EMP* assetId
+    public let assetId: String
+    
+    public init(entitlement: PlaybackEntitlement, assetId: String) {
         self.entitlement = entitlement
+        self.assetId = assetId
     }
     
     deinit {
         print("ExposureSource deinit")
+    }
+    
+    internal func handleStartTime(for tech: HLSNative<ExposureContext>, in context: ExposureContext) {
+        
     }
 }
 

@@ -37,6 +37,9 @@ public class ExposureContext: MediaContext {
     /// Tracks the internal programChanged callback
     internal var onProgramChanged: (Program?, Source) -> Void = { _,_ in }
     
+    /// Tracks the internal entitlementResponse callback
+    internal var onEntitlementResponse: (PlaybackEntitlement, Source) -> Void = { _,_ in }
+    
     internal var playbackProperties: PlaybackProperties = PlaybackProperties()
     
     public init(environment: Environment, sessionToken: SessionToken) {
@@ -49,101 +52,3 @@ public class ExposureContext: MediaContext {
         print("ExposureContext deinit")
     }
 }
-
-extension ExposureContext {
-    /// Helper method producing an `ExposureSource` for *vod* playback using the supplied assetId.
-    ///
-    /// - parameter assetId: *EMP* asset identifier for the *vod* asset
-    /// - parameter callback: Closure called on request completion
-    internal func request(vod assetId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
-        Entitlement(environment: environment,
-                    sessionToken: sessionToken)
-            .vod(assetId: assetId)
-            .request()
-            .validate()
-            .response{ [weak self] in
-                self?.handle(response: $0, callback: callback)
-        }
-    }
-    
-    /// Helper method producing an `ExposureSource` for *live* playback using the supplied assetId.
-    ///
-    /// - parameter channelId: *EMP* asset identifier for the *live* asset
-    /// - parameter callback: Closure called on request completion
-    internal func request(live channelId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
-        let entitlement = Entitlement(environment: environment,
-                                      sessionToken: sessionToken)
-            .live(channelId: channelId)
-        
-        entitlement
-            .request()
-            .validate()
-            .response{ [weak self] in
-                if let error = $0.error {
-                    // Workaround until EMP-10023 is fixed
-                    if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NO_MEDIA_ON_CHANNEL") {
-                        entitlement
-                            .use(drm: .unencrypted)
-                            .request()
-                            .validate()
-                            .response{ [weak self] in
-                                self?.handle(response: $0, callback: callback)
-                        }
-                    }
-                    else {
-                        callback(nil,error)
-                    }
-                }
-                else if let entitlement = $0.value {
-                    callback(ExposureSource(entitlement: entitlement), nil)
-                }
-        }
-    }
-    
-    /// Helper method producing an `ExposureSource` for *program* playback using the supplied assetId.
-    ///
-    /// - parameter programId: *EMP* asset identifier for the program on the specified channel
-    /// - parameter channelId: *EMP* asset identifier for the channel
-    /// - parameter callback: Closure called on request completion
-    internal func request(program programId: String, channelId: String, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
-        let entitlement = Entitlement(environment: environment,
-                                      sessionToken: sessionToken)
-            .program(programId: programId,
-                     channelId: channelId)
-        
-        entitlement
-            .request()
-            .validate()
-            .response{ [weak self] in
-                if let error = $0.error {
-                    // Workaround until EMP-10023 is fixed
-                    if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 403 && reason.message == "NO_MEDIA_FOR_PROGRAM") {
-                        entitlement
-                            .use(drm: .unencrypted)
-                            .request()
-                            .validate()
-                            .response{ [weak self] in
-                                self?.handle(response: $0, callback: callback)
-                        }
-                    }
-                    else {
-                        self?.handle(response: $0, callback: callback)
-                    }
-                }
-                else if let entitlement = $0.value {
-                    self?.handle(response: $0, callback: callback)
-                }
-        }
-    }
-    
-    /// Transforms the response into the requested `MediaSource` if successful, errors otherwise.
-    private func handle(response: ExposureResponse<PlaybackEntitlement>, callback: @escaping (ExposureSource?, ExposureError?) -> Void) {
-        if let entitlement = response.value {
-            callback(ExposureSource(entitlement: entitlement), nil)
-        }
-        else {
-            callback(nil,response.error!)
-        }
-    }
-}
-

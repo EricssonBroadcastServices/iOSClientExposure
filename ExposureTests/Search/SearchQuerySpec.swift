@@ -44,7 +44,7 @@ class SearchQuerySpec: QuickSpec {
                     .use(fieldSet: .all)
                     .include(fields: ["first"])
                     .exclude(fields: ["notUsed"])
-                    .filter(on: [.movie,.clip])
+                    .filter(on: ["MOVIE","CLIP"])
                     .filter(onlyPublished: true)
                     .show(page: 1, spanning: 10)
                     .sort(on: "test")

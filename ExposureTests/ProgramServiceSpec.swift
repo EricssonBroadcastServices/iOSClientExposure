@@ -303,9 +303,13 @@ class ProgramServiceSpec: QuickSpec {
                     
                     service.startMonitoring()
                     
-                    service.isEntitled(toPlay: Date().millisecondsSince1970 + 4000)
+                    var successCalled = false
+                    service.isEntitled(toPlay: Date().millisecondsSince1970 + 4000) { error in
+                        successCalled = true
+                    }
                     
                     expect(notEntitledMessage).toEventually(beNil(), timeout: 3)
+                    expect(successCalled).toEventually(beTrue(), timeout: 3)
                     expect(programs.count).toEventually(equal(1), timeout: 3)
                 }
             }
@@ -332,9 +336,13 @@ class ProgramServiceSpec: QuickSpec {
                 
                 service.startMonitoring()
                 
-                service.isEntitled(toPlay: Date().millisecondsSince1970 + 4000)
+                var successCalled = false
+                service.isEntitled(toPlay: Date().millisecondsSince1970 + 4000) { error in
+                    successCalled = true
+                }
                 
                 expect(notEntitledMessage).toEventually(equal("NOT_ENTITLED"), timeout: 3)
+                expect(successCalled).toEventually(beFalse(), timeout: 3)
                 expect(programs.count).toEventually(equal(1), timeout: 3)
             }
         }

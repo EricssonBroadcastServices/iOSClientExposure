@@ -33,9 +33,3 @@ public struct ExposureResponseMessage: Decodable {
     /// Related error message returned by *Exposure*
     public let message: String
 }
-
-extension ExposureResponseMessage {
-    public var localizedDescription: String {
-        return "Exposure response returned httpCode: [\(httpCode)] with message: \(message)"
-    }
-}

@@ -36,10 +36,10 @@ extension Player where Tech == HLSNative<ExposureContext> {
     /// - parameter callback: callback to fire once the event is fired.
     /// - returns: `Self`
     @discardableResult
-    public func onProgramChanged(callback: @escaping (Tech, ExposureContext.Source, Program?) -> Void) -> Self {
+    public func onProgramChanged(callback: @escaping (Player<Tech>, ExposureContext.Source, Program?) -> Void) -> Self {
         context.onProgramChanged = { [weak self] program, source in
             guard let `self` = self else { return }
-            callback(self.tech, source, program)
+            callback(self, source, program)
         }
         return self
     }
