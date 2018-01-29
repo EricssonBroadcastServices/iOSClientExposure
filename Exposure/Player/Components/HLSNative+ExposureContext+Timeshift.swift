@@ -11,6 +11,12 @@ import Player
 
 // MARK: - Timeshift
 extension Player where Tech == HLSNative<ExposureContext> {
+    public func pause() {
+        guard let source = tech.currentSource else { return }
+        guard context.contractRestrictionsService.canPause(entitlement: source.entitlement) else { return }
+        tech.pause()
+    }
+    
     #if DEBUG
     /// Specifies the timeshift delay *in seconds* associated with the current `MediaSource` (if available).
     ///

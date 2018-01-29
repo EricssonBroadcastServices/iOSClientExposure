@@ -31,8 +31,11 @@ public class ExposureContext: MediaContext {
     /// Service that handles synchronization of local device time with server time
     public let monotonicTimeService: MonotonicTimeService
     
-    /// Service that Manages entitlement validation on currently active program
+    /// Service that manages entitlement validation on currently active program
     internal var programService: ProgramService?
+    
+    /// Service that manages contract restrictions
+    internal let contractRestrictionsService: ContractRestrictionsService
     
     /// Tracks the internal programChanged callback
     internal var onProgramChanged: (Program?, Source) -> Void = { _,_ in }
@@ -46,6 +49,7 @@ public class ExposureContext: MediaContext {
         self.environment = environment
         self.sessionToken = sessionToken
         self.monotonicTimeService = MonotonicTimeService(environment: environment)
+        self.contractRestrictionsService = ContractRestrictionsService()
     }
     
     deinit {

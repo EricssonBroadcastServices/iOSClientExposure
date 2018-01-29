@@ -36,10 +36,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// - parameter timeInterval: target timestamp in unix epoch time (milliseconds)
     public func seek(toTime timeInterval: Int64) {
-        /// 1. Contract Restrictions
-        
-        
-        /// 2. Seekable Range
+        /// Check Seekable Range
         let ranges = seekableTimeRanges
         guard !ranges.isEmpty else { return }
         if ranges.count == 1 {
@@ -60,6 +57,9 @@ extension Player where Tech == HLSNative<ExposureContext> {
             }
             else {
                 // Within bounds
+                guard let source = tech.currentSource else { return }
+                guard context.contractRestrictionsService.canSeek(from: playheadPosition, to: timeInterval, using: source.entitlement) else { return }
+                
                 if let programService = context.programService {
                     programService.isEntitled(toPlay: timeInterval) { [weak self] in
                         self?.tech.seek(toTime: timeInterval)
@@ -81,9 +81,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
     ///
     /// - parameter position: target offset in milliseconds
     public func seek(toPosition position: Int64) {
-        /// 1. Contract Restrictions
-        
-        /// 2. Seekable Range
+        /// Check Seekable Range
         let ranges = seekableRanges
         guard !ranges.isEmpty else { return }
         if ranges.count == 1 {
@@ -97,6 +95,9 @@ extension Player where Tech == HLSNative<ExposureContext> {
             }
             else {
                 // Within bounds
+                guard let source = tech.currentSource else { return }
+                guard context.contractRestrictionsService.canSeek(from: playheadPosition, to: position, using: source.entitlement) else { return }
+                
                 if let programService = context.programService, let timeInterval = timestamp(relatedTo: position) {
                     programService.isEntitled(toPlay: timeInterval) { [weak self] in
                         self?.tech.seek(toTime: timeInterval)

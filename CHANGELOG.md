@@ -14,6 +14,7 @@
 * `EMP-10861` Internal management of *timeshift delay* implemented for `ExposureContext`.
 * Introduced `PlaybackProperties` to manage additional configuration of playback.
 * Added `onEntitlementResponse` callback
+* *fastForward*, *rewind* and *timeshift* contract restrictions enforced.
 
 #### Changes
 * `EMP-10852` API changes to `ExposureContext` playback extensions starting playback by *EMP* assetId has been renamed.
