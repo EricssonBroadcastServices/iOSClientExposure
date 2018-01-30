@@ -172,15 +172,10 @@
 		76B04F2E1FBADDFE007011E6 /* FetchAllRatings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F2D1FBADDFE007011E6 /* FetchAllRatings.swift */; };
 		76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */; };
 		76B305D51F5E855100EF2567 /* UPGRADE_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */; };
-		76BAF3A42015FF3300E48206 /* ProgramServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */; };
 		76BBFB761EA8C039001DBDDB /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB751EA8C039001DBDDB /* Cartfile.resolved */; };
 		76BBFB7C1EA8CE80001DBDDB /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */; };
 		76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */; };
 		76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */; };
-		76CD3542201B721C00255003 /* AssetSourceSpec+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3541201B721C00255003 /* AssetSourceSpec+StartTime.swift */; };
-		76CD3544201B724800255003 /* ChannelSourceSpec+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */; };
-		76CD3548201F604300255003 /* ContractRestrictionsServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3547201F604300255003 /* ContractRestrictionsServiceSpec.swift */; };
-		76CD354A201F63DB00255003 /* ProgramSource+StartTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */; };
 		76D7045B1F93912E00D6FC6B /* SearchResponseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7045A1F93912E00D6FC6B /* SearchResponseList.swift */; };
 		76D7045D1F93913A00D6FC6B /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7045C1F93913A00D6FC6B /* SearchResponse.swift */; };
 		76D7045F1F93927300D6FC6B /* SearchResponseAutocomplete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7045E1F93927300D6FC6B /* SearchResponseAutocomplete.swift */; };
@@ -195,7 +190,6 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
-		76FA1DAE2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -379,15 +373,10 @@
 		76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = SOURCE_ROOT; };
 		76B305D61F5E924D00EF2567 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../../iOSClientPlayer/LICENSE; sourceTree = "<group>"; };
-		76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramServiceSpec.swift; sourceTree = "<group>"; };
 		76BBFB751EA8C039001DBDDB /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = SOURCE_ROOT; };
 		76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = SOURCE_ROOT; };
 		76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentSpec.swift; sourceTree = "<group>"; };
 		76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureResponseMessage.swift; sourceTree = "<group>"; };
-		76CD3541201B721C00255003 /* AssetSourceSpec+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AssetSourceSpec+StartTime.swift"; sourceTree = "<group>"; };
-		76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChannelSourceSpec+StartTime.swift"; sourceTree = "<group>"; };
-		76CD3547201F604300255003 /* ContractRestrictionsServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractRestrictionsServiceSpec.swift; sourceTree = "<group>"; };
-		76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProgramSource+StartTime.swift"; sourceTree = "<group>"; };
 		76D7045A1F93912E00D6FC6B /* SearchResponseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponseList.swift; sourceTree = "<group>"; };
 		76D7045C1F93913A00D6FC6B /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		76D7045E1F93927300D6FC6B /* SearchResponseAutocomplete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponseAutocomplete.swift; sourceTree = "<group>"; };
@@ -402,7 +391,6 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
-		76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeServiceSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -837,7 +825,6 @@
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
 				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
-				76CD3540201B71C700255003 /* StartTime */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
 				769734B41EF26CF500F6ADC8 /* Epg */,
@@ -846,9 +833,6 @@
 				3E9409B01F862F1100253602 /* CustomerConfig */,
 				7672F2591F93A2CE00F892C3 /* Search */,
 				76B04F231FBACAF4007011E6 /* Rating */,
-				76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */,
-				76BAF3A32015FF3300E48206 /* ProgramServiceSpec.swift */,
-				76CD3547201F604300255003 /* ContractRestrictionsServiceSpec.swift */,
 			);
 			path = ExposureTests;
 			sourceTree = "<group>";
@@ -1019,16 +1003,6 @@
 				76B04F2B1FBADDA5007011E6 /* ContentRating.swift */,
 			);
 			path = Response;
-			sourceTree = "<group>";
-		};
-		76CD3540201B71C700255003 /* StartTime */ = {
-			isa = PBXGroup;
-			children = (
-				76CD3541201B721C00255003 /* AssetSourceSpec+StartTime.swift */,
-				76CD3543201B724800255003 /* ChannelSourceSpec+StartTime.swift */,
-				76CD3549201F63DB00255003 /* ProgramSource+StartTime.swift */,
-			);
-			path = StartTime;
 			sourceTree = "<group>";
 		};
 		76D704571F93909300D6FC6B /* Search */ = {
@@ -1333,7 +1307,6 @@
 				7640920E1F7E35970022F6ED /* AssetUserDataSpec.swift in Sources */,
 				7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */,
 				767030891ECB2BEB0026CD70 /* ExternalReferenceSpec.swift in Sources */,
-				76FA1DAE2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift in Sources */,
 				7672F2631F93A8BD00F892C3 /* SearchResponseSpellingSpec.swift in Sources */,
 				7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */,
 				761336AF1ECB860300E316BF /* DeviceRightsSpec.swift in Sources */,
@@ -1353,7 +1326,6 @@
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
 				7672F25D1F93A3D800F892C3 /* SearchQuerySpec.swift in Sources */,
-				76CD354A201F63DB00255003 /* ProgramSource+StartTime.swift in Sources */,
 				3EF75EFF1F86264E00CB3ED4 /* CarouselItemSpec.swift in Sources */,
 				764092101F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift in Sources */,
 				7672F2671F93A9E700F892C3 /* SearchResponseListSpec.swift in Sources */,
@@ -1364,7 +1336,6 @@
 				76B04F251FBACB05007011E6 /* RatingSpec.swift in Sources */,
 				7646D6891EF00A6B009E5C2B /* PlayVodSpec.swift in Sources */,
 				7646D66D1EF00A20009E5C2B /* FetchAssetListSpec.swift in Sources */,
-				76CD3544201B724800255003 /* ChannelSourceSpec+StartTime.swift in Sources */,
 				761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */,
 				769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */,
 				7672F2651F93A93300F892C3 /* SearchResponseSpec.swift in Sources */,
@@ -1381,12 +1352,9 @@
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
 				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */,
-				76CD3548201F604300255003 /* ContractRestrictionsServiceSpec.swift in Sources */,
 				7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */,
 				7646D6801EF00A6B009E5C2B /* DeviceInfoSpec.swift in Sources */,
 				766338661F78FEB700D66160 /* ValidateDownloadSpec.swift in Sources */,
-				76BAF3A42015FF3300E48206 /* ProgramServiceSpec.swift in Sources */,
-				76CD3542201B721C00255003 /* AssetSourceSpec+StartTime.swift in Sources */,
 				76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
