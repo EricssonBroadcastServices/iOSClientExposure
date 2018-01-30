@@ -159,6 +159,15 @@
 		76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF02020942000C23579 /* Mockingjay.framework */; };
 		76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
 		76A89CEF2020942000C23579 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
+		76A89D4E2020F16C00C23579 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4C2020F16C00C23579 /* Data+Extensions.swift */; };
+		76A89D4F2020F16C00C23579 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4D2020F16C00C23579 /* String+Extensions.swift */; };
+		76A89D5A2020F1E100C23579 /* AlamofireNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */; };
+		76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D532020F1E100C23579 /* AnalyticsPersister.swift */; };
+		76A89D5C2020F1E100C23579 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D542020F1E100C23579 /* Dispatcher.swift */; };
+		76A89D5D2020F1E100C23579 /* PersistedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D552020F1E100C23579 /* PersistedAnalytics.swift */; };
+		76A89D5E2020F1E100C23579 /* EncryptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D572020F1E100C23579 /* EncryptionProvider.swift */; };
+		76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */; };
+		76A89D602020F1E100C23579 /* StorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D592020F1E100C23579 /* StorageProvider.swift */; };
 		76AD6FB31F826B600084524A /* PersistedAnalyticsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */; };
@@ -365,6 +374,15 @@
 		76A89CF02020942000C23579 /* Mockingjay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mockingjay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A89CF12020942000C23579 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A89CF22020942000C23579 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76A89D4C2020F16C00C23579 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
+		76A89D4D2020F16C00C23579 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireNetworkHandler.swift; sourceTree = "<group>"; };
+		76A89D532020F1E100C23579 /* AnalyticsPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsPersister.swift; sourceTree = "<group>"; };
+		76A89D542020F1E100C23579 /* Dispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
+		76A89D552020F1E100C23579 /* PersistedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedAnalytics.swift; sourceTree = "<group>"; };
+		76A89D572020F1E100C23579 /* EncryptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionProvider.swift; sourceTree = "<group>"; };
+		76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherNetworkHandler.swift; sourceTree = "<group>"; };
+		76A89D592020F1E100C23579 /* StorageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageProvider.swift; sourceTree = "<group>"; };
 		76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedAnalyticsPayload.swift; sourceTree = "<group>"; };
 		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRating.swift; sourceTree = "<group>"; };
@@ -513,8 +531,7 @@
 		7619E54F1FCC0C5200ACACAE /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				7619E5501FCC0C5200ACACAE /* SWXMLHash+TypeConversion.swift */,
-				7619E5511FCC0C5200ACACAE /* SWXMLHash.swift */,
+				76A89D612020F23500C23579 /* SWXMLHash */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -668,9 +685,11 @@
 		766FBB681EC9A17800EBEC53 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				766FBB6B1EC9A19B00EBEC53 /* Sequence+Extensions.swift */,
-				7645C5622006BFAA00133955 /* URL+Extensions.swift */,
+				76A89D4C2020F16C00C23579 /* Data+Extensions.swift */,
 				76A89CE9202089E100C23579 /* Date+Extensions.swift */,
+				766FBB6B1EC9A19B00EBEC53 /* Sequence+Extensions.swift */,
+				76A89D4D2020F16C00C23579 /* String+Extensions.swift */,
+				7645C5622006BFAA00133955 /* URL+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -809,6 +828,7 @@
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
+				76A89D502020F1E100C23579 /* Services */,
 				766FBB5E1EC9816700EBEC53 /* Asset */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
 				76A842D21EA7667D00BDAF2C /* Entitlements */,
@@ -1001,6 +1021,45 @@
 				76A842EA1EA7667D00BDAF2C /* ServerTime.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		76A89D502020F1E100C23579 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				76A89D512020F1E100C23579 /* Dispatcher */,
+				76A89D562020F1E100C23579 /* Protocols */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		76A89D512020F1E100C23579 /* Dispatcher */ = {
+			isa = PBXGroup;
+			children = (
+				76A89D542020F1E100C23579 /* Dispatcher.swift */,
+				76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */,
+				76A89D532020F1E100C23579 /* AnalyticsPersister.swift */,
+				76A89D552020F1E100C23579 /* PersistedAnalytics.swift */,
+			);
+			path = Dispatcher;
+			sourceTree = "<group>";
+		};
+		76A89D562020F1E100C23579 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				76A89D572020F1E100C23579 /* EncryptionProvider.swift */,
+				76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */,
+				76A89D592020F1E100C23579 /* StorageProvider.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		76A89D612020F23500C23579 /* SWXMLHash */ = {
+			isa = PBXGroup;
+			children = (
+				7619E5501FCC0C5200ACACAE /* SWXMLHash+TypeConversion.swift */,
+				7619E5511FCC0C5200ACACAE /* SWXMLHash.swift */,
+			);
+			path = SWXMLHash;
 			sourceTree = "<group>";
 		};
 		76B04F231FBACAF4007011E6 /* Rating */ = {
@@ -1216,6 +1275,7 @@
 				76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */,
 				76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */,
 				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
+				76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */,
 				76288CBE1F213B0C004B22AB /* AnalyticsInitializationResponse.swift in Sources */,
 				76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */,
 				76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */,
@@ -1223,10 +1283,12 @@
 				76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */,
 				76A842EB1EA7667D00BDAF2C /* DeviceInfo.swift in Sources */,
 				3EB9A2711F6FF80700C74093 /* DownloadVod.swift in Sources */,
+				76A89D602020F1E100C23579 /* StorageProvider.swift in Sources */,
 				3E48B76F1F83D76400D345BF /* FetchCarouselList.swift in Sources */,
 				3E48B7631F83AA6A00D345BF /* CustomerConfigRequest.swift in Sources */,
 				76D7045D1F93913A00D6FC6B /* SearchResponse.swift in Sources */,
 				76288CB21F20B048004B22AB /* AnalyticsPayload.swift in Sources */,
+				76A89D4E2020F16C00C23579 /* Data+Extensions.swift in Sources */,
 				76A842FA1EA7667D00BDAF2C /* ExposureError.swift in Sources */,
 				76D704631F93935700D6FC6B /* Search.swift in Sources */,
 				76DE9AC41ECCF99400D86C43 /* AssetList.swift in Sources */,
@@ -1239,6 +1301,8 @@
 				76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */,
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
+				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
+				76A89D5A2020F1E100C23579 /* AlamofireNetworkHandler.swift in Sources */,
 				769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */,
 				76288CBC1F213A50004B22AB /* EventSinkInit.swift in Sources */,
 				766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */,
@@ -1246,6 +1310,7 @@
 				76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				7646D65F1EEFF5BE009E5C2B /* PlayProgram.swift in Sources */,
+				76A89D5D2020F1E100C23579 /* PersistedAnalytics.swift in Sources */,
 				76D704651F93952F00D6FC6B /* SearchAutocomplete.swift in Sources */,
 				7640920C1F7E34680022F6ED /* AssetUserPlayHistory.swift in Sources */,
 				76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */,
@@ -1256,6 +1321,7 @@
 				76A842EF1EA7667D00BDAF2C /* SessionToken.swift in Sources */,
 				76A44C9B1F16350E008992E9 /* Logout.swift in Sources */,
 				76D7046C1F93999400D6FC6B /* SearchQuery.swift in Sources */,
+				76A89D4F2020F16C00C23579 /* String+Extensions.swift in Sources */,
 				766FBB841ECA2B6100EBEC53 /* Person.swift in Sources */,
 				76A842F71EA7667D00BDAF2C /* DataRequest.swift in Sources */,
 				769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */,
@@ -1278,7 +1344,9 @@
 				76DAE68E201B62EF00992D5C /* ExposureResponseMessage.swift in Sources */,
 				769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */,
 				769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */,
+				76A89D5C2020F1E100C23579 /* Dispatcher.swift in Sources */,
 				3E48B7671F83C49C00D345BF /* CustomerConfigFileRequest.swift in Sources */,
+				76A89D5E2020F1E100C23579 /* EncryptionProvider.swift in Sources */,
 				7661F87B1FACBB8700643FDB /* FetchCarouselItem.swift in Sources */,
 				76288CBA1F20B710004B22AB /* AnalyticsConfigResponse.swift in Sources */,
 				76B04F221FBACA8F007011E6 /* DeleteRating.swift in Sources */,
