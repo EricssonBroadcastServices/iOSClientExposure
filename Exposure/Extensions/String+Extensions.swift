@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Utilities
 
 extension String {
     /// Generates a *sha256* hash from `self`
