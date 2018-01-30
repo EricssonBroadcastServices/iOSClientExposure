@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import Exposure
-import Utilities
 
 /// Analytics dispatch consists of several subcomponents each responsible for a distinct task.
 /// The core system consists of a realtime delivery engine which optimizes the networking process for minimal usage and maximum responsiveness. This is achived by batching the events in a pipe.
@@ -136,8 +134,8 @@ extension Dispatcher {
                 }
                 else {
                     print("Delivered: \(current.payload.count) events before terminating")
-                    current.payload
-                        .flatMap{ $0 as? AnalyticsEvent }
+                    current
+                        .payload
                         .forEach{
                             print(" ✅ ",$0.eventType)
                     }
@@ -253,8 +251,8 @@ extension Dispatcher {
     /// - parameter clockOffset: current offset between server timestamp and device time, or `nil` if not available
     fileprivate func realtime(analytics: AnalyticsBatch, clockOffset: Int64?) {
         print("Delivering Realtime: \(analytics.payload.count) events")
-        analytics.payload
-            .flatMap{ $0 as? AnalyticsEvent }
+        analytics
+            .payload
             .forEach{
                 print(" 📤 ",$0.eventType)
         }
@@ -283,8 +281,8 @@ extension Dispatcher {
         }
         
         print("Delivered: \(analytics.payload.count) events")
-        analytics.payload
-            .flatMap{ $0 as? AnalyticsEvent }
+        analytics
+            .payload
             .forEach{
                 print(" ✅ ",$0.eventType)
         }
@@ -295,7 +293,7 @@ extension Dispatcher {
         }
         
         // Last event in delivered batch marks last dispatch timestamp
-        if let event = analytics.payload.last as? AnalyticsEvent {
+        if let event = analytics.payload.last {
             if let lastDispatch = configuration.lastDispatchTimestamp {
                 if event.timestamp > lastDispatch {
                     configuration.lastDispatchTimestamp = event.timestamp
@@ -548,14 +546,13 @@ extension Dispatcher {
         flush(forced: false)
     }
     
-    /// Appends the specified `event` to thhe currently active `AnalyticsBatch`
+    /// Appends the specified `event` to the currently active `AnalyticsBatch`
     fileprivate func appendToCurrentBatch(event: AnalyticsEvent) {
-        currentBatch.payload.forEach{
-            if $0 is AnalyticsEvent { }
-            else { print("⚠️ Discarding unsupported payload") }
-        }
-        var current = currentBatch.payload.flatMap{ $0 as? AnalyticsEvent }
+        var current = currentBatch.payload
         current.append(event)
+        
+        // TODO: Replace AnalyticsPayload with AnalyticsEvent
+        
         currentBatch = AnalyticsBatch(sessionToken: currentBatch.sessionToken,
                                       environment: currentBatch.environment,
                                       playToken: currentBatch.sessionId,

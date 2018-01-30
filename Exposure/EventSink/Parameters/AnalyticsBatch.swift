@@ -32,10 +32,10 @@ public struct AnalyticsBatch {
     
     /// JSON array of analytics events.
     /// Should be sorted on $0.timestamp
-    public let payload: [AnalyticsPayload]
+    public let payload: [AnalyticsEvent]
     
     
-    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = []) {
+    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsEvent] = []) {
         self.environment = environment
         self.sessionToken = sessionToken
         self.sessionId = playToken
@@ -82,6 +82,16 @@ public struct AnalyticsBatch {
         case customer
         case businessUnit
         case url
+    }
+}
+
+extension AnalyticsBatch {
+    /// Returns the timestamp in milliseconds (unix epoch time) by which the batch should be sent, or nil if no payload is found
+    internal func bufferLimit() -> Int64? {
+        return payload
+            .map{ $0.timestamp + $0.bufferLimit }
+            .sorted{ $0 < $1 }
+            .first
     }
 }
 

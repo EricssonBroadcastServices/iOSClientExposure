@@ -8,7 +8,7 @@
 
 import Foundation
 
-internal struct AlamofireNetworkHandler: NetworkHandler {
+internal struct AlamofireNetworkHandler: DispatcherNetworkHandler {
     func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
         EventSink()
             .send(analytics: batch,
