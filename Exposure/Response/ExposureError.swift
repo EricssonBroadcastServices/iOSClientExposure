@@ -7,14 +7,12 @@
 //
 
 import Foundation
-import Download
-import Player
 
 /// `ExposureError` is the error type returned by the *Exposure Framework*. It can manifest as both *native errors* to the framework and *nested errors* specific to underlying frameworks or concepts such as `ExposureResponseMessage`.
 /// Effective error handling thus requires a deeper undestanding of the overall architecture.
 ///
 /// - important: Nested errors have *error codes* specific to the related *domain*. A domain is defined as the `representing type` *(for example* `ExposureResponseMessage`*)* and may contain subtypes. This means different errors may share error codes. When this occurs, it is important to keep track of the underlying domain.
-public enum ExposureError: ExpandedError, DownloadErrorConvertible {
+public enum ExposureError: Error {
     /// General Errors
     case generalError(error: Error)
     
@@ -26,15 +24,6 @@ public enum ExposureError: ExpandedError, DownloadErrorConvertible {
     
     /// Errors related to *Fairplay* `DRM` validation.
     case fairplay(reason: FairplayError)
-    
-    /// Download Related Errors
-    case download(reason: Download.DownloadError)
-    
-    case exposureDownload(reason: DownloadError)
-    
-    public static func downloadError(reason: Download.DownloadError) -> ExposureError {
-        return .download(reason: reason)
-    }
 }
 
 extension ExposureError {
@@ -133,8 +122,6 @@ extension ExposureError {
         case .serialization(reason: let reason): return "Exposure: " + reason.message
         case .exposureResponse(reason: let reason): return "Exposure: " + reason.message
         case .fairplay(reason: let reason): return "Exposure: " + reason.message
-        case .exposureDownload(reason: let reason): return "Exposure: " + reason.message
-        case .download(reason: let reason): return "Exposure: " + reason.message
         }
     }
 }
@@ -183,8 +170,6 @@ extension ExposureError {
         case .serialization(reason: let error): return error.code
         case .exposureResponse(reason: let reason): return reason.httpCode
         case .fairplay(reason: let reason): return reason.code
-        case .exposureDownload(reason: let reason): return reason.code
-        case .download(reason: let reason): return reason.code
         }
     }
 }

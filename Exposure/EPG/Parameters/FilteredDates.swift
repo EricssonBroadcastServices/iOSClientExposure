@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Player
 
 /// Defines an *Exposure request* filter on dates.
 public protocol FilteredDates {
