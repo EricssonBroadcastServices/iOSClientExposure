@@ -828,6 +828,8 @@
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
+				766FBB681EC9A17800EBEC53 /* Extensions */,
+				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 				76A89D502020F1E100C23579 /* Services */,
 				766FBB5E1EC9816700EBEC53 /* Asset */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
@@ -842,8 +844,6 @@
 				76A842E11EA7667D00BDAF2C /* Response */,
 				76D704571F93909300D6FC6B /* Search */,
 				76A842E61EA7667D00BDAF2C /* Time */,
-				766FBB681EC9A17800EBEC53 /* Extensions */,
-				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 			);
 			path = Exposure;
 			sourceTree = "<group>";
