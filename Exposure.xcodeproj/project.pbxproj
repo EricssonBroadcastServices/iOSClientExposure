@@ -230,6 +230,7 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
+		76E7F0E820205F4F0071D8C9 /* Warning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E7F0E720205F4F0071D8C9 /* Warning.swift */; };
 		76EB9EE42015259300493198 /* simple-player.md in Resources */ = {isa = PBXBuildFile; fileRef = 76EB9EE32015259300493198 /* simple-player.md */; };
 		76FA1DAE2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */; };
 /* End PBXBuildFile section */
@@ -475,6 +476,7 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
+		76E7F0E720205F4F0071D8C9 /* Warning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Warning.swift; sourceTree = "<group>"; };
 		76EB9EE32015259300493198 /* simple-player.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "simple-player.md"; sourceTree = "<group>"; };
 		76FA1DAD2003EE8E0042BE4A /* MonotonicTimeServiceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonotonicTimeServiceSpec.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -938,9 +940,10 @@
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
+				76E7F0E720205F4F0071D8C9 /* Warning.swift */,
 				76D257E72004CF4C007FDB56 /* Services */,
-				7628048C1FB33E6A00DB54CC /* Protocols */,
 				76344F4B1F7B78850034AEC0 /* Download */,
+				7628048C1FB33E6A00DB54CC /* Protocols */,
 				766094A51F0AAD61005E9A70 /* Player */,
 				766FBB5E1EC9816700EBEC53 /* Asset */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
@@ -1446,6 +1449,7 @@
 				7640920C1F7E34680022F6ED /* AssetUserPlayHistory.swift in Sources */,
 				76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */,
 				76BAF3A62017432500E48206 /* PlaybackProperties.swift in Sources */,
+				76E7F0E820205F4F0071D8C9 /* Warning.swift in Sources */,
 				76D704611F93931200D6FC6B /* SearchResponseSpelling.swift in Sources */,
 				76529CFF1EDC23E100318AE2 /* Authenticate.swift in Sources */,
 				76842F9F1F61B58200F1A0D3 /* FetchProgramAiring.swift in Sources */,

@@ -139,9 +139,10 @@ extension Player where Tech == HLSNative<ExposureContext> {
         programService.currentProgram(for: timestamp) { [weak self] program, error in
             guard let `self` = self else { return }
             if let program = program {
-                let properties = PlaybackProperties(autoplay: self.context.playbackProperties.autoplay, playFrom: PlaybackProperties.PlayFrom.custom(offset: timestamp))
-                print("handleProgramServiceBasedSeek startPlayback")
-                self.startPlayback(channelId: programService.channelId, programId: program.assetId, properties: properties)
+                let properties = PlaybackProperties(autoplay: true, playFrom: PlaybackProperties.PlayFrom.custom(offset: timestamp))
+                print("handleProgramServiceBasedSeek startPlayback",programService.channelId, program.programId)
+                self.startPlayback(playable: program.programPlayable, properties: properties)
+//                self.startPlayback(channelId: programService.channelId, programId: program.programId, properties: properties)
             }
             
             // TODO: Do we ignore seek if no program is found or do we stop playback?

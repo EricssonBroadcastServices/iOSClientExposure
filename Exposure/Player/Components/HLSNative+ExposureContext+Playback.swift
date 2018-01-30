@@ -89,6 +89,17 @@ extension Player where Tech == HLSNative<ExposureContext> {
     }
 }
 
+extension Player where Tech == HLSNative<ExposureContext> {
+    var autoplay: Bool {
+        get {
+            return context.playbackProperties.autoplay
+        }
+        set {
+            
+        }
+    }
+}
+
 // MARK: Entitlement response
 extension Player where Tech == HLSNative<ExposureContext> {
     
@@ -116,6 +127,7 @@ extension Player where Tech == HLSNative<ExposureContext> {
         service.currentPlayheadTime = { [weak self] in return self?.playheadTime }
         service.onProgramChanged = { [weak self] program in
             guard let `self` = self else { return }
+            print("prepareProgramService on programChanged",program?.programId)
             self.context.onProgramChanged(program, source)
         }
         service.onNotEntitled = { message in

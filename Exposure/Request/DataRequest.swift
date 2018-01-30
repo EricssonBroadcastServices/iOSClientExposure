@@ -32,8 +32,17 @@ extension DataRequest {
             do {
                 let object = try JSONDecoder().decode(Object.self, from: jsonData)
                 return .success(object)
-            } catch (let e) {
-                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object", json: e.localizedDescription)))
+            }
+            catch let decodingError as DecodingError {
+                switch decodingError {
+                case .dataCorrupted(let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .keyNotFound(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .typeMismatch(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .valueNotFound(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                }
+            }
+            catch (let e) {
+                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
             }
         }
 

@@ -32,4 +32,16 @@ public struct ExposureResponseMessage: Decodable {
     
     /// Related error message returned by *Exposure*
     public let message: String
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        httpCode = try container.decode(Int.self, forKey: .httpCode)
+        message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
+    }
+    
+    internal enum CodingKeys: CodingKey {
+        case httpCode
+        case message
+    }
 }

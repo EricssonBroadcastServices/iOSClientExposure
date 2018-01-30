@@ -16,6 +16,9 @@ public class ExposureContext: MediaContext {
     /// *Exposure* related errors
     public typealias ContextError = ExposureError
     
+    /// *Exposure* related warning message
+    public typealias ContextWarning = Exposure.Warning
+    
     /// Source object encapsulating a fetched `PlaybackEntitlement`
     public typealias Source = ExposureSource
     
