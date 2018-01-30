@@ -156,6 +156,9 @@
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A89CE7202088FB00C23579 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CE8202088FB00C23579 /* Alamofire.framework */; };
 		76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89CE9202089E100C23579 /* Date+Extensions.swift */; };
+		76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF02020942000C23579 /* Mockingjay.framework */; };
+		76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
+		76A89CEF2020942000C23579 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		76AD6FB31F826B600084524A /* PersistedAnalyticsPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */; };
 		76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */; };
 		76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */; };
@@ -359,6 +362,9 @@
 		76A842EA1EA7667D00BDAF2C /* ServerTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerTime.swift; sourceTree = "<group>"; };
 		76A89CE8202088FB00C23579 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A89CE9202089E100C23579 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		76A89CF02020942000C23579 /* Mockingjay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Mockingjay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76A89CF12020942000C23579 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		76A89CF22020942000C23579 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76AD6FB21F826B600084524A /* PersistedAnalyticsPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedAnalyticsPayload.swift; sourceTree = "<group>"; };
 		76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpgChannel.swift; sourceTree = "<group>"; };
 		76B04F1B1FBAC7F4007011E6 /* FetchRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchRating.swift; sourceTree = "<group>"; };
@@ -412,6 +418,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */,
+				76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */,
+				76A89CEF2020942000C23579 /* Quick.framework in Frameworks */,
 				762808CC1FCDDEF3005610DF /* Alamofire.framework in Frameworks */,
 				76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */,
 			);
@@ -847,6 +856,9 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				76A89CF02020942000C23579 /* Mockingjay.framework */,
+				76A89CF12020942000C23579 /* Nimble.framework */,
+				76A89CF22020942000C23579 /* Quick.framework */,
 				76A89CE8202088FB00C23579 /* Alamofire.framework */,
 				762808CD1FCDDEF3005610DF /* Alamofire.framework */,
 			);
