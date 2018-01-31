@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Exposure/Crypto.h>
 
 //! Project version number for Exposure.
 FOUNDATION_EXPORT double ExposureVersionNumber;
