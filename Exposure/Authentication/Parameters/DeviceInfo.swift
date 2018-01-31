@@ -15,7 +15,7 @@ extension UIDevice {
     }
     
     /// Previous versions of *iOS* stated the system name as `iPhone OS`. This function merges legacy naming with the modern designation.
-    internal static var mergedSystemName: String {
+    public static var mergedSystemName: String {
         let systemName = UIDevice.current.systemName
         if systemName == "iPhone OS" { return "iOS" }
         return systemName
