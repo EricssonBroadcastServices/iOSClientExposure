@@ -52,8 +52,8 @@ extension ValidateDownload {
     
     internal var queryParams: [String: Any] {
         return [
-            Keys.drm.rawValue: playRequest.drm.rawValue,
-            Keys.format.rawValue: playRequest.format.rawValue
+            Keys.drm.rawValue: playRequest.drm,
+            Keys.format.rawValue: playRequest.format
         ]
     }
 }

@@ -16,13 +16,10 @@ public protocol DRMRequest {
 }
 
 extension DRMRequest {
-    public typealias DRM = PlayRequest.DRM
-    public typealias Format = PlayRequest.Format
-    
     /// Requested *DRM*
     ///
     /// This is normaly `FairPlay`
-    public var drm: DRM {
+    public var drm: String {
         return playRequest.drm
     }
     
@@ -30,16 +27,20 @@ extension DRMRequest {
     ///
     /// Please note that playback may not be supported for all DRM formats. For more information please consult `Player` documentation.
     ///
+    /// Supported DRM
+    ///     * "FAIRPLAY"
+    ///     * "UNENCRYPTED"
+    ///
     /// - parameter value: selected `DRM`
     /// - returns: `Self`
-    public func use(drm value: DRM) -> Self {
+    public func use(drm value: String) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: value, format: format)
         return old
     }
     
     /// Requested `Format`
-    public var format: Format {
+    public var format: String {
         return playRequest.format
     }
     
@@ -47,9 +48,12 @@ extension DRMRequest {
     ///
     /// Please note that playback may not be supported for all formats. For more information please consult `Player` documentation.
     ///
+    /// Supported Formats
+    ///     * "HLS"
+    ///
     /// - parameter value: selected `Format`
     /// - returns: `Self`
-    public func use(format value: Format) -> Self {
+    public func use(format value: String) -> Self {
         var old = self
         old.playRequest = PlayRequest(drm: drm, format: value)
         return old
@@ -58,49 +62,32 @@ extension DRMRequest {
 
 /// Used internally to configure the `DRM` request.
 public struct PlayRequest: Serializable {
-    internal let drm: DRM
-    internal let format: Format
+    /// Supported DRM
+    ///     * "FAIRPLAY"
+    ///     * "UNENCRYPTED"
+    public let drm: String
     
-    internal init(drm: DRM = .fairplay, format: Format = .hls) {
+    /// Supported Formats
+    ///     * "HLS"
+    public let format: String
+    
+    public init(drm: String = "FAIRPLAY", format: String = "HLS") {
         self.drm = drm
         self.format = format
-    }
-    
-    /// The requested DRM. The playToken will be adapted according to this parameter.
-    ///
-    /// Please note that playback may not be supported for all DRM formats. For more information please consult `Player` documentation.
-    public enum DRM: String {
-        case playready = "PLAYREADY"
-        case edrm = "EDRM"
-        case edrmFairplay = "EDRM_FAIRPLAY"
-        case cenc = "CENC"
-        case unencrypted = "UNENCRYPTED"
-        case fairplay = "FAIRPLAY"
-    }
-    
-    /// The requested format. The server will make sure that the asset is available in this format.
-    ///
-    /// Please note that playback may not be supported for all formats. For more information please consult `Player` documentation.
-    public enum Format: String {
-        case dash = "DASH"
-        case smoothstreaming = "SMOOTHSTREAMING"
-        case hls = "HLS"
-        case mp4 = "MP4"
-        case syndicated = "SYNDICATED"
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(drm.rawValue, forKey: .drm)
-        try container.encode(format.rawValue, forKey: .format)
+        try container.encode(drm, forKey: .drm)
+        try container.encode(format, forKey: .format)
     }
 }
 
 extension PlayRequest {
     public func toJSON() -> [String: Any] {
         return [
-            CodingKeys.drm.rawValue: drm.rawValue,
-            CodingKeys.format.rawValue: format.rawValue
+            CodingKeys.drm.rawValue: drm,
+            CodingKeys.format.rawValue: format
             ]
     }
     
