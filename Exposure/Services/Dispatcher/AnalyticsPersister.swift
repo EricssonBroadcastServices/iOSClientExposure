@@ -16,7 +16,9 @@ internal enum PersisterError: Error {
 /// Responsible for managing persistence of analytics data.
 /// 
 /// All data persisted on disk is encrypted.
-internal struct AnalyticsPersister: StorageProvider {
+public struct AnalyticsPersister: StorageProvider {
+    public init() { }
+    
     /// This directory should be reserved for analytics data.
     ///
     /// - returns: `URL` to the base directory
@@ -44,10 +46,10 @@ internal struct AnalyticsPersister: StorageProvider {
     ///
     /// - parameter analytics: Batch to persist
     /// - throws: `FileManager` error. `CCCryptorStatus` related `Error`.
-    internal func persist(analytics: AnalyticsBatch) throws {
+    public func persist(analytics: AnalyticsBatch) throws {
         // Data protection
         // 1. Convert AnalyticsBatch to data
-        let data = try JSONSerialization.data(withJSONObject: analytics.persistencePayload, options: .prettyPrinted)
+        let data = try JSONEncoder().encode(analytics)
         
         // 2. Encrypt the data (Currently in Utilities)
         let encryptedData = try encrypt(data: data)
@@ -105,13 +107,8 @@ internal struct AnalyticsPersister: StorageProvider {
                     // 2. Decrypt the data
                     guard let decryptedData = try decrypt(data: data) else { return nil }
                     
-                    if let json = try JSONSerialization.jsonObject(with: decryptedData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] , let batch = AnalyticsBatch(persistencePayload: json) {
-                        print("✅ Found PersistedAnalytics!", batch.sessionId)
-                        return PersistedAnalytics(url: url, batch: batch)
-                    }
-                    else {
-                        print("🚨 No Analytics parsed")
-                        return nil }
+                    let batch = try JSONDecoder().decode(AnalyticsBatch.self, from: decryptedData)
+                    return PersistedAnalytics(url: url, batch: batch)
                 }
                 catch {
                     print("🚨 Error materializing analytics")

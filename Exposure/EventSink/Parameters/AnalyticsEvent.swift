@@ -9,7 +9,7 @@
 import Foundation
 
 /// `AnalyticsEvent` is the basic building block of *EMP* specific analytics data.
-public protocol AnalyticsEvent {
+public protocol AnalyticsEvent: Codable {
     /// The type of event
     /// Example: Playback.Created
     var eventType: String { get }
@@ -21,11 +21,4 @@ public protocol AnalyticsEvent {
     var bufferLimit: Int64 { get }
     
     var jsonPayload: [String: Any] { get }
-}
-
-extension AnalyticsEvent {
-    /// Defines how long an event can be kept in a batch before it has to be dispatched. This relates to the *realtime* aspect of the analytics engine.
-    var bufferLimit: Int64 {
-        return 3000
-    }
 }

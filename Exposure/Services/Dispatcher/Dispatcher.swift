@@ -15,7 +15,7 @@ import Foundation
 /// This process is active as long as the `dispatcher` is alive.
 ///
 /// Once the `dispatcher` reaches the end of it's lifecycle, the `termination` procedure activates. This subsytem will handle any unsent data by either dispatch or, failing that, storing the events to disk. Persisted events are delivered as soon another `dispatcher` is instantiated.
-internal class Dispatcher {
+public class Dispatcher {
     /// Internal state governing dispatcher flush behavior.
     internal enum State {
         /// In idle state, ie waiting
@@ -57,7 +57,7 @@ internal class Dispatcher {
     
     internal var networkHandler: DispatcherNetworkHandler
     
-    internal init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: HeartbeatsProvider) {
+    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: HeartbeatsProvider) {
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                            environment: environment,
                                            playToken: playSessionId,
@@ -109,7 +109,7 @@ extension Dispatcher {
     ///
     /// - important:
     /// This method should be called before the `dispatcher` is disposed, preferably manually. It should be noted that since this involves an async networking call. If this fails, the `persister` will attempt to persist the related analytics.
-    internal func terminate() {
+    public func terminate() {
         print("❗️ Terminating Dispatcher")
         invalidateFlushTrigger()
         configuration.heartbeatsEnabled = false
@@ -153,7 +153,7 @@ extension Dispatcher {
     /// Disabling the *flush trigger* will also disable heartbeats
     ///
     /// - parameter enabled: `true` for enabled, `false` to disable
-    internal func flushTrigger(enabled: Bool) {
+    public func flushTrigger(enabled: Bool) {
         if enabled {
             flushTrigger?.invalidate()
             flushTrigger = Timer.scheduledTimer(timeInterval: flushInterval, target: self, selector: #selector(flushTriggerEvent), userInfo: nil, repeats: true)
@@ -210,8 +210,8 @@ extension Dispatcher {
             guard configuration.heartbeatsEnabled else { return }
             if let lastDispatch = configuration.lastDispatchTimestamp {
                 if (currentTime - lastDispatch) > configuration.reportingTimeinterval || forced {
-                    if let heartbeatData = heartbeatsProvider?.requestHeatbeat() {
-                        appendToCurrentBatch(event: Playback.Heartbeat(timestamp: heartbeatData.timestamp, data: heartbeatData.payload))
+                    if let heartbeat = heartbeatsProvider?.requestHeatbeat() {
+                        appendToCurrentBatch(event: heartbeat)
                         flush()
                     }
                 }
@@ -495,7 +495,7 @@ extension Dispatcher {
     /// - important: Enabling `Heartbeats` will start the *flush trigger* (if not already started).
     ///
     /// - parameter enabled: `true` if hearbeats should be enabled, `false` otherwise.
-    internal func heartbeat(enabled: Bool) {
+    public func heartbeat(enabled: Bool) {
         configuration.heartbeatsEnabled = enabled
         if enabled && flushTrigger == nil {
             flushTrigger(enabled: true)
@@ -541,7 +541,7 @@ extension Dispatcher {
     /// Once that is done, the buffer will be flushed as nessescary.
     /// 
     /// - parameter event: analytics event to dispatch
-    internal func enqueue(event: AnalyticsEvent) {
+    public func enqueue(event: AnalyticsEvent) {
         appendToCurrentBatch(event: event)
         flush(forced: false)
     }

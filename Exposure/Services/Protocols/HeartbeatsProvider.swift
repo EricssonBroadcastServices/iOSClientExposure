@@ -12,14 +12,7 @@ import Foundation
 public protocol HeartbeatsProvider: class {
     /// Should return a *heartbeat* configured for the current environment
     ///
-    /// - returns: `AnalyticsPayload` specifying the heartbeat
-    func requestHeatbeat() -> HeartbeatData
+    /// - returns: `AnalyticsEvent` specifying the heartbeat
+    func requestHeatbeat() -> AnalyticsEvent
 }
 
-public protocol HeartbeatData {
-    /// Timestamp defining when the heartbeat took place
-    var timestamp: Int64 { get }
-    
-    /// Analytics related payload as `json`
-    var payload: [String: Any]  { get }
-}

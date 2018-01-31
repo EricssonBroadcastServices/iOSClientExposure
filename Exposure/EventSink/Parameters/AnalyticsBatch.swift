@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnalyticsBatch {
+public struct AnalyticsBatch: Codable {
     // MARK: Configuration
     /// Authorization: Bearer "sessionToken"
     public let sessionToken: SessionToken
@@ -35,6 +35,12 @@ public struct AnalyticsBatch {
     public let payload: [AnalyticsEvent]
     
     
+    internal enum CodingKeys: CodingKey {
+        case sessionToken
+        case environment
+        case sessionId
+        case payload
+    }
     public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsEvent] = []) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -42,46 +48,21 @@ public struct AnalyticsBatch {
         self.payload = payload
     }
     
-    
-    public init?(persistencePayload json: [String: Any]) {
-        guard let token = json[PersistenceKeys.sessionToken.rawValue] as? String else { return nil }
-        guard  let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
-        guard    let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
-        guard    let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        guard let url = env[EnvironmentKeys.url.rawValue],
-            let customer = env[EnvironmentKeys.customer.rawValue],
-            let businessUnit = env[EnvironmentKeys.businessUnit.rawValue] else { return nil }
-        self.environment = Environment(baseUrl: url, customer: customer, businessUnit: businessUnit)
-        self.sessionToken = SessionToken(value: token)
-        self.sessionId = session
+        sessionToken = try container.decode(SessionToken.self, forKey: .sessionToken)
+        environment = try container.decode(Environment.self, forKey: .environment)
+        sessionId = try container.decode(String.self, forKey: .sessionId)
+        payload = try container.decode([AnalyticsEvent].self, forKey: .payload)
+    }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         
-        self.payload = payloadData.map{ PersistedAnalyticsPayload(payload: $0) }
-    }
-    
-    public var persistencePayload: [String: Any] {
-        return [
-            PersistenceKeys.sessionToken.rawValue: sessionToken.value,
-            PersistenceKeys.environment.rawValue: [
-                EnvironmentKeys.businessUnit.rawValue: environment.businessUnit,
-                EnvironmentKeys.customer.rawValue: environment.customer,
-                EnvironmentKeys.url.rawValue: environment.baseUrl
-            ],
-            PersistenceKeys.sessionId.rawValue: sessionId,
-            PersistenceKeys.payload.rawValue: payload.map{ $0.jsonPayload }
-        ]
-    }
-    
-    internal enum PersistenceKeys: String {
-        case sessionToken
-        case environment
-        case sessionId
-        case payload
-    }
-    internal enum EnvironmentKeys: String {
-        case customer
-        case businessUnit
-        case url
+        try container.encode(sessionToken, forKey: .sessionToken)
+        try container.encode(environment, forKey: .environment)
+        try container.encode(sessionId, forKey: .sessionId)
+        try container.encode(payload, forKey: .payload)
     }
 }
 
