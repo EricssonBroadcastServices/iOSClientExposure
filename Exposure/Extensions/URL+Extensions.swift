@@ -18,7 +18,7 @@ extension URL {
     /// - parameter key: they key which defines the query parameter
     /// - parameter value: the value to set
     /// - returns: an updated `URL`
-    internal func queryParam(key: String, value: String?) -> URL? {
+    public func queryParam(key: String, value: String?) -> URL? {
         guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false), let queryItems = urlComponents.queryItems else { return nil }
         
         if let _: String = queryParam(for: key) {
@@ -49,7 +49,7 @@ extension URL {
     ///
     /// - parameter key: they key which defines the query parameter
     /// - returns: `value` if `key` is present, `nil` otherwise
-    internal func queryParam(for key: String) -> String? {
+    public func queryParam(for key: String) -> String? {
         return URLComponents(url: self, resolvingAgainstBaseURL: false)?
             .queryItems?
             .first{ $0.name == key }?
@@ -60,7 +60,7 @@ extension URL {
     ///
     /// - parameter key: they key which defines the query parameter
     /// - returns: `value` if `key` is present, `nil` otherwise
-    internal func queryParam(for key: String) -> Int64? {
+    public func queryParam(for key: String) -> Int64? {
         guard let value: String = queryParam(for: key) else { return  nil }
         return Int64(value)
     }
