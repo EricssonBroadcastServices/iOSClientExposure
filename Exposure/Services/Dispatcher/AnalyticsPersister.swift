@@ -49,7 +49,7 @@ public struct AnalyticsPersister: StorageProvider {
     public func persist(analytics: AnalyticsBatch) throws {
         // Data protection
         // 1. Convert AnalyticsBatch to data
-        let data = try JSONEncoder().encode(analytics)
+        let data = try JSONSerialization.data(withJSONObject: analytics.persistencePayload, options: .prettyPrinted)
         
         // 2. Encrypt the data (Currently in Utilities)
         let encryptedData = try encrypt(data: data)
@@ -107,8 +107,13 @@ public struct AnalyticsPersister: StorageProvider {
                     // 2. Decrypt the data
                     guard let decryptedData = try decrypt(data: data) else { return nil }
                     
-                    let batch = try JSONDecoder().decode(AnalyticsBatch.self, from: decryptedData)
-                    return PersistedAnalytics(url: url, batch: batch)
+                    if let json = try JSONSerialization.jsonObject(with: decryptedData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] , let batch = AnalyticsBatch(persistencePayload: json) {
+                        print("✅ Found PersistedAnalytics!", batch.sessionId)
+                        return PersistedAnalytics(url: url, batch: batch)
+                    }
+                    else {
+                        print("🚨 No Analytics parsed")
+                        return nil }
                 }
                 catch {
                     print("🚨 Error materializing analytics")

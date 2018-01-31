@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct AnalyticsBatch: Codable {
+public struct AnalyticsBatch {
     // MARK: Configuration
     /// Authorization: Bearer "sessionToken"
     public let sessionToken: SessionToken
@@ -32,7 +32,7 @@ public struct AnalyticsBatch: Codable {
     
     /// JSON array of analytics events.
     /// Should be sorted on $0.timestamp
-    public let payload: [AnalyticsEvent]
+    public let payload: [AnalyticsPayload]
     
     
     internal enum CodingKeys: CodingKey {
@@ -41,28 +41,53 @@ public struct AnalyticsBatch: Codable {
         case sessionId
         case payload
     }
-    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsEvent] = []) {
+    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = []) {
         self.environment = environment
         self.sessionToken = sessionToken
         self.sessionId = playToken
         self.payload = payload
     }
     
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+    public init?(persistencePayload json: [String: Any]) {
+        guard let token = json[PersistenceKeys.sessionToken.rawValue] as? String else { return nil }
+        guard  let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
+        guard    let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
+        guard    let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
         
-        sessionToken = try container.decode(SessionToken.self, forKey: .sessionToken)
-        environment = try container.decode(Environment.self, forKey: .environment)
-        sessionId = try container.decode(String.self, forKey: .sessionId)
-        payload = try container.decode([AnalyticsEvent].self, forKey: .payload)
+        guard let url = env[EnvironmentKeys.url.rawValue],
+            let customer = env[EnvironmentKeys.customer.rawValue],
+            let businessUnit = env[EnvironmentKeys.businessUnit.rawValue] else { return nil }
+        self.environment = Environment(baseUrl: url, customer: customer, businessUnit: businessUnit)
+        self.sessionToken = SessionToken(value: token)
+        self.sessionId = session
+        
+        self.payload = payloadData.map{ PersistedAnalyticsPayload(payload: $0) }
     }
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(sessionToken, forKey: .sessionToken)
-        try container.encode(environment, forKey: .environment)
-        try container.encode(sessionId, forKey: .sessionId)
-        try container.encode(payload, forKey: .payload)
+    
+    public var persistencePayload: [String: Any] {
+        return [
+            PersistenceKeys.sessionToken.rawValue: sessionToken.value,
+            PersistenceKeys.environment.rawValue: [
+                EnvironmentKeys.businessUnit.rawValue: environment.businessUnit,
+                EnvironmentKeys.customer.rawValue: environment.customer,
+                EnvironmentKeys.url.rawValue: environment.baseUrl
+            ],
+            PersistenceKeys.sessionId.rawValue: sessionId,
+            PersistenceKeys.payload.rawValue: payload.map{ $0.jsonPayload }
+        ]
+    }
+    
+    internal enum PersistenceKeys: String {
+        case sessionToken
+        case environment
+        case sessionId
+        case payload
+    }
+    internal enum EnvironmentKeys: String {
+        case customer
+        case businessUnit
+        case url
     }
 }
 
@@ -70,6 +95,7 @@ extension AnalyticsBatch {
     /// Returns the timestamp in milliseconds (unix epoch time) by which the batch should be sent, or nil if no payload is found
     internal func bufferLimit() -> Int64? {
         return payload
+            .flatMap{ $0 as? AnalyticsEvent }
             .map{ $0.timestamp + $0.bufferLimit }
             .sorted{ $0 < $1 }
             .first

@@ -12,7 +12,7 @@ import Mockingjay
 
 @testable import Exposure
 
-enum MapErrorTestError: Error {
+enum MapErrorTestError: Swift.Error {
     case expectedMappedError
 }
 

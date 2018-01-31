@@ -37,7 +37,7 @@ public struct ExposureResponseMessage: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         httpCode = try container.decode(Int.self, forKey: .httpCode)
-        message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
+        message = try container.decode(String.self, forKey: .message)
     }
     
     internal enum CodingKeys: CodingKey {

@@ -136,6 +136,7 @@ extension Dispatcher {
                     print("Delivered: \(current.payload.count) events before terminating")
                     current
                         .payload
+                        .flatMap{ $0 as? AnalyticsEvent}
                         .forEach{
                             print(" ✅ ",$0.eventType)
                     }
@@ -253,6 +254,7 @@ extension Dispatcher {
         print("Delivering Realtime: \(analytics.payload.count) events")
         analytics
             .payload
+            .flatMap{ $0 as? AnalyticsEvent}
             .forEach{
                 print(" 📤 ",$0.eventType)
         }
@@ -283,6 +285,7 @@ extension Dispatcher {
         print("Delivered: \(analytics.payload.count) events")
         analytics
             .payload
+            .flatMap{ $0 as? AnalyticsEvent}
             .forEach{
                 print(" ✅ ",$0.eventType)
         }
@@ -293,7 +296,7 @@ extension Dispatcher {
         }
         
         // Last event in delivered batch marks last dispatch timestamp
-        if let event = analytics.payload.last {
+        if let event = analytics.payload.last as? AnalyticsEvent {
             if let lastDispatch = configuration.lastDispatchTimestamp {
                 if event.timestamp > lastDispatch {
                     configuration.lastDispatchTimestamp = event.timestamp

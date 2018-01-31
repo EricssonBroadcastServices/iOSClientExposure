@@ -8,8 +8,13 @@
 
 import Foundation
 
+/// Defines the `json` payload loadable into an `AnalyticsBatch`
+public protocol AnalyticsPayload {
+    var jsonPayload: [String: Any] { get }
+}
+
 /// `AnalyticsEvent` is the basic building block of *EMP* specific analytics data.
-public protocol AnalyticsEvent: Codable {
+public protocol AnalyticsEvent: AnalyticsPayload {
     /// The type of event
     /// Example: Playback.Created
     var eventType: String { get }
@@ -19,6 +24,4 @@ public protocol AnalyticsEvent: Codable {
     
     /// Max time in milliseconds the event is kept in the batch before it should be flushed.
     var bufferLimit: Int64 { get }
-    
-    var jsonPayload: [String: Any] { get }
 }
