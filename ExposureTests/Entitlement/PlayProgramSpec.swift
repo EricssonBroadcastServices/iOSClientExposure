@@ -30,8 +30,8 @@ class PlayProgramSpec: QuickSpec {
                                       sessionToken: sessionToken)
         let play = entitlement
             .program(programId: programId, channelId: channelId)
-            .use(drm: .unencrypted)
-            .use(format: .hls)
+            .use(drm: "UNENCRYPTED")
+            .use(format: "HLS")
         
         describe("Catchup") {
             it("should have headers") {
@@ -52,8 +52,8 @@ class PlayProgramSpec: QuickSpec {
                 let drm = play.drm
                 let format = play.format
                 
-                expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
-                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
+                expect(drm).to(equal("UNENCRYPTED"))
+                expect(format).to(equal("HLS"))
             }
             
             it("should transform PlayLive to PlayCatchup") {

@@ -25,8 +25,8 @@ class PlayLiveSpec: QuickSpec {
         let playVod = Entitlement(environment: env,
                                   sessionToken: sessionToken)
             .live(channelId: assetId)
-            .use(drm: .unencrypted)
-            .use(format: .hls)
+            .use(drm: "UNENCRYPTED")
+            .use(format: "HLS")
         
         describe("Live") {
             it("should have headers") {
@@ -48,8 +48,8 @@ class PlayLiveSpec: QuickSpec {
                 let drm = playVod.drm
                 let format = playVod.format
                 
-                expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
-                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
+                expect(drm).to(equal("UNENCRYPTED"))
+                expect(format).to(equal("HLS"))
             }
         }
     }

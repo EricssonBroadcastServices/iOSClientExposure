@@ -25,8 +25,8 @@ class ValidateEntitlementSpec: QuickSpec {
         let request = Entitlement(environment: env,
                                   sessionToken: sessionToken)
             .validate(assetId: assetId)
-            .use(drm: .unencrypted)
-            .use(format: .hls)
+            .use(drm: "UNENCRYPTED")
+            .use(format: "HLS")
         
         describe("ValidateEntitlement") {
             it("should have headers") {
@@ -48,8 +48,8 @@ class ValidateEntitlementSpec: QuickSpec {
                 let drm = request.drm
                 let format = request.format
                 
-                expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
-                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
+                expect(drm).to(equal("UNENCRYPTED"))
+                expect(format).to(equal("HLS"))
             }
         }
         

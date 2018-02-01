@@ -25,8 +25,8 @@ class DownloadVodSpec: QuickSpec {
         let downloadVod = Entitlement(environment: env,
                                       sessionToken: sessionToken)
             .download(assetId: assetId)
-            .use(drm: .unencrypted)
-            .use(format: .hls)
+            .use(drm: "UNENCRYPTED")
+            .use(format: "HLS")
 
         describe("DownloadVod") {
             it("should have headers") {
@@ -48,8 +48,8 @@ class DownloadVodSpec: QuickSpec {
                 let drm = downloadVod.drm
                 let format = downloadVod.format
 
-                expect(drm.rawValue).to(equal(PlayRequest.DRM.unencrypted.rawValue))
-                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
+                expect(drm).to(equal("UNENCRYPTED"))
+                expect(format).to(equal("HLS"))
             }
         }
     }

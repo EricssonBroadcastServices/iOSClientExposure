@@ -17,7 +17,7 @@ class PlayRequestSpec: QuickSpec {
         
         describe("PlayRequest") {
             it("should convert to json") {
-                let playRequest = PlayRequest(drm: .unencrypted, format: .hls).toJSON()
+                let playRequest = PlayRequest(drm: "UNENCRYPTED", format: "HLS").toJSON()
                 
                 let drm: String? = playRequest["drm"] as? String
                 let format: String? = playRequest["format"] as? String
@@ -29,13 +29,13 @@ class PlayRequestSpec: QuickSpec {
             }
             
             it("should record DRM and format") {
-                let playRequest = PlayRequest(drm: .fairplay, format: .hls)
+                let playRequest = PlayRequest(drm: "FAIRPLAY", format: "HLS")
                 
                 let drm = playRequest.drm
                 let format = playRequest.format
                 
-                expect(drm.rawValue).to(equal(PlayRequest.DRM.fairplay.rawValue))
-                expect(format.rawValue).to(equal(PlayRequest.Format.hls.rawValue))
+                expect(drm).to(equal("FAIRPLAY"))
+                expect(format).to(equal("HLS"))
             }
         }
     }
