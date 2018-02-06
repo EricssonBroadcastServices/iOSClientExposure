@@ -36,9 +36,10 @@ class AnalyticsPersisterSpec: QuickSpec {
         let persister = AnalyticsPersister()
         
         describe("Persistence") {
-            let batch = self.firstSession(for: validToken, environment: firstEnvironment)
             it("Should persist simple batch") {
+                let batch = self.firstSession(for: validToken, environment: firstEnvironment)
                 expect{ try persister.persist(analytics: batch) }.toNot(throwError())
+                expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
             }
             
             it("Should not persist batches with malformatted sessionTokens") {
@@ -52,6 +53,10 @@ class AnalyticsPersisterSpec: QuickSpec {
             }
             
             it("Should retrieve and remove simple pesisted batch") {
+                expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
+                let batch = self.firstSession(for: validToken, environment: firstEnvironment)
+                expect{ try persister.persist(analytics: batch) }.toNot(throwError())
+                
                 let accountId = validToken.accountId
                 expect(accountId).toNot(beNil())
                 expect{ try persister.analytics(accountId: accountId!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)}.toNot(throwError())
@@ -70,6 +75,7 @@ class AnalyticsPersisterSpec: QuickSpec {
         }
         
         describe("Multiple Customers and BusinessUnits") {
+            expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
             /// batch-x-y-z-w where
             /// x: accountId
             /// y: customer

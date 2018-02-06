@@ -1139,7 +1139,6 @@
 				76A89E012021CFF300C23579 /* AnalyticsPersisterSpec.swift */,
 				76A89E032021CFF300C23579 /* Flush Trigger */,
 				76A89E062021CFF300C23579 /* Heartbeat */,
-				76A89E0A2021CFF300C23579 /* Realtime */,
 				76A89E0B2021CFF300C23579 /* Related Analytics */,
 				76A89E0E2021CFF300C23579 /* Synchronization */,
 				76A89E112021CFF300C23579 /* Termination */,
@@ -1165,13 +1164,6 @@
 				76A89E092021CFF300C23579 /* MockedHeartbeatProvider.swift */,
 			);
 			path = Heartbeat;
-			sourceTree = "<group>";
-		};
-		76A89E0A2021CFF300C23579 /* Realtime */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Realtime;
 			sourceTree = "<group>";
 		};
 		76A89E0B2021CFF300C23579 /* Related Analytics */ = {

@@ -69,7 +69,7 @@ struct Aborted: AnalyticsEvent {
 }
 
 struct Error: AnalyticsEvent {
-    let eventType: String = "Playback.Aborted"
+    let eventType: String = "Playback.Error"
     let bufferLimit: Int64 = 3000
     let timestamp: Int64
     let offsetTime: Int64
