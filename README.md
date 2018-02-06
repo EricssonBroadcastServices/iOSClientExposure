@@ -9,7 +9,6 @@
 * Usage
     - [Getting Started](#getting-started)
     - [Authentication: Best practices](#authentication-best-practices)
-    - [Entitlement Requests and Streaming through  `Player`](#entitlement-requests-and-streaming-through-player)
     - [Fetching EPG](#fetching-epg)
     - [Fetching Assets](#fetching-assets)
     - [Content Search](#content-search)
@@ -40,8 +39,6 @@
 * `Xcode` 9.0+
 
 * Framework dependencies
-    - [`Player`](https://github.com/EricssonBroadcastServices/iOSClientPlayer)
-    - [`Download`](https://github.com/EricssonBroadcastServices/iOSClientDownload)
     - [`Alamofire`](https://github.com/Alamofire/Alamofire)
     - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
