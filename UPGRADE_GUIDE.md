@@ -1,6 +1,6 @@
 # Upgrade Guide
 
-## 0.72.0 to 0.76.0
+## 0.72.0 to 0.77.0
 
 #### Architecture
 `Exposure` module has been refactored with the playback and download related functionality extracted into new modules, `ExposurePlayback` and `ExposureDownload`.

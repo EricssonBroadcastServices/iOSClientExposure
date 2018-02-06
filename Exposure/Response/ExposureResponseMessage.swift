@@ -33,6 +33,11 @@ public struct ExposureResponseMessage: Decodable {
     /// Related error message returned by *Exposure*
     public let message: String
     
+    public init(httpCode: Int, message: String) {
+        self.httpCode = httpCode
+        self.message = message
+    }
+    
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         

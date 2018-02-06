@@ -38,9 +38,9 @@ extension ExposureError {
 extension ExposureError {
     public var message: String {
         switch self {
-        case .generalError(error: let error): return "Exposure: " + error.localizedDescription
-        case .serialization(reason: let reason): return "Exposure: " + reason.message
-        case .exposureResponse(reason: let reason): return "Exposure: " + reason.message
+        case .generalError(error: let error): return error.localizedDescription
+        case .serialization(reason: let reason): return reason.message
+        case .exposureResponse(reason: let reason): return reason.message
         }
     }
 }
