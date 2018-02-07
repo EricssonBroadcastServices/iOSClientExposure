@@ -44,6 +44,7 @@
 		76288CBC1F213A50004B22AB /* EventSinkInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CBB1F213A50004B22AB /* EventSinkInit.swift */; };
 		76288CBE1F213B0C004B22AB /* AnalyticsInitializationResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CBD1F213B0C004B22AB /* AnalyticsInitializationResponse.swift */; };
 		7633A9F11F7E406500580002 /* IncludesUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7633A9F01F7E406500580002 /* IncludesUserData.swift */; };
+		7635AEC1202A4423001512BF /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7635AEC0202A4423001512BF /* Request.swift */; };
 		76380D991EB8A7C600691342 /* Appfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D971EB8A7C600691342 /* Appfile */; };
 		76380D9A1EB8A7C600691342 /* Fastfile in Resources */ = {isa = PBXBuildFile; fileRef = 76380D981EB8A7C600691342 /* Fastfile */; };
 		7640920A1F7E342C0022F6ED /* AssetUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 764092091F7E342C0022F6ED /* AssetUserData.swift */; };
@@ -275,6 +276,7 @@
 		76288CBB1F213A50004B22AB /* EventSinkInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSinkInit.swift; sourceTree = "<group>"; };
 		76288CBD1F213B0C004B22AB /* AnalyticsInitializationResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsInitializationResponse.swift; sourceTree = "<group>"; };
 		7633A9F01F7E406500580002 /* IncludesUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncludesUserData.swift; sourceTree = "<group>"; };
+		7635AEC0202A4423001512BF /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		76380D971EB8A7C600691342 /* Appfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Appfile; path = fastlane/Appfile; sourceTree = SOURCE_ROOT; };
 		76380D981EB8A7C600691342 /* Fastfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Fastfile; path = fastlane/Fastfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		764092091F7E342C0022F6ED /* AssetUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetUserData.swift; sourceTree = "<group>"; };
@@ -867,6 +869,7 @@
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
+				7635AEC0202A4423001512BF /* Request.swift */,
 				766FBB681EC9A17800EBEC53 /* Extensions */,
 				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 				76A89D502020F1E100C23579 /* Services */,
@@ -1429,6 +1432,7 @@
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
 				76A89D5A2020F1E100C23579 /* AlamofireNetworkHandler.swift in Sources */,
+				7635AEC1202A4423001512BF /* Request.swift in Sources */,
 				769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */,
 				76288CBC1F213A50004B22AB /* EventSinkInit.swift in Sources */,
 				766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */,

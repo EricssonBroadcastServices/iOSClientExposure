@@ -13,7 +13,7 @@ import Alamofire
 ///
 /// Errors are mapped to typed *ExposureErrors* by default. Specialized error handling can be performed through the `mapError(callback:)` function.
 public class ExposureRequest<Response: Decodable> {
-    /// Internally handled by Alamofire
+    /// Internal dataRequest handling the actual networking
     internal let dataRequest: DataRequest
     
     /// Error mapping function where `error` and `data` are mapped to an `ExposureError`.
@@ -22,16 +22,27 @@ public class ExposureRequest<Response: Decodable> {
     /// Default error mapper tries to materialize an `ExposureResponseMessage` from the response `Data` if (and only if) an `Error` occured. Failure to do so will forward the `generalError`.
     internal init(dataRequest: DataRequest,
                   mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
-        if let data = data {
-            // Handle status code errors from Exposure
-            do {
-                let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
-                return ExposureError.exposureResponse(reason: exposureResponse)
-            } catch (let error) {
-                return ExposureError.generalError(error: error)
+        if let exposureError = error as? ExposureError, let data = data {
+            switch exposureError {
+            case .networking(reason: let reason):
+                switch reason {
+                case .unacceptableStatusCode(code: let code):
+                    do {
+                        let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
+                        return ExposureError.exposureResponse(reason: exposureResponse)
+                    } catch (let error) {
+                        return ExposureError.generalError(error: error)
+                    }
+                default:
+                    return exposureError
+                }
+            default:
+                return exposureError
             }
         }
-        return ExposureError.generalError(error: error)
+        else {
+            return ExposureError.generalError(error: error)
+        }
         }) {
         self.dataRequest = dataRequest
         self.mapError = mapError
@@ -111,17 +122,6 @@ extension ExposureRequest {
     /// - returns: The request.
     public func validate<S : Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
         dataRequest.validate(statusCode: acceptableStatusCodes)
-        return self
-    }
-    
-    /// Validates that the response has a content type in the specified sequence.
-    ///
-    /// If validation fails, subsequent calls to response handlers will have an associated error.
-    ///
-    /// - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
-    /// - returns: The request.
-    public func validate<S : Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
-        dataRequest.validate(contentType: acceptableContentTypes)
         return self
     }
     

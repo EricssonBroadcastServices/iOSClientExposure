@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-extension DataRequest {
+extension Alamofire.DataRequest {
     /// Extends `DataRequest` to enable *Exposure* specific parsing.
     ///
     /// - parameter queue: The queue on which the completion handler is dispatched.
