@@ -42,7 +42,23 @@ public struct ExposureResponseMessage: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         httpCode = try container.decode(Int.self, forKey: .httpCode)
-        message = try container.decode(String.self, forKey: .message)
+        if let errorMessage = try container.decodeIfPresent(String.self, forKey: .message) {
+            message = errorMessage
+        }
+        else {
+            /// HACK: Exposure sometimes returns
+            ///
+            /// ```json
+            /// {
+            ///     httpCode: 500
+            /// }
+            /// ````
+            ///
+            /// Ie with a missing `message` key:value. This will account for the scenario and internally
+            /// map all 500 without a message to "INTERNAL_ERROR". If `httpCode` != 500`, throws a decoding error.
+            if httpCode == 500 { message = "INTERNAL_ERROR" }
+            else { message = try container.decode(String.self, forKey: .message) }
+        }
     }
     
     internal enum CodingKeys: CodingKey {

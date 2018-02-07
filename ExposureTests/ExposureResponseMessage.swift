@@ -26,6 +26,17 @@ class ExposureResponseMessageSpec: QuickSpec {
                 expect(result).to(beNil())
             }
             
+            it("should initialize with httpCode 500 but without a message") {
+                let json: [String: Codable] = [
+                    "httpCode":500
+                ]
+                
+                let result = json.decode(ExposureResponseMessage.self)
+                
+                expect(result).toNot(beNil())
+                expect(result!.message).to(equal("INTERNAL_ERROR"))
+            }
+            
             it("should not initialize with invalid fields") {
                 let json: [String: Codable] = [
                     "httpCode":"invalid",
