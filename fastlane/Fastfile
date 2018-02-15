@@ -55,9 +55,11 @@ platform :ios do
             update_graph
             run_unit_tests
             
-            #Action.sh("git push -u origin '#{version}'")
-            Action.sh("git tag '#{version}'")
-            Action.sh("git push -u origin '#{version}'")
+            add_git_tag(tag: version)
+            push_to_git_remote(
+                               remote; "origin",
+                               tags: true,
+                               )
             
             current_time = Time.now.to_f
             project_name = ENV["PROJECT_TITLE"]
