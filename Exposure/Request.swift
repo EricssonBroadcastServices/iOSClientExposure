@@ -55,161 +55,7 @@ extension URLComponents: URLConvertible {
     }
 }
 
-public class SessionManager {
-    
-    /// A default instance of `SessionManager`, used by top-level Alamofire request methods, and suitable for use
-    /// directly for any ad hoc requests.
-    public static let `default`: SessionManager = {
-        let configuration = URLSessionConfiguration.default
-        configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-//        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-        
-        return SessionManager(configuration: configuration)
-    }()
-    
-    
-    /// The underlying session.
-    public let session: URLSession
-    
-    /// The session delegate handling all the task and session delegate callbacks.
-    public let delegate: SessionDelegate
-    
-    /// Whether to start requests immediately after being constructed. `true` by default.
-    public var startRequestsImmediately: Bool = true
-    
-    public init(
-        configuration: URLSessionConfiguration = URLSessionConfiguration.default,
-        delegate: SessionDelegate = SessionDelegate())
-    {
-        self.delegate = delegate
-        self.session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
-        
-        self.delegate.sessionManager = self
-    }
-    
-    
-    deinit {
-        session.invalidateAndCancel()
-    }
-    
-    @discardableResult
-    public func request<Parameters: Encodable>(
-        _ url: URLConvertible,
-        method: HTTPMethod = .get,
-        parameters: Parameters? = nil,
-        headers: [String: String]? = nil)
-        -> DataRequest
-    {
-        do {
-            let requestUrl = try url.asURL()
-            var urlRequest = URLRequest(url: requestUrl)
-            urlRequest.httpMethod = method.rawValue
-            headers?.forEach{ key, value in
-                urlRequest.setValue(value, forHTTPHeaderField: key)
-            }
-            
-            if let params = parameters {
-                let data = try JSONEncoder().encode(params)
-                
-                
-                if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                }
-                urlRequest.httpBody = data
-            }
-            
-            let task = session.dataTask(with: urlRequest)
-            let request = DataRequest(session: session, requestTask: task)
-            
-            delegate[task] = request
-            
-            if startRequestsImmediately { request.resume() }
-            
-            return request
-        } catch {
-            let request = DataRequest(session: session, requestTask: nil, error: error)
-            
-            if startRequestsImmediately { request.resume() }
-            return request
-        }
-    }
-}
 
-public class SessionDelegate: NSObject {
-    
-    weak var sessionManager: SessionManager?
-    
-    private var requests: [Int: Request] = [:]
-    private let lock = NSLock()
-    
-    /// Access the task delegate for the specified task in a thread-safe manner.
-    public subscript(task: URLSessionTask) -> Request? {
-        get {
-            lock.lock() ; defer { lock.unlock() }
-            return requests[task.taskIdentifier]
-        }
-        set {
-            lock.lock() ; defer { lock.unlock() }
-            requests[task.taskIdentifier] = newValue
-        }
-    }
-
-    /// Initializes the `SessionDelegate` instance.
-    ///
-    /// - returns: The new `SessionDelegate` instance.
-    public override init() {
-        super.init()
-    }
-    
-    /// Overrides default behavior for URLSessionTaskDelegate method `urlSession(_:task:didCompleteWithError:)`.
-    open var taskDidComplete: ((URLSession, URLSessionTask, Error?) -> Void)?
-}
-
-
-// MARK: - URLSessionTaskDelegate
-
-extension SessionDelegate: URLSessionTaskDelegate {
-    /// Tells the delegate that the task finished transferring data.
-    ///
-    /// - parameter session: The session containing the task whose request finished transferring data.
-    /// - parameter task:    The task whose request finished transferring data.
-    /// - parameter error:   If an error occurred, an error object indicating how the transfer failed, otherwise nil.
-    public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        /// Executed after it is determined that the request is not going to be retried
-        let completeTask: (URLSession, URLSessionTask, Error?) -> Void = { [weak self] session, task, error in
-            guard let strongSelf = self else { return }
-            
-            strongSelf.taskDidComplete?(session, task, error)
-            
-            strongSelf[task]?.delegate.urlSession(session, task: task, didCompleteWithError: error)
-            
-            NotificationCenter.default.post(
-                name: Notification.Name.Task.DidComplete,
-                object: strongSelf,
-                userInfo: [Notification.Key.Task: task]
-            )
-            
-            strongSelf[task] = nil
-        }
-        
-        guard let request = self[task], let sessionManager = sessionManager else {
-            completeTask(session, task, error)
-            return
-        }
-        
-        // Run all validations on the request before checking if an error occurred
-        request.validations.forEach { $0() }
-        
-        // Determine whether an error has occurred
-        var error: Error? = error
-        
-        if let taskDelegate = self[task]?.delegate, taskDelegate.error != nil {
-            error = taskDelegate.error
-        }
-        
-        completeTask(session, task, error)
-    }
-}
 
 public class Request {
     
@@ -247,7 +93,7 @@ public class Request {
     
     init(session: URLSession, requestTask: URLSessionTask?, error: Error? = nil) {
         self.session = session
-        taskDelegate = DataTaskDelegate(task: requestTask)
+        taskDelegate = TaskDelegate(task: requestTask)
         
         delegate.error = error
     }
@@ -362,6 +208,10 @@ extension Request {
 }
 
 extension Request {
+    public enum Result<Value> {
+        case success(value: Value)
+        case failure(error: Error)
+    }
     /// Extends `DataRequest` to enable *Exposure* specific parsing.
     ///
     /// - parameter queue: The queue on which the completion handler is dispatched.
@@ -373,102 +223,49 @@ extension Request {
     public func response<Object: Decodable>(
         queue: DispatchQueue? = nil,
         mapError: @escaping (Error, Data?) -> ExposureError,
-        completionHandler: @escaping (DataResponse<Object>) -> Void)
+        completionHandler: @escaping (Response<Object>) -> Void)
         -> Self
     {
-        let responseSerializer = DataResponseSerializer<Object> { request, response, data, error in
+        let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
             guard error == nil, let jsonData = data else {
-                return .failure(mapError(error!, data))
+                return .failure(error: mapError(error!, data))
             }
             
             do {
-                let object = try JSONDecoder().decode(Object.self, from: jsonData)
-                return .success(object)
+                let object: Object = try JSONDecoder().decode(Object.self, from: jsonData)
+                return .success(value: object)
             }
             catch let decodingError as DecodingError {
                 switch decodingError {
-                case .dataCorrupted(let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .keyNotFound(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .typeMismatch(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .valueNotFound(_, let context): return .failure(ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .dataCorrupted(let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .keyNotFound(_, let context): return.failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .typeMismatch(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .valueNotFound(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
                 }
             }
             catch (let e) {
-                return .failure(ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
+                return.failure(error: ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
             }
         }
         
-        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
-    }
-}
-
-public class DataRequest: Request {
-    var dataDelegate: DataTaskDelegate { return delegate as! DataTaskDelegate }
-}
-
-public class TaskDelegate: NSObject {
-    
-    // MARK: Properties
-    
-    /// The serial operation queue used to execute all operations after the task completes.
-    public let queue: OperationQueue
-    
-    /// The data returned by the server.
-    public var data: Data? { return nil }
-    
-    /// The error generated throughout the lifecyle of the task.
-    public var error: Error?
-    
-    var task: URLSessionTask? {
-        didSet { reset() }
+        return response(queue: queue, serializer: responseSerializer, completion: completionHandler)
     }
     
-    // MARK: Lifecycle
-    
-    init(task: URLSessionTask?) {
-        self.task = task
-        
-        self.queue = {
-            let operationQueue = OperationQueue()
+    public func response<Object: Decodable>(queue: DispatchQueue? = nil,
+                                            serializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>,
+                                            completion: @escaping (Response<Object>) -> Void) -> Self {
+        delegate.queue.addOperation {
+            let result = serializer(self.request, self.response, self.delegate.data, self.delegate.error)
             
-            operationQueue.maxConcurrentOperationCount = 1
-            operationQueue.isSuspended = true
-            operationQueue.qualityOfService = .utility
-            
-            return operationQueue
-        }()
-    }
-    
-    func reset() {
-        error = nil
-    }
-    
-    // MARK: URLSessionTaskDelegate
-    
-    var taskDidCompleteWithError: ((URLSession, URLSessionTask, Error?) -> Void)?
-    
-   
-    @objc(URLSession:task:didCompleteWithError:)
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let taskDidCompleteWithError = taskDidCompleteWithError {
-            taskDidCompleteWithError(session, task, error)
-        } else {
-            if let error = error {
-                if self.error == nil { self.error = error }
+            let dataResponse = Response(request: self.request,
+                                        response: self.response,
+                                        data: self.delegate.data,
+                                        result: result)
+            (queue ?? DispatchQueue.main).async {
+                completion(dataResponse)
             }
-            
-            queue.isSuspended = false
         }
+        return self
     }
 }
 
-class DataTaskDelegate: TaskDelegate, URLSessionDataDelegate {
-    
-    // MARK: Properties
-    
-    var dataTask: URLSessionDataTask { return task as! URLSessionDataTask }
-}
-
-public struct Response<Value> {
-    
-}
