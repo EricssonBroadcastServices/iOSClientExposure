@@ -57,8 +57,8 @@ platform :ios do
             
             add_git_tag(tag: version)
             push_to_git_remote(
-                               remote; "origin",
-                               tags: true,
+                               remote: "origin",
+                               tags: true
                                )
             
             current_time = Time.now.to_f
