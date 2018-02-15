@@ -78,7 +78,7 @@ platform :ios do
     
     # Private lanes
     desc "Runs all the tests"
-    private lane :run_unit_tests do
+    private_lane :run_unit_tests do
         scan(
              workspace: ENV["UNIT_TEST_WORKSPACE"],
              scheme: ENV["UNIT_TEST_SCHEME"]
