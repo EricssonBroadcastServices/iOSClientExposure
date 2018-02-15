@@ -39,6 +39,38 @@ platform :ios do
         notify_slack_dev_success
     end
     
+    lane :release do
+        version = "v" + get_version_number(xcodeproj: ENV["XCODE_PROJECT"])
+        
+        if !git_tag_exists(tag: version)
+            
+            Action.sh("git branch '#{version}'")
+            Action.sh("git checkout '#{version}'")
+            
+            run_unit_tests
+            
+            #Action.sh("git commit -m 'Version: #{version}'")
+            Action.sh("git push -u origin '#{version}'")
+            Action.sh("git tag '#{version}'")
+            Action.sh("git push origin '#{version}'")
+            
+            
+            current_time = Time.now.to_f
+            project_name = ENV["PROJECT_TITLE"]
+            
+            slack(
+                  use_webhook_configured_username_and_icon: true,
+                  default_payloads: [],
+                  attachment_properties: {
+                  pretext: "#{project_name} #{version} released",
+                  color: "good",
+                  text: "Released!",
+                  footer: ENV["DEV_TEAM_NAME"],
+                  ts: current_time,
+                  }
+                  )
+        end
+    end
     
     desc "Runs all the tests"
     lane :run_unit_tests do
