@@ -47,9 +47,13 @@ platform :ios do
             Action.sh("git branch '#{version}'")
             Action.sh("git checkout '#{version}'")
             
+            fix_dependencies
+            
+            Action.sh("git commit -m 'Version: #{version}'")
+            
+            update_graph
             run_unit_tests
             
-            #Action.sh("git commit -m 'Version: #{version}'")
             Action.sh("git push -u origin '#{version}'")
             Action.sh("git tag '#{version}'")
             Action.sh("git push origin '#{version}'")
@@ -72,16 +76,39 @@ platform :ios do
         end
     end
     
+    # Private lanes
     desc "Runs all the tests"
-    lane :run_unit_tests do
+    private lane :run_unit_tests do
         scan(
              workspace: ENV["UNIT_TEST_WORKSPACE"],
              scheme: ENV["UNIT_TEST_SCHEME"]
              )
-             
-             UI.success("====> TESTING DONE")
     end
     
+    private lane :fix_dependencies do
+        version = "v" + get_version_number(xcodeproj: ENV["XCODE_PROJECT"])
+        cartfile = File.expand_path("..",Dir.pwd) + "/Cartfile"
+        UI.message(cartfile)
+        if File.exists?(cartfile)
+            temp_file = Tempfile.new('foo')
+            begin
+                File.open(cartfile, 'r') do |file|
+                    file.each_line do |line|
+                        if line.include? "EricssonBroadcastServices/"
+                            temp_file.puts line.gsub('"master"',"== "+version)
+                            else
+                            temp_file.puts line
+                        end
+                    end
+                end
+                temp_file.close
+                FileUtils.mv(temp_file.path, cartfile)
+                ensure
+                temp_file.close
+                temp_file.unlink
+            end
+        end
+    end
     
     desc "Checkout latest dependencies as declared in Cartfile.resolved"
     private_lane :update_graph do
@@ -96,7 +123,6 @@ platform :ios do
         update_dependency_graph()
     end
     
-    # Private lanes
     
     private_lane :bump_build_number do
         new_build_number = increment_build_number(xcodeproj: ENV["XCODE_PROJECT"])
