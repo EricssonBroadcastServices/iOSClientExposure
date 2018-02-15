@@ -66,12 +66,12 @@ platform :ios do
                   use_webhook_configured_username_and_icon: true,
                   default_payloads: [],
                   attachment_properties: {
-                  pretext: "#{project_name} #{version} released",
-                  color: "good",
-                  text: "Released!",
-                  footer: ENV["DEV_TEAM_NAME"],
-                  ts: current_time,
-                  }
+                        pretext: "#{project_name} #{version} released",
+                        color: "good",
+                        text: "Released!",
+                        footer: ENV["DEV_TEAM_NAME"],
+                        ts: current_time,
+                    }
                   )
         end
     end
@@ -85,7 +85,7 @@ platform :ios do
              )
     end
     
-    private lane :fix_dependencies do
+    private_lane :fix_dependencies do
         version = "v" + get_version_number(xcodeproj: ENV["XCODE_PROJECT"])
         cartfile = File.expand_path("..",Dir.pwd) + "/Cartfile"
         UI.message(cartfile)
