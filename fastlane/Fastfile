@@ -49,8 +49,10 @@ platform :ios do
             
             fix_dependencies
             
-            Action.sh("git add -A")
-            Action.sh("git commit -m 'Version: #{version}'")
+            if !Action.sh("git diff --name-only").empty?
+                Action.sh("git add -A")
+                Action.sh("git commit -m 'Version: #{version}'")
+            end
             
             update_graph
             run_unit_tests
