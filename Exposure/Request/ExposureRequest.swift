@@ -7,56 +7,19 @@
 //
 
 import Foundation
-import Alamofire
 
 /// Responsible for sending a request and receiving response from the server.
 ///
 /// Errors are mapped to typed *ExposureErrors* by default. Specialized error handling can be performed through the `mapError(callback:)` function.
-public class ExposureRequest<Response: Decodable> {
+public class ExposureRequest<Object: Decodable> {
     /// Internal dataRequest handling the actual networking
-    internal let dataRequest: DataRequest
+    internal let dataRequest: Request
     
-    /// Error mapping function where `error` and `data` are mapped to an `ExposureError`.
-    internal var mapError: (Error, Data?) -> ExposureError
-    
-    /// Default error mapper tries to materialize an `ExposureResponseMessage` from the response `Data` if (and only if) an `Error` occured. Failure to do so will forward the `generalError`.
-    internal init(dataRequest: DataRequest,
-                  mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
-        if let exposureError = error as? ExposureError, let data = data {
-            switch exposureError {
-            case .networking(reason: let reason):
-                switch reason {
-                case .unacceptableStatusCode(code: let code):
-                    do {
-                        let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
-                        return ExposureError.exposureResponse(reason: exposureResponse)
-                    } catch (let error) {
-                        return ExposureError.generalError(error: error)
-                    }
-                default:
-                    return exposureError
-                }
-            default:
-                return exposureError
-            }
-        }
-        else {
-            return ExposureError.generalError(error: error)
-        }
-        }) {
+    internal init(dataRequest: Request) {
         self.dataRequest = dataRequest
-        self.mapError = mapError
-    }
-    
-    /// Customize the error mapping function
-    ///
-    /// - parameter callback: Callback to perform the error mapping
-    /// - returns: `Self`
-    public func mapError(callback: @escaping (Error, Data?) -> ExposureError) -> Self {
-        self.mapError = callback
-        return self
     }
 }
+
 
 extension ExposureRequest {
     /// Response materialization.
@@ -69,26 +32,10 @@ extension ExposureRequest {
     @discardableResult
     public func response
         (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureResponse<Response>) -> Void) -> Self {
-        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Response>) in
+         completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
+        
+        dataRequest.response(queue: queue) { (dataResponse: Response<Object>) in
             completionHandler(ExposureResponse(dataResponse: dataResponse))
-        }
-        return self
-    }
-    
-    /// Response materialization.
-    ///
-    /// Once the request has been created, calling this method will trigger the request and materialize the response.
-    ///
-    /// - parameter queue: The queue on which the completion handler is dispatched.
-    /// - parameter completionHandler: The code to be executed once the request has finished.
-    /// - returns: `Self`
-    @discardableResult
-    public func emptyResponse
-        (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureError?) -> Void) -> Self {
-        dataRequest.emptyExposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Data>) in
-            completionHandler(ExposureResponse(dataResponse: dataResponse).error)
         }
         return self
     }

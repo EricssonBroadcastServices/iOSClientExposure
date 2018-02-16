@@ -12,7 +12,7 @@ public struct SearchQuery: ExposureType, FilteredLocale, SortedResponse, Pageabl
     public typealias Response = SearchResponseList
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/content/search/query/" + ExposureURLEncoding.queryString.escape(query)
+        return environment.apiUrl + "/content/search/query/" + URLEncoding().escape(query)
     }
     
     public var parameters: [String: Any] {
@@ -122,6 +122,6 @@ extension SearchQuery {
 // MARK: - Request
 extension SearchQuery {
     public func request() -> ExposureRequest<Response> {
-        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
+        return request(.get)
     }
 }

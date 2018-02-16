@@ -33,7 +33,7 @@ extension String: URLConvertible {
     ///
     /// - returns: A URL or throws an `AFError`.
     public func asURL() throws -> URL {
-        guard let url = URL(string: self) else { throw ExposureError.networking(reason: .invalidUrl(url: self)) }
+        guard let url = URL(string: self) else { throw Request.Networking.invalidUrl(url: self) }
         return url
     }
 }
@@ -50,7 +50,7 @@ extension URLComponents: URLConvertible {
     ///
     /// - returns: A URL or throws an `AFError`.
     public func asURL() throws -> URL {
-        guard let url = url else { throw ExposureError.networking(reason: .invalidUrl(url: self)) }
+        guard let url = url else { throw Request.Networking.invalidUrl(url: self) }
         return url
     }
 }
@@ -148,7 +148,7 @@ extension Request {
         if acceptableStatusCodes.contains(response.statusCode) {
             return .success
         } else {
-            let reason = ExposureError.networking(reason: .unacceptableStatusCode(code: response.statusCode))
+            let reason = Networking.unacceptableStatusCode(code: response.statusCode)
             return .failure(reason)
         }
     }
@@ -190,7 +190,7 @@ extension Request {
             if acceptableStatusCodes.contains(response.statusCode) {
                 return .success
             } else {
-                let reason = ExposureError.networking(reason: .unacceptableStatusCode(code: response.statusCode))
+                let reason =  Networking.unacceptableStatusCode(code: response.statusCode)
                 return .failure(reason)
             }
         }
@@ -207,62 +207,69 @@ extension Request {
     }
 }
 
+public enum Result<Value> {
+    case success(value: Value)
+    case failure(error: Error)
+}
+
 extension Request {
-    public enum Result<Value> {
-        case success(value: Value)
-        case failure(error: Error)
+    
+    public enum Networking: Error {
+        case invalidUrl(url: URLConvertible)
+        case unacceptableStatusCode(code: Int)
+        case noResponseData
+        case parameterEncodingFailedMissingUrl
+        
+        public var message: String {
+            switch self {
+            case .invalidUrl(url: let url): return "Invalid URL in URLConvertible \(url)"
+            case .unacceptableStatusCode(code: let code): return "Unacceptable status code \(code) in http response"
+            case .noResponseData: return "Response data was null"
+            case .parameterEncodingFailedMissingUrl: return "URLRequest is missing an url to encode parameters onto"
+            }
+        }
     }
-    /// Extends `DataRequest` to enable *Exposure* specific parsing.
-    ///
-    /// - parameter queue: The queue on which the completion handler is dispatched.
-    /// - parameter mapError: The error mapping function to convert between *untyped* `Error` and `ExposureError`.
-    /// - parameter completionHandler: The code to be executed once the request has finished.
-    ///
-    /// - returns: The request.
+    
     @discardableResult
     public func response<Object: Decodable>(
         queue: DispatchQueue? = nil,
-        mapError: @escaping (Error, Data?) -> ExposureError,
         completionHandler: @escaping (Response<Object>) -> Void)
         -> Self
     {
         let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
             guard error == nil, let jsonData = data else {
-                return .failure(error: mapError(error!, data))
+                return .failure(error: error!)
             }
             
             do {
-                let object: Object = try JSONDecoder().decode(Object.self, from: jsonData)
+                let object = try JSONDecoder().decode(Object.self, from: jsonData)
                 return .success(value: object)
             }
             catch let decodingError as DecodingError {
                 switch decodingError {
                 case .dataCorrupted(let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .keyNotFound(_, let context): return.failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
+                case .keyNotFound(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
                 case .typeMismatch(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
                 case .valueNotFound(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
                 }
             }
             catch (let e) {
-                return.failure(error: ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
+                return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
             }
         }
-        
-        return response(queue: queue, serializer: responseSerializer, completion: completionHandler)
-    }
-    
-    public func response<Object: Decodable>(queue: DispatchQueue? = nil,
-                                            serializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>,
-                                            completion: @escaping (Response<Object>) -> Void) -> Self {
         delegate.queue.addOperation {
-            let result = serializer(self.request, self.response, self.delegate.data, self.delegate.error)
+            let result = responseSerializer(self.request,
+                                            self.response,
+                                            self.delegate.data,
+                                            self.delegate.error)
+            
             
             let dataResponse = Response(request: self.request,
                                         response: self.response,
                                         data: self.delegate.data,
                                         result: result)
             (queue ?? DispatchQueue.main).async {
-                completion(dataResponse)
+                completionHandler(dataResponse)
             }
         }
         return self

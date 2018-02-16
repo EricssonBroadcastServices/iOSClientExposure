@@ -42,40 +42,33 @@ public class SessionManager {
         session.invalidateAndCancel()
     }
     
+    private func createRequest(from url: URLConvertible,  method: HTTPMethod = .get, headers: [String: String]? = nil) throws -> URLRequest {
+        let requestUrl = try url.asURL()
+        var urlRequest = URLRequest(url: requestUrl)
+        urlRequest.httpMethod = method.rawValue
+        headers?.forEach{ key, value in
+            urlRequest.setValue(value, forHTTPHeaderField: key)
+        }
+        return urlRequest
+    }
+    
+    func finalize(encodedRequest: URLRequest) -> Request {
+        let task = session.dataTask(with: encodedRequest)
+        let request = Request(session: session, requestTask: task)
+        
+        delegate[task] = request
+        
+        if startRequestsImmediately { request.resume() }
+        
+        return request
+    }
+    
     @discardableResult
-    public func request<Parameters: Encodable>(
-        _ url: URLConvertible,
-        method: HTTPMethod = .get,
-        parameters: Parameters? = nil,
-        headers: [String: String]? = nil)
-        -> Request
-    {
+    public func request<Parameters: Encodable>(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: Parameters? = nil, headers: [String: String]? = nil) -> Request {
         do {
-            let requestUrl = try url.asURL()
-            var urlRequest = URLRequest(url: requestUrl)
-            urlRequest.httpMethod = method.rawValue
-            headers?.forEach{ key, value in
-                urlRequest.setValue(value, forHTTPHeaderField: key)
-            }
-            
-            if let params = parameters {
-                let data = try JSONEncoder().encode(params)
-                
-                
-                if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                }
-                urlRequest.httpBody = data
-            }
-            
-            let task = session.dataTask(with: urlRequest)
-            let request = Request(session: session, requestTask: task)
-            
-            delegate[task] = request
-            
-            if startRequestsImmediately { request.resume() }
-            
-            return request
+            let urlRequest = try createRequest(from: url, method: method, headers: headers)
+            let encodedRequest = try JSONEncoding().encode(urlRequest, with: parameters)
+            return finalize(encodedRequest: encodedRequest)
         } catch {
             let request = Request(session: session, requestTask: nil, error: error)
             
@@ -83,4 +76,19 @@ public class SessionManager {
             return request
         }
     }
+    
+    @discardableResult
+    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, headers: [String: String]? = nil) -> Request {
+        do {
+            let urlRequest = try createRequest(from: url, method: method, headers: headers)
+            let encodedRequest = try URLEncoding().encode(urlRequest, with: parameters)
+            return finalize(encodedRequest: encodedRequest)
+        } catch {
+            let request = Request(session: session, requestTask: nil, error: error)
+            
+            if startRequestsImmediately { request.resume() }
+            return request
+        }
+    }
+    
 }

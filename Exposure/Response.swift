@@ -19,7 +19,7 @@ public struct Response<Value> {
     /// The data returned by the server.
     public let data: Data?
     
-    public let result: Request.Result<Value>
+    public let result: Result<Value>
     
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
     public var value: Value?
@@ -27,12 +27,7 @@ public struct Response<Value> {
     /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
     public var error: Error?
     
-    public init(
-        request: URLRequest?,
-        response: HTTPURLResponse?,
-        data: Data?,
-        result: Request.Result<Value>)
-    {
+    public init( request: URLRequest?, response: HTTPURLResponse?, data: Data?, result: Result<Value>) {
         self.request = request
         self.response = response
         self.data = data

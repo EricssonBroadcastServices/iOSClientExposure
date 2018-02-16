@@ -47,8 +47,8 @@ public struct PlayProgram: ExposureType, DRMRequest {
         return environment.apiUrl + "/entitlement/channel/" + channelId + "/program/" + programId + "/play"
     }
     
-    public var parameters: [String: Any] {
-        return playRequest.toJSON()
+    public var parameters: PlayRequest {
+        return playRequest
     }
     
     public var headers: [String: String]? {

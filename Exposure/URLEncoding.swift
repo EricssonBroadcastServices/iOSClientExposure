@@ -1,62 +1,15 @@
 //
-//  ExposureURLEncoding.swift
+//  URLEncoding.swift
 //  Exposure
 //
-//  Created by Fredrik Sjöberg on 2017-05-31.
-//  Copyright © 2017 emp. All rights reserved.
+//  Created by Fredrik Sjöberg on 2018-02-16.
+//  Copyright © 2018 emp. All rights reserved.
 //
 
 import Foundation
-import Alamofire
 
-/// Paramenter encoding compatible with Exposure.
-/// Alamofire implements encoding for collection types by appending `[]` to the key for array values (`foo[]=1&foo[]=2`). This is incompatible with the current Exposure implementation.
-/// This struct supplies an Exposure compatible encoding for .GET methods. For more information see 'Alamofire.URLEncoding'
-/// https://github.com/Alamofire/Alamofire/issues/329
-internal struct ExposureURLEncoding: ParameterEncoding {
-    
-    // MARK: Helper Types
-    
-    /// Defines whether the url-encoded query string is applied to the existing query string or HTTP body of the
-    /// resulting URL request.
-    ///
-    /// - methodDependent: Applies encoded query string result to existing query string for `GET`, `HEAD` and `DELETE`
-    ///                    requests and sets as the HTTP body for requests with any other HTTP method.
-    /// - queryString:     Sets or appends encoded query string result to existing query string.
-    /// - httpBody:        Sets encoded query string result as the HTTP body of the URL request.
-    public enum Destination {
-        case methodDependent, queryString, httpBody
-    }
-    
-    // MARK: Properties
-    
-    /// Returns a default `URLEncoding` instance.
-    public static var `default`: URLEncoding { return URLEncoding() }
-    
-    /// Returns a `URLEncoding` instance with a `.methodDependent` destination.
-    public static var methodDependent: URLEncoding { return URLEncoding() }
-    
-    /// Returns a `URLEncoding` instance with a `.queryString` destination.
-    public static var queryString: URLEncoding { return URLEncoding(destination: .queryString) }
-    
-    /// Returns a `URLEncoding` instance with an `.httpBody` destination.
-    public static var httpBody: URLEncoding { return URLEncoding(destination: .httpBody) }
-    
-    /// The destination defining where the encoded query string is to be applied to the URL request.
-    public let destination: Destination
-    
-    // MARK: Initialization
-    
-    /// Creates a `URLEncoding` instance using the specified destination.
-    ///
-    /// - parameter destination: The destination defining where the encoded query string is to be applied.
-    ///
-    /// - returns: The new `URLEncoding` instance.
-    public init(destination: Destination = .methodDependent) {
-        self.destination = destination
-    }
-    
-    // MARK: Encoding
+/// Paramenter encoding for query strings compatible with Exposure.
+internal struct URLEncoding {
     
     /// Creates a URL request by encoding parameters and applying them onto an existing request.
     ///
@@ -66,27 +19,18 @@ internal struct ExposureURLEncoding: ParameterEncoding {
     /// - throws: An `Error` if the encoding process encounters an error.
     ///
     /// - returns: The encoded request.
-    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-        var urlRequest = try urlRequest.asURLRequest()
-        
+    public func encode(_ urlRequest: URLRequest, with parameters: [String: Any]?) throws -> URLRequest {
+        var urlRequest = urlRequest
         guard let parameters = parameters else { return urlRequest }
         
-        if let method = Alamofire.HTTPMethod(rawValue: urlRequest.httpMethod ?? "GET"), encodesParametersInURL(with: method) {
-            guard let url = urlRequest.url else {
-                throw AFError.parameterEncodingFailed(reason: .missingURL)
-            }
-            
-            if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
-                let percentEncodedQuery = (urlComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
-                urlComponents.percentEncodedQuery = percentEncodedQuery
-                urlRequest.url = urlComponents.url
-            }
-        } else {
-            if urlRequest.value(forHTTPHeaderField: "Content-Type") == nil {
-                urlRequest.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
-            }
-            
-            urlRequest.httpBody = query(parameters).data(using: .utf8, allowLossyConversion: false)
+        guard let url = urlRequest.url else {
+            throw Request.Networking.parameterEncodingFailedMissingUrl
+        }
+        
+        if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
+            let percentEncodedQuery = (urlComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + query(parameters)
+            urlComponents.percentEncodedQuery = percentEncodedQuery
+            urlRequest.url = urlComponents.url
         }
         
         return urlRequest
@@ -189,24 +133,6 @@ internal struct ExposureURLEncoding: ParameterEncoding {
         }
         
         return components.map { "\($0)=\($1)" }.joined(separator: "&")
-    }
-    
-    private func encodesParametersInURL(with method: HTTPMethod) -> Bool {
-        switch destination {
-        case .queryString:
-            return true
-        case .httpBody:
-            return false
-        default:
-            break
-        }
-        
-        switch method {
-        case .get, .head, .delete:
-            return true
-        default:
-            return false
-        }
     }
 }
 

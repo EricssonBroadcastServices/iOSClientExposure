@@ -48,7 +48,7 @@ extension Alamofire.DataRequest {
 
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
-    
+
     /// Extends `DataRequest` to enable *Exposure* specific parsing.
     ///
     /// - parameter queue: The queue on which the completion handler is dispatched.
@@ -71,5 +71,6 @@ extension Alamofire.DataRequest {
         }
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
-    
+
 }
+

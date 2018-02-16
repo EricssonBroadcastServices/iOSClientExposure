@@ -21,9 +21,6 @@ public enum ExposureError: Error {
     
     /// *Exposure* responded with an error message
     case exposureResponse(reason: ExposureResponseMessage)
-    
-    
-    case networking(reason: Networking)
 }
 
 extension ExposureError {
@@ -38,20 +35,11 @@ extension ExposureError {
 }
 
 extension ExposureError {
-    
-    public enum Networking {
-        case invalidUrl(url: URLConvertible)
-        case unacceptableStatusCode(code: Int)
-    }
-}
-
-extension ExposureError {
     public var message: String {
         switch self {
         case .generalError(error: let error): return error.localizedDescription
         case .serialization(reason: let reason): return reason.message
         case .exposureResponse(reason: let reason): return reason.message
-        case .networking(reason: let reason): return reason.message
         }
     }
 }
@@ -65,14 +53,6 @@ extension ExposureError.SerializationFailureReason {
     }
 }
 
-extension ExposureError.Networking {
-    public var message: String {
-        switch self {
-        case .invalidUrl(url: let url): return "Invalid URL in URLConvertible"
-        case .unacceptableStatusCode(code: let code): return "Unacceptable status code \(code) in http response"
-        }
-    }
-}
 
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.
@@ -81,7 +61,6 @@ extension ExposureError {
         case .generalError(error: _): return 101
         case .serialization(reason: let error): return error.code
         case .exposureResponse(reason: let reason): return reason.httpCode
-        case .networking(reason: let reason): return reason.code
         }
     }
 }
@@ -92,15 +71,6 @@ extension ExposureError.SerializationFailureReason {
         switch self {
         case .jsonSerialization(error: _): return 201
         case .objectSerialization(reason: _, json: _): return 202
-        }
-    }
-}
-
-extension ExposureError.Networking {
-    public var code: Int {
-        switch self {
-        case .invalidUrl(url: _): return 301
-        case .unacceptableStatusCode(code: _): return 302
         }
     }
 }
