@@ -66,20 +66,22 @@ extension ExposureType where Parameters: Encodable, Headers == [String: String]?
 }
 
 extension ExposureType where Parameters == [String: Any]?, Headers == [String: String]? {
-    public func request(_ method: HTTPMethod) -> ExposureRequest<Response> {
+    public func request(_ method: HTTPMethod, encoding: ParameterEncoding = URLEncoding()) -> ExposureRequest<Response> {
         let dataRequest = sessionManager.request(endpointUrl,
                                                  method: method,
                                                  parameters: parameters,
+                                                 encoding: encoding,
                                                  headers: headers)
         return ExposureRequest(dataRequest: dataRequest)
     }
 }
 
 extension ExposureType where Parameters == [String: Any], Headers == [String: String]? {
-    public func request(_ method: HTTPMethod) -> ExposureRequest<Response> {
+    public func request(_ method: HTTPMethod, encoding: ParameterEncoding = URLEncoding()) -> ExposureRequest<Response> {
         let dataRequest = sessionManager.request(endpointUrl,
                                                  method: method,
                                                  parameters: parameters,
+                                                 encoding: encoding,
                                                  headers: headers)
         return ExposureRequest(dataRequest: dataRequest)
     }

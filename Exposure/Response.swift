@@ -22,10 +22,10 @@ public struct Response<Value> {
     public let result: Result<Value>
     
     /// Returns the associated value of the result if it is a success, `nil` otherwise.
-    public var value: Value?
+    public var value: Value? { return result.value }
     
     /// Returns the associated error value if the result if it is a failure, `nil` otherwise.
-    public var error: Error?
+    public var error: Error? { return result.error }
     
     public init( request: URLRequest?, response: HTTPURLResponse?, data: Data?, result: Result<Value>) {
         self.request = request

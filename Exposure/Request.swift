@@ -210,6 +210,26 @@ extension Request {
 public enum Result<Value> {
     case success(value: Value)
     case failure(error: Error)
+    
+    /// Returns the associated value if the result is a success, `nil` otherwise.
+    public var value: Value? {
+        switch self {
+        case .success(let value):
+            return value
+        case .failure:
+            return nil
+        }
+    }
+    
+    /// Returns the associated error value if the result is a failure, `nil` otherwise.
+    public var error: Error? {
+        switch self {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
+    }
 }
 
 extension Request {
@@ -276,6 +296,20 @@ extension Request {
             }
         }
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
+    }
+    
+    @discardableResult
+    public func emptyResponse(
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void)
+        -> Self
+    {
+        delegate.queue.addOperation {
+            (queue ?? DispatchQueue.main).async {
+                completionHandler(self.request, self.response, self.delegate.data, self.delegate.error)
+            }
+        }
+        return self
     }
 }
 

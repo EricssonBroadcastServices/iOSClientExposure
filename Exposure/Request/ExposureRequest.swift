@@ -30,7 +30,7 @@ extension ExposureRequest {
     /// - parameter completionHandler: The code to be executed once the request has finished.
     /// - returns: `Self`
     @discardableResult
-    public func exposureResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
+    public func response(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
         dataRequest.response(responseSerializer: { request, response, data, error in
             guard error == nil, let jsonData = data else {
                 if let statusError = error as? Request.Networking {
@@ -64,6 +64,35 @@ extension ExposureRequest {
         }
         return self
     }
+    
+    @discardableResult
+    public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureError?) -> Void) -> Self {
+        dataRequest.emptyResponse(queue: queue) { request, response, data, error in
+            guard error == nil else {
+                if let statusError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
+                        do {
+                            let message = try JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData)
+                            return completionHandler(ExposureError.exposureResponse(reason: message))
+                        }
+                        catch let e {
+                            return completionHandler(ExposureError.generalError(error: e))
+                        }
+                    }
+                    else {
+                        return completionHandler(ExposureError.generalError(error: statusError))
+                    }
+                }
+                else {
+                    return completionHandler(ExposureError.generalError(error: error!))
+                }
+            }
+            completionHandler(nil)
+        }
+        return self
+    }
+    
+    
 }
 
 extension JSONDecoder {

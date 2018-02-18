@@ -9,16 +9,7 @@
 import Foundation
 
 /// Paramenter encoding for query strings compatible with Exposure.
-internal struct URLEncoding {
-    
-    /// Creates a URL request by encoding parameters and applying them onto an existing request.
-    ///
-    /// - parameter urlRequest: The request to have parameters applied.
-    /// - parameter parameters: The parameters to apply.
-    ///
-    /// - throws: An `Error` if the encoding process encounters an error.
-    ///
-    /// - returns: The encoded request.
+internal struct URLEncoding: ParameterEncoding {
     public func encode(_ urlRequest: URLRequest, with parameters: [String: Any]?) throws -> URLRequest {
         var urlRequest = urlRequest
         guard let parameters = parameters else { return urlRequest }

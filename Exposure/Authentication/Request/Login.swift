@@ -9,7 +9,7 @@
 import Foundation
 
 /// *Exposure* endpoint integration for handling *Login* through *username* and *password*.
-public struct Login: ExposureType {
+public struct Login: ExposureType, Encodable {
     public typealias Response = Credentials
     
     /// Username to authenticate with
@@ -24,8 +24,13 @@ public struct Login: ExposureType {
     /// `true` extends period of session validity, `false` uses normal validation period.
     public let rememberMe: Bool
     
-    /// `DeviceInfo` required by *Exposure*
-    public let deviceInfo: DeviceInfo = DeviceInfo()
+    /// Unique device identifier
+    public var deviceId: String? {
+        return UIDevice.current.identifierForVendor?.uuidString
+    }
+    
+    /// Device specific information
+    public let device: Device = Device()
     
     /// Environment to use
     public let environment: Environment
@@ -42,29 +47,33 @@ public struct Login: ExposureType {
         return environment.apiUrl + "/auth/login"
     }
     
-    public var parameters: [String: Any] {
-        var json = deviceInfo.toJSON()
-        
-        json[JSONKeys.username.rawValue] = username
-        json[JSONKeys.password.rawValue] = password
-        if let mfa = twoFactor {
-            json[JSONKeys.twoFactor.rawValue] = mfa
-        }
-        json[JSONKeys.rememberMe.rawValue] = rememberMe
-        
-        return json
+    public var parameters: Login {
+        return self
     }
     
     public var headers: [String: String]? {
         return nil
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(username, forKey: .username)
+        try container.encode(password, forKey: .password)
+        try container.encodeIfPresent(twoFactor, forKey: .twoFactor)
+        try container.encode(rememberMe, forKey: .rememberMe)
+        try container.encode(device, forKey: .device)
+        try container.encodeIfPresent(deviceId, forKey: .deviceId)
+    }
+    
     /// Keys used to specify `json` body for the request.
-    internal enum JSONKeys: String {
-        case username = "username"
-        case password = "password"
+    internal enum CodingKeys: String, CodingKey {
+        case username
+        case password
         case twoFactor = "totp"
-        case rememberMe = "rememberMe"
+        case rememberMe
+        case deviceId
+        case device
     }
 }
 

@@ -24,9 +24,6 @@ public class SessionManager {
     /// The session delegate handling all the task and session delegate callbacks.
     public let delegate: SessionDelegate
     
-    /// Whether to start requests immediately after being constructed. `true` by default.
-    public var startRequestsImmediately: Bool = true
-    
     public init(
         configuration: URLSessionConfiguration = URLSessionConfiguration.default,
         delegate: SessionDelegate = SessionDelegate())
@@ -58,8 +55,7 @@ public class SessionManager {
         
         delegate[task] = request
         
-        if startRequestsImmediately { request.resume() }
-        
+        request.resume()
         return request
     }
     
@@ -72,21 +68,21 @@ public class SessionManager {
         } catch {
             let request = Request(session: session, requestTask: nil, error: error)
             
-            if startRequestsImmediately { request.resume() }
+            request.resume()
             return request
         }
     }
     
     @discardableResult
-    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, headers: [String: String]? = nil) -> Request {
+    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding, headers: [String: String]? = nil) -> Request {
         do {
             let urlRequest = try createRequest(from: url, method: method, headers: headers)
-            let encodedRequest = try URLEncoding().encode(urlRequest, with: parameters)
+            let encodedRequest = try encoding.encode(urlRequest, with: parameters)
             return finalize(encodedRequest: encodedRequest)
         } catch {
             let request = Request(session: session, requestTask: nil, error: error)
             
-            if startRequestsImmediately { request.resume() }
+            request.resume()
             return request
         }
     }
