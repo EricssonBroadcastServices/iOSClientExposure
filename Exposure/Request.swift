@@ -252,12 +252,7 @@ extension Request {
     
     
     @discardableResult
-    public func response<Object: Decodable>(
-        queue: DispatchQueue? = nil,
-        responseSerializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>,
-        completionHandler: @escaping (Response<Object>) -> Void)
-        -> Self
-    {
+    public func response<Object: Decodable>(queue: DispatchQueue? = nil, responseSerializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>, completionHandler: @escaping (Response<Object>) -> Void) -> Self {
         delegate.queue.addOperation {
             let result = responseSerializer(self.request,
                                             self.response,
@@ -277,11 +272,7 @@ extension Request {
     }
     
     @discardableResult
-    public func response<Object: Decodable>(
-        queue: DispatchQueue? = nil,
-        completionHandler: @escaping (Response<Object>) -> Void)
-        -> Self
-    {
+    public func response<Object: Decodable>(queue: DispatchQueue? = nil, completionHandler: @escaping (Response<Object>) -> Void) -> Self {
         let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
             guard error == nil, let jsonData = data else {
                 return .failure(error: error!)
@@ -299,11 +290,7 @@ extension Request {
     }
     
     @discardableResult
-    public func emptyResponse(
-        queue: DispatchQueue? = nil,
-        completionHandler: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void)
-        -> Self
-    {
+    public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void) -> Self {
         delegate.queue.addOperation {
             (queue ?? DispatchQueue.main).async {
                 completionHandler(self.request, self.response, self.delegate.data, self.delegate.error)

@@ -24,16 +24,12 @@ public class SessionManager {
     /// The session delegate handling all the task and session delegate callbacks.
     public let delegate: SessionDelegate
     
-    public init(
-        configuration: URLSessionConfiguration = URLSessionConfiguration.default,
-        delegate: SessionDelegate = SessionDelegate())
-    {
+    public init( configuration: URLSessionConfiguration = URLSessionConfiguration.default, delegate: SessionDelegate = SessionDelegate()) {
         self.delegate = delegate
         self.session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
         
         self.delegate.sessionManager = self
     }
-    
     
     deinit {
         session.invalidateAndCancel()
@@ -49,7 +45,7 @@ public class SessionManager {
         return urlRequest
     }
     
-    func finalize(encodedRequest: URLRequest) -> Request {
+    private func finalize(encodedRequest: URLRequest) -> Request {
         let task = session.dataTask(with: encodedRequest)
         let request = Request(session: session, requestTask: task)
         

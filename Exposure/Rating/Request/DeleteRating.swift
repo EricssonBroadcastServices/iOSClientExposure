@@ -10,7 +10,7 @@ import Foundation
 
 /// Get rating of an asset given by the currently logged in user.
 public struct DeleteRating: ExposureType {
-    public typealias Response = [String:Any]?
+    public typealias Response = EmptyResponse
     
     public var endpointUrl: String {
         return environment.apiUrl + "/rating/asset/" + assetId
