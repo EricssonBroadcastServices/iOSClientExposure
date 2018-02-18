@@ -43,11 +43,6 @@ class PlayProgramSpec: QuickSpec {
                 expect(play.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
-            it("should generate paramters") {
-                let json = PlayRequest().toJSON()
-                expect(play.parameters.count).to(equal(json.count))
-            }
-            
             it("should record DRM and format") {
                 let drm = play.drm
                 let format = play.format

@@ -38,26 +38,6 @@ class LoginSpec: QuickSpec {
                 let endpoint = "/auth/login"
                 expect(login.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
-            
-            it("should generate paramters") {
-                let params = login.parameters
-                expect(params.count).to(equal(login.deviceInfo.toJSON().count+3))
-                
-                expect(params["username"]).toNot(beNil())
-                expect(params["password"]).toNot(beNil())
-                expect(params["rememberMe"]).toNot(beNil())
-            }
-            
-            it("should generate paramters for twoFactor auth") {
-                let params = Authenticate(environment: env)
-                    .login(username: username, password: password, twoFactor: "Some TwoFactor").parameters
-                expect(params.count).to(equal(login.deviceInfo.toJSON().count+4))
-                
-                expect(params["username"]).toNot(beNil())
-                expect(params["password"]).toNot(beNil())
-                expect(params["rememberMe"]).toNot(beNil())
-                expect(params["totp"]).toNot(beNil())
-            }
         }
         
         describe("Logout") {

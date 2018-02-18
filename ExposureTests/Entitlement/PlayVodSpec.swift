@@ -39,11 +39,6 @@ class PlayVodSpec: QuickSpec {
                 expect(playVod.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
-            it("should generate paramters") {
-                let json = PlayRequest().toJSON()
-                expect(playVod.parameters.count).to(equal(json.count))
-            }
-            
             it("should record DRM and format") {
                 let drm = playVod.drm
                 let format = playVod.format

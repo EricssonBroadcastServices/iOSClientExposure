@@ -80,52 +80,6 @@ class FetchServerTimeSpec: QuickSpec {
                     expect(serverTime!.epochMillis).toEventually(equal(1000))
                 }
             }
-            
-            context("MapError") { // MockingJay does not work well with `validate()`
-                let exposureErrorJson:[String: Any] = [
-                    "httpCode": 404,
-                    "message":"FAKE_EXPOSURE_ERROR"
-                ]
-                self.stub(uri(fetch.endpointUrl), json(exposureErrorJson, status: 404))
-                
-                var result: ServerTime? = nil
-                var mappedError: ExposureError? = nil
-                fetch
-                    .request()
-                    .validate()
-                    .mapError{ (error, data) in
-                        return ExposureError.generalError(error: MapErrorTestError.expectedMappedError)
-                    }
-                    .response{
-                        result = $0.value
-                        mappedError = $0.error
-                        
-                }
-                
-                it("should mapError") {
-                    expect(result).toEventually(beNil())
-                    expect(mappedError).toEventually(matchError(ExposureError.generalError(error: MapErrorTestError.expectedMappedError)))
-                }
-            }
-            
-            context("Validating contentType") {
-                beforeEach {
-                    self.stub(uri(fetch.endpointUrl), json(expectedJson))
-                    
-                    fetch
-                        .request()
-                        .validate(contentType: ["application/json"])
-                        .response{
-                            serverTime = $0.value
-                            error = $0.error
-                    }
-                }
-                
-                it("should have valid contentType") {
-                    expect(serverTime).toEventuallyNot(beNil())
-                    expect(error).toEventually(beNil())
-                }
-            }
         }
     }
 }

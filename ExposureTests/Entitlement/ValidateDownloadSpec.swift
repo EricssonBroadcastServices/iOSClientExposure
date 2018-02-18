@@ -39,11 +39,6 @@ class ValidateDownloadSpec: QuickSpec {
                 expect(request.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
-            it("should generate paramters") {
-                let json = PlayRequest().toJSON()
-                expect(request.parameters.count).to(equal(json.count))
-            }
-            
             it("should record DRM and format") {
                 let drm = request.drm
                 let format = request.format

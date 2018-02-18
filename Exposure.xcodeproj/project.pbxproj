@@ -64,7 +64,6 @@
 		7646D66E1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D66C1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift */; };
 		7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6701EF00A6B009E5C2B /* AnonymousSpec.swift */; };
 		7646D67F1EF00A6B009E5C2B /* CredentialsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6711EF00A6B009E5C2B /* CredentialsSpec.swift */; };
-		7646D6801EF00A6B009E5C2B /* DeviceInfoSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6721EF00A6B009E5C2B /* DeviceInfoSpec.swift */; };
 		7646D6811EF00A6B009E5C2B /* LoginSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6731EF00A6B009E5C2B /* LoginSpec.swift */; };
 		7646D6821EF00A6B009E5C2B /* SessionTokenSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6741EF00A6B009E5C2B /* SessionTokenSpec.swift */; };
 		7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7646D6771EF00A6B009E5C2B /* FairplayConfigurationSpec.swift */; };
@@ -123,7 +122,6 @@
 		76842FA31F61B83000F1A0D3 /* FetchProgramAiringSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76842FA21F61B83000F1A0D3 /* FetchProgramAiringSpec.swift */; };
 		768ED8A71F0EBFF6008E8F9B /* update_dependency_graph.rb in Resources */ = {isa = PBXBuildFile; fileRef = 768ED8A61F0EBFF6008E8F9B /* update_dependency_graph.rb */; };
 		7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */; };
-		7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7693EDCD1EADEE9300421551 /* ExposureSpec.swift */; };
 		7697349F1EF1801000F6ADC8 /* ChannelEpg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7697349E1EF1801000F6ADC8 /* ChannelEpg.swift */; };
 		769734A11EF1803200F6ADC8 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734A01EF1803200F6ADC8 /* Program.swift */; };
 		769734A91EF1833100F6ADC8 /* FetchEpg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734A81EF1833100F6ADC8 /* FetchEpg.swift */; };
@@ -304,7 +302,6 @@
 		7646D66C1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetsByIdSpec.swift; sourceTree = "<group>"; };
 		7646D6701EF00A6B009E5C2B /* AnonymousSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnonymousSpec.swift; sourceTree = "<group>"; };
 		7646D6711EF00A6B009E5C2B /* CredentialsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CredentialsSpec.swift; sourceTree = "<group>"; };
-		7646D6721EF00A6B009E5C2B /* DeviceInfoSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceInfoSpec.swift; sourceTree = "<group>"; };
 		7646D6731EF00A6B009E5C2B /* LoginSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginSpec.swift; sourceTree = "<group>"; };
 		7646D6741EF00A6B009E5C2B /* SessionTokenSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTokenSpec.swift; sourceTree = "<group>"; };
 		7646D6771EF00A6B009E5C2B /* FairplayConfigurationSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FairplayConfigurationSpec.swift; sourceTree = "<group>"; };
@@ -363,7 +360,6 @@
 		76842FA21F61B83000F1A0D3 /* FetchProgramAiringSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchProgramAiringSpec.swift; sourceTree = "<group>"; };
 		768ED8A61F0EBFF6008E8F9B /* update_dependency_graph.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = update_dependency_graph.rb; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchServerTimeSpec.swift; sourceTree = "<group>"; };
-		7693EDCD1EADEE9300421551 /* ExposureSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureSpec.swift; sourceTree = "<group>"; };
 		7697349E1EF1801000F6ADC8 /* ChannelEpg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChannelEpg.swift; sourceTree = "<group>"; };
 		769734A01EF1803200F6ADC8 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
 		769734A81EF1833100F6ADC8 /* FetchEpg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchEpg.swift; sourceTree = "<group>"; };
@@ -649,7 +645,6 @@
 			children = (
 				7646D6701EF00A6B009E5C2B /* AnonymousSpec.swift */,
 				7646D6711EF00A6B009E5C2B /* CredentialsSpec.swift */,
-				7646D6721EF00A6B009E5C2B /* DeviceInfoSpec.swift */,
 				7646D6731EF00A6B009E5C2B /* LoginSpec.swift */,
 				7646D6741EF00A6B009E5C2B /* SessionTokenSpec.swift */,
 				76009FA21F5D6A44008E1738 /* ValidateSessionTokenSpec.swift */,
@@ -914,7 +909,6 @@
 				76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */,
 				76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */,
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
-				7693EDCD1EADEE9300421551 /* ExposureSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
@@ -1607,7 +1601,6 @@
 				7672F2671F93A9E700F892C3 /* SearchResponseListSpec.swift in Sources */,
 				7646D6871EF00A6B009E5C2B /* PlayLiveSpec.swift in Sources */,
 				76A89E212021CFF300C23579 /* SynchronizeNetworkHandler.swift in Sources */,
-				7693EDCE1EADEE9300421551 /* ExposureSpec.swift in Sources */,
 				767030811ECB25E00026CD70 /* ImageSpec.swift in Sources */,
 				767030871ECB2B1E0026CD70 /* PersonSpec.swift in Sources */,
 				76A89E192021CFF300C23579 /* DispatcherFlushTriggerSpec.swift in Sources */,
@@ -1637,7 +1630,6 @@
 				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */,
 				7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */,
-				7646D6801EF00A6B009E5C2B /* DeviceInfoSpec.swift in Sources */,
 				766338661F78FEB700D66160 /* ValidateDownloadSpec.swift in Sources */,
 				76A89E232021CFF300C23579 /* TerminationNetworkHandler.swift in Sources */,
 				76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */,

@@ -50,11 +50,6 @@ class AnonymousSpec: QuickSpec {
                 let endpoint = "/auth/anonymous"
                 expect(anonymous.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
-            
-            it("should generate paramters") {
-                let json = anonymous.deviceInfo.toJSON()
-                expect(anonymous.parameters.count).to(equal(json.count))
-            }
         }
         
         describe("Anonymous Login Response") {
