@@ -80,6 +80,20 @@ public class SessionManager {
     }
     
     @discardableResult
+    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, data: Data, headers: [String: String]? = nil) -> Request {
+        do {
+            var encodedUrlRequest = try createRequest(from: url, method: method, headers: headers)
+            encodedUrlRequest.httpBody = data
+            return finalize(encodedRequest: encodedUrlRequest)
+        } catch {
+            let request = Request(session: session, requestTask: nil, error: error)
+            
+            request.resume()
+            return request
+        }
+    }
+    
+    @discardableResult
     public func request<Parameters: Encodable>(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: Parameters, headers: [String: String]? = nil) -> Request {
         do {
             let urlRequest = try createRequest(from: url, method: method, headers: headers)
