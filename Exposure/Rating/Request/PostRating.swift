@@ -10,14 +10,14 @@ import Foundation
 
 /// Create/Update a rating for an asset given by currently logged in user.
 public struct PostRating: ExposureType {
-    public typealias Response = [String:Any]?
+    public typealias Response = Data
     
     public var endpointUrl: String {
         return environment.apiUrl + "/rating/asset/" + assetId
     }
     
-    public var parameters: [String: Any] {
-        return [JSONKeys.rating.rawValue: rating]
+    public var parameters: UserValue {
+        return userValue
     }
     
     public var headers: [String: String]? {
@@ -34,18 +34,22 @@ public struct PostRating: ExposureType {
     public let assetId: String
     
     /// A rating between [0...1]
-    public let rating: Float
+    public var rating: Float {
+        return userValue.rating
+    }
+    
+    public let userValue: UserValue
     
     internal init(environment: Environment, sessionToken: SessionToken, assetId: String, rating: Float) {
         self.environment = environment
         self.sessionToken = sessionToken
         self.assetId = assetId
-        self.rating = rating
+        self.userValue = UserValue(rating: rating)
     }
     
-    /// Keys used to specify `json` body for the request.
-    internal enum JSONKeys: String {
-        case rating = "rating"
+    public struct UserValue: Encodable {
+        /// A rating between [0...1]
+        public let rating: Float
     }
 }
 
@@ -54,7 +58,11 @@ extension PostRating {
     /// `PostRating` request is specified as a `.put`
     ///
     /// - returns: `ExposureRequest` with request specific data
-    public func request() -> ExposureRequest<Response> {
-        return request(.put)
+    public func request() -> ExposureRequest<Data> {
+        let dataRequest = sessionManager.request(endpointUrl,
+                                                 method: .put,
+                                                 parameters: parameters,
+                                                 headers: headers)
+        return ExposureRequest(dataRequest: dataRequest)
     }
 }

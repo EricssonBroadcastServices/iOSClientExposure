@@ -230,33 +230,14 @@ extension Request {
         }
     }
     
+    
     @discardableResult
     public func response<Object: Decodable>(
         queue: DispatchQueue? = nil,
+        responseSerializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>,
         completionHandler: @escaping (Response<Object>) -> Void)
         -> Self
     {
-        let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
-            guard error == nil, let jsonData = data else {
-                return .failure(error: error!)
-            }
-            
-            do {
-                let object = try JSONDecoder().decode(Object.self, from: jsonData)
-                return .success(value: object)
-            }
-            catch let decodingError as DecodingError {
-                switch decodingError {
-                case .dataCorrupted(let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .keyNotFound(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .typeMismatch(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                case .valueNotFound(_, let context): return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: jsonData)))
-                }
-            }
-            catch (let e) {
-                return .failure(error: ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: jsonData)))
-            }
-        }
         delegate.queue.addOperation {
             let result = responseSerializer(self.request,
                                             self.response,
@@ -273,6 +254,28 @@ extension Request {
             }
         }
         return self
+    }
+    
+    @discardableResult
+    public func response<Object: Decodable>(
+        queue: DispatchQueue? = nil,
+        completionHandler: @escaping (Response<Object>) -> Void)
+        -> Self
+    {
+        let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
+            guard error == nil, let jsonData = data else {
+                return .failure(error: error!)
+            }
+            
+            do {
+                let object = try JSONDecoder().decode(Object.self, from: jsonData)
+                return .success(value: object)
+            }
+            catch (let e) {
+                return .failure(error: e)
+            }
+        }
+        return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
 }
 
