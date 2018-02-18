@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 public struct FetchAssetById: ExposureType, FilteredFields, FilteredPublish, IncludesUserData {
     public typealias Response = Asset

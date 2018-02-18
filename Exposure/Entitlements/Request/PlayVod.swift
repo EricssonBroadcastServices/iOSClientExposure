@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 /// Request a `PlaybackEntitlement` for *Vod* playback.
 ///

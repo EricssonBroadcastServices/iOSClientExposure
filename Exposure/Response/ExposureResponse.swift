@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 // Response struct wrapping the *Exposure* request, response and result.
 public struct ExposureResponse<Value: Decodable> {

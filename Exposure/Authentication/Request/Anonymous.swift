@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 /// *Exposure* endpoint integration for handling *Anonymous* login.
 public struct Anonymous: ExposureType, Encodable {

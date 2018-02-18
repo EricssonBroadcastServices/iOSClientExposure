@@ -156,7 +156,6 @@
 		76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E41EA7667D00BDAF2C /* ExposureResponse.swift */; };
 		76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */; };
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
-		76A89CE7202088FB00C23579 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CE8202088FB00C23579 /* Alamofire.framework */; };
 		76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89CE9202089E100C23579 /* Date+Extensions.swift */; };
 		76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF02020942000C23579 /* Mockingjay.framework */; };
 		76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
@@ -486,7 +485,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A89CE7202088FB00C23579 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

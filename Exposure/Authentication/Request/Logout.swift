@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 /// *Exposure* endpoint integration for *Logout*.
 public struct Logout: ExposureType {
