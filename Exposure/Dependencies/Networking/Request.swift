@@ -5,58 +5,33 @@
 //  Created by Fredrik Sjöberg on 2018-02-06.
 //  Copyright © 2018 emp. All rights reserved.
 //
+// Lightweight modification of the Alamofire framework.
+
+//
+//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
+//
 
 import Foundation
 
-public enum HTTPMethod: String {
-    case get     = "GET"
-    case post    = "POST"
-    case put     = "PUT"
-    case delete  = "DELETE"
-}
-
-/// Types adopting the `URLConvertible` protocol can be used to construct URLs, which are then used to construct
-/// URL requests.
-public protocol URLConvertible {
-    /// Returns a URL that conforms to RFC 2396 or throws an `Error`.
-    ///
-    /// - throws: An `Error` if the type cannot be converted to a `URL`.
-    ///
-    /// - returns: A URL or throws an `Error`.
-    func asURL() throws -> URL
-}
-
-extension String: URLConvertible {
-    /// Returns a URL if `self` represents a valid URL string that conforms to RFC 2396 or throws an `AFError`.
-    ///
-    /// - throws: An `AFError.invalidURL` if `self` is not a valid URL string.
-    ///
-    /// - returns: A URL or throws an `AFError`.
-    public func asURL() throws -> URL {
-        guard let url = URL(string: self) else { throw Request.Networking.invalidUrl(url: self) }
-        return url
-    }
-}
-
-extension URL: URLConvertible {
-    /// Returns self.
-    public func asURL() throws -> URL { return self }
-}
-
-extension URLComponents: URLConvertible {
-    /// Returns a URL if `url` is not nil, otherise throws an `Error`.
-    ///
-    /// - throws: An `AFError.invalidURL` if `url` is `nil`.
-    ///
-    /// - returns: A URL or throws an `AFError`.
-    public func asURL() throws -> URL {
-        guard let url = url else { throw Request.Networking.invalidUrl(url: self) }
-        return url
-    }
-}
-
-
-
+/// `Request` that manages an underlying `URLSessionDataTask`.
 public class Request {
     
     /// The delegate for the underlying task.
@@ -207,31 +182,6 @@ extension Request {
     }
 }
 
-public enum Result<Value> {
-    case success(value: Value)
-    case failure(error: Error)
-    
-    /// Returns the associated value if the result is a success, `nil` otherwise.
-    public var value: Value? {
-        switch self {
-        case .success(let value):
-            return value
-        case .failure:
-            return nil
-        }
-    }
-    
-    /// Returns the associated error value if the result is a failure, `nil` otherwise.
-    public var error: Error? {
-        switch self {
-        case .success:
-            return nil
-        case .failure(let error):
-            return error
-        }
-    }
-}
-
 extension Request {
     
     public enum Networking: Error {
@@ -251,6 +201,14 @@ extension Request {
     }
     
     
+    /// Adds a handler to be called once the request has finished.
+    ///
+    /// - parameter queue:              The queue on which the completion handler is dispatched.
+    /// - parameter responseSerializer: The response serializer responsible for serializing the request, response,
+    ///                                 and data.
+    /// - parameter completionHandler:  The code to be executed once the request has finished.
+    ///
+    /// - returns: The request.
     @discardableResult
     public func response<Object: Decodable>(queue: DispatchQueue? = nil, responseSerializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>, completionHandler: @escaping (Response<Object>) -> Void) -> Self {
         delegate.queue.addOperation {
@@ -271,6 +229,12 @@ extension Request {
         return self
     }
     
+    /// Adds a handler with a default JSONSerializer to be called once the request has finished.
+    ///
+    /// - parameter queue:              The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler:  The code to be executed once the request has finished.
+    ///
+    /// - returns: The request.
     @discardableResult
     public func response<Object: Decodable>(queue: DispatchQueue? = nil, completionHandler: @escaping (Response<Object>) -> Void) -> Self {
         let responseSerializer: (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object> = { request, response, data, error in
@@ -289,8 +253,15 @@ extension Request {
         return response(queue: queue, responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
     
+    
+    /// Adds a handler which does no response serialization to be called once the request has finished.
+    ///
+    /// - parameter queue:              The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler:  The code to be executed once the request has finished.
+    ///
+    /// - returns: The request.
     @discardableResult
-    public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void) -> Self {
+    public func rawResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void) -> Self {
         delegate.queue.addOperation {
             (queue ?? DispatchQueue.main).async {
                 completionHandler(self.request, self.response, self.delegate.data, self.delegate.error)

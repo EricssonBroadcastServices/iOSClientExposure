@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/NSString.h>
-// Foks modify - START -
 #import <Foundation/NSData.h>
-// Foks modify - END -
 
 @interface NSString (Base64Additions)
 

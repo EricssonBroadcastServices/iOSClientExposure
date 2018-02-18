@@ -67,7 +67,7 @@ extension ExposureRequest {
     
     @discardableResult
     public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureError?) -> Void) -> Self {
-        dataRequest.emptyResponse(queue: queue) { request, response, data, error in
+        dataRequest.rawResponse(queue: queue) { request, response, data, error in
             guard error == nil else {
                 if let statusError = error as? Request.Networking {
                     if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
