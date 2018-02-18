@@ -80,7 +80,7 @@ public class SessionManager {
     }
     
     @discardableResult
-    public func request<Parameters: Encodable>(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: Parameters? = nil, headers: [String: String]? = nil) -> Request {
+    public func request<Parameters: Encodable>(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: Parameters, headers: [String: String]? = nil) -> Request {
         do {
             let urlRequest = try createRequest(from: url, method: method, headers: headers)
             let encodedRequest = try JSONEncoding().encode(urlRequest, with: parameters)
@@ -94,7 +94,7 @@ public class SessionManager {
     }
     
     @discardableResult
-    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding, headers: [String: String]? = nil) -> Request {
+    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding(), headers: [String: String]? = nil) -> Request {
         do {
             let urlRequest = try createRequest(from: url, method: method, headers: headers)
             let encodedRequest = try encoding.encode(urlRequest, with: parameters)
