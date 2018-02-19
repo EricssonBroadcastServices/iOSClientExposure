@@ -16,6 +16,8 @@ class DispatcherTerminationSpec: QuickSpec {
     let environment = Environment(baseUrl: "url", customer: "DispatcherCustomer", businessUnit: "DispatcherBusinessUnit")
     let sessionToken = SessionToken(value: "crmToken|DispatcherAccountId1|userId|anotherField|1000|2000|false|field|finalField")
     
+    let deliverUndelivered = TerminationNetworkHandler()
+    let persistUndelivered = TerminationNetworkHandler()
     var heartbeatsProvider = MockedHeartbeatProvider()
     override func spec() {
         describe("Termination") {
@@ -50,10 +52,9 @@ class DispatcherTerminationSpec: QuickSpec {
                                             playSessionId: UUID().uuidString,
                                             startupEvents: [event],
                                             heartbeatsProvider: self.heartbeatsProvider)
-                let networkHandler = TerminationNetworkHandler()
-                dispatcher.networkHandler = networkHandler
+                dispatcher.networkHandler = self.deliverUndelivered
                 dispatcher.terminate()
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(1), timeout: 6)
+                expect(self.deliverUndelivered.payloadDelivered.count).toEventually(equal(1), timeout: 6)
             }
             
             it("Should persist underlivered analytics that failed to dispatch on termination") {
@@ -65,12 +66,11 @@ class DispatcherTerminationSpec: QuickSpec {
                                             playSessionId: "Termination-dispatch-persistence-id",
                                             startupEvents: [event],
                                             heartbeatsProvider: self.heartbeatsProvider)
-                let networkHandler = TerminationNetworkHandler()
-                networkHandler.failsToDispatch = true
-                dispatcher.networkHandler = networkHandler
+                self.persistUndelivered.failsToDispatch = true
+                dispatcher.networkHandler = self.persistUndelivered
                 dispatcher.terminate()
                 
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(0), timeout: 6)
+                expect(self.persistUndelivered.payloadDelivered.count).toEventually(equal(0), timeout: 6)
                 expect(self.sessionToken.accountId).toNot(beNil())
                 expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer)}.toNot(throwError())
                 expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer).count }.toEventually(equal(1))

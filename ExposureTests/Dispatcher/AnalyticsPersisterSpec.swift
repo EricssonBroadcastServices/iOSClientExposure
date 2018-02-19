@@ -22,37 +22,33 @@ struct PersistenceTestData {
 
 class AnalyticsPersisterSpec: QuickSpec {
     override func spec() {
-        let validToken = SessionToken(value: "crmToken|accountId1|userId|anotherField|1000|2000|false|field|finalField")
-        let anotherValidToken = SessionToken(value: "crmToken|accountId1|userId|anotherField|1000|2000|false|field|finalField")
-        let validButDifferentAccountToken = SessionToken(value: "crmToken|accountId2|userId|anotherField|1000|2000|false|field|finalField")
-        let malformatedShortToken = SessionToken(value: "crmToken|accountId|userId|anotherField|1000|2000|false|field")
-        let malformatedMissingAccountIdToken = SessionToken(value: "someLongButHardlyCorrectSessionToken")
-        
-        let firstEnvironment = Environment(baseUrl: "firstUrl", customer: "FirstCustomer", businessUnit: "BusinessUnit1")
-        let secondEnvironment = Environment(baseUrl: "firstUrl", customer: "FirstCustomer", businessUnit: "BusinessUnit2")
-        
-        let thirdEnvironment = Environment(baseUrl: "firstUrl", customer: "SecondCustomer", businessUnit: "BusinessUnit1")
-        
-        let persister = AnalyticsPersister()
-        
         describe("Persistence") {
+            let validToken = SessionToken(value: "crmToken|simpleAccount|userId|anotherField|1000|2000|false|field|finalField")
+            let malformatedShortToken = SessionToken(value: "crmToken|simpleAccount|userId|anotherField|1000|2000|false|field")
+            let malformatedMissingAccountIdToken = SessionToken(value: "someLongButHardlyCorrectSessionToken")
+            
+            let firstEnvironment = Environment(baseUrl: "firstUrl", customer: "simpleFirstCustomer", businessUnit: "simpleFirstBusinessUnit")
             it("Should persist simple batch") {
+                let persister = AnalyticsPersister()
                 let batch = self.firstSession(for: validToken, environment: firstEnvironment)
                 expect{ try persister.persist(analytics: batch) }.toNot(throwError())
                 expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
             }
             
             it("Should not persist batches with malformatted sessionTokens") {
+                let persister = AnalyticsPersister()
                 let malformattedTokenBatch = self.firstSession(for: malformatedShortToken, environment: firstEnvironment)
                 expect{ try persister.persist(analytics: malformattedTokenBatch) }.to(throwError(PersisterError.failedToPersistWithMalformattedSessionToken))
             }
             
             it("Should not persist batches with sessionTokens without accountIds") {
+                let persister = AnalyticsPersister()
                 let invalidAccountIdBatch = self.secondSession(for: malformatedMissingAccountIdToken, environment: firstEnvironment)
                 expect{ try persister.persist(analytics: invalidAccountIdBatch) }.to(throwError(PersisterError.failedToPersistMissingAccountId))
             }
             
             it("Should retrieve and remove simple pesisted batch") {
+                let persister = AnalyticsPersister()
                 expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
                 let batch = self.firstSession(for: validToken, environment: firstEnvironment)
                 expect{ try persister.persist(analytics: batch) }.toNot(throwError())
@@ -75,7 +71,15 @@ class AnalyticsPersisterSpec: QuickSpec {
         }
         
         describe("Multiple Customers and BusinessUnits") {
-            expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
+            let validToken = SessionToken(value: "crmToken|accountId1|userId|anotherField|1000|2000|false|field|finalField")
+            let anotherValidToken = SessionToken(value: "crmToken|accountId1|userId|anotherField|1000|2000|false|field|finalField")
+            let validButDifferentAccountToken = SessionToken(value: "crmToken|accountId2|userId|anotherField|1000|2000|false|field|finalField")
+            
+            let firstEnvironment = Environment(baseUrl: "firstUrl", customer: "FirstCustomer", businessUnit: "BusinessUnit1")
+            let secondEnvironment = Environment(baseUrl: "firstUrl", customer: "FirstCustomer", businessUnit: "BusinessUnit2")
+            
+            let thirdEnvironment = Environment(baseUrl: "firstUrl", customer: "SecondCustomer", businessUnit: "BusinessUnit1")
+            
             /// batch-x-y-z-w where
             /// x: accountId
             /// y: customer
@@ -95,6 +99,7 @@ class AnalyticsPersisterSpec: QuickSpec {
             let batch2231 = self.thirdSession(for: validButDifferentAccountToken, environment: thirdEnvironment)
             
             it("Should persist and return multiple sessions") {
+                let persister = AnalyticsPersister()
                 let accountId1 = validToken.accountId
                 expect(accountId1).toNot(beNil())
                 
@@ -161,64 +166,6 @@ class AnalyticsPersisterSpec: QuickSpec {
                 expect{ try persister.analytics(accountId: accountId2!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)}.toNot(throwError())
                 let retrieved222 = try! persister.analytics(accountId: accountId2!, businessUnit: thirdEnvironment.businessUnit, customer: thirdEnvironment.customer)
                 expect(retrieved222.count).to(equal(1))
-            }
-            
-            it("Should clear all analytics older than specified timestamp") {
-                let accountId1 = validToken.accountId
-                expect(accountId1).toNot(beNil())
-                
-                let accountId2 = validButDifferentAccountToken.accountId
-                expect(accountId2).toNot(beNil())
-                
-                expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId1 (ie validToken && anotherValidToken)
-                /// 2. customer: FirstCustomer
-                /// 3. businessUnit: BusinessUnit1
-                expect{ try persister.analytics(accountId: accountId1!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)}.toNot(throwError())
-                let retrieved111 = try! persister.analytics(accountId: accountId1!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)
-                expect(retrieved111.count).to(equal(0))
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId1 (ie validToken && anotherValidToken)
-                /// 2. customer: FirstCustomer
-                /// 3. businessUnit: BusinessUnit2
-                expect{ try persister.analytics(accountId: accountId1!, businessUnit: secondEnvironment.businessUnit, customer: secondEnvironment.customer)}.toNot(throwError())
-                let retrieved112 = try! persister.analytics(accountId: accountId1!, businessUnit: secondEnvironment.businessUnit, customer: secondEnvironment.customer)
-                expect(retrieved112.count).to(equal(0))
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId1 (ie validToken && anotherValidToken)
-                /// 2. customer: SecondCustomer
-                /// 3. businessUnit: BusinessUnit1
-                expect{ try persister.analytics(accountId: accountId1!, businessUnit: thirdEnvironment.businessUnit, customer: thirdEnvironment.customer)}.toNot(throwError())
-                let retrieved123 = try! persister.analytics(accountId: accountId1!, businessUnit: thirdEnvironment.businessUnit, customer: thirdEnvironment.customer)
-                expect(retrieved123.count).to(equal(0))
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId2 (ie validButDifferentAccountToken)
-                /// 2. customer: FirstCustomer
-                /// 3. businessUnit: BusinessUnit1
-                expect{ try persister.analytics(accountId: accountId2!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)}.toNot(throwError())
-                let retrieved211 = try! persister.analytics(accountId: accountId2!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)
-                expect(retrieved211.count).to(equal(0))
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId2 (ie validButDifferentAccountToken)
-                /// 2. customer: FirstCustomer
-                /// 3. businessUnit: BusinessUnit2
-                expect{ try persister.analytics(accountId: accountId2!, businessUnit: secondEnvironment.businessUnit, customer: secondEnvironment.customer)}.toNot(throwError())
-                let retrieved212 = try! persister.analytics(accountId: accountId2!, businessUnit: secondEnvironment.businessUnit, customer: secondEnvironment.customer)
-                expect(retrieved212.count).to(equal(0))
-                
-                /// Fetch all batches for
-                /// 1. accountId: accountId2 (ie validButDifferentAccountToken)
-                /// 2. customer: SecondCustomer
-                /// 3. businessUnit: BusinessUnit1
-                expect{ try persister.analytics(accountId: accountId2!, businessUnit: firstEnvironment.businessUnit, customer: firstEnvironment.customer)}.toNot(throwError())
-                let retrieved222 = try! persister.analytics(accountId: accountId2!, businessUnit: thirdEnvironment.businessUnit, customer: thirdEnvironment.customer)
-                expect(retrieved222.count).to(equal(0))
             }
         }
     }

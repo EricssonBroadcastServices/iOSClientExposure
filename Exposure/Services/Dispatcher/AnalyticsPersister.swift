@@ -35,8 +35,8 @@ public struct AnalyticsPersister: StorageProvider {
     /// - throws: `FileManager` error
     fileprivate func storageDirectory(businessUnit: String, customer: String, accountId: String) throws -> URL {
         return try baseDirectory()
-            .appendingPathComponent(businessUnit)
             .appendingPathComponent(customer)
+            .appendingPathComponent(businessUnit)
             .appendingPathComponent(accountId)
     }
     
