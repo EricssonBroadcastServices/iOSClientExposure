@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 /// Request a `PlaybackEntitlement` for *DownloadVod*.
 ///
@@ -42,8 +41,8 @@ public struct DownloadVod: ExposureType, DRMRequest {
         return environment.apiUrl + "/download/" + assetId
     }
 
-    public var parameters: [String: Any] {
-        return playRequest.toJSON()
+    public var parameters: PlayRequest {
+        return playRequest
     }
 
     public var headers: [String: String]? {

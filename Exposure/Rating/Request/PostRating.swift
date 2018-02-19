@@ -9,15 +9,15 @@
 import Foundation
 
 /// Create/Update a rating for an asset given by currently logged in user.
-public struct PostRating: ExposureType {
-    public typealias Response = [String:Any]?
+public struct PostRating: ExposureType, Encodable {
+    public typealias Response = EmptyResponse?
     
     public var endpointUrl: String {
         return environment.apiUrl + "/rating/asset/" + assetId
     }
     
-    public var parameters: [String: Any] {
-        return [JSONKeys.rating.rawValue: rating]
+    public var parameters: PostRating {
+        return self
     }
     
     public var headers: [String: String]? {
@@ -43,9 +43,16 @@ public struct PostRating: ExposureType {
         self.rating = rating
     }
     
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(rating, forKey: .rating)
+    }
+    
     /// Keys used to specify `json` body for the request.
-    internal enum JSONKeys: String {
-        case rating = "rating"
+    internal enum CodingKeys: String, CodingKey {
+        case rating
     }
 }
 

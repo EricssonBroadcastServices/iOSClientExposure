@@ -39,8 +39,6 @@
 * `Xcode` 9.0+
 
 * Framework dependencies
-    - [`Alamofire`](https://github.com/Alamofire/Alamofire)
-    - Exact versions described in [Cartfile](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Cartfile)
 
 ## Installation
 

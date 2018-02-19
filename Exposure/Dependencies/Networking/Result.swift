@@ -1,9 +1,14 @@
 //
-//  NSString+Base64.h
-//  Gurpartap Singh
+//  Result.swift
+//  Exposure
 //
-//  Created by Gurpartap Singh on 06/05/12.
-//  Copyright (c) 2012 Gurpartap Singh. All rights reserved.
+//  Created by Fredrik Sjöberg on 2018-02-18.
+//  Copyright © 2018 emp. All rights reserved.
+//
+// Lightweight modification of the Alamofire framework.
+
+//
+//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +29,29 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/NSString.h>
-#import <Foundation/NSData.h>
+import Foundation
 
-@interface NSString (Base64Additions)
-
-+ (NSString *)base64StringFromData:(NSData *)data length:(NSUInteger)length;
-
-@end
+public enum Result<Value> {
+    case success(value: Value)
+    case failure(error: Error)
+    
+    /// Returns the associated value if the result is a success, `nil` otherwise.
+    public var value: Value? {
+        switch self {
+        case .success(let value):
+            return value
+        case .failure:
+            return nil
+        }
+    }
+    
+    /// Returns the associated error value if the result is a failure, `nil` otherwise.
+    public var error: Error? {
+        switch self {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
+    }
+}

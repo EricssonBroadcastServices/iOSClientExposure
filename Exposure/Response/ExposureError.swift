@@ -21,7 +21,6 @@ public enum ExposureError: Error {
     
     /// *Exposure* responded with an error message
     case exposureResponse(reason: ExposureResponseMessage)
-    
 }
 
 extension ExposureError {
@@ -53,6 +52,7 @@ extension ExposureError.SerializationFailureReason {
         }
     }
 }
+
 
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.

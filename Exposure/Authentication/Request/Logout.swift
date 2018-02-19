@@ -7,11 +7,10 @@
 //
 
 import Foundation
-import Alamofire
 
 /// *Exposure* endpoint integration for *Logout*.
 public struct Logout: ExposureType {
-    public typealias Response = AnyJSONType
+    public typealias Response = EmptyResponse
     
     /// Auth token to invalidate
     public let sessionToken: SessionToken

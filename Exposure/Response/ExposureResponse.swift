@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import Alamofire
 
 // Response struct wrapping the *Exposure* request, response and result.
 public struct ExposureResponse<Value: Decodable> {
     /// Internal data structure
-    internal let dataResponse: DataResponse<Value>
+    internal let dataResponse: Response<Value>
     
     /// The URL request sent to the server.
     public var request: URLRequest? {

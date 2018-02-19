@@ -1,9 +1,14 @@
 //
-//  NSString+Base64.h
-//  Gurpartap Singh
+//  HTTPMethod.swift
+//  Exposure
 //
-//  Created by Gurpartap Singh on 06/05/12.
-//  Copyright (c) 2012 Gurpartap Singh. All rights reserved.
+//  Created by Fredrik Sjöberg on 2018-02-18.
+//  Copyright © 2018 emp. All rights reserved.
+//
+// Lightweight modification of the Alamofire framework.
+
+//
+//  Copyright (c) 2014-2016 Alamofire Software Foundation (http://alamofire.org/)
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -24,11 +29,12 @@
 //  THE SOFTWARE.
 //
 
-#import <Foundation/NSString.h>
-#import <Foundation/NSData.h>
 
-@interface NSString (Base64Additions)
+import Foundation
 
-+ (NSString *)base64StringFromData:(NSData *)data length:(NSUInteger)length;
-
-@end
+public enum HTTPMethod: String {
+    case get     = "GET"
+    case post    = "POST"
+    case put     = "PUT"
+    case delete  = "DELETE"
+}

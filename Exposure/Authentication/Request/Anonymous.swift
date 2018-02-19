@@ -7,14 +7,18 @@
 //
 
 import Foundation
-import Alamofire
 
 /// *Exposure* endpoint integration for handling *Anonymous* login.
-public struct Anonymous: ExposureType {
+public struct Anonymous: ExposureType, Encodable {
     public typealias Response = SessionToken
     
-    /// `DeviceInfo` required by *Exposure*
-    public let deviceInfo: DeviceInfo = DeviceInfo()
+    /// Unique device identifier
+    public var deviceId: String? {
+        return UIDevice.current.identifierForVendor?.uuidString
+    }
+    
+    /// Device specific information
+    public let device: Device = Device()
     
     /// `Environment` to use
     public let environment: Environment
@@ -27,14 +31,27 @@ public struct Anonymous: ExposureType {
         return environment.apiUrl + "/auth/anonymous"
     }
     
-    
-    public var parameters: [String: Any] {
-        return deviceInfo.toJSON()
+    public var parameters: Anonymous {
+        return self
     }
     
     /// `Anonymous` requires no headers
     public var headers: [String: String]? {
         return nil
+    }
+    
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(device, forKey: .device)
+        try container.encodeIfPresent(deviceId, forKey: .deviceId)
+    }
+    
+    /// Keys used to specify `json` body for the request.
+    internal enum CodingKeys: String, CodingKey {
+        case deviceId
+        case device
     }
 }
 

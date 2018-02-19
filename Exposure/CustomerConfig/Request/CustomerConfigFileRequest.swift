@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 
 /// *Exposure* endpoint integration for *CustomerConfig.File*.
 public struct CustomerConfigFileRequest: ExposureType {

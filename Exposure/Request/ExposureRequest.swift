@@ -7,45 +7,19 @@
 //
 
 import Foundation
-import Alamofire
 
 /// Responsible for sending a request and receiving response from the server.
 ///
 /// Errors are mapped to typed *ExposureErrors* by default. Specialized error handling can be performed through the `mapError(callback:)` function.
-public class ExposureRequest<Response: Decodable> {
-    /// Internally handled by Alamofire
-    internal let dataRequest: DataRequest
+public class ExposureRequest<Object: Decodable> {
+    /// Internal dataRequest handling the actual networking
+    internal let dataRequest: Request
     
-    /// Error mapping function where `error` and `data` are mapped to an `ExposureError`.
-    internal var mapError: (Error, Data?) -> ExposureError
-    
-    /// Default error mapper tries to materialize an `ExposureResponseMessage` from the response `Data` if (and only if) an `Error` occured. Failure to do so will forward the `generalError`.
-    internal init(dataRequest: DataRequest,
-                  mapError: @escaping (Error, Data?) -> ExposureError = { (error, data) in
-        if let data = data {
-            // Handle status code errors from Exposure
-            do {
-                let exposureResponse = try JSONDecoder().decode(ExposureResponseMessage.self, from: data)
-                return ExposureError.exposureResponse(reason: exposureResponse)
-            } catch (let error) {
-                return ExposureError.generalError(error: error)
-            }
-        }
-        return ExposureError.generalError(error: error)
-        }) {
+    internal init(dataRequest: Request) {
         self.dataRequest = dataRequest
-        self.mapError = mapError
-    }
-    
-    /// Customize the error mapping function
-    ///
-    /// - parameter callback: Callback to perform the error mapping
-    /// - returns: `Self`
-    public func mapError(callback: @escaping (Error, Data?) -> ExposureError) -> Self {
-        self.mapError = callback
-        return self
     }
 }
+
 
 extension ExposureRequest {
     /// Response materialization.
@@ -56,30 +30,87 @@ extension ExposureRequest {
     /// - parameter completionHandler: The code to be executed once the request has finished.
     /// - returns: `Self`
     @discardableResult
-    public func response
-        (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureResponse<Response>) -> Void) -> Self {
-        dataRequest.exposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Response>) in
+    public func response(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
+        dataRequest.response(responseSerializer: { request, response, data, error in
+            guard error == nil, let jsonData = data else {
+                if let statusError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
+                        do {
+                            let message = try JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData)
+                            return .failure(error: ExposureError.exposureResponse(reason: message))
+                        }
+                        catch let e {
+                            return .failure(error: e)
+                        }
+                    }
+                    else {
+                        return .failure(error: ExposureError.generalError(error: statusError))
+                    }
+                }
+                else {
+                    return .failure(error: ExposureError.generalError(error: error!))
+                }
+            }
+            
+            do {
+                let object = try JSONDecoder().exposureDecode(Object.self, from: jsonData)
+                return .success(value: object)
+            }
+            catch let e {
+                return .failure(error: e)
+            }
+        }) { (dataResponse: Response<Object>) in
             completionHandler(ExposureResponse(dataResponse: dataResponse))
         }
         return self
     }
     
-    /// Response materialization.
-    ///
-    /// Once the request has been created, calling this method will trigger the request and materialize the response.
-    ///
-    /// - parameter queue: The queue on which the completion handler is dispatched.
-    /// - parameter completionHandler: The code to be executed once the request has finished.
-    /// - returns: `Self`
     @discardableResult
-    public func emptyResponse
-        (queue: DispatchQueue? = nil,
-         completionHandler: @escaping (ExposureError?) -> Void) -> Self {
-        dataRequest.emptyExposureResponse(queue: queue, mapError: mapError) { (dataResponse: DataResponse<Data>) in
-            completionHandler(ExposureResponse(dataResponse: dataResponse).error)
+    public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureError?) -> Void) -> Self {
+        dataRequest.rawResponse(queue: queue) { request, response, data, error in
+            guard error == nil else {
+                if let statusError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
+                        do {
+                            let message = try JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData)
+                            return completionHandler(ExposureError.exposureResponse(reason: message))
+                        }
+                        catch let e {
+                            return completionHandler(ExposureError.generalError(error: e))
+                        }
+                    }
+                    else {
+                        return completionHandler(ExposureError.generalError(error: statusError))
+                    }
+                }
+                else {
+                    return completionHandler(ExposureError.generalError(error: error!))
+                }
+            }
+            completionHandler(nil)
         }
         return self
+    }
+    
+    
+}
+
+extension JSONDecoder {
+    internal func exposureDecode<T>(_ type: T.Type, from data: Data) throws -> T where T: Decodable {
+        do {
+            return try self.decode(type, from: data)
+        }
+        catch let decodingError as DecodingError {
+            switch decodingError {
+            case .dataCorrupted(let context): throw ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: data))
+            case .keyNotFound(_, let context): throw ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: data))
+            case .typeMismatch(_, let context): throw ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: data))
+            case .valueNotFound(_, let context): throw ExposureError.serialization(reason: .objectSerialization(reason: context.debugDescription, json: data))
+            }
+        }
+        catch (let e) {
+            throw ExposureError.serialization(reason: .objectSerialization(reason: "Unable to serialize object: \(e.localizedDescription)", json: data))
+        }
     }
 }
 
@@ -111,17 +142,6 @@ extension ExposureRequest {
     /// - returns: The request.
     public func validate<S : Sequence>(statusCode acceptableStatusCodes: S) -> Self where S.Iterator.Element == Int {
         dataRequest.validate(statusCode: acceptableStatusCodes)
-        return self
-    }
-    
-    /// Validates that the response has a content type in the specified sequence.
-    ///
-    /// If validation fails, subsequent calls to response handlers will have an associated error.
-    ///
-    /// - parameter contentType: The acceptable content types, which may specify wildcard types and/or subtypes.
-    /// - returns: The request.
-    public func validate<S : Sequence>(contentType acceptableContentTypes: S) -> Self where S.Iterator.Element == String {
-        dataRequest.validate(contentType: acceptableContentTypes)
         return self
     }
     

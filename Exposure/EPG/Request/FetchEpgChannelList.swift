@@ -14,7 +14,7 @@ public struct FetchEpgChannelList: ExposureType, SortedResponse, PageableRespons
     
     public var endpointUrl: String {
         let channelIds = assetIdFilter.assetIds?.joined(separator: ",") ?? ""
-        let escaped = ExposureURLEncoding.queryString.escape(channelIds)
+        let escaped = URLEncoding().escape(channelIds)
         return environment.apiUrl + "/epg/" + escaped
     }
     
@@ -81,6 +81,6 @@ extension FetchEpgChannelList {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest<Response> {
-        return request(.get, encoding: ExposureURLEncoding(destination: .queryString))
+        return request(.get)
     }
 }

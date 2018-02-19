@@ -95,12 +95,6 @@ class RatingSpec: QuickSpec {
                 let endpoint = "/rating/asset/" + assetId
                 expect(rating.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
-            
-            it("should generate paramters") {
-                let params = rating.parameters
-                expect(params).toNot(beNil())
-                expect(params.count).to(equal(1))
-            }
         }
         
         describe("DeleteRating") {
