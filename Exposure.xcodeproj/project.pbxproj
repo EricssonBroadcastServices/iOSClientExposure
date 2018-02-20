@@ -167,7 +167,6 @@
 		76A89D5E2020F1E100C23579 /* EncryptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D572020F1E100C23579 /* EncryptionProvider.swift */; };
 		76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */; };
 		76A89D602020F1E100C23579 /* StorageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D592020F1E100C23579 /* StorageProvider.swift */; };
-		76A89DB82020FC8900C23579 /* HeartbeatsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89DB72020FC8800C23579 /* HeartbeatsProvider.swift */; };
 		76A89DC12021C75B00C23579 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A89DB92021C75900C23579 /* NSString+Base64.m */; };
 		76A89DC22021C75B00C23579 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A89DBA2021C75A00C23579 /* NSData+Base64.m */; };
 		76A89DC32021C75B00C23579 /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 76A89DBB2021C75A00C23579 /* NSData+Base64.h */; };
@@ -409,7 +408,6 @@
 		76A89D572020F1E100C23579 /* EncryptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionProvider.swift; sourceTree = "<group>"; };
 		76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherNetworkHandler.swift; sourceTree = "<group>"; };
 		76A89D592020F1E100C23579 /* StorageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageProvider.swift; sourceTree = "<group>"; };
-		76A89DB72020FC8800C23579 /* HeartbeatsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartbeatsProvider.swift; sourceTree = "<group>"; };
 		76A89DB92021C75900C23579 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		76A89DBA2021C75A00C23579 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		76A89DBB2021C75A00C23579 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
@@ -1096,7 +1094,6 @@
 		76A89D562020F1E100C23579 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				76A89DB72020FC8800C23579 /* HeartbeatsProvider.swift */,
 				76A89D572020F1E100C23579 /* EncryptionProvider.swift */,
 				76A89D582020F1E100C23579 /* DispatcherNetworkHandler.swift */,
 				76A89D592020F1E100C23579 /* StorageProvider.swift */,
@@ -1422,7 +1419,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A89DB82020FC8900C23579 /* HeartbeatsProvider.swift in Sources */,
 				76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */,
 				76A842ED1EA7667D00BDAF2C /* Login.swift in Sources */,
 				766FBB801ECA2B2B00EBEC53 /* LinkedEntity.swift in Sources */,

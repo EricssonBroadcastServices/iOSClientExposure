@@ -45,8 +45,8 @@ public class Dispatcher {
     /// Manages local storage access for persisted analytics payloads
     fileprivate let persister: AnalyticsPersister
     
-    /// Provides the `dispatch` with a configured heartbeat if available
-    fileprivate weak var heartbeatsProvider: HeartbeatsProvider?
+    /// Provides the `dispatcher` with a configured heartbeat if available
+    fileprivate var heartbeatsProvider: () -> AnalyticsEvent?
     
     /// Simple timer used to trigger the anaytics flush proceedure
     fileprivate var flushTrigger: Timer?
@@ -57,7 +57,7 @@ public class Dispatcher {
     
     internal var networkHandler: DispatcherNetworkHandler
     
-    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: HeartbeatsProvider) {
+    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent?) {
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                            environment: environment,
                                            playToken: playSessionId,
@@ -211,7 +211,7 @@ extension Dispatcher {
             guard configuration.heartbeatsEnabled else { return }
             if let lastDispatch = configuration.lastDispatchTimestamp {
                 if (currentTime - lastDispatch) > configuration.reportingTimeinterval || forced {
-                    if let heartbeat = heartbeatsProvider?.requestHeatbeat() {
+                    if let heartbeat = heartbeatsProvider() {
                         appendToCurrentBatch(event: heartbeat)
                         flush()
                     }
