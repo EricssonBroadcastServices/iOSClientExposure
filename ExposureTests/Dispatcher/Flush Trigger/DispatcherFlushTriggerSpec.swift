@@ -16,7 +16,6 @@ class DispatcherFlushTriggerSpec: QuickSpec {
     let environment = Environment(baseUrl: "url", customer: "DispatcherCustomer", businessUnit: "DispatcherBusinessUnit")
     let sessionToken = SessionToken(value: "crmToken|DispatcherAccountId1|userId|anotherField|1000|2000|false|field|finalField")
     
-    var heartbeatsProvider = MockedHeartbeatProvider()
     override func spec() {
         describe("Flush Trigger") {
             //
@@ -32,8 +31,7 @@ class DispatcherFlushTriggerSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 expect(dispatcher.flushTriggerEnabled).to(beFalse())
             }
             
@@ -41,8 +39,7 @@ class DispatcherFlushTriggerSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.flushTrigger(enabled: true)
                 expect(dispatcher.flushTriggerEnabled).to(beTrue())
             }
@@ -51,8 +48,7 @@ class DispatcherFlushTriggerSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.flushTrigger(enabled: true)
                 dispatcher.heartbeat(enabled: true)
                 
@@ -70,8 +66,7 @@ class DispatcherFlushTriggerSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: events,
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: events) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let networkHandler = FlushTriggerNetworkHandler()
                 dispatcher.networkHandler = networkHandler
                 dispatcher.flushTrigger(enabled: false)

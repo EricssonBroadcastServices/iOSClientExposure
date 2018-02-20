@@ -1,5 +1,5 @@
 //
-//  MockedHeartbeatProvider.swift
+//  MockedHeartbeat.swift
 //  AnalyticsTests
 //
 //  Created by Fredrik Sjöberg on 2017-12-15.
@@ -8,14 +8,6 @@
 
 import Foundation
 @testable import Exposure
-
-class MockedHeartbeatProvider: HeartbeatsProvider {
-    func requestHeatbeat() -> AnalyticsEvent {
-        return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000)
-    }
-    
-    public init() { }
-}
 
 struct MockedHeartbeat: AnalyticsEvent {
     let eventType: String = "Playback.Heartbeat"

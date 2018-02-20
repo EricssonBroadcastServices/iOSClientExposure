@@ -18,7 +18,6 @@ class DispatcherTerminationSpec: QuickSpec {
     
     let deliverUndelivered = TerminationNetworkHandler()
     let persistUndelivered = TerminationNetworkHandler()
-    var heartbeatsProvider = MockedHeartbeatProvider()
     override func spec() {
         describe("Termination") {
             //
@@ -37,8 +36,7 @@ class DispatcherTerminationSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.heartbeat(enabled: true)
                 dispatcher.flushTrigger(enabled: true)
                 dispatcher.terminate()
@@ -50,8 +48,7 @@ class DispatcherTerminationSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [event],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.networkHandler = self.deliverUndelivered
                 dispatcher.terminate()
                 expect(self.deliverUndelivered.payloadDelivered.count).toEventually(equal(1), timeout: 6)
@@ -64,8 +61,7 @@ class DispatcherTerminationSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: "Termination-dispatch-persistence-id",
-                                            startupEvents: [event],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 self.persistUndelivered.failsToDispatch = true
                 dispatcher.networkHandler = self.persistUndelivered
                 dispatcher.terminate()

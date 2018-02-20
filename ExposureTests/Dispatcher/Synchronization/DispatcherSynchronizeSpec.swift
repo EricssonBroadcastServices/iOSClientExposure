@@ -16,7 +16,6 @@ class DispatcherSynchronizeSpec: QuickSpec {
     let environment = Environment(baseUrl: "url", customer: "DispatcherCustomer", businessUnit: "DispatcherBusinessUnit")
     let sessionToken = SessionToken(value: "crmToken|DispatcherAccountId1|userId|anotherField|1000|2000|false|field|finalField")
     
-    var heartbeatsProvider = MockedHeartbeatProvider()
     override func spec() {
         describe("Termination") {
             
@@ -34,8 +33,7 @@ class DispatcherSynchronizeSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let networkHandler = SynchronizeNetworkHandler()
                 networkHandler.failsToSync = true
                 dispatcher.networkHandler = networkHandler
@@ -50,8 +48,7 @@ class DispatcherSynchronizeSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let networkHandler = SynchronizeNetworkHandler()
                 dispatcher.networkHandler = networkHandler
                 dispatcher.enqueue(event: event)

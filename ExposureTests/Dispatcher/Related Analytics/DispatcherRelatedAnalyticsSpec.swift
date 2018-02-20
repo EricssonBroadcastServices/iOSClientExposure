@@ -18,8 +18,6 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
     let oldButRelatedToken = SessionToken(value: "anotherCrmToken|RelatedDispatchAccountId1|userId|changedField|1111|2222|false|otherField|RealyFinalField")
     let unrelatedAccountId = SessionToken(value: "anotherCrmToken|CompletelyDifferentAccountId|userId|changedField|1111|2222|false|otherField|RealyFinalField")
     
-    var heartbeatsProvider = MockedHeartbeatProvider()
-    
     override func spec() {
         describe("Related Analytics") {
             // Process Related Analytics
@@ -46,8 +44,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 let networkHandler = RelatedAnalyticsNetworkHandler()
                 dispatcher.networkHandler = networkHandler
@@ -77,8 +74,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 let networkHandler = RelatedAnalyticsNetworkHandler()
                 networkHandler.deliveryResult = .failsWithInvalidSessionToken
@@ -110,8 +106,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
-                                            startupEvents: [],
-                                            heartbeatsProvider: self.heartbeatsProvider)
+                                            startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
 
                 let networkHandler = RelatedAnalyticsNetworkHandler()
                 networkHandler.deliveryResult = .success

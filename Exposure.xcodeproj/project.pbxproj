@@ -183,7 +183,7 @@
 		76A89E1A2021CFF300C23579 /* FlushTriggerNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E052021CFF300C23579 /* FlushTriggerNetworkHandler.swift */; };
 		76A89E1B2021CFF300C23579 /* DispatcherHeartbeatSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E072021CFF300C23579 /* DispatcherHeartbeatSpec.swift */; };
 		76A89E1C2021CFF300C23579 /* HeartbeatNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E082021CFF300C23579 /* HeartbeatNetworkHandler.swift */; };
-		76A89E1D2021CFF300C23579 /* MockedHeartbeatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E092021CFF300C23579 /* MockedHeartbeatProvider.swift */; };
+		76A89E1D2021CFF300C23579 /* MockedHeartbeat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E092021CFF300C23579 /* MockedHeartbeat.swift */; };
 		76A89E1E2021CFF300C23579 /* DispatcherRelatedAnalyticsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E0C2021CFF300C23579 /* DispatcherRelatedAnalyticsSpec.swift */; };
 		76A89E1F2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E0D2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift */; };
 		76A89E202021CFF300C23579 /* DispatcherSynchronizeSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E0F2021CFF300C23579 /* DispatcherSynchronizeSpec.swift */; };
@@ -424,7 +424,7 @@
 		76A89E052021CFF300C23579 /* FlushTriggerNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlushTriggerNetworkHandler.swift; sourceTree = "<group>"; };
 		76A89E072021CFF300C23579 /* DispatcherHeartbeatSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherHeartbeatSpec.swift; sourceTree = "<group>"; };
 		76A89E082021CFF300C23579 /* HeartbeatNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeartbeatNetworkHandler.swift; sourceTree = "<group>"; };
-		76A89E092021CFF300C23579 /* MockedHeartbeatProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockedHeartbeatProvider.swift; sourceTree = "<group>"; };
+		76A89E092021CFF300C23579 /* MockedHeartbeat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockedHeartbeat.swift; sourceTree = "<group>"; };
 		76A89E0C2021CFF300C23579 /* DispatcherRelatedAnalyticsSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherRelatedAnalyticsSpec.swift; sourceTree = "<group>"; };
 		76A89E0D2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RelatedAnalyticsNetworkHandler.swift; sourceTree = "<group>"; };
 		76A89E0F2021CFF300C23579 /* DispatcherSynchronizeSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherSynchronizeSpec.swift; sourceTree = "<group>"; };
@@ -1170,7 +1170,7 @@
 			children = (
 				76A89E072021CFF300C23579 /* DispatcherHeartbeatSpec.swift */,
 				76A89E082021CFF300C23579 /* HeartbeatNetworkHandler.swift */,
-				76A89E092021CFF300C23579 /* MockedHeartbeatProvider.swift */,
+				76A89E092021CFF300C23579 /* MockedHeartbeat.swift */,
 			);
 			path = Heartbeat;
 			sourceTree = "<group>";
@@ -1621,7 +1621,7 @@
 				7672F2611F93A80500F892C3 /* SearchResponseAutocompleteSpec.swift in Sources */,
 				7646D6881EF00A6B009E5C2B /* PlayRequestSpec.swift in Sources */,
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
-				76A89E1D2021CFF300C23579 /* MockedHeartbeatProvider.swift in Sources */,
+				76A89E1D2021CFF300C23579 /* MockedHeartbeat.swift in Sources */,
 				76A89E1F2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift in Sources */,
 				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */,
