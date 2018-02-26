@@ -49,6 +49,7 @@ public struct Program: Decodable {
 extension Program {
     internal static var exposureDateFormatter: DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
         formatter.timeZone = TimeZone(abbreviation: "UTC")
         return formatter
     }

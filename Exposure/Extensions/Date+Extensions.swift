@@ -12,6 +12,8 @@ extension Date {
     /// Date formatter for utc.
     public static func utcFormatter() -> DateFormatter {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.timeZone = TimeZone(abbreviation: "UTC")
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return formatter
     }

@@ -13,6 +13,9 @@
 #### Changes
 * Removed `HeartbeatsProvider` protocol in favour of a closure
 
+#### Bug Fixes
+* `EMP-11029` Forced locale to en_GB for framework dependantn date calculations
+
 ## 0.77.0
 
 #### Changes
