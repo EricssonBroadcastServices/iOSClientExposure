@@ -6,7 +6,7 @@
 * [License](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/LICENSE)
 * [Requirements](#requirements)
 * [Installation](#installation)
-- [Getting Started](#getting-started)
+* [Getting Started](#getting-started)
 * Documentation
     - [Authentication Best practices](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/authentication-best-practices.md)
     - [Requesting Playback Entitlements](https://github.com/EricssonBroadcastServices/iOSClientExposure/Documentation/requesting-playback-entitlements.md)
