@@ -10,6 +10,9 @@
 
 ## 2.0.78
 
+#### Features
+* `EMP-11047` `ExposureError` now exposes an error `Domain`
+
 #### Changes
 * Removed `HeartbeatsProvider` protocol in favour of a closure
 

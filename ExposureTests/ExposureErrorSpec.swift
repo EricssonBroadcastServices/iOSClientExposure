@@ -32,6 +32,11 @@ class ExposureErrorSpec: QuickSpec {
                 
                 expect(desc).to(equal("JSON Serialization error: \(anyError.localizedDescription)"))
             }
+            
+            it("should have an error domain") {
+                let error = ExposureError.exposureResponse(reason: ExposureResponseMessage(httpCode: 10, message: "ERROR"))
+                expect(error.domain).to(equal(String(describing: type(of: error))+"Domain"))
+            }
         }
     }
 }
