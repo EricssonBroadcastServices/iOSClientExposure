@@ -75,3 +75,6 @@ extension ExposureError.SerializationFailureReason {
     }
 }
 
+extension ExposureError {
+    public var domain: String { return String(describing: type(of: self))+"Domain" }
+}
