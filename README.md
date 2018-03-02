@@ -12,7 +12,7 @@
     - [Requesting Playback Entitlements](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/requesting-playback-entitlements.md)
     - [Content Discovery](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/content-discovery.md)
     - [Analytics Delivery](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/analytics-delivery.md)
-    - [Error Handling and Response Validation](https://github.com/EricssonBroadcastServices/iOSClientExposure/Documentation/blob/master/error-handling-and-response-validation.md)
+    - [Error Handling and Response Validation](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/error-handling-and-response-validation.md)
 * [Release Notes](#release-notes)
 * [Upgrade Guides](#upgrade-guides)
 * [Roadmap](#roadmap)
