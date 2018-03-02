@@ -873,6 +873,7 @@
 				76009F9D1F5D44A7008E1738 /* README.md */,
 				76B305CE1F5E7B2600EF2567 /* CHANGELOG.md */,
 				76B305D41F5E855100EF2567 /* UPGRADE_GUIDE.md */,
+				76BCE08220496CFE00F1E49C /* Documentation */,
 				76380DA51EBC784800691342 /* fastlane */,
 				76A842C11EA7604F00BDAF2C /* Cartfile */,
 				76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */,
@@ -1219,6 +1220,13 @@
 			);
 			path = Response;
 			sourceTree = "<group>";
+		};
+		76BCE08220496CFE00F1E49C /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Documentation;
+			sourceTree = SOURCE_ROOT;
 		};
 		76D704571F93909300D6FC6B /* Search */ = {
 			isa = PBXGroup;
