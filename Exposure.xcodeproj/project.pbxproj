@@ -208,6 +208,11 @@
 		76BBFB7C1EA8CE80001DBDDB /* Cartfile.private in Resources */ = {isa = PBXBuildFile; fileRef = 76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */; };
 		76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */; };
 		76BBFBD31EAA4A33001DBDDB /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */; };
+		76BCE08820496DEF00F1E49C /* content-discovery.md in Resources */ = {isa = PBXBuildFile; fileRef = 76BCE08320496DEF00F1E49C /* content-discovery.md */; };
+		76BCE08920496DEF00F1E49C /* error-handling-and-response-validation.md in Resources */ = {isa = PBXBuildFile; fileRef = 76BCE08420496DEF00F1E49C /* error-handling-and-response-validation.md */; };
+		76BCE08A20496DEF00F1E49C /* authentication-best-practices.md in Resources */ = {isa = PBXBuildFile; fileRef = 76BCE08520496DEF00F1E49C /* authentication-best-practices.md */; };
+		76BCE08B20496DEF00F1E49C /* requesting-playback-entitlements.md in Resources */ = {isa = PBXBuildFile; fileRef = 76BCE08620496DEF00F1E49C /* requesting-playback-entitlements.md */; };
+		76BCE08C20496DEF00F1E49C /* analytics-delivery.md in Resources */ = {isa = PBXBuildFile; fileRef = 76BCE08720496DEF00F1E49C /* analytics-delivery.md */; };
 		76C6EE432037968B00DED52E /* JSONEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6EE422037968B00DED52E /* JSONEncoding.swift */; };
 		76C6EE452037969500DED52E /* URLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C6EE442037969500DED52E /* URLEncoding.swift */; };
 		76D7045B1F93912E00D6FC6B /* SearchResponseList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D7045A1F93912E00D6FC6B /* SearchResponseList.swift */; };
@@ -450,6 +455,11 @@
 		76BBFB7B1EA8CE80001DBDDB /* Cartfile.private */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.private; sourceTree = SOURCE_ROOT; };
 		76BBFBC01EA8F6D2001DBDDB /* EnvironmentSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentSpec.swift; sourceTree = "<group>"; };
 		76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureResponseMessage.swift; sourceTree = "<group>"; };
+		76BCE08320496DEF00F1E49C /* content-discovery.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "content-discovery.md"; sourceTree = "<group>"; };
+		76BCE08420496DEF00F1E49C /* error-handling-and-response-validation.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "error-handling-and-response-validation.md"; sourceTree = "<group>"; };
+		76BCE08520496DEF00F1E49C /* authentication-best-practices.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "authentication-best-practices.md"; sourceTree = "<group>"; };
+		76BCE08620496DEF00F1E49C /* requesting-playback-entitlements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "requesting-playback-entitlements.md"; sourceTree = "<group>"; };
+		76BCE08720496DEF00F1E49C /* analytics-delivery.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "analytics-delivery.md"; sourceTree = "<group>"; };
 		76C6EE422037968B00DED52E /* JSONEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoding.swift; sourceTree = "<group>"; };
 		76C6EE442037969500DED52E /* URLEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoding.swift; sourceTree = "<group>"; };
 		76D7045A1F93912E00D6FC6B /* SearchResponseList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponseList.swift; sourceTree = "<group>"; };
@@ -1224,6 +1234,11 @@
 		76BCE08220496CFE00F1E49C /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				76BCE08720496DEF00F1E49C /* analytics-delivery.md */,
+				76BCE08520496DEF00F1E49C /* authentication-best-practices.md */,
+				76BCE08320496DEF00F1E49C /* content-discovery.md */,
+				76BCE08420496DEF00F1E49C /* error-handling-and-response-validation.md */,
+				76BCE08620496DEF00F1E49C /* requesting-playback-entitlements.md */,
 			);
 			path = Documentation;
 			sourceTree = SOURCE_ROOT;
@@ -1402,10 +1417,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				76380D9A1EB8A7C600691342 /* Fastfile in Resources */,
+				76BCE08920496DEF00F1E49C /* error-handling-and-response-validation.md in Resources */,
 				76B305D51F5E855100EF2567 /* UPGRADE_GUIDE.md in Resources */,
 				76380D991EB8A7C600691342 /* Appfile in Resources */,
 				76A842C21EA7604F00BDAF2C /* Cartfile in Resources */,
+				76BCE08C20496DEF00F1E49C /* analytics-delivery.md in Resources */,
+				76BCE08B20496DEF00F1E49C /* requesting-playback-entitlements.md in Resources */,
 				76B305CF1F5E7B2600EF2567 /* CHANGELOG.md in Resources */,
+				76BCE08A20496DEF00F1E49C /* authentication-best-practices.md in Resources */,
+				76BCE08820496DEF00F1E49C /* content-discovery.md in Resources */,
 				7667AEBA1EC1C44100C308FC /* .env in Resources */,
 				76BBFB7C1EA8CE80001DBDDB /* Cartfile.private in Resources */,
 				768ED8A71F0EBFF6008E8F9B /* update_dependency_graph.rb in Resources */,
