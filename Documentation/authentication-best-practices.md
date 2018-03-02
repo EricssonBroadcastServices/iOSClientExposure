@@ -1,7 +1,7 @@
 ## Authentication Best Practices
-Retrieving, persisting, validating and destroying user `SessionToken`s lays a the heart of the *EMP Exposure layer*.
+Retrieving, persisting, validating and destroying user `SessionToken`s lays at the heart of the *EMP Exposure layer*.
 
-Authentication requests return a valid `SessionToken` (or an encapsulating `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
+Authentication requests return a valid `SessionToken` (or an encapsulated `Credentials`) if the request is successful. This `sessionToken` should be persisted and used in subsequent calls when an authenticated user is required.
 
 ```Swift
 Authenticate(environment: exposureEnv)
