@@ -74,8 +74,6 @@ public class Dispatcher {
     }
     
     deinit {
-        self.synchronizeTimer?.setEventHandler { }
-        self.synchronizeTimer?.cancel()
         terminate()
         print("Dispatcher.deinit")
     }
@@ -118,6 +116,8 @@ extension Dispatcher {
     /// This method should be called before the `dispatcher` is disposed, preferably manually. It should be noted that since this involves an async networking call. If this fails, the `persister` will attempt to persist the related analytics.
     public func terminate() {
         print("❗️ Terminating Dispatcher")
+        synchronizeTimer?.setEventHandler { }
+        synchronizeTimer?.cancel()
         invalidateFlushTrigger()
         configuration.heartbeatsEnabled = false
         
@@ -241,9 +241,7 @@ extension Dispatcher {
         state = .flushing
         
         guard let clockOffset = configuration.synchronizedClockOffset else {
-            print("synchronizedClockOffset")
             synchronize{ [weak self] error in
-                print("DISPATCH SYNC")
                 guard let `self` = self else { return }
                 
                 let currentBatch = self.extractBatch()
@@ -258,7 +256,6 @@ extension Dispatcher {
                 self.synchronizeTimer?.setEventHandler{ [weak self] in
                     guard let `self` = self else { return }
                     DispatchQueue.main.async { [weak self] in
-                        print("synchronize")
                         self?.synchronize{ _ in }
                     }
                 }
