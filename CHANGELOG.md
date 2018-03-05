@@ -15,6 +15,7 @@
 
 #### Changes
 * Removed `HeartbeatsProvider` protocol in favour of a closure
+* `EMP-11065` `Dispatcher` synchronization on a regular interval
 
 #### Bug Fixes
 * `EMP-11029` Forced locale to en_GB for framework dependantn date calculations
