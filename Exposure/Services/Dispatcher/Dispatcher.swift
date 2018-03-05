@@ -54,6 +54,11 @@ public class Dispatcher {
     /// The interval, in seconds, between each analytics flush
     internal var flushInterval: TimeInterval = 3
     
+    fileprivate var synchronizeTimer: DispatchSourceTimer?
+    fileprivate var synchronizeQueue = DispatchQueue(label: "com.emp.exposure.dispatcher.synchronize",
+                                                     qos: DispatchQoS.background,
+                                                     attributes: DispatchQueue.Attributes.concurrent)
+    fileprivate let synchronizeIntervall: Int = 30 * 60 * 1000
     
     internal var networkHandler: DispatcherNetworkHandler
     
@@ -111,6 +116,8 @@ extension Dispatcher {
     /// This method should be called before the `dispatcher` is disposed, preferably manually. It should be noted that since this involves an async networking call. If this fails, the `persister` will attempt to persist the related analytics.
     public func terminate() {
         print("❗️ Terminating Dispatcher")
+        synchronizeTimer?.setEventHandler { }
+        synchronizeTimer?.cancel()
         invalidateFlushTrigger()
         configuration.heartbeatsEnabled = false
         
@@ -233,14 +240,33 @@ extension Dispatcher {
         
         state = .flushing
         
-        synchronize{ [weak self] error in
-            guard let weakSelf = self else { return }
-            
-            let currentBatch = weakSelf.extractBatch()
-            
-            weakSelf.realtime(analytics: currentBatch,
-                              clockOffset: weakSelf.configuration.synchronizedClockOffset)
+        guard let clockOffset = configuration.synchronizedClockOffset else {
+            synchronize{ [weak self] error in
+                guard let `self` = self else { return }
+                
+                let currentBatch = self.extractBatch()
+                
+                self.realtime(analytics: currentBatch,
+                                  clockOffset: self.configuration.synchronizedClockOffset)
+                
+                self.synchronizeTimer?.setEventHandler { }
+                self.synchronizeTimer?.cancel()
+                self.synchronizeTimer = DispatchSource.makeTimerSource(queue: self.synchronizeQueue)
+                self.synchronizeTimer?.scheduleRepeating(deadline: .now(), interval: .milliseconds(self.synchronizeIntervall))
+                self.synchronizeTimer?.setEventHandler{ [weak self] in
+                    guard let `self` = self else { return }
+                    DispatchQueue.main.async { [weak self] in
+                        self?.synchronize{ _ in }
+                    }
+                }
+                self.synchronizeTimer?.resume()
+            }
+            return
         }
+        
+        print("realtime")
+        realtime(analytics: extractBatch(),
+                 clockOffset: clockOffset)
     }
 }
 
@@ -513,28 +539,28 @@ extension Dispatcher {
     internal func synchronize(callback: @escaping (ExposureError?)  -> Void) {
         let clientStart = Date().millisecondsSince1970
         
-        networkHandler.initialize(using: currentBatch.environment) { [weak self] response, error in
-                if let error = error {
-                    callback(error)
-                    return
-                }
-
-                let clientEnd = Date().millisecondsSince1970
-                guard let success = response else {
-                    callback(nil)
-                    return
-                }
-                
-                if let receivedTime = success.receivedTime,
-                    let repliedTime = success.repliedTime {
-
-                    self?.configuration.synchronizedClockOffset = (clientEnd - repliedTime + clientStart - receivedTime) / 2
-                }
-
-                if let reportingInterval = success.settings?.secondsUntilNextReport {
-                    self?.configuration.reportingTimeinterval = Int64(reportingInterval) * 1000
-                }
+        self.networkHandler.initialize(using: self.currentBatch.environment) { [weak self] response, error in
+            if let error = error {
+                callback(error)
+                return
+            }
+            
+            let clientEnd = Date().millisecondsSince1970
+            guard let success = response else {
                 callback(nil)
+                return
+            }
+            
+            if let receivedTime = success.receivedTime,
+                let repliedTime = success.repliedTime {
+                
+                self?.configuration.synchronizedClockOffset = (clientEnd - repliedTime + clientStart - receivedTime) / 2
+            }
+            
+            if let reportingInterval = success.settings?.secondsUntilNextReport {
+                self?.configuration.reportingTimeinterval = Int64(reportingInterval) * 1000
+            }
+            callback(nil)
         }
     }
 }
