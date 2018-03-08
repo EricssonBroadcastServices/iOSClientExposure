@@ -11,6 +11,17 @@ import Foundation
 /// Defines the `json` payload loadable into an `AnalyticsBatch`
 public protocol AnalyticsPayload {
     var jsonPayload: [String: Any] { get }
+    
+    /// Indicates if the payload should be stored for a dispatch retry in the event of a failure.
+    ///
+    /// Default is `true`
+    var storeOnDispatchFailure: Bool { get }
+}
+
+extension AnalyticsPayload {
+    public var storeOnDispatchFailure: Bool {
+        return true
+    }
 }
 
 /// `AnalyticsEvent` is the basic building block of *EMP* specific analytics data.

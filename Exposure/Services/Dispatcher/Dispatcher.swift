@@ -366,7 +366,8 @@ extension Dispatcher {
             
             // In the event we have any undelivered payload at this point, merge it with the incoming `analytics` payload
             var combinedPayload = undeliveredBatch?.payload ?? []
-            combinedPayload.append(contentsOf: analytics.payload)
+            let toStore = analytics.payload.filter{ $0.storeOnDispatchFailure }
+            combinedPayload.append(contentsOf: toStore)
             undeliveredBatch = AnalyticsBatch(sessionToken: analytics.sessionToken,
                                               environment: analytics.environment,
                                               playToken: analytics.sessionId,
