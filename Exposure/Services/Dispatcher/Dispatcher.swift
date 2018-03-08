@@ -318,7 +318,7 @@ extension Dispatcher {
         
         // Update reporting interval
         if let reportingInterval = response.secondsUntilNextReport {
-            self.configuration.reportingTimeinterval = Int64(reportingInterval) * 1000
+            self.configuration.reportingTimeinterval = reportingInterval * 1000
         }
         
         // Last event in delivered batch marks last dispatch timestamp
@@ -346,10 +346,19 @@ extension Dispatcher {
             state = .idle
         }
         
-        if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
-            // The sessionToken was rendered invalid during playback. This signals player lockdown should be performed.
+        func shouldStore(byError error: ExposureError) -> Bool {
+            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
+                return true
+            }
+            
+            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
+                return true
+            }
+            
+            return false
         }
-        else {
+        
+        if shouldStore(byError: error) {
             // Check if the error was due to connection lost
             print("🚨 Failed to deliver payload: ",error.message)
             
@@ -558,7 +567,7 @@ extension Dispatcher {
             }
             
             if let reportingInterval = success.settings?.secondsUntilNextReport {
-                self?.configuration.reportingTimeinterval = Int64(reportingInterval) * 1000
+                self?.configuration.reportingTimeinterval = reportingInterval * 1000
             }
             callback(nil)
         }

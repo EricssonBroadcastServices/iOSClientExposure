@@ -33,18 +33,12 @@ extension ExposureRequest {
     public func response(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
         dataRequest.response(responseSerializer: { request, response, data, error in
             guard error == nil, let jsonData = data else {
-                if let statusError = error as? Request.Networking {
-                    if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
-                        do {
-                            let message = try JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData)
-                            return .failure(error: ExposureError.exposureResponse(reason: message))
-                        }
-                        catch let e {
-                            return .failure(error: e)
-                        }
+                if let networkingError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: let code) = networkingError, let statusData = data, let message = try? JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData) {
+                        return .failure(error: ExposureError.exposureResponse(reason: message))
                     }
                     else {
-                        return .failure(error: ExposureError.generalError(error: statusError))
+                        return .failure(error: ExposureError.generalError(error: networkingError))
                     }
                 }
                 else {
@@ -69,18 +63,12 @@ extension ExposureRequest {
     public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureError?) -> Void) -> Self {
         dataRequest.rawResponse(queue: queue) { request, response, data, error in
             guard error == nil else {
-                if let statusError = error as? Request.Networking {
-                    if case Request.Networking.unacceptableStatusCode(code: _) = statusError, let statusData = data {
-                        do {
-                            let message = try JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData)
-                            return completionHandler(ExposureError.exposureResponse(reason: message))
-                        }
-                        catch let e {
-                            return completionHandler(ExposureError.generalError(error: e))
-                        }
+                if let networkingError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: let code) = networkingError, let statusData = data, let message = try? JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData) {
+                        return completionHandler(ExposureError.exposureResponse(reason: message))
                     }
                     else {
-                        return completionHandler(ExposureError.generalError(error: statusError))
+                        return completionHandler(ExposureError.generalError(error: networkingError))
                     }
                 }
                 else {
