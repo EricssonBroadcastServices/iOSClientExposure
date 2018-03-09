@@ -73,10 +73,10 @@ public struct PlaybackEntitlement: Codable {
     public let entitlementType: String?
     
     /// Min bitrate to use
-    public let minBitrate: Int?
+    public let minBitrate: Int64?
     
     /// Max bitrate to use
-    public let maxBitrate: Int?
+    public let maxBitrate: Int64?
     
     /// Max height resolution
     public let maxResHeight: Int?
@@ -88,10 +88,10 @@ public struct PlaybackEntitlement: Codable {
     public let lastViewedOffset: Int?
     
     /// Last viewed time
-    public let lastViewedTime: Int?
+    public let lastViewedTime: Int64?
     
     /// Live timestamp
-    public let liveTime: Int?
+    public let liveTime: Int64?
     
     /// Identity of the product that permitted playback of the asset
     public let productId: String?
@@ -121,14 +121,14 @@ extension PlaybackEntitlement {
         
         entitlementType = try container.decodeIfPresent(String.self, forKey: .entitlementType)
         
-        minBitrate = try container.decodeIfPresent(Int.self, forKey: .minBitrate)
-        maxBitrate = try container.decodeIfPresent(Int.self, forKey: .maxBitrate)
+        minBitrate = try container.decodeIfPresent(Int64.self, forKey: .minBitrate)
+        maxBitrate = try container.decodeIfPresent(Int64.self, forKey: .maxBitrate)
         maxResHeight = try container.decodeIfPresent(Int.self, forKey: .maxResHeight)
         
         mdnRequestRouterUrl = try container.decodeIfPresent(String.self, forKey: .mdnRequestRouterUrl)
         lastViewedOffset = try container.decodeIfPresent(Int.self, forKey: .lastViewedOffset)
-        lastViewedTime = try container.decodeIfPresent(Int.self, forKey: .lastViewedTime)
-        liveTime = try container.decodeIfPresent(Int.self, forKey: .liveTime)
+        lastViewedTime = try container.decodeIfPresent(Int64.self, forKey: .lastViewedTime)
+        liveTime = try container.decodeIfPresent(Int64.self, forKey: .liveTime)
         productId = try container.decodeIfPresent(String.self, forKey: .productId)
     }
     

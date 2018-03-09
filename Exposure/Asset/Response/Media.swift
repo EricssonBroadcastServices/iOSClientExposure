@@ -28,7 +28,7 @@ public struct Media: Codable {
     public let width: Int?
     
     /// The duration of the media in milliseconds.
-    public let durationMillis: Int?
+    public let durationMillis: Int64?
     
     /// The id of the EPG program this media is for.
     public let programId: String?

@@ -510,18 +510,10 @@
 		3E48B75E1F83A98800D345BF /* CustomerConfig */ = {
 			isa = PBXGroup;
 			children = (
-				3E48B75F1F83A99D00D345BF /* Parameters */,
 				3E48B7601F83A9A100D345BF /* Request */,
 				3E48B7611F83A9A900D345BF /* Response */,
 			);
 			path = CustomerConfig;
-			sourceTree = "<group>";
-		};
-		3E48B75F1F83A99D00D345BF /* Parameters */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Parameters;
 			sourceTree = "<group>";
 		};
 		3E48B7601F83A9A100D345BF /* Request */ = {

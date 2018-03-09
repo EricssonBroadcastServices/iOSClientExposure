@@ -23,7 +23,7 @@ public struct AssetRights: Codable {
     
     
     public let playCount: Int?
-    public let maxFileSize: Int?
+    public let maxFileSize: Int64?
     
     public let activation: String?
     public let expiration: String?

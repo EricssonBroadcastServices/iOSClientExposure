@@ -13,7 +13,7 @@ public struct AssetUserPlayHistory: Codable {
     public let lastViewedOffset: Int
     
     /// Last viewed time, when the user last viewed the asset.
-    public let lastViewedTime: Int
+    public let lastViewedTime: Int64
     
     /// The program id if the asset was viewed as catchup or live.
     public let programId: String?
