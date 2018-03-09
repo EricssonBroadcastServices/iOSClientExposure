@@ -42,9 +42,6 @@ public class Dispatcher {
     /// Stores the internal dispatch environment
     fileprivate var configuration: Configuration
     
-    /// Manages local storage access for persisted analytics payloads
-    fileprivate let persister: AnalyticsPersister
-    
     /// Provides the `dispatcher` with a configured heartbeat if available
     fileprivate var heartbeatsProvider: () -> AnalyticsEvent?
     
@@ -69,13 +66,21 @@ public class Dispatcher {
                                            payload: startupEvents)
         self.configuration = Configuration()
         self.heartbeatsProvider = heartbeatsProvider
-        self.persister = AnalyticsPersister()
         self.networkHandler = AlamofireNetworkHandler()
+    }
+    
+    /// Internal log level
+    internal static var logLevel: LogLevel = .none
+    
+    /// LogLevel option
+    internal enum LogLevel {
+        case none
+        case debug
     }
     
     deinit {
         terminate()
-        print("Dispatcher.deinit")
+        Dispatcher.log(message: "Dispatcher.deinit")
     }
     
     /// Will merge undelivered events with the currently active batch. The async nature of dispatch requires us to have one point where we, before delivery, can decide what to send.
@@ -88,7 +93,8 @@ public class Dispatcher {
         var current = currentBatch
         
         if let undeliveredBatch = undeliveredBatch {
-            print("♻️ Retrying delivery by merging \(undeliveredBatch.payload.count) underlivered events")
+            Dispatcher.log(message: "♻️ Retrying delivery by merging \(undeliveredBatch.payload.count) underlivered events")
+            Dispatcher.log(status: "🕘", delivery: undeliveredBatch)
             // By design, undeliveredBatch events occured before the currentBatch events, no sort should be required
             
             var combinedPayload = undeliveredBatch.payload
@@ -109,13 +115,15 @@ public class Dispatcher {
     }
 }
 
+
+
 extension Dispatcher {
     /// Dispatch termination requires any outstanding analytics events be processed before the `dispatcher` is disposed. This happens in two steps where the first consists of an attempt to dispatch the events. If that fails, for example due to networking issues, the payload will be persisted on disk locally.
     ///
     /// - important:
     /// This method should be called before the `dispatcher` is disposed, preferably manually. It should be noted that since this involves an async networking call. If this fails, the `persister` will attempt to persist the related analytics.
     public func terminate() {
-        print("❗️ Terminating Dispatcher")
+        Dispatcher.log(message: "❗️ Terminating Dispatcher")
         synchronizeTimer?.setEventHandler { }
         synchronizeTimer?.cancel()
         invalidateFlushTrigger()
@@ -124,33 +132,41 @@ extension Dispatcher {
         let current = extractBatch()
         guard !current.payload.isEmpty else { return }
         
-        networkHandler.deliver(batch: current,
-                               clockOffset: configuration.synchronizedClockOffset) { [persister] _, error in
-                // NOTE: Capture of self needs to be strong. Else we can not ensure saving will work properly. Reference will be cleaned up after block finishes.
-                if let error = error {
-                    // These events need to be stored to disk
-                    print("🚨 Failed to deliver events on termination.", error.message)
-                    
-                    do {
-                        try persister.persist(analytics: current)
-                        print("💾 Analytics data saved to disk")
-                    }
-                    catch {
-                        print("🚨 AnalyticsPersister failed to persist analytics data before terminating",error)
-                    }
+        networkHandler.deliver(batch: current, clockOffset: configuration.synchronizedClockOffset) { _, error in
+            Dispatcher.log(message: "delivering analytics on terminate")
+            if let error = error {
+                // These events need to be stored to disk
+                Dispatcher.log(message: "🚨 Failed to deliver events on termination. \(error.message)")
+                do {
+                    try AnalyticsPersister().persist(analytics: current)
+                    Dispatcher.log(message: "💾 Analytics data saved to disk")
                 }
-                else {
-                    print("Delivered: \(current.payload.count) events before terminating")
-                    current
-                        .payload
-                        .flatMap{ $0 as? AnalyticsEvent}
-                        .forEach{
-                            print(" ✅ ",$0.eventType)
-                    }
+                catch {
+                    Dispatcher.log(message: "🚨 Analytics persister failed to persist")
                 }
+            }
+            else {
+                Dispatcher.log(message: "Delivered: \(current.payload.count) events before terminating")
+                Dispatcher.log(delivery: current)
+            }
         }
     }
     
+    internal static func log(message: String) {
+        if case .debug = logLevel {
+            print(message)
+        }
+    }
+    internal static func log(status: String = "✅", delivery: AnalyticsBatch) {
+        if case .debug = logLevel {
+            delivery
+                .payload
+                .flatMap{ $0 as? AnalyticsEvent}
+                .forEach{
+                    print(" \(status) ",$0.timestamp, $0.eventType,"payload", $0.jsonPayload.count)
+            }
+        }
+    }
 }
 
 extension Dispatcher {
@@ -246,8 +262,7 @@ extension Dispatcher {
                 
                 let currentBatch = self.extractBatch()
                 
-                self.realtime(analytics: currentBatch,
-                                  clockOffset: self.configuration.synchronizedClockOffset)
+                self.realtime(analytics: currentBatch, clockOffset: self.configuration.synchronizedClockOffset)
                 
                 self.synchronizeTimer?.setEventHandler { }
                 self.synchronizeTimer?.cancel()
@@ -263,13 +278,11 @@ extension Dispatcher {
             }
             return
         }
-        
-        print("realtime")
-        realtime(analytics: extractBatch(),
-                 clockOffset: clockOffset)
+        realtime(analytics: extractBatch(), clockOffset: clockOffset)
     }
 }
 
+/// MARK: Realtime
 extension Dispatcher {
     /// Delivers the specified analytics batch to the server and processes the resulting response.
     /// Failure to dispatch will result in a retry if applicable.
@@ -277,23 +290,60 @@ extension Dispatcher {
     /// - parameter analytics: analytics batch to deliver
     /// - parameter clockOffset: current offset between server timestamp and device time, or `nil` if not available
     fileprivate func realtime(analytics: AnalyticsBatch, clockOffset: Int64?) {
-        print("Delivering Realtime: \(analytics.payload.count) events")
-        analytics
-            .payload
-            .flatMap{ $0 as? AnalyticsEvent}
-            .forEach{
-                print(" 📤 ",$0.eventType)
+        Dispatcher.log(message: "Delivering Realtime: \(analytics.payload.count) events")
+        
+        let shouldRetryPolicy: (ExposureError) -> Bool = { error -> Bool in
+            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
+                return true
+            }
+            
+            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
+                return true
+            }
+            return false
         }
         
-        networkHandler
-            .deliver(batch: analytics,
-                     clockOffset: clockOffset) { [weak self] success, error in
-                        if let error = error {
-                            self?.handle(error: error, for: analytics)
+        let shouldPersistPolicy: (ExposureError) -> Bool = { error -> Bool in
+            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
+                return true
+            }
+            
+            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
+                return true
+            }
+            return false
+        }
+        
+        networkHandler.deliver(batch: analytics, clockOffset: clockOffset) { [weak self] response, error in
+            if let response = response {
+                Dispatcher.log(message: "Delivered: \(analytics.payload.count) events")
+                Dispatcher.log(delivery: analytics)
+                self?.processRealtime(response: response, for: analytics)
+                return
+            }
+            
+            if let error = error {
+                guard let `self` = self else {
+                    Dispatcher.log(message: "Realtime Delivery error, dispatcher gone")
+                    if shouldPersistPolicy(error) {
+                        /// Dispatcher has dellocated, persist data if criteria are met
+                        do {
+                            try AnalyticsPersister().persist(analytics: analytics)
+                            Dispatcher.log(message: "💾 Analytics data saved to disk")
                         }
-                        else if let success = success {
-                            self?.process(response: success, for: analytics)
+                        catch {
+                            Dispatcher.log(message: "🚨 Analytics persister failed to persist")
                         }
+                    }
+                    return
+                }
+                Dispatcher.log(message: "Realtime Delivery error")
+                
+                /// Some sort of failure
+                if shouldRetryPolicy(error) {
+                    self.markForRetry(batch: analytics)
+                }
+            }
         }
     }
     
@@ -302,18 +352,10 @@ extension Dispatcher {
     ///
     /// - parameter response: Response received while delivering the analytics batch.
     /// - parameter analytics: Analytics batch successfully delivered.
-    private func process(response: AnalyticsConfigResponse, for analytics: AnalyticsBatch) {
+    private func processRealtime(response: AnalyticsConfigResponse, for analytics: AnalyticsBatch) {
         defer {
             // Update state
             state = .idle
-        }
-        
-        print("Delivered: \(analytics.payload.count) events")
-        analytics
-            .payload
-            .flatMap{ $0 as? AnalyticsEvent}
-            .forEach{
-                print(" ✅ ",$0.eventType)
         }
         
         // Update reporting interval
@@ -334,45 +376,27 @@ extension Dispatcher {
         }
     }
     
-    /// Handles retry logic for failed delivery of realtime analytics.
+    /// Marks the specified batch as a candidate dispatch retry.
     ///
-    /// - parameter error: `ExposureError` casuing the delivery to fail
-    /// - parameter analytics: the batch for which delivery failed
-    ///
-    /// - Note: This method should **not** be called for offline analytics. *INVALID_SESSION_TOKEN* should not lock playback for previously generated analytics trying to be sent on a new session.
-    private func handle(error: ExposureError, for analytics: AnalyticsBatch) {
+    /// - parameter batch: Batch to retry
+    private func markForRetry(batch: AnalyticsBatch) {
         defer {
             // Update state
             state = .idle
         }
         
-        func shouldStore(byError error: ExposureError) -> Bool {
-            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
-                return true
-            }
-            
-            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
-                return true
-            }
-            
-            return false
-        }
+        /// Even error events should count as a dispatch attempt
+        configuration.lastDispatchTimestamp = Date().millisecondsSince1970
+        Dispatcher.log(message: "📎 Marking failed dispatch events for retry")
         
-        if shouldStore(byError: error) {
-            // Check if the error was due to connection lost
-            print("🚨 Failed to deliver payload: ",error.message)
-            
-            print("📎 Marking failed dispatch events for retry")
-            
-            // In the event we have any undelivered payload at this point, merge it with the incoming `analytics` payload
-            var combinedPayload = undeliveredBatch?.payload ?? []
-            let toStore = analytics.payload.filter{ $0.storeOnDispatchFailure }
-            combinedPayload.append(contentsOf: toStore)
-            undeliveredBatch = AnalyticsBatch(sessionToken: analytics.sessionToken,
-                                              environment: analytics.environment,
-                                              playToken: analytics.sessionId,
-                                              payload: combinedPayload)
-        }
+        // In the event we have any undelivered payload at this point, merge it with the incoming `analytics` payload
+        var combinedPayload = undeliveredBatch?.payload ?? []
+        let toStore = batch.payload.filter{ $0.storeOnDispatchFailure }
+        combinedPayload.append(contentsOf: toStore)
+        undeliveredBatch = AnalyticsBatch(sessionToken: batch.sessionToken,
+                                          environment: batch.environment,
+                                          playToken: batch.sessionId,
+                                          payload: combinedPayload)
     }
 }
 
@@ -395,7 +419,6 @@ extension Dispatcher {
     fileprivate func processUndeliveredAnalytics() {
         procesRelatedAnalytics()
         clearStaleAnalytics()
-        
     }
     
     /// Will fetch and dispatch any previously persisted analytics with the same `accountId` as the currently active batch.
@@ -404,49 +427,31 @@ extension Dispatcher {
     private func procesRelatedAnalytics() {
         guard let accountId = currentBatch.sessionToken.accountId else { return }
         do {
-            let relatedAnalytics = try persister.analytics(accountId: accountId,
-                                                           businessUnit: currentBatch.businessUnit,
-                                                           customer: currentBatch.customer)
+            let relatedAnalytics = try AnalyticsPersister().analytics(accountId: accountId,
+                                                                      businessUnit: currentBatch.businessUnit,
+                                                                      customer: currentBatch.customer)
             
             relatedAnalytics.forEach{ persisted in
-                print("Delivering Persisted: \(persisted.batch.payload.count) events")
-                persisted
-                    .batch
-                    .payload
-                    .forEach{ print(" 📤 PayloadCount", $0.jsonPayload.count) }
+                Dispatcher.log(message: "Found persisted analytics")
+                Dispatcher.log(status:  "📤", delivery: persisted.batch)
                 
-                networkHandler.deliver(batch: persisted.batch,
-                                       clockOffset: configuration.synchronizedClockOffset) { [weak self] response, error in
-                        if let error = error {
-                            self?.process(error: error, delivery: persisted)
-                        }
-                        else if response != nil {
-                            self?.process(delivery: persisted)
-                        }
+                networkHandler.deliver(batch: persisted.batch, clockOffset: configuration.synchronizedClockOffset) { [weak self] response, error in
+                    if response != nil {
+                        try? AnalyticsPersister().delete(persistedAnalytics: persisted)
+                        return
+                    }
+                    
+                    if let error = error {
+                        self?.process(error: error, delivery: persisted)
+                    }
                 }
             }
         }
         catch {
-            print("🚨 Failed to retrieve related, persisted analytics for \(accountId) due to",error.localizedDescription)
+            Dispatcher.log(message: "🚨 Failed to retrieve related, persisted analytics for \(accountId) due to \(error.localizedDescription)")
         }
         
         
-    }
-    
-    /// Once a related persisted analytics batch has been successfully delivered, this method is called causing the local file to be removed.
-    private func process(delivery: PersistedAnalytics) {
-        print("Delivered Persisted Analytics: \(delivery.batch.payload.count) events")
-        delivery
-            .batch
-            .payload
-            .forEach{ print(" ✅ PayloadCount", $0.jsonPayload.count) }
-        
-        do {
-            try self.persister.delete(persistedAnalytics: delivery)
-        }
-        catch {
-            print("🚨 Unable to delete persisted batch after delivery:",error.localizedDescription)
-        }
     }
     
     /// If a related, persisted analytics batch failed to be delivered, this method will handle the related error
@@ -464,35 +469,20 @@ extension Dispatcher {
                                                   playToken: delivery.batch.sessionId,
                                                   payload: delivery.batch.payload)
                 
-                networkHandler.deliver(batch: updatedBatch,
-                                       clockOffset: configuration.synchronizedClockOffset) { [weak self] response, error in
-                        if let secondaryError = error {
-                            print("🚨 Failed to deliver persisted payload on new sessionToken:",secondaryError.message)
-                            print("⚠️ Undelivered persisted payload will remain on disk")
-                        }
-                        else if response != nil {
-                            print("✅ Delivered persisted payload on new sessionToken")
-                            self?.process(delivery: delivery)
-                        }
+                networkHandler.deliver(batch: updatedBatch, clockOffset: configuration.synchronizedClockOffset) { response, error in
+                    if response != nil {
+                        Dispatcher.log(message: "✅ Delivered persisted payload on new sessionToken")
+                        try? AnalyticsPersister().delete(persistedAnalytics: delivery)
+                    }
                 }
             }
-        }
-        else {
-            print("🚨 Failed to deliver persisted payload:",error.message)
-            print("⚠️ Undelivered persisted payload will remain on disk")
         }
     }
     
     /// Once persisted analytics batches reaches a `time limit`, they are considered stale and should be removed
     private func clearStaleAnalytics() {
-        do {
-            let timelimit = Date().millisecondsSince1970 - configuration.analyticsStorageLimit
-            try persister.clearAll(olderThan: timelimit)
-        }
-        catch {
-            print("🚨 Failed to clear stale, persisted analytics events:",error.localizedDescription)
-            print("⚠️ No stale events will be removed from disk")
-        }
+        let timelimit = Date().millisecondsSince1970 - configuration.analyticsStorageLimit
+        try? AnalyticsPersister().clearAll(olderThan: timelimit)
     }
 }
 

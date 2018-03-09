@@ -11,6 +11,9 @@
 
 ## 2.0.79
 
+#### Changes
+* `EMP-11077` Dispatcher console log made optional
+
 #### Bug Fixes
 * `EMP-11102` Failure to serialize response on analytics dispatch no longer retrys already delivered batches.
 
