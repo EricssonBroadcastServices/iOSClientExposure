@@ -37,8 +37,19 @@ extension ExposureError {
 extension ExposureError {
     public var message: String {
         switch self {
-        case .generalError(error: let error): return error.localizedDescription
+        case .generalError(error: _): return "GENERAL_ERROR"
         case .serialization(reason: let reason): return reason.message
+        case .exposureResponse(reason: let reason): return reason.message
+        }
+    }
+}
+
+extension ExposureError {
+    /// Returns detailed information about the error
+    public var info: String? {
+        switch self {
+        case .generalError(error: let error): return error.localizedDescription
+        case .serialization(reason: let reason): return reason.info
         case .exposureResponse(reason: let reason): return reason.message
         }
     }
@@ -47,12 +58,21 @@ extension ExposureError {
 extension ExposureError.SerializationFailureReason {
     public var message: String {
         switch self {
+        case .jsonSerialization(error: _): return "JSON_SERIALIZATION_ERROR"
+        case .objectSerialization(reason: _, json: _): return "OBJECT_SERIALIZATION_ERROR"
+        }
+    }
+}
+
+extension ExposureError.SerializationFailureReason {
+    /// Returns detailed information about the error
+    public var info: String? {
+        switch self {
         case .jsonSerialization(error: let error): return "JSON Serialization error: \(error.localizedDescription)"
         case .objectSerialization(reason: let reason, json: let json): return "Object Serialization error: \(reason) for json: \(json)"
         }
     }
 }
-
 
 extension ExposureError {
     /// Defines the `domain` specific code for the underlying error.
