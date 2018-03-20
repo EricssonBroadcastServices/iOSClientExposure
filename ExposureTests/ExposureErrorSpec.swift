@@ -21,7 +21,7 @@ class ExposureErrorSpec: QuickSpec {
                 
                 let desc = reason.message
                 
-                expect(desc).to(equal("Object Serialization error: REASON for json: \([:])"))
+                expect(desc).to(equal("OBJECT_SERIALIZATION_ERROR"))
             }
             
             it("should describe jsonSerialization error") {
@@ -30,7 +30,7 @@ class ExposureErrorSpec: QuickSpec {
                 
                 let desc = reason.message
                 
-                expect(desc).to(equal("JSON Serialization error: \(anyError.localizedDescription)"))
+                expect(desc).to(equal("JSON_SERIALIZATION_ERROR"))
             }
             
             it("should have an error domain") {
