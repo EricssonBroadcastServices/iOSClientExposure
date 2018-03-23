@@ -37,8 +37,6 @@
 		761336B51ECC31E800E316BF /* AssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B41ECC31E800E316BF /* AssetSpec.swift */; };
 		761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B61ECC40C100E316BF /* SeasonSpec.swift */; };
 		761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B81ECCD61B00E316BF /* FetchAssetList.swift */; };
-		7619E5521FCC0C5300ACACAE /* SWXMLHash+TypeConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E5501FCC0C5200ACACAE /* SWXMLHash+TypeConversion.swift */; };
-		7619E5531FCC0C5300ACACAE /* SWXMLHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7619E5511FCC0C5200ACACAE /* SWXMLHash.swift */; };
 		762808CC1FCDDEF3005610DF /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762808CD1FCDDEF3005610DF /* Alamofire.framework */; };
 		76288CB21F20B048004B22AB /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB11F20B048004B22AB /* AnalyticsEvent.swift */; };
 		76288CB41F20B08B004B22AB /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB31F20B08B004B22AB /* EventSink.swift */; };
@@ -279,8 +277,6 @@
 		761336B41ECC31E800E316BF /* AssetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetSpec.swift; sourceTree = "<group>"; };
 		761336B61ECC40C100E316BF /* SeasonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonSpec.swift; sourceTree = "<group>"; };
 		761336B81ECCD61B00E316BF /* FetchAssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetList.swift; sourceTree = "<group>"; };
-		7619E5501FCC0C5200ACACAE /* SWXMLHash+TypeConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SWXMLHash+TypeConversion.swift"; sourceTree = "<group>"; };
-		7619E5511FCC0C5200ACACAE /* SWXMLHash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SWXMLHash.swift; sourceTree = "<group>"; };
 		762808CD1FCDDEF3005610DF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76288CB11F20B048004B22AB /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		76288CB31F20B08B004B22AB /* EventSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSink.swift; sourceTree = "<group>"; };
@@ -585,7 +581,6 @@
 			children = (
 				76D70EF32039FDB7006CF211 /* Networking */,
 				76A89DA62020FBDF00C23579 /* Crypto */,
-				76A89D612020F23500C23579 /* SWXMLHash */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -1104,15 +1099,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		76A89D612020F23500C23579 /* SWXMLHash */ = {
-			isa = PBXGroup;
-			children = (
-				7619E5501FCC0C5200ACACAE /* SWXMLHash+TypeConversion.swift */,
-				7619E5511FCC0C5200ACACAE /* SWXMLHash.swift */,
-			);
-			path = SWXMLHash;
-			sourceTree = "<group>";
-		};
 		76A89DA62020FBDF00C23579 /* Crypto */ = {
 			isa = PBXGroup;
 			children = (
@@ -1470,7 +1456,6 @@
 				3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */,
 				76B04F2A1FBADCE3007011E6 /* UserContentRating.swift in Sources */,
 				7661F8791FACBAFB00643FDB /* FetchCarousel.swift in Sources */,
-				7619E5521FCC0C5300ACACAE /* SWXMLHash+TypeConversion.swift in Sources */,
 				76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */,
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
@@ -1513,7 +1498,6 @@
 				76288CB81F20B4A7004B22AB /* AnalyticsBatch.swift in Sources */,
 				7633A9F11F7E406500580002 /* IncludesUserData.swift in Sources */,
 				76A842F81EA7667D00BDAF2C /* ExposureRequest.swift in Sources */,
-				7619E5531FCC0C5300ACACAE /* SWXMLHash.swift in Sources */,
 				7697349F1EF1801000F6ADC8 /* ChannelEpg.swift in Sources */,
 				76D7045F1F93927300D6FC6B /* SearchResponseAutocomplete.swift in Sources */,
 				766FBB6E1EC9A96500EBEC53 /* FetchAssetById.swift in Sources */,
