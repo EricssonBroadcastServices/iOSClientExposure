@@ -13,6 +13,7 @@
 
 #### Changes
 * `EMP-11156` Standardized error messages and introduced an `info` variable
+* `EMP-11171` `Exposure` now supports *tvOS*.
 
 ## 2.0.79
 
