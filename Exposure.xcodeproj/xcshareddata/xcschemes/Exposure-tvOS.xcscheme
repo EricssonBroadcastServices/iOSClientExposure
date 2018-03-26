@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0900"
+   LastUpgradeVersion = "0920"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76A842A61EA75EC900BDAF2C"
+               BlueprintIdentifier = "760800E520692820007F59D5"
                BuildableName = "Exposure.framework"
-               BlueprintName = "Exposure"
+               BlueprintName = "Exposure-tvOS"
+               ReferencedContainer = "container:Exposure.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "760801842069296F007F59D5"
+               BuildableName = "ExposureTests-tvOS.xctest"
+               BlueprintName = "ExposureTests-tvOS"
                ReferencedContainer = "container:Exposure.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,9 +48,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "76A842AF1EA75EC900BDAF2C"
-               BuildableName = "ExposureTests.xctest"
-               BlueprintName = "ExposureTests"
+               BlueprintIdentifier = "760801842069296F007F59D5"
+               BuildableName = "ExposureTests-tvOS.xctest"
+               BlueprintName = "ExposureTests-tvOS"
                ReferencedContainer = "container:Exposure.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -44,9 +58,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "76A842A61EA75EC900BDAF2C"
+            BlueprintIdentifier = "760800E520692820007F59D5"
             BuildableName = "Exposure.framework"
-            BlueprintName = "Exposure"
+            BlueprintName = "Exposure-tvOS"
             ReferencedContainer = "container:Exposure.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -67,9 +81,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "76A842A61EA75EC900BDAF2C"
+            BlueprintIdentifier = "760800E520692820007F59D5"
             BuildableName = "Exposure.framework"
-            BlueprintName = "Exposure"
+            BlueprintName = "Exposure-tvOS"
             ReferencedContainer = "container:Exposure.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -85,9 +99,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "76A842A61EA75EC900BDAF2C"
+            BlueprintIdentifier = "760800E520692820007F59D5"
             BuildableName = "Exposure.framework"
-            BlueprintName = "Exposure"
+            BlueprintName = "Exposure-tvOS"
             ReferencedContainer = "container:Exposure.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
