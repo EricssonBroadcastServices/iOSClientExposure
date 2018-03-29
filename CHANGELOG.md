@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `2.0.81` Release - [2.0.81](#2081)
 * `2.0.80` Release - [2.0.80](#2080)
 * `2.0.79` Release - [2.0.79](#2079)
 * `2.0.78` Release - [2.0.78](#2078)
@@ -9,11 +10,16 @@
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
 
+## 2.0.81
+
+#### Features
+* `EMP-11171` `Exposure` now supports *tvOS*.
+* Added `resonseData` returning raw `Data` to `ExposureRequest`
+
 ## 2.0.80
 
 #### Changes
 * `EMP-11156` Standardized error messages and introduced an `info` variable
-* `EMP-11171` `Exposure` now supports *tvOS*.
 
 ## 2.0.79
 
