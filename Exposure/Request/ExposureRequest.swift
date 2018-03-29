@@ -59,6 +59,13 @@ extension ExposureRequest {
         return self
     }
     
+    /// Response materialization.
+    ///
+    /// Once the request has been created, calling this method will trigger the request but only forward errors encountered.
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    /// - returns: `Self`
     @discardableResult
     public func emptyResponse(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureError?) -> Void) -> Self {
         dataRequest.rawResponse(queue: queue) { request, response, data, error in
@@ -80,7 +87,33 @@ extension ExposureRequest {
         return self
     }
     
-    
+    /// Response materialization.
+    ///
+    /// Once the request has been created, calling this method will trigger the request and return the retrieved data
+    ///
+    /// - parameter queue: The queue on which the completion handler is dispatched.
+    /// - parameter completionHandler: The code to be executed once the request has finished.
+    /// - returns: `Self`
+    @discardableResult
+    public func responseData(queue: DispatchQueue? = nil, completionHandler: @escaping (Data?, ExposureError?) -> Void) -> Self {
+        dataRequest.rawResponse(queue: queue) { request, response, data, error in
+            guard error == nil else {
+                if let networkingError = error as? Request.Networking {
+                    if case Request.Networking.unacceptableStatusCode(code: let code) = networkingError, let statusData = data, let message = try? JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData) {
+                        return completionHandler(nil, ExposureError.exposureResponse(reason: message))
+                    }
+                    else {
+                        return completionHandler(nil, ExposureError.generalError(error: networkingError))
+                    }
+                }
+                else {
+                    return completionHandler(nil, ExposureError.generalError(error: error!))
+                }
+            }
+            completionHandler(data, nil)
+        }
+        return self
+    }
 }
 
 extension JSONDecoder {
