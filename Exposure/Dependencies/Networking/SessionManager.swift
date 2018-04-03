@@ -107,6 +107,20 @@ public class SessionManager {
         }
     }
     
+//    @discardableResult
+//    public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: String, headers: [String: String]? = nil) -> Request {
+//        do {
+//            let urlRequest = try createRequest(from: url, method: method, headers: headers)
+//            let encodedRequest = try URLEncoding().encode(urlRequest, with: parameters)
+//            return finalize(encodedRequest: encodedRequest)
+//        } catch {
+//            let request = Request(session: session, requestTask: nil, error: error)
+//            
+//            request.resume()
+//            return request
+//        }
+//    }
+    
     @discardableResult
     public func request(_ url: URLConvertible,  method: HTTPMethod = .get, parameters: [String: Any]? = nil, encoding: ParameterEncoding = URLEncoding(), headers: [String: String]? = nil) -> Request {
         do {

@@ -34,6 +34,23 @@ import Foundation
 
 /// Paramenter encoding for query strings compatible with Exposure.
 internal struct URLEncoding: ParameterEncoding {
+//    public func encode(_ urlRequest: URLRequest, with parameters: String?) throws -> URLRequest {
+//        guard let params = parameters else { return urlRequest }
+//        var encodedUrlRequest = urlRequest
+//        
+//        guard let url = urlRequest.url else {
+//            throw Request.Networking.parameterEncodingFailedMissingUrl
+//        }
+//        
+//        if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+//            let percentEncodedQuery = (urlComponents.percentEncodedQuery.map { $0 + "&" } ?? "") + params
+//            urlComponents.percentEncodedQuery = percentEncodedQuery
+//            encodedUrlRequest.url = urlComponents.url
+//        }
+//        
+//        return encodedUrlRequest
+//    }
+    
     public func encode(_ urlRequest: URLRequest, with parameters: [String: Any]?) throws -> URLRequest {
         var urlRequest = urlRequest
         guard let parameters = parameters else { return urlRequest }
