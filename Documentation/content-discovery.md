@@ -1,5 +1,27 @@
 ## Content Discovery
 
+#### Generic Exposure endpoints
+`ExposureApi` is designed as an integration point for querying a generic *Exposure* endpoint. Users can specify a generic `ResponseType` (any data structure that conforms to `Decodable`) which will be materialized from the server response. In the event the server responds with an error, this will be handled by error validation and promotion of the related `ExposureError`. 
+
+Queries can be specified in *freeform*.
+
+```Swift
+let sessionToken: SessionToken?
+let query = "onlyPublished=true&includeUserData=\(sessionToken != nil)&fieldSet=ALL&assetType=MOVIE&sort=originalTitle"
+ExposureApi<AssetList>(environment: environment, endpoint: "content/asset", query: query, sessionToken: sessionToken)
+    .request()
+    .validate()
+    .response{
+        if let success = $0 {
+            // Present or manage the response
+        }
+        
+        if let error = $0.error {
+            // Present or manage the error
+        }
+    }
+```
+
 #### Fetching EPG
 *EPG*, or the *electronic programming guide*, details previous, current and upcomming programs on a specific channel. Client applications may request *EPG* data through the `FetchEpg` endpoint.
 

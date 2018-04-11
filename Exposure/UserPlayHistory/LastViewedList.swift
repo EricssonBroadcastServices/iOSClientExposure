@@ -8,7 +8,9 @@
 
 import Foundation
 
+/// Response receieved from the UserPlayHistory endpoint.
 public struct LastViewedList: Decodable {
+    /// List of assets the user has played before
     public let items: [Asset]
 }
 

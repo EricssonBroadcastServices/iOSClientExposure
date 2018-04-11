@@ -15,6 +15,8 @@
 #### Features
 * `EMP-11171` `Exposure` now supports *tvOS*.
 * Added `resonseData` returning raw `Data` to `ExposureRequest`
+* Added `ExposureApi` integration point for querying a generic *Exposure* endpoint.
+* Added `LastViewedList` struct to represent *userPlayHistory* endpoint.
 
 ## 2.0.80
 

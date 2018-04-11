@@ -248,6 +248,7 @@
 		761336B51ECC31E800E316BF /* AssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B41ECC31E800E316BF /* AssetSpec.swift */; };
 		761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B61ECC40C100E316BF /* SeasonSpec.swift */; };
 		761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B81ECCD61B00E316BF /* FetchAssetList.swift */; };
+		7614A376207E53080005C089 /* ExposureApiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614A375207E53080005C089 /* ExposureApiSpec.swift */; };
 		76288CB21F20B048004B22AB /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB11F20B048004B22AB /* AnalyticsEvent.swift */; };
 		76288CB41F20B08B004B22AB /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB31F20B08B004B22AB /* EventSink.swift */; };
 		76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB51F20B0D3004B22AB /* SendBatch.swift */; };
@@ -486,6 +487,7 @@
 		761336B41ECC31E800E316BF /* AssetSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetSpec.swift; sourceTree = "<group>"; };
 		761336B61ECC40C100E316BF /* SeasonSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonSpec.swift; sourceTree = "<group>"; };
 		761336B81ECCD61B00E316BF /* FetchAssetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchAssetList.swift; sourceTree = "<group>"; };
+		7614A375207E53080005C089 /* ExposureApiSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureApiSpec.swift; sourceTree = "<group>"; };
 		762808CD1FCDDEF3005610DF /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76288CB11F20B048004B22AB /* AnalyticsEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		76288CB31F20B08B004B22AB /* EventSink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventSink.swift; sourceTree = "<group>"; };
@@ -804,6 +806,22 @@
 			path = CustomerConfig;
 			sourceTree = "<group>";
 		};
+		7614A373207E47D30005C089 /* ExposureApi */ = {
+			isa = PBXGroup;
+			children = (
+				76512B1F20737863006E8CD0 /* ExposureApi.swift */,
+			);
+			path = ExposureApi;
+			sourceTree = "<group>";
+		};
+		7614A374207E47EF0005C089 /* UserPlayHistory */ = {
+			isa = PBXGroup;
+			children = (
+				764423E6206FA9B20086C4B4 /* LastViewedList.swift */,
+			);
+			path = UserPlayHistory;
+			sourceTree = "<group>";
+		};
 		7619E54F1FCC0C5200ACACAE /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -1108,8 +1126,8 @@
 				76A842AA1EA75EC900BDAF2C /* Exposure.h */,
 				76A842AB1EA75EC900BDAF2C /* Info.plist */,
 				76A842DB1EA7667D00BDAF2C /* ExposureType.swift */,
-				764423E6206FA9B20086C4B4 /* LastViewedList.swift */,
-				76512B1F20737863006E8CD0 /* ExposureApi.swift */,
+				7614A374207E47EF0005C089 /* UserPlayHistory */,
+				7614A373207E47D30005C089 /* ExposureApi */,
 				766FBB681EC9A17800EBEC53 /* Extensions */,
 				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 				76A89D502020F1E100C23579 /* Services */,
@@ -1138,6 +1156,7 @@
 				76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */,
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
+				7614A375207E53080005C089 /* ExposureApiSpec.swift */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
 				769734B41EF26CF500F6ADC8 /* Epg */,
@@ -2014,6 +2033,7 @@
 				769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */,
 				76512B2020737863006E8CD0 /* ExposureApi.swift in Sources */,
 				76A89DC22021C75B00C23579 /* NSData+Base64.m in Sources */,
+				7614A376207E53080005C089 /* ExposureApiSpec.swift in Sources */,
 				769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */,
 				76A89D5C2020F1E100C23579 /* Dispatcher.swift in Sources */,
 				3E48B7671F83C49C00D345BF /* CustomerConfigFileRequest.swift in Sources */,
