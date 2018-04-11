@@ -1,5 +1,9 @@
 # Upgrade Guide
 
+## 2.0.81
+
+Release `2.0.81` adds `tvOS` support by introducing a new *target*, `Player-tvOS`. Client application developers working with the *tvOS* platform should embedd the product of this target in their *tvOS* applications.
+
 ## 0.72.0 to 0.77.0
 
 #### Architecture
