@@ -33,6 +33,7 @@
 ## Requirements
 
 * `iOS` 9.0+
+* `tvOS` 9.0+
 * `Swift` 4.0+
 * `Xcode` 9.0+
 
@@ -98,7 +99,6 @@ Updating your dependencies is done by running  `carthage update` with the releva
 ## Roadmap
 No formalised roadmap has yet been established but an extensive backlog of possible items exist. The following represent an unordered *wish list* and is subject to change.
 
-- [ ] User playback history
 - [ ] User preferences
 - [ ] Device management
 

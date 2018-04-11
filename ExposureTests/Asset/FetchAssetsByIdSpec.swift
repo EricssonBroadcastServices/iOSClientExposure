@@ -116,52 +116,6 @@ class FetchAssetByIdSpec: QuickSpec {
                 expect(unpublished.onlyPublished).to(beFalse())
             }
         }
-        
-        /* // Something is wrong with Mockingjay
-        describe("FetchAssetById Response") {
-            var request: URLRequest?
-            var response: URLResponse?
-            var data: Data?
-            var asset: Asset?
-            var error: Error?
-            
-            beforeEach {
-                request = nil
-                response = nil
-                data = nil
-                asset = nil
-                error = nil
-            }
-            
-            context("Success") {
-                beforeEach {
-                    self.stub(uri(fetchReq.endpointUrl), json(assetResponse))
-                    print(fetchReq.endpointUrl)
-                    fetchReq
-                        .request()
-                        .response{ (exposureResponse: ExposureResponse<Asset>) in
-                            print("===================")
-                            request = exposureResponse.request
-                            response = exposureResponse.response
-                            data = exposureResponse.data
-                            asset = exposureResponse.value
-                            error = exposureResponse.error
-                            
-                    }
-                }
-                
-                it("should eventually return a response") {
-                    
-                    expect(request).toEventuallyNot(beNil())
-                    expect(response).toEventuallyNot(beNil())
-                    expect(data).toEventuallyNot(beNil())
-                    expect(asset).toEventuallyNot(beNil())
-                    expect(error).toEventually(beNil())
-                    
-                    expect(asset!.assetId).toEventually(equal(AssetSpec.AssetJSON.assetId), timeout: 3)
-                }
-            }
-        }*/
     }
     
     func compare(field: FetchAssetById.FieldSet, to other: FetchAssetById.FieldSet) -> Bool {
