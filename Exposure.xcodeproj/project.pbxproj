@@ -248,7 +248,8 @@
 		761336B51ECC31E800E316BF /* AssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B41ECC31E800E316BF /* AssetSpec.swift */; };
 		761336B71ECC40C100E316BF /* SeasonSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B61ECC40C100E316BF /* SeasonSpec.swift */; };
 		761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336B81ECCD61B00E316BF /* FetchAssetList.swift */; };
-		7614A376207E53080005C089 /* ExposureApiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614A375207E53080005C089 /* ExposureApiSpec.swift */; };
+		7614A37D207F72910005C089 /* ExposureApiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614A375207E53080005C089 /* ExposureApiSpec.swift */; };
+		7614A37E207F72920005C089 /* ExposureApiSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7614A375207E53080005C089 /* ExposureApiSpec.swift */; };
 		76288CB21F20B048004B22AB /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB11F20B048004B22AB /* AnalyticsEvent.swift */; };
 		76288CB41F20B08B004B22AB /* EventSink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB31F20B08B004B22AB /* EventSink.swift */; };
 		76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CB51F20B0D3004B22AB /* SendBatch.swift */; };
@@ -1915,6 +1916,7 @@
 				760801B12069296F007F59D5 /* DispatcherFlushTriggerSpec.swift in Sources */,
 				760801B22069296F007F59D5 /* DispatcherRelatedAnalyticsSpec.swift in Sources */,
 				760801B32069296F007F59D5 /* RatingSpec.swift in Sources */,
+				7614A37E207F72920005C089 /* ExposureApiSpec.swift in Sources */,
 				760801B42069296F007F59D5 /* EncryptionProviderSpec.swift in Sources */,
 				760801B52069296F007F59D5 /* PlayVodSpec.swift in Sources */,
 				760801B62069296F007F59D5 /* FetchAssetListSpec.swift in Sources */,
@@ -2033,7 +2035,6 @@
 				769734BE1EF28EF100F6ADC8 /* Marker.swift in Sources */,
 				76512B2020737863006E8CD0 /* ExposureApi.swift in Sources */,
 				76A89DC22021C75B00C23579 /* NSData+Base64.m in Sources */,
-				7614A376207E53080005C089 /* ExposureApiSpec.swift in Sources */,
 				769734B31EF19A5000F6ADC8 /* FetchEpgProgram.swift in Sources */,
 				76A89D5C2020F1E100C23579 /* Dispatcher.swift in Sources */,
 				3E48B7671F83C49C00D345BF /* CustomerConfigFileRequest.swift in Sources */,
@@ -2134,6 +2135,7 @@
 				76A89E192021CFF300C23579 /* DispatcherFlushTriggerSpec.swift in Sources */,
 				76A89E1E2021CFF300C23579 /* DispatcherRelatedAnalyticsSpec.swift in Sources */,
 				76B04F251FBACB05007011E6 /* RatingSpec.swift in Sources */,
+				7614A37D207F72910005C089 /* ExposureApiSpec.swift in Sources */,
 				76A89E152021CFF300C23579 /* EncryptionProviderSpec.swift in Sources */,
 				7646D6891EF00A6B009E5C2B /* PlayVodSpec.swift in Sources */,
 				7646D66D1EF00A20009E5C2B /* FetchAssetListSpec.swift in Sources */,
