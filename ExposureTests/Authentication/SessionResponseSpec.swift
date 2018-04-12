@@ -41,7 +41,7 @@ extension SessionResponseSpec {
         static let accountId = "accountId"
         static let userId = "userId"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "crmToken": SessionResponseJSON.crmToken,
                 "accountId": SessionResponseJSON.accountId,
@@ -49,7 +49,7 @@ extension SessionResponseSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "crmToken": SessionResponseJSON.crmToken
             ]

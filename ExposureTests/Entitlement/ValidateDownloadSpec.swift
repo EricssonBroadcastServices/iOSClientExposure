@@ -50,12 +50,12 @@ class ValidateDownloadSpec: QuickSpec {
         
         describe("DownloadValidation") {
             it("should process with valid json") {
-                let bitrate: [String: Codable] = [
+                let bitrate: [String: Any] = [
                     "bitrate": 120000,
                     "size": 200000
                 ]
                 
-                let json: [String: Codable] = [
+                let json: [String: Any] = [
                     "status":"SUCCESS",
                     "paymentDone":false,
                     "bitrates": [bitrate],
@@ -77,7 +77,7 @@ class ValidateDownloadSpec: QuickSpec {
             }
             
             it("should fail with invalid json") {
-                let json: [String: Codable] = [
+                let json: [String: Any] = [
                     "WRONG_KEY":"SUCCESS",
                     "OTHER_MISTAKE":false
                 ]

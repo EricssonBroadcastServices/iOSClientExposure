@@ -60,7 +60,7 @@ extension SearchResponseListSpec {
         static let pageNumber = 50
         static let suggestion = "suggestion"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "items": SearchResponseListJSON.items,
                 "totalCount": SearchResponseListJSON.totalCount,
@@ -70,7 +70,7 @@ extension SearchResponseListSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "items": SearchResponseListJSON.items,
                 "totalCount": SearchResponseListJSON.totalCount,
@@ -79,7 +79,7 @@ extension SearchResponseListSpec {
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

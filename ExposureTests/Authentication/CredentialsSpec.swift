@@ -18,7 +18,7 @@ class CredentialsSpec: QuickSpec {
         
         describe("Credentials") {
             it("should not set a date if json is missing the datestring field") {
-                let json: [String: Codable] = [
+                let json: [String: Any] = [
                     "sessionToken":"token",
                     "invalidDateKey":"SomeDateString"
                 ]

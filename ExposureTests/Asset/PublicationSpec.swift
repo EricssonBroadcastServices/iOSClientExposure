@@ -76,7 +76,7 @@ extension PublicationSpec {
         static let customData = ["Custom":10]
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
         static let devices = [DeviceRightsSpec.DeviceRightsJSON.valid()]
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
                 "fromDate": PublicationJSON.fromDate,
@@ -91,13 +91,13 @@ extension PublicationSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "publicationDate": PublicationJSON.publicationDate,
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

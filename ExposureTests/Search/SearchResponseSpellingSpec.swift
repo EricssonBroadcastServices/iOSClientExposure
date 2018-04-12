@@ -51,20 +51,20 @@ extension SearchResponseSpellingSpec {
         static let text = "text"
         static let assetId = "assetId"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "text": SearchResponseSpellingJSON.text,
                 "assetId": SearchResponseSpellingJSON.assetId,
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "text": SearchResponseSpellingJSON.text
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

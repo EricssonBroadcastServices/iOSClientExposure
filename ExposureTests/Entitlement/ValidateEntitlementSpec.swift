@@ -50,7 +50,7 @@ class ValidateEntitlementSpec: QuickSpec {
         
         describe("EntitlementValidation") {
             it("should process with valid json") {
-                let json: [String : Codable] = [
+                let json: [String : Any] = [
                     "status":"SUCCESS",
                     "paymentDone":false
                     ]
@@ -65,7 +65,7 @@ class ValidateEntitlementSpec: QuickSpec {
             }
             
             it("should fail with invalid json") {
-                let json: [String: Codable] = [
+                let json: [String: Any] = [
                     "WRONG_KEY":"SUCCESS",
                     "OTHER_MISTAKE":false
                 ]
@@ -77,14 +77,14 @@ class ValidateEntitlementSpec: QuickSpec {
     }
 }
 
-extension Dictionary where Key == String, Value == Codable {
+extension Dictionary where Key == String, Value == Any {
     func decode<T>(_ type: T.Type) -> T? where T : Decodable {
         guard let data = try? JSONSerialization.data(withJSONObject: self, options: .prettyPrinted) else { return nil }
         return try? JSONDecoder().decode(T.self, from: data)
     }
 }
 
-extension Dictionary where Key == String, Value == Codable {
+extension Dictionary where Key == String, Value == Any {
     func throwingDecode<T>(_ type: T.Type) throws -> T where T : Decodable {
         let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
         return try JSONDecoder().decode(T.self, from: data)

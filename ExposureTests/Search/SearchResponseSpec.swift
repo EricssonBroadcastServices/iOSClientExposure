@@ -54,7 +54,7 @@ extension SearchResponseSpec {
         static let highlightedTitle = "highlightedTitle"
         static let highlightedDescription = "highlightedDescription"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "asset": SearchResponseJSON.asset,
                 "highlightedTitle": SearchResponseJSON.highlightedTitle,
@@ -62,13 +62,13 @@ extension SearchResponseSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "asset": SearchResponseJSON.asset
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

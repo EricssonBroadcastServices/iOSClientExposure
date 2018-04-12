@@ -53,7 +53,7 @@ extension CustomerConfigSpec {
             "main.json"
         ]
 
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "customer": CustomerConfigJSON.customer,
                 "businessUnit": CustomerConfigJSON.businessUnit,
@@ -61,13 +61,13 @@ extension CustomerConfigSpec {
             ]
         }
 
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "customer": CustomerConfigJSON.customer
             ]
         }
 
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

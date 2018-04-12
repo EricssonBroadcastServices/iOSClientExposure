@@ -92,7 +92,7 @@ extension DeviceRightsSpec {
         static let os = "iOS"
         static let osVersion = "iOS10.0"
         static let rights = AssetRightsSpec.AssetRightsJSON.valid()
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "type": DeviceRightsJSON.type,
                 "model": DeviceRightsJSON.model,
@@ -103,17 +103,17 @@ extension DeviceRightsSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "type": DeviceRightsJSON.type
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
         
-        static func missformatedAssetRights() -> [String: Codable] {
+        static func missformatedAssetRights() -> [String: Any] {
             return [
                 "type": DeviceRightsJSON.type,
                 "rights": []

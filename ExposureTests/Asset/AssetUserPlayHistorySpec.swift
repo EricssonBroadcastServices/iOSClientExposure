@@ -57,7 +57,7 @@ extension AssetUserPlayHistorySpec {
         static let programId = "programId"
         static let channelId = "channelId"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "lastViewedOffset": AssetUserPlayHistoryJSON.lastViewedOffset,
                 "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime,
@@ -66,14 +66,14 @@ extension AssetUserPlayHistorySpec {
             ]
         }
         
-        static func requiredKeys() -> [String: Codable] {
+        static func requiredKeys() -> [String: Any] {
             return [
                 "lastViewedOffset": AssetUserPlayHistoryJSON.lastViewedOffset,
                 "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "lastViewedTime": AssetUserPlayHistoryJSON.lastViewedTime,
                 "programId": AssetUserPlayHistoryJSON.programId,

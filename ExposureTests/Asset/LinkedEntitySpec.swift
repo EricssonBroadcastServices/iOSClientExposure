@@ -53,7 +53,7 @@ extension LinkedEntitySpec {
         static let entityId = "anEntityId"
         static let linkType = "aLinkType"
         static let entityType = "anEnitityType"
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "entityId": LinkedEntityJSON.entityId,
                 "linkType": LinkedEntityJSON.linkType,
@@ -61,13 +61,13 @@ extension LinkedEntitySpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "entityType": LinkedEntityJSON.entityType
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

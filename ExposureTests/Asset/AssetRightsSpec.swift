@@ -126,7 +126,7 @@ extension AssetRightsSpec {
         static let downloadMaxSecondsAfterDownload = 0
         static let downloadMaxSecondsAfterPlay = 10
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "minBitrate": AssetRightsJSON.minBitrate,
                 "maxBitrate": AssetRightsJSON.maxBitrate,
@@ -158,13 +158,13 @@ extension AssetRightsSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "minBitrate": AssetRightsJSON.minBitrate
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

@@ -15,12 +15,12 @@ class PlaybackEntitlementSpec: QuickSpec {
     override func spec() {
         super.spec()
         
-        let fairplayJson:[String: Codable] = [
+        let fairplayJson:[String: Any] = [
             "secondaryMediaLocator":"secondaryMediaLocator",
             "certificateUrl":"certificateUrl",
             "licenseAcquisitionUrl":"licenseAcquisitionUrl"
         ]
-        let json:[String: Codable] = [
+        let json:[String: Any] = [
             "playToken":"playToken",
             "fairplayConfig":fairplayJson,
             "mediaLocator":"mediaLocator",
@@ -45,7 +45,7 @@ class PlaybackEntitlementSpec: QuickSpec {
             "productId":"productId"
         ]
         
-        let requiredJson:[String: Codable] = [
+        let requiredJson:[String: Any] = [
             "mediaLocator":"mediaLocator",
             "playTokenExpiration":"playTokenExpiration",
             "playSessionId":"playSessionId",
@@ -66,14 +66,14 @@ class PlaybackEntitlementSpec: QuickSpec {
             }
             
             it("should not init without required properties") {
-                let invalid:[String: Codable] = ["invalid":"JSON"]
+                let invalid:[String: Any] = ["invalid":"JSON"]
                 
                 expect{ try invalid.throwingDecode(PlaybackEntitlement.self) }
                     .to(throwError(errorType: DecodingError.self))
             }
             
             it("should not init with empty json") {
-                let empty:[String: Codable] = [:]
+                let empty:[String: Any] = [:]
                 
                 expect{ try empty.throwingDecode(PlaybackEntitlement.self) }
                     .to(throwError(errorType: DecodingError.self))

@@ -49,20 +49,20 @@ extension SearchResponseAutocompleteSpec {
         static let text = "text"
         static let assetId = "assetId"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "text": SearchResponseAutocompleteJSON.text,
                 "assetId": SearchResponseAutocompleteJSON.assetId,
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "text": SearchResponseAutocompleteJSON.text
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

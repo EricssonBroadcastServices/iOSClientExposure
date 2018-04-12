@@ -138,7 +138,7 @@ extension AssetSpec {
         static let markers = [MarkerSpec.MarkerJSON.valid()]
         static let userData = AssetUserDataSpec.AssetUserDataJSON.valid()
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "created": AssetJSON.created,
                 "changed": AssetJSON.changed,
@@ -175,19 +175,19 @@ extension AssetSpec {
             ]
         }
         
-        static func requiredKeys() -> [String: Codable] {
+        static func requiredKeys() -> [String: Any] {
             return [
                 "assetId": AssetJSON.assetId
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "created": AssetJSON.created
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

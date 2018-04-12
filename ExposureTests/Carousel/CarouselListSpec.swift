@@ -48,11 +48,11 @@ extension CarouselListSpec {
             CarouselItemSpec.CarouselItemJSON.valid(),
             CarouselItemSpec.CarouselItemJSON.valid(),
         ]
-        static func valid() -> [[String: Codable]] {
+        static func valid() -> [[String: Any]] {
             return CarouselListJSON.items
         }
 
-        static func empty() -> [[String: Codable]] {
+        static func empty() -> [[String: Any]] {
             return []
         }
     }

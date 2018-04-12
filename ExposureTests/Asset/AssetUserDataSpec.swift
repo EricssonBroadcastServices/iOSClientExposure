@@ -44,19 +44,19 @@ class AssetUserDataSpec: QuickSpec {
 
 extension AssetUserDataSpec {
     enum AssetUserDataJSON {
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "playHistory": AssetUserPlayHistorySpec.AssetUserPlayHistoryJSON.valid()
             ]
         }
         
-        static func incomplete() -> [String: Codable] {
+        static func incomplete() -> [String: Any] {
             return [
                 "playHistory": [:]
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

@@ -55,7 +55,7 @@ extension CustomerConfigFileSpec {
             "this": "works"
         ]
 
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "customer": FileJSON.customer,
                 "businessUnit": FileJSON.businessUnit,
@@ -64,13 +64,13 @@ extension CustomerConfigFileSpec {
             ]
         }
 
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "customer": FileJSON.customer
             ]
         }
 
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

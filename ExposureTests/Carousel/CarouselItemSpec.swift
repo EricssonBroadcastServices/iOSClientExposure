@@ -56,7 +56,7 @@ extension CarouselItemSpec {
         static let sortOrder = 10
         static let items = AssetListSpec.AssetListJSON.valid()
         static let titles = [LocalizedDataSpec.LocalizedDataJSON.valid()]
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "carouselId": CarouselItemJSON.id,
                 "sortOrder": CarouselItemJSON.sortOrder,
@@ -65,13 +65,13 @@ extension CarouselItemSpec {
             ]
         }
 
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "carouselId": CarouselItemJSON.id
             ]
         }
 
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

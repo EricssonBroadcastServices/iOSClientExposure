@@ -53,7 +53,7 @@ extension ExternalReferenceSpec {
         static let locator = "http://someUrl.com/references/ref1"
         static let type = "QAProvider"
         static let value = "QAExternalRef_3da09434-6193-450b-8fd1-aa283c14eb8d"
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "locator": ExternalReferenceJSON.locator,
                 "type": ExternalReferenceJSON.type,
@@ -61,13 +61,13 @@ extension ExternalReferenceSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "locator": ExternalReferenceJSON.locator
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

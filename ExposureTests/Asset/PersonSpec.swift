@@ -53,7 +53,7 @@ extension PersonSpec {
         static let personId = "susan_jr_sarandon"
         static let name = "Susan Jr. Sarandon"
         static let function = "Stuntman"
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "personId": PersonJSON.personId,
                 "name": PersonJSON.name,
@@ -61,13 +61,13 @@ extension PersonSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "personId": PersonJSON.personId
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

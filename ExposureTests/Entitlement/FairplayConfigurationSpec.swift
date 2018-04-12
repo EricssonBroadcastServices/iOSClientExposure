@@ -19,7 +19,7 @@ class FairplayConfigurationSpec: QuickSpec {
             context("Success") {
                 it("should init with correct information") {
                     
-                    let json: [String: Codable] = [
+                    let json: [String: Any] = [
                         "secondaryMediaLocator":"foo",
                         "certificateUrl":"bar",
                         "licenseAcquisitionUrl":"baz"
@@ -39,7 +39,7 @@ class FairplayConfigurationSpec: QuickSpec {
                 
                 it("should init with required information") {
                     
-                    let json: [String: Codable] = [
+                    let json: [String: Any] = [
                         "certificateUrl":"bar",
                         "licenseAcquisitionUrl":"baz"
                     ]
@@ -57,7 +57,7 @@ class FairplayConfigurationSpec: QuickSpec {
             
             context("Failure") {
                 it("should fail to init without all fields present") {
-                    let json: [String: Codable] = [
+                    let json: [String: Any] = [
                         "secondaryMediaLocator":"foo",
                         "certificateUrl":"bar"
                     ]

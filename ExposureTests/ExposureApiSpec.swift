@@ -28,22 +28,23 @@ class ExposureApiSpec: QuickSpec {
         describe("Basics") {
             
             it("should have headers") {
-                expect(req.headers).toNot(beNil())
+                expect(request.headers).toNot(beNil())
             }
             
             it("should generate a correct endpoint url") {
                 let endpoint = "/userplayhistory/lastviewed"
-                expect(fetchReq.endpointUrl).to(equal(env.apiUrl+endpoint))
+                expect(request.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
             it("should generate paramters") {
                 let params = request.parameters
+                expect(params).toNot(beNil())
                 
-                expect(params.count).to(equal(3))
+                expect(params!.count).to(equal(3))
                 
-                expect(params["onlyPublished"]).toNot(beNil())
-                expect(params["includeUserData"]).toNot(beNil())
-                expect(params["fieldSet"]).toNot(beNil())
+                expect(params!["onlyPublished"]).toNot(beNil())
+                expect(params!["includeUserData"]).toNot(beNil())
+                expect(params!["fieldSet"]).toNot(beNil())
             }
         }
     }

@@ -53,20 +53,20 @@ extension MarkerSpec {
         static let offset = 100
         static let url = "someUrl"
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "offset": MarkerJSON.offset,
                 "url": MarkerJSON.url,
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "offset": MarkerJSON.offset
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

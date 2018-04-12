@@ -81,7 +81,7 @@ extension ProgramSpec {
         static let asset = AssetSpec.AssetJSON.valid()
         static let blackout = false
         
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "created": ProgramJSON.created,
                 "changed": ProgramJSON.changed,
@@ -98,7 +98,7 @@ extension ProgramSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "created": ProgramJSON.created,
                 "programId": ProgramJSON.programId,
@@ -107,7 +107,7 @@ extension ProgramSpec {
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }

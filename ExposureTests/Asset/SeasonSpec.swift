@@ -110,7 +110,7 @@ extension SeasonSpec {
         static let linkedEntities = [LinkedEntitySpec.LinkedEntityJSON.valid()]
         static let externalReferences = [ExternalReferenceSpec.ExternalReferenceJSON.valid()]
         static let customData:[String:Any] = [:]
-        static func valid() -> [String: Codable] {
+        static func valid() -> [String: Any] {
             return [
                 "created": SeasonJSON.created,
                 "changed": SeasonJSON.changed,
@@ -131,13 +131,13 @@ extension SeasonSpec {
             ]
         }
         
-        static func missingKeys() -> [String: Codable] {
+        static func missingKeys() -> [String: Any] {
             return [
                 "created": SeasonJSON.created
             ]
         }
         
-        static func empty() -> [String: Codable] {
+        static func empty() -> [String: Any] {
             return [:]
         }
     }
