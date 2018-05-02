@@ -63,9 +63,12 @@ public class SessionManager {
         let requestUrl = try url.asURL()
         var urlRequest = URLRequest(url: requestUrl)
         urlRequest.httpMethod = method.rawValue
+        urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        urlRequest.httpShouldHandleCookies = false
         headers?.forEach{ key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
+        print("forHTTPHeaderField",urlRequest.value(forHTTPHeaderField: "Connection"))
         return urlRequest
     }
     

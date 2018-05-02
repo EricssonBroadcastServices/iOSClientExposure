@@ -65,8 +65,11 @@ extension SessionDelegate: URLSessionTaskDelegate {
     /// - parameter task:    The task whose request finished transferring data.
     /// - parameter error:   If an error occurred, an error object indicating how the transfer failed, otherwise nil.
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        print(#function,"SessionDelegate")
+        print(task.originalRequest?.allHTTPHeaderFields)
         /// Executed after it is determined that the request is not going to be retried
         let completeTask: (URLSession, URLSessionTask, Error?) -> Void = { [weak self] session, task, error in
+            print(#function,"completeTask")
             guard let strongSelf = self else { return }
             strongSelf[task]?.delegate.urlSession(session, task: task, didCompleteWithError: error)
             strongSelf[task] = nil
@@ -89,6 +92,74 @@ extension SessionDelegate: URLSessionTaskDelegate {
         
         completeTask(session, task, error)
     }
+    
+    
+    
+    public func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        print(#function)
+        
+        completionHandler(request)
+    }
+    
+    @available(iOS 11.0, *)
+    public func urlSession(_ session: URLSession, task: URLSessionTask, willBeginDelayedRequest request: URLRequest, completionHandler: @escaping (URLSession.DelayedRequestDisposition, URLRequest?) -> Void) {
+        print(#function)
+        completionHandler(URLSession.DelayedRequestDisposition.continueLoading,request)
+    }
+    
+//    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//        print(#function)
+//        completionHandler(URLSession.AuthChallengeDisposition.performDefaultHandling,challenge.proposedCredential)
+//    }
+
+    public func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+        print("taskIdentifier",task.taskIdentifier)
+        print("sent",bytesSent,"total",totalBytesSent,"expected",totalBytesExpectedToSend)
+
+    }
+    
+    public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        print(#function)
+    }
+//    public func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//
+//        print("===========")
+//        let delegate = self[task]?.delegate
+//        print("Data",delegate?.data)
+//        print(delegate?.error?.localizedDescription)
+//        print(delegate)
+//        print("taskIdentifier",task.taskIdentifier)
+//        print("-----------")
+//        print("previousFailureCount",challenge.previousFailureCount)
+//        print("-----------")
+//        print("error",challenge.error?.localizedDescription)
+//        print("------failureResponse-----")
+//        print("debugDescription",challenge.failureResponse.debugDescription)
+//        print("mimeType",challenge.failureResponse?.mimeType)
+//        print("url",challenge.failureResponse?.url)
+//        print("-----protectionSpace------")
+//        print(challenge.protectionSpace.authenticationMethod)
+//        print(challenge.protectionSpace.host)
+//        print(challenge.protectionSpace.port)
+//        print(challenge.protectionSpace.protocol)
+//        print(challenge.protectionSpace.proxyType)
+//        print(challenge.protectionSpace.realm)
+//        print("----proposedCredential------")
+//        print(challenge.proposedCredential?.password)
+//        print(challenge.proposedCredential?.user)
+//        print("----Headers------")
+//        if let urlResponse = task.response as? HTTPURLResponse {
+//            print(urlResponse.allHeaderFields)
+//            print(urlResponse.statusCode)
+//        }
+//
+//        if let taskDelegate = self[task]?.delegate {
+//            print(taskDelegate.data)
+//        }
+//        print("===========")
+//
+//        completionHandler(URLSession.AuthChallengeDisposition.rejectProtectionSpace,nil)
+//    }
 }
 
 
@@ -101,6 +172,7 @@ extension SessionDelegate: URLSessionDataDelegate {
     /// - parameter dataTask: The data task that provided data.
     /// - parameter data:     A data object containing the transferred data.
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        print(#function)
         self[dataTask]?
             .delegate
             .urlSession(session, dataTask: dataTask, didReceive: data)
@@ -118,6 +190,7 @@ extension SessionDelegate: URLSessionDataDelegate {
     ///                                response. If your delegate implements this method, it must call this completion
     ///                                handler; otherwise, your app leaks memory.
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
+        print(#function)
         self[dataTask]?
             .delegate
             .urlSession(session, dataTask: dataTask, willCacheResponse: proposedResponse, completionHandler: completionHandler)

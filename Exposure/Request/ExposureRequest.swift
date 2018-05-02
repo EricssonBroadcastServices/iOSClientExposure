@@ -32,6 +32,7 @@ extension ExposureRequest {
     @discardableResult
     public func response(queue: DispatchQueue? = nil, completionHandler: @escaping (ExposureResponse<Object>) -> Void) -> Self {
         dataRequest.response(responseSerializer: { request, response, data, error in
+            print(#function)
             guard error == nil, let jsonData = data else {
                 if let networkingError = error as? Request.Networking {
                     if case Request.Networking.unacceptableStatusCode(code: let code) = networkingError, let statusData = data, let message = try? JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData) {
@@ -42,6 +43,17 @@ extension ExposureRequest {
                     }
                 }
                 else {
+                    if let error = error as? NSError {
+                        print(error.code,error.domain,error.localizedDescription,error.userInfo)
+                        if let statusData = data {
+                            if let response = response {
+                                print("response",response.statusCode,response.allHeaderFields)
+                            }
+                            if let message = try? JSONDecoder().exposureDecode(ExposureResponseMessage.self, from: statusData) {
+                            
+                            }
+                        }
+                    }
                     return .failure(error: ExposureError.generalError(error: error!))
                 }
             }

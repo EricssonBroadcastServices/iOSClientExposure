@@ -92,6 +92,7 @@ public class TaskDelegate: NSObject, URLSessionDataDelegate {
     
     @objc(URLSession:task:didCompleteWithError:)
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        print(#function,"taskDelegate")
         if let error = error, self.error == nil {
             self.error = error
         }
@@ -110,6 +111,7 @@ public class TaskDelegate: NSObject, URLSessionDataDelegate {
         completionHandler: @escaping (URLSession.ResponseDisposition) -> Void)
     {
         var disposition: URLSession.ResponseDisposition = .allow
+        print(#function)
         
         if let dataTaskDidReceiveResponse = dataTaskDidReceiveResponse {
             disposition = dataTaskDidReceiveResponse(session, dataTask, response)
@@ -119,12 +121,14 @@ public class TaskDelegate: NSObject, URLSessionDataDelegate {
     }
     
     public func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        print(#function,"DATA",dataTask.taskIdentifier,data)
         if let dataTaskDidReceiveData = dataTaskDidReceiveData {
             dataTaskDidReceiveData(session, dataTask, data)
         } else {
             if let dataStream = dataStream {
                 dataStream(data)
             } else {
+                print("APPENDING DATA")
                 mutableData.append(data)
             }
         }
@@ -132,6 +136,7 @@ public class TaskDelegate: NSObject, URLSessionDataDelegate {
     
     public func urlSession( _ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
         var cachedResponse: CachedURLResponse? = proposedResponse
+        print(#function)
         
         if let dataTaskWillCacheResponse = dataTaskWillCacheResponse {
             cachedResponse = dataTaskWillCacheResponse(session, dataTask, proposedResponse)
@@ -139,4 +144,9 @@ public class TaskDelegate: NSObject, URLSessionDataDelegate {
         
         completionHandler(cachedResponse)
     }
+    
+//    public func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+//        
+//        completionHandler(URLSession.AuthChallengeDisposition.cancelAuthenticationChallenge,nil)
+//    }
 }

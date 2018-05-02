@@ -212,6 +212,7 @@ extension Request {
     @discardableResult
     public func response<Object: Decodable>(queue: DispatchQueue? = nil, responseSerializer: @escaping (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Result<Object>, completionHandler: @escaping (Response<Object>) -> Void) -> Self {
         delegate.queue.addOperation {
+            print(#function)
             let result = responseSerializer(self.request,
                                             self.response,
                                             self.delegate.data,
