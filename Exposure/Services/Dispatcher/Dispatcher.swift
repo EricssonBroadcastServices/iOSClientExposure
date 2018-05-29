@@ -53,7 +53,7 @@ public class Dispatcher {
     
     fileprivate var synchronizeTimer: DispatchSourceTimer?
     fileprivate var synchronizeQueue = DispatchQueue(label: "com.emp.exposure.dispatcher.synchronize",
-                                                     qos: DispatchQoS.background,
+                                                     qos: DispatchQoS.default,
                                                      attributes: DispatchQueue.Attributes.concurrent)
     fileprivate let synchronizeIntervall: Int = 30 * 60 * 1000
     
@@ -67,6 +67,11 @@ public class Dispatcher {
         self.configuration = Configuration()
         self.heartbeatsProvider = heartbeatsProvider
         self.networkHandler = AlamofireNetworkHandler()
+        NotificationCenter.default.addObserver(self, selector: #selector(Dispatcher.appDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+    }
+    
+    @objc internal func appDidEnterBackground() {
+        flush(forced: true)
     }
     
     /// Internal log level
@@ -124,6 +129,7 @@ extension Dispatcher {
     /// This method should be called before the `dispatcher` is disposed, preferably manually. It should be noted that since this involves an async networking call. If this fails, the `persister` will attempt to persist the related analytics.
     public func terminate() {
         Dispatcher.log(message: "❗️ Terminating Dispatcher")
+        NotificationCenter.default.removeObserver(self)
         synchronizeTimer?.setEventHandler { }
         synchronizeTimer?.cancel()
         invalidateFlushTrigger()
