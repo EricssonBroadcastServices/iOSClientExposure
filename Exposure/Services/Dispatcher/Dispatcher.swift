@@ -51,9 +51,11 @@ public class Dispatcher {
     /// The interval, in seconds, between each analytics flush
     internal var flushInterval: TimeInterval = 3
     
+    public var currentTimestamp: () -> Int64 = { return Date().millisecondsSince1970 }
+    
     fileprivate var synchronizeTimer: DispatchSourceTimer?
     fileprivate var synchronizeQueue = DispatchQueue(label: "com.emp.exposure.dispatcher.synchronize",
-                                                     qos: DispatchQoS.default,
+                                                     qos: DispatchQoS.background,
                                                      attributes: DispatchQueue.Attributes.concurrent)
     fileprivate let synchronizeIntervall: Int = 30 * 60 * 1000
     
@@ -226,7 +228,7 @@ extension Dispatcher {
         
         guard state == .idle else { return }
         
-        let currentTime = Date().millisecondsSince1970
+        let currentTime = currentTimestamp()
         
         if forced {
             flush()
@@ -392,7 +394,7 @@ extension Dispatcher {
         }
         
         /// Even error events should count as a dispatch attempt
-        configuration.lastDispatchTimestamp = Date().millisecondsSince1970
+        configuration.lastDispatchTimestamp = currentTimestamp()
         Dispatcher.log(message: "📎 Marking failed dispatch events for retry")
         
         // In the event we have any undelivered payload at this point, merge it with the incoming `analytics` payload
@@ -487,7 +489,7 @@ extension Dispatcher {
     
     /// Once persisted analytics batches reaches a `time limit`, they are considered stale and should be removed
     private func clearStaleAnalytics() {
-        let timelimit = Date().millisecondsSince1970 - configuration.analyticsStorageLimit
+        let timelimit = currentTimestamp() - configuration.analyticsStorageLimit
         try? AnalyticsPersister().clearAll(olderThan: timelimit)
     }
 }
@@ -543,7 +545,7 @@ extension Dispatcher {
     /// 
     /// - parameter callback: a closure returning an `ExposureError` if the call failed, or `nil` if successful.
     internal func synchronize(callback: @escaping (ExposureError?)  -> Void) {
-        let clientStart = Date().millisecondsSince1970
+        let clientStart = currentTimestamp()
         
         self.networkHandler.initialize(using: self.currentBatch.environment) { [weak self] response, error in
             if let error = error {
@@ -551,7 +553,7 @@ extension Dispatcher {
                 return
             }
             
-            let clientEnd = Date().millisecondsSince1970
+            guard let clientEnd = self?.currentTimestamp() else { return }
             guard let success = response else {
                 callback(nil)
                 return
