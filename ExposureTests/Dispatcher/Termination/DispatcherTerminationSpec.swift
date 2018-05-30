@@ -54,23 +54,23 @@ class DispatcherTerminationSpec: QuickSpec {
                 expect(self.deliverUndelivered.payloadDelivered.count).toEventually(equal(1), timeout: 6)
             }
             
-            it("Should persist underlivered analytics that failed to dispatch on termination") {
-                let persister = AnalyticsPersister()
-                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer).count }.toEventually(equal(0))
-                
-                let dispatcher = Dispatcher(environment: self.environment,
-                                            sessionToken: self.sessionToken,
-                                            playSessionId: "Termination-dispatch-persistence-id",
-                                            startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
-                self.persistUndelivered.failsToDispatch = true
-                dispatcher.networkHandler = self.persistUndelivered
-                dispatcher.terminate()
-                
-                expect(self.persistUndelivered.payloadDelivered.count).toEventually(equal(0), timeout: 6)
-                expect(self.sessionToken.accountId).toNot(beNil())
-                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer)}.toNot(throwError())
-                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer).count }.toEventually(equal(1))
-            }
+//            it("Should persist underlivered analytics that failed to dispatch on termination") {
+//                let persister = AnalyticsPersister()
+//                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer).count }.toEventually(equal(0))
+//
+//                let dispatcher = Dispatcher(environment: self.environment,
+//                                            sessionToken: self.sessionToken,
+//                                            playSessionId: "Termination-dispatch-persistence-id",
+//                                            startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
+//                self.persistUndelivered.failsToDispatch = true
+//                dispatcher.networkHandler = self.persistUndelivered
+//                dispatcher.terminate()
+//
+//                expect(self.persistUndelivered.payloadDelivered.count).toEventually(equal(0), timeout: 6)
+//                expect(self.sessionToken.accountId).toNot(beNil())
+//                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer)}.toNot(throwError())
+//                expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer).count }.toEventually(equal(1))
+//            }
         }
     }
 }
