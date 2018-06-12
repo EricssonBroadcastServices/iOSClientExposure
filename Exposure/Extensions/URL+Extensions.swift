@@ -19,17 +19,18 @@ extension URL {
     /// - parameter value: the value to set
     /// - returns: an updated `URL`
     public func queryParam(key: String, value: String?) -> URL? {
-        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false), let queryItems = urlComponents.queryItems else { return nil }
+        guard var urlComponents = URLComponents(url: self, resolvingAgainstBaseURL: false) else { return nil }
         
         if let _: String = queryParam(for: key) {
             // Update the current value for key
-            urlComponents.queryItems = queryItems.flatMap{ item -> URLQueryItem? in
+            let updated = urlComponents.queryItems?.flatMap{ item -> URLQueryItem? in
                 if item.name == key {
                     if let value = value { return URLQueryItem(name: key, value: value) }
                     else { return nil }
                 }
                 else { return item }
             }
+            urlComponents.queryItems = updated
             return urlComponents.url
         }
         else {
