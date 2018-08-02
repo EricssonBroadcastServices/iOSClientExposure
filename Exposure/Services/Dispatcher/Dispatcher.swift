@@ -71,7 +71,9 @@ public class Dispatcher {
     }
     
     @objc internal func appDidEnterBackground() {
-        flush(forced: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.flush(forced: true)
+        }
     }
     
     /// Internal log level
