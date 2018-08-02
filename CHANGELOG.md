@@ -15,6 +15,7 @@
 
 ## 2.0.87
 
+#### Changes
 `Dispatcher` resilience improvements.
 
 ## 2.0.86
