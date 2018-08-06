@@ -10,8 +10,9 @@ import Foundation
 
 extension UIDevice {
     /// Extracts the *Exposure* formatted `DeviceType` from the current *device*
+    @available(*, deprecated: 2.0.87, message: "Use Device.type instead")
     public static func deviceType() -> DeviceType {
-        return DeviceType(model: current.model)
+        return DeviceType(model: Device(name: nil).model)
     }
     
     /// Previous versions of *iOS* stated the system name as `iPhone OS`. This function merges legacy naming with the modern designation.

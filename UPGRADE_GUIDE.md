@@ -1,5 +1,17 @@
 # Upgrade Guide
 
+## 2.0.87
+
+
+### API Changes
+
+#### Channel
+
+| reason | api |
+| -------- | --- |
+| deprecated | `UIDevice.deviceType()` |
+
+
 ## 2.0.81
 
 Release `2.0.81` adds `tvOS` support by introducing a new *target*, `Player-tvOS`. Client application developers working with the *tvOS* platform should embedd the product of this target in their *tvOS* applications.
