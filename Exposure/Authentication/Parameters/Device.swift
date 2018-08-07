@@ -53,6 +53,7 @@ public struct Device: Encodable {
     
     /// `DeviceType` reported in a format expected by *Exposure*
     public var type: DeviceType {
+//        return DeviceType(model: model)
         return UIDevice.deviceType()
     }
     

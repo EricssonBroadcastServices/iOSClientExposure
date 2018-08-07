@@ -35,11 +35,18 @@ public enum DeviceType {
     ///
     /// - parameter model: *System* description of the current device.
     internal init(model: String) {
-        switch model {
-        case "iPhone": self = .mobile
-        case "iPad": self = .tablet
-        case "AppleTv": self = .appleTv
-        default: self = .mobile
+        let lcModel = model.lowercased()
+        if lcModel.contains("iPhone".lowercased()) {
+            self = .mobile
+        }
+        else if lcModel.contains("iPad".lowercased()) {
+            self = .tablet
+        }
+        else if lcModel.contains("AppleTV".lowercased()) {
+            self = .appleTv
+        }
+        else {
+            self = .other(string: model)
         }
     }
     

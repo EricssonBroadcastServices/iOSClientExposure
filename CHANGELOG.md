@@ -18,6 +18,9 @@
 #### Changes
 `Dispatcher` resilience improvements.
 
+#### Bug Fixes
+* `EMP-11523` Fixed issue where `Device.type` would be incorrectly set while logging in.
+
 ## 2.0.86
 
 #### Bug Fixes
