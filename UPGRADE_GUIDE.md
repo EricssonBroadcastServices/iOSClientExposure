@@ -1,7 +1,6 @@
 # Upgrade Guide
 
-## 2.0.87
-
+## 2.0.88
 
 ### API Changes
 
