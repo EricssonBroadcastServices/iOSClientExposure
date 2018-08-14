@@ -35,12 +35,6 @@ class AnalyticsPersisterSpec: QuickSpec {
                 expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
             }
             
-            it("Should not persist batches with malformatted sessionTokens") {
-                let persister = AnalyticsPersister()
-                let malformattedTokenBatch = self.firstSession(for: malformatedShortToken, environment: firstEnvironment)
-                expect{ try persister.persist(analytics: malformattedTokenBatch) }.to(throwError(PersisterError.failedToPersistWithMalformattedSessionToken))
-            }
-            
             it("Should not persist batches with sessionTokens without accountIds") {
                 let persister = AnalyticsPersister()
                 let invalidAccountIdBatch = self.secondSession(for: malformatedMissingAccountIdToken, environment: firstEnvironment)
