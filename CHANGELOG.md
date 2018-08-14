@@ -20,6 +20,8 @@
 
 #### Bug Fixes
 * `EMP-11523` Fixed issue where `Device.type` would be incorrectly set while logging in.
+* Fixed an issue where persisted analytics would be delivered multiple times.
+* `ExposureResponseMessage.info` now returns `nil` instead of _message_. 
 
 ## 2.0.86
 

@@ -59,6 +59,9 @@ public class Dispatcher {
     
     internal var networkHandler: DispatcherNetworkHandler
     
+    /// Callback that will be fired whenever realtime analytics dispatch fails with an `ExposureResponseMessage`
+    public var onExposureResponseMessage: (ExposureResponseMessage) -> Void = { _ in }
+    
     public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent?) {
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                            environment: environment,
@@ -224,8 +227,6 @@ extension Dispatcher {
     ///
     /// Finaly, specifying `forced = true` will force flush the system (if the system state is acceptable).
     internal func flush(forced: Bool) {
-        processUndeliveredAnalytics()
-        
         guard state == .idle else { return }
         
         let currentTime = Date().millisecondsSince1970
@@ -261,6 +262,8 @@ extension Dispatcher {
     /// Every dispatch is preceeded by a clock sync with the server
     private func flush() {
         guard !currentBatch.payload.isEmpty else { return }
+        
+        processUndeliveredAnalytics()
         
         state = .flushing
         
@@ -300,28 +303,6 @@ extension Dispatcher {
     fileprivate func realtime(analytics: AnalyticsBatch, clockOffset: Int64?) {
         Dispatcher.log(message: "Delivering Realtime: \(analytics.payload.count) events")
         
-        let shouldRetryPolicy: (ExposureError) -> Bool = { error -> Bool in
-            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
-                return true
-            }
-            
-            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
-                return true
-            }
-            return false
-        }
-        
-        let shouldPersistPolicy: (ExposureError) -> Bool = { error -> Bool in
-            if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
-                return true
-            }
-            
-            if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
-                return true
-            }
-            return false
-        }
-        
         networkHandler.deliver(batch: analytics, clockOffset: clockOffset) { [weak self] response, error in
             if let response = response {
                 Dispatcher.log(message: "Delivered: \(analytics.payload.count) events")
@@ -332,8 +313,8 @@ extension Dispatcher {
             
             if let error = error {
                 guard let `self` = self else {
-                    Dispatcher.log(message: "Realtime Delivery error, dispatcher gone")
-                    if shouldPersistPolicy(error) {
+                    Dispatcher.log(message: "🚨 Realtime Delivery error, dispatcher gone")
+                    if Dispatcher.persistOnErrorPolicy(error: error) {
                         /// Dispatcher has dellocated, persist data if criteria are met
                         do {
                             try AnalyticsPersister().persist(analytics: analytics)
@@ -345,10 +326,13 @@ extension Dispatcher {
                     }
                     return
                 }
-                Dispatcher.log(message: "Realtime Delivery error")
+                Dispatcher.log(message: "Realtime Delivery error: \(error.code), \(error.message)")
                 
-                /// Some sort of failure
-                if shouldRetryPolicy(error) {
+                if case let .exposureResponse(reason: reason) = error {
+                    self.onExposureResponseMessage(reason)
+                }
+                
+                if Dispatcher.markForRealtimeRetryOnErrorPolicy(error: error) {
                     self.markForRetry(batch: analytics)
                 }
             }
@@ -408,6 +392,40 @@ extension Dispatcher {
     }
 }
 
+// MARK: Retry and Persistence Policy
+extension Dispatcher {
+    
+    /// Retry Policy in the event realtime analytics fails with an `ExposureError`
+    ///
+    /// - parameter error: The error triggering retry policy
+    /// - returns: If retry should occur or not.
+    static internal func markForRealtimeRetryOnErrorPolicy(error: ExposureError) -> Bool {
+        if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
+            return true
+        }
+        if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
+            return true
+        }
+        return false
+    }
+    
+    /// Persistence policy in the event an error occurs during dispatch forcing possible loss of in-memory analytics events.
+    ///
+    /// - parameter error: The error triggering retry policy
+    /// - returns: If persistence should occur or not.
+    static internal func persistOnErrorPolicy(error: ExposureError) -> Bool {
+        if case let .exposureResponse(reason: reason) = error, reason.httpCode >= 500 {
+            return true
+        }
+        
+        if case let ExposureError.generalError(error: underlyingError) = error, let nsError = underlyingError as? NSError, nsError.domain == NSURLErrorDomain {
+            return true
+        }
+        return false
+    }
+}
+
+// MARK: Persisted Analytics
 extension Dispatcher {
     /// Persisted events and sessions occur when the Dispatcher was previously unable to deliver its payload. These `batches` are related to an accountId (through the attached SessionToken) and a playSessionId.
     ///
@@ -437,26 +455,34 @@ extension Dispatcher {
         do {
             let relatedAnalytics = try AnalyticsPersister().analytics(accountId: accountId,
                                                                       businessUnit: currentBatch.businessUnit,
-                                                                      customer: currentBatch.customer)
+                                                                      customer: currentBatch.customer,
+                                                                      extractFromDisk: true)
             
             relatedAnalytics.forEach{ persisted in
-                Dispatcher.log(message: "Found persisted analytics")
+                Dispatcher.log(message: "Found related persisted analytics")
                 Dispatcher.log(status:  "📤", delivery: persisted.batch)
                 
                 networkHandler.deliver(batch: persisted.batch, clockOffset: configuration.synchronizedClockOffset) { [weak self] response, error in
                     if response != nil {
-                        try? AnalyticsPersister().delete(persistedAnalytics: persisted)
-                        return
+                        Dispatcher.log(message: "✅ Delivered related persisted analytics")
                     }
                     
                     if let error = error {
-                        self?.process(error: error, delivery: persisted)
+                        if let `self` = self {
+                            self.processRelatedAnalytics(error: error, delivery: persisted)
+                        }
+                        else {
+                            if Dispatcher.persistOnErrorPolicy(error: error) {
+                                Dispatcher.log(message: "🚨 Error delivering related analytics. Dispatcher missing. Re-persisting batch: \(error.code), \(error.message)")
+                                try? AnalyticsPersister().persist(analytics: persisted.batch)
+                            }
+                        }
                     }
                 }
             }
         }
         catch {
-            Dispatcher.log(message: "🚨 Failed to retrieve related, persisted analytics for \(accountId) due to \(error.localizedDescription)")
+            Dispatcher.log(message: "🚨 Failed to retrieve related persisted analytics for \(accountId) due to \(error.localizedDescription)")
         }
         
         
@@ -466,7 +492,7 @@ extension Dispatcher {
     /// 
     /// - parameter error: `ExposureError` to handle
     /// - parameter delivery: `PersistedAnalytics` that failed to deliver.
-    private func process(error: ExposureError, delivery: PersistedAnalytics) {
+    private func processRelatedAnalytics(error: ExposureError, delivery: PersistedAnalytics) {
         if case let .exposureResponse(reason: reason) = error, (reason.httpCode == 401 && reason.message == "INVALID_SESSION_TOKEN") {
             // There is still a possbility to resend the persisted batch. If the currently active analytics batch contain a sessionToken with an accountId that matches the persisted batch, we can use that sessionToken to send the payload
             if let currentAccountId = currentBatch.sessionToken.accountId,
@@ -479,10 +505,28 @@ extension Dispatcher {
                 
                 networkHandler.deliver(batch: updatedBatch, clockOffset: configuration.synchronizedClockOffset) { response, error in
                     if response != nil {
-                        Dispatcher.log(message: "✅ Delivered persisted payload on new sessionToken")
-                        try? AnalyticsPersister().delete(persistedAnalytics: delivery)
+                        Dispatcher.log(message: "✅ Delivered related persisted analytics on new sessionToken")
+                    }
+                    
+                    if let error = error, Dispatcher.persistOnErrorPolicy(error: error) {
+                        Dispatcher.log(message: "🚨 Error delivering related analytics on new sessionToken. Re-persisting batch: \(error.code), \(error.message)")
+                        try? AnalyticsPersister().persist(analytics: updatedBatch)
                     }
                 }
+            }
+            else {
+                if Dispatcher.persistOnErrorPolicy(error: error) {
+                    /// Re-persist failed delivery
+                    Dispatcher.log(message: "🚨 Error delivering related analytics. Re-persisting batch: \(error.code), \(error.message)")
+                    try? AnalyticsPersister().persist(analytics: delivery.batch)
+                }
+            }
+        }
+        else {
+            if Dispatcher.persistOnErrorPolicy(error: error) {
+                /// Re-persist failed delivery
+                Dispatcher.log(message: "🚨 Error delivering related analytics on new sessionToken. Re-persisting batch: \(error.code), \(error.message)")
+                try? AnalyticsPersister().persist(analytics: delivery.batch)
             }
         }
     }

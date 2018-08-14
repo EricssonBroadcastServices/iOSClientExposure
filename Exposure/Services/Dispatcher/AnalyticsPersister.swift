@@ -63,12 +63,6 @@ public struct AnalyticsPersister: StorageProvider {
             throw PersisterError.failedToPersistMissingAccountId
         }
         
-        // 5. Make sure we have a correctly formatted sessionToken
-        guard analytics.sessionToken.hasValidFormat else {
-            /// TODO: Log this for debug purposes?
-            throw PersisterError.failedToPersistWithMalformattedSessionToken
-        }
-        
         let directoryUrl = try storageDirectory(businessUnit: analytics.businessUnit,
                                                 customer: analytics.customer,
                                                 accountId: accountId)
@@ -84,18 +78,20 @@ public struct AnalyticsPersister: StorageProvider {
     /// - parameter accountId: account for which to retrieve data
     /// - parameter businessUnit: related to `accountId`
     /// - parameter customer: relted to `accountId`
+    /// - parameter extractFromDisk: specifying `true` will remove any `PersistedAnalytics` from disk, keeping them only in memory.
     /// - returns: Array of `PersistedAnalytics`
     /// - throws: `FileManager` error. `CCCryptorStatus` related `Error`.
-    internal func analytics(accountId: String, businessUnit: String, customer: String) throws -> [PersistedAnalytics] {
+    internal func analytics(accountId: String, businessUnit: String, customer: String, extractFromDisk: Bool = false) throws -> [PersistedAnalytics] {
         let directoryUrl = try storageDirectory(businessUnit: businessUnit,
                                                 customer: customer,
                                                 accountId: accountId)
         
-        return try files(at: directoryUrl, preloadingKeys: [.isDirectoryKey]) { url, enumerator in
-            let resourceValues = try url.resourceValues(forKeys: [.isDirectoryKey])
+        return try files(at: directoryUrl, preloadingKeys: [.isDirectoryKey, .isRegularFileKey]) { url, enumerator in
             
-            if let isDirectory = resourceValues.isDirectory {
-                return !isDirectory
+            let resourceValues = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey])
+            
+            if let isDirectory = resourceValues.isDirectory, let isFile = resourceValues.isRegularFile {
+                return !isDirectory && isFile
             }
             return false
             }
@@ -106,17 +102,26 @@ public struct AnalyticsPersister: StorageProvider {
                     
                     // 2. Decrypt the data
                     guard let decryptedData = try decrypt(data: data) else { return nil }
-                    
                     if let json = try JSONSerialization.jsonObject(with: decryptedData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] , let batch = AnalyticsBatch(persistencePayload: json) {
-                        print("✅ Found PersistedAnalytics!", batch.sessionId)
-                        return PersistedAnalytics(url: url, batch: batch)
+                        let persistedAnalytics = PersistedAnalytics(url: url, batch: batch)
+                        if extractFromDisk {
+                            do {
+                                try self.delete(persistedAnalytics: persistedAnalytics)
+                                return persistedAnalytics
+                            }
+                            catch {
+                                return nil
+                            }
+                        }
+                        else {
+                            return persistedAnalytics
+                        }
                     }
                     else {
-                        print("🚨 No Analytics parsed")
-                        return nil }
+                        return nil
+                    }
                 }
                 catch {
-                    print("🚨 Error materializing analytics")
                     return nil
                 }
         }

@@ -4,12 +4,17 @@
 
 ### API Changes
 
-#### Channel
+#### UIDevice
 
 | reason | api |
 | -------- | --- |
 | deprecated | `UIDevice.deviceType()` |
 
+#### SessionToken
+
+| reason | api |
+| -------- | --- |
+| deprecated | `hasValidFormat` |
 
 ## 2.0.81
 

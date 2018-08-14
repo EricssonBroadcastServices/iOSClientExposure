@@ -50,7 +50,7 @@ extension ExposureError {
         switch self {
         case .generalError(error: let error): return error.localizedDescription
         case .serialization(reason: let reason): return reason.info
-        case .exposureResponse(reason: let reason): return reason.message
+        case .exposureResponse(reason: let reason): return nil
         }
     }
 }
