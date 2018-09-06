@@ -64,7 +64,7 @@
 		7608010720692820007F59D5 /* ContentRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76B04F2B1FBADDA5007011E6 /* ContentRating.swift */; };
 		7608010820692820007F59D5 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		7608010920692820007F59D5 /* AnalyticsPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D532020F1E100C23579 /* AnalyticsPersister.swift */; };
-		7608010A20692820007F59D5 /* AlamofireNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */; };
+		7608010A20692820007F59D5 /* ExposureNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* ExposureNetworkHandler.swift */; };
 		7608010B20692820007F59D5 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7635AEC0202A4423001512BF /* Request.swift */; };
 		7608010C20692820007F59D5 /* FetchEpgChannelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 769734B01EF1994900F6ADC8 /* FetchEpgChannelList.swift */; };
 		7608010D20692820007F59D5 /* EventSinkInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76288CBB1F213A50004B22AB /* EventSinkInit.swift */; };
@@ -369,7 +369,7 @@
 		76A89CEF2020942000C23579 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		76A89D4E2020F16C00C23579 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4C2020F16C00C23579 /* Data+Extensions.swift */; };
 		76A89D4F2020F16C00C23579 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4D2020F16C00C23579 /* String+Extensions.swift */; };
-		76A89D5A2020F1E100C23579 /* AlamofireNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */; };
+		76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* ExposureNetworkHandler.swift */; };
 		76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D532020F1E100C23579 /* AnalyticsPersister.swift */; };
 		76A89D5C2020F1E100C23579 /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D542020F1E100C23579 /* Dispatcher.swift */; };
 		76A89D5D2020F1E100C23579 /* PersistedAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D552020F1E100C23579 /* PersistedAnalytics.swift */; };
@@ -616,7 +616,7 @@
 		76A89CF22020942000C23579 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		76A89D4C2020F16C00C23579 /* Data+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+Extensions.swift"; sourceTree = "<group>"; };
 		76A89D4D2020F16C00C23579 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireNetworkHandler.swift; sourceTree = "<group>"; };
+		76A89D522020F1E100C23579 /* ExposureNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExposureNetworkHandler.swift; sourceTree = "<group>"; };
 		76A89D532020F1E100C23579 /* AnalyticsPersister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsPersister.swift; sourceTree = "<group>"; };
 		76A89D542020F1E100C23579 /* Dispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		76A89D552020F1E100C23579 /* PersistedAnalytics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedAnalytics.swift; sourceTree = "<group>"; };
@@ -1334,7 +1334,7 @@
 			isa = PBXGroup;
 			children = (
 				76A89D542020F1E100C23579 /* Dispatcher.swift */,
-				76A89D522020F1E100C23579 /* AlamofireNetworkHandler.swift */,
+				76A89D522020F1E100C23579 /* ExposureNetworkHandler.swift */,
 				76A89D532020F1E100C23579 /* AnalyticsPersister.swift */,
 				76A89D552020F1E100C23579 /* PersistedAnalytics.swift */,
 			);
@@ -1768,7 +1768,7 @@
 				7608010720692820007F59D5 /* ContentRating.swift in Sources */,
 				7608010820692820007F59D5 /* FilteredFields.swift in Sources */,
 				7608010920692820007F59D5 /* AnalyticsPersister.swift in Sources */,
-				7608010A20692820007F59D5 /* AlamofireNetworkHandler.swift in Sources */,
+				7608010A20692820007F59D5 /* ExposureNetworkHandler.swift in Sources */,
 				7608010B20692820007F59D5 /* Request.swift in Sources */,
 				7608010C20692820007F59D5 /* FetchEpgChannelList.swift in Sources */,
 				7608010D20692820007F59D5 /* EventSinkInit.swift in Sources */,
@@ -1987,7 +1987,7 @@
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
-				76A89D5A2020F1E100C23579 /* AlamofireNetworkHandler.swift in Sources */,
+				76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */,
 				7635AEC1202A4423001512BF /* Request.swift in Sources */,
 				769734B11EF1994900F6ADC8 /* FetchEpgChannelList.swift in Sources */,
 				76288CBC1F213A50004B22AB /* EventSinkInit.swift in Sources */,

@@ -33,7 +33,7 @@
 import Foundation
 
 /// Paramenter encoding for query strings compatible with Exposure.
-internal struct URLEncoding: ParameterEncoding {
+public struct URLEncoding: ParameterEncoding {
 //    public func encode(_ urlRequest: URLRequest, with parameters: String?) throws -> URLRequest {
 //        guard let params = parameters else { return urlRequest }
 //        var encodedUrlRequest = urlRequest

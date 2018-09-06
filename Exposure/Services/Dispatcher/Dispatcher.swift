@@ -69,7 +69,7 @@ public class Dispatcher {
                                            payload: startupEvents)
         self.configuration = Configuration()
         self.heartbeatsProvider = heartbeatsProvider
-        self.networkHandler = AlamofireNetworkHandler()
+        self.networkHandler = ExposureNetworkHandler()
         NotificationCenter.default.addObserver(self, selector: #selector(Dispatcher.appDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
@@ -122,6 +122,16 @@ public class Dispatcher {
                                       environment: currentBatch.environment,
                                       playToken: currentBatch.sessionId)
         return current
+    }
+    
+    /// Specifies a custom `RequestId` used when making network requests.
+    public var requestId: String? {
+        set {
+            networkHandler.requestId = newValue
+        }
+        get {
+            return networkHandler.requestId
+        }
     }
 }
 
