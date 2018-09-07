@@ -11,6 +11,8 @@ import Foundation
 
 
 class TerminationNetworkHandler: MockedSuccessNetworkHandler {
+    var requestId: String?
+    
     enum TerminationError: Swift.Error {
         case someError
     }

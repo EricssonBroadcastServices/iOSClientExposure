@@ -42,6 +42,8 @@ extension MockedSuccessNetworkHandler {
 }
 
 class FlushTriggerNetworkHandler: MockedSuccessNetworkHandler {
+    var requestId: String?
+    
     enum FlushTriggerError: Swift.Error {
         case generalError
     }

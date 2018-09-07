@@ -10,6 +10,8 @@ import Foundation
 @testable import Exposure
 
 class SynchronizeNetworkHandler: MockedSuccessNetworkHandler {
+    var requestId: String?
+    
     static var configJson: [String: Any] {
         return [
             "secondsUntilNextReport": 2,

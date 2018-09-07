@@ -10,6 +10,8 @@ import Foundation
 @testable import Exposure
 
 class RelatedAnalyticsNetworkHandler: MockedSuccessNetworkHandler {
+    var requestId: String?
+    
     
     enum RelatedError: Swift.Error {
         case someError

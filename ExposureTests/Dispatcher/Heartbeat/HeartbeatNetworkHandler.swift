@@ -10,6 +10,8 @@ import Foundation
 @testable import Exposure
 
 class HeartbeatNetworkHandler: MockedSuccessNetworkHandler {
+    var requestId: String?
+    
     func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
         let heartbeats = batch.payload.flatMap{ $0 as? MockedHeartbeat }
         heartbeatsDelivered.append(contentsOf: heartbeats)
