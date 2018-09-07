@@ -25,23 +25,28 @@ public struct ExposureApi<ResponseType: Decodable>: ExposureType {
     /// Raw query to be used when making the response
     fileprivate(set) public var query: String?
     
-    /// Parameters in a dictionary format, as transformed from the query string
-    public var parameters: [String: Any]? {
-        return query?.components(separatedBy: "&").reduce([String: Any]()) {
-            var result = $0
-            let comp = $1.components(separatedBy: "=")
-            result[comp[0]] = comp[1]
-            return result
-        }
-    }
+    /// Parameters in a dictionary format
+    public var parameters: [String: Any]?
     
     /// HTTP method to use
     public let method: HTTPMethod
     
     /// Headers to apply
     public var headers: [String: String]? {
-        return sessionToken?.authorizationHeader
+        var result: [String: String] = [:]
+        
+        if let custom = customHeaders {
+            custom.forEach{ result[$0] = $1 }
+        }
+        
+        if let authorization = sessionToken?.authorizationHeader {
+            authorization.forEach{ result[$0] = $1 }
+        }
+        
+        return result.isEmpty ? nil : result
     }
+    
+    internal let customHeaders: [String: String]?
     
     /// Performs the actual request
     public func request() -> ExposureRequest<ResponseType> {
@@ -68,11 +73,47 @@ public struct ExposureApi<ResponseType: Decodable>: ExposureType {
     /// - parameter query: An optional query to apply
     /// - parameter method: The HTTP method to apply
     /// - parameter sessionToken: an optional session token to append to the headers
-    public init(environment: Environment, endpoint: String, query: String? = nil, method: HTTPMethod = .get, sessionToken: SessionToken? = nil) {
+    public init(environment: Environment, endpoint: String, query: String? = nil, method: HTTPMethod = .get, sessionToken: SessionToken? = nil, headers: [String: String]? = nil) {
         self.environment = environment
         self.endpoint = endpoint.first == "/" ? endpoint : "/"+endpoint
         self.query = query
+        self.parameters = query?.components(separatedBy: "&").reduce([String: Any]()) {
+            var result = $0
+            let comp = $1.components(separatedBy: "=")
+            result[comp[0]] = comp[1]
+            return result
+        }
         self.method = method
         self.sessionToken = sessionToken
+        self.customHeaders = headers
     }
+    
+    /// Initializer
+    ///
+    /// - parameter environment: The *Exposure* environment to use
+    /// - parameter endpoint: The *Exposure* endpoint to contant, for example "/userplayhistory/lastviewed"
+    /// - parameter query: An optional query to apply
+    /// - parameter method: The HTTP method to apply
+    /// - parameter sessionToken: an optional session token to append to the headers
+    public init(environment: Environment, endpoint: String, parameters: [String: Any], method: HTTPMethod = .get, sessionToken: SessionToken? = nil, headers: [String: String]? = nil) {
+        self.environment = environment
+        self.endpoint = endpoint.first == "/" ? endpoint : "/"+endpoint
+        self.query = nil
+        self.parameters = parameters
+        self.method = method
+        self.sessionToken = sessionToken
+        self.customHeaders = headers
+    }
+}
+
+extension ExposureApi {
+    public func request(encoding: ParameterEncoding) -> ExposureRequest<ResponseType> {
+        let request = sessionManager.request(endpointUrl,
+                                             method: method,
+                                             parameters: parameters,
+                                             encoding: encoding,
+                                             headers: headers)
+        return ExposureRequest(dataRequest: request)
+    }
+    
 }
