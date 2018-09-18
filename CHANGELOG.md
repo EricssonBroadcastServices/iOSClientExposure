@@ -18,6 +18,7 @@
 
 #### Features
 * Custom `RequestId`  on  `Dispatcher` used when making network requests.
+* `EMP-11766` Expanded and clarified error logging through analytics dispatch.
 
 ## 2.0.89
 
