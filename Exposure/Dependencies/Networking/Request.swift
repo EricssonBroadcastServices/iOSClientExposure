@@ -198,6 +198,17 @@ extension Request {
             case .parameterEncodingFailedMissingUrl: return "URLRequest is missing an url to encode parameters onto"
             }
         }
+        
+        public var code: Int {
+            switch self {
+            case .invalidUrl(url: _): return 501
+            case .unacceptableStatusCode(code: let code): return code
+            case .noResponseData: return 502
+            case .parameterEncodingFailedMissingUrl: return 503
+            }
+        }
+        
+        public var domain: String { return "ExposureRequestNetworkingErrorDomain" }
     }
     
     

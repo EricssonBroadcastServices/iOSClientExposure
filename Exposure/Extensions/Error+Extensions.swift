@@ -10,7 +10,13 @@ import Foundation
 
 extension Error {
     internal var debugInfoString: String {
-        if let nsError = self as? NSError {
+        if let networkingError = self as? Request.Networking {
+            var message = "[\(networkingError.code):\(networkingError.domain)] \n "
+            message += "[\(networkingError.message)] \n "
+            
+            return message
+        }
+        else if let nsError = self as? NSError {
             var message = "[\(nsError.code):\(nsError.domain)] \n "
             message += "[\(nsError.debugDescription)] \n "
             
