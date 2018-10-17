@@ -45,6 +45,9 @@ public enum DeviceType {
         else if lcModel.contains("AppleTV".lowercased()) {
             self = .appleTv
         }
+        else if lcModel.contains("x86_64".lowercased()) {
+            self = .mobile
+        }
         else {
             self = .other(string: model)
         }
