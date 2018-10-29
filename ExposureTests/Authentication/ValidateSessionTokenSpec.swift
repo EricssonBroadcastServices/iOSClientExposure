@@ -8,13 +8,10 @@
 
 import Quick
 import Nimble
-import Mockingjay
 
 @testable import Exposure
 
 class ValidateSessionTokenSpec: QuickSpec {
-    var endpointStub: Stub?
-    
     override func spec() {
         super.spec()
         

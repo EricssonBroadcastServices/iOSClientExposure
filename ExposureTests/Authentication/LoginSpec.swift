@@ -8,13 +8,10 @@
 
 import Quick
 import Nimble
-import Mockingjay
 
 @testable import Exposure
 
 class LoginSpec: QuickSpec {
-    var endpointStub: Stub?
-    
     override func spec() {
         super.spec()
         

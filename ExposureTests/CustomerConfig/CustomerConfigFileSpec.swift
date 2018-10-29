@@ -9,7 +9,6 @@
 import Foundation
 import Quick
 import Nimble
-import Mockingjay
 
 @testable import Exposure
 
