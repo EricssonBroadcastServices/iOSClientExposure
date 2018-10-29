@@ -95,6 +95,9 @@ public struct PlaybackEntitlement: Codable {
     
     /// Identity of the product that permitted playback of the asset
     public let productId: String?
+    
+    /// Optional `URL` for streams supporting serverside ad insertion.
+    public let adMediaLocator: URL?
 }
 
 extension PlaybackEntitlement {
@@ -130,6 +133,7 @@ extension PlaybackEntitlement {
         lastViewedTime = try container.decodeIfPresent(Int64.self, forKey: .lastViewedTime)
         liveTime = try container.decodeIfPresent(Int64.self, forKey: .liveTime)
         productId = try container.decodeIfPresent(String.self, forKey: .productId)
+        adMediaLocator = try container.decodeIfPresent(URL.self, forKey: .adMediaLocator)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -163,6 +167,7 @@ extension PlaybackEntitlement {
         try container.encodeIfPresent(lastViewedTime, forKey: .lastViewedTime)
         try container.encodeIfPresent(liveTime, forKey: .liveTime)
         try container.encodeIfPresent(productId, forKey: .productId)
+        try container.encodeIfPresent(adMediaLocator, forKey: .adMediaLocator)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -188,5 +193,6 @@ extension PlaybackEntitlement {
         case lastViewedTime
         case liveTime
         case productId
+        case adMediaLocator
     }
 }

@@ -18,7 +18,7 @@
 ## 2.0.92
 
 #### Changes
-* Upgraded unit testing frameworks.
+* `EMP-11795` Included `adMediaLocator` in `PlaybackEntitlement`.
 
 ## 2.0.91
 
