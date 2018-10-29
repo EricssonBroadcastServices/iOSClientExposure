@@ -38,6 +38,8 @@ public protocol ParameterEncoding {
 
 public struct JSONEncoding: ParameterEncoding {
     
+    public init() { }
+    
     public func encode<Parameters: Encodable>(_ urlRequest: URLRequest, with parameters: Parameters?) throws -> URLRequest {
         guard let params = parameters else { return urlRequest }
         var encodedUrlRequest = urlRequest
