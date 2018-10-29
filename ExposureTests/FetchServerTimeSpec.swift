@@ -8,7 +8,6 @@
 
 import Quick
 import Nimble
-import Mockingjay
 
 @testable import Exposure
 
@@ -39,46 +38,6 @@ class FetchServerTimeSpec: QuickSpec {
             it("should generate a correct endpoint url") {
                 let endpoint = "/time"
                 expect(fetch.endpointUrl).to(equal(env.apiUrl+endpoint))
-            }
-        }
-        
-        describe("Request") {
-            let expectedJson:[String: Any] = [
-                "epochMillis": 1000,
-                "iso8601":"ISOTIME"
-            ]
-            
-            var serverTime: ServerTime?
-            var error: ExposureError?
-            
-            beforeEach {
-                serverTime = nil
-                error = nil
-            }
-            
-            context("Success") {
-                
-                beforeEach {
-                    self.stub(uri(fetch.endpointUrl), json(expectedJson))
-                    
-                    fetch
-                        .request()
-                        .response{
-                            serverTime = $0.value
-                            error = $0.error
-                    }
-                }
-                
-                it("should receive correct response") {
-                    expect(serverTime).toEventuallyNot(beNil())
-                    expect(error).toEventually(beNil())
-                    
-                    expect(serverTime!.iso8601).toEventuallyNot(beNil())
-                    expect(serverTime!.epochMillis).toEventuallyNot(beNil())
-                    
-                    expect(serverTime!.iso8601).toEventually(equal("ISOTIME"))
-                    expect(serverTime!.epochMillis).toEventually(equal(1000))
-                }
             }
         }
     }
