@@ -236,7 +236,6 @@
 		760801CD2069296F007F59D5 /* TerminationNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E132021CFF300C23579 /* TerminationNetworkHandler.swift */; };
 		760801CE2069296F007F59D5 /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */; };
 		760801CF2069296F007F59D5 /* AnalyticsBatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89DFC2021CFF200C23579 /* AnalyticsBatchSpec.swift */; };
-		760801D12069296F007F59D5 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF02020942000C23579 /* Mockingjay.framework */; };
 		760801D22069296F007F59D5 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
 		760801D32069296F007F59D5 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		760801D52069296F007F59D5 /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
@@ -366,7 +365,6 @@
 		76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */; };
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89CE9202089E100C23579 /* Date+Extensions.swift */; };
-		76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF02020942000C23579 /* Mockingjay.framework */; };
 		76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
 		76A89CEF2020942000C23579 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		76A89D4E2020F16C00C23579 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4C2020F16C00C23579 /* Data+Extensions.swift */; };
@@ -709,7 +707,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				760801D12069296F007F59D5 /* Mockingjay.framework in Frameworks */,
 				760801D22069296F007F59D5 /* Nimble.framework in Frameworks */,
 				760801D32069296F007F59D5 /* Quick.framework in Frameworks */,
 				760801D52069296F007F59D5 /* Exposure.framework in Frameworks */,
@@ -727,7 +724,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A89CED2020942000C23579 /* Mockingjay.framework in Frameworks */,
 				76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */,
 				76A89CEF2020942000C23579 /* Quick.framework in Frameworks */,
 				76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */,
