@@ -78,8 +78,10 @@ public struct ExposureApi<ResponseType: Decodable>: ExposureType {
         self.endpoint = endpoint.first == "/" ? endpoint : "/"+endpoint
         self.query = query
         self.parameters = query?.components(separatedBy: "&").reduce([String: Any]()) {
+            guard $1 != "" else { return $0 }
             var result = $0
             let comp = $1.components(separatedBy: "=")
+            guard comp.count == 2 else { return $0 }
             result[comp[0]] = comp[1]
             return result
         }
