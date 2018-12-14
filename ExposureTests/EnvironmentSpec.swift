@@ -17,10 +17,12 @@ class EnvironmentSpec: QuickSpec {
             let base = "http://base.url.com"
             let customer = "TestCustomer"
             let businessUnit = "TestBusinessUnit"
-            let basePath = "/v1/customer/" + customer + "/businessunit/" + businessUnit
-            let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+            let version = "v1"
+            let basePath = "/" + version + "/customer/" + customer + "/businessunit/" + businessUnit
             
-            it("should build a correct base path") {
+            let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit, version: version)
+           
+           it ("should build a correct base path") {
                 expect(env.basePath).to(equal(basePath))
             }
             
@@ -29,4 +31,6 @@ class EnvironmentSpec: QuickSpec {
             }
         }
     }
+    
+    
 }
