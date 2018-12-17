@@ -29,6 +29,15 @@ class EnvironmentSpec: QuickSpec {
             it("should build a correct apiURL") {
                 expect(env.apiUrl).to(equal(base+basePath))
             }
+            
+            it ("should equal the versions") {
+                expect(env.version).to(equal(version))
+            }
+            
+            it ("Should not equal the versions") {
+                let versionTwo = "v2"
+                expect(env.version).notTo(equal(versionTwo))
+            }
         }
     }
     
