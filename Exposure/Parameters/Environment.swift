@@ -19,14 +19,18 @@ public struct Environment: Codable {
     /// EMP Business Unit identifier
     public let businessUnit: String
     
-    public init(baseUrl: String, customer: String, businessUnit: String) {
+    /// Exposure url version
+    public let version: String
+    
+    public init(baseUrl: String, customer: String, businessUnit: String, version: String = "v1") {
         self.baseUrl = baseUrl
         self.customer = customer
         self.businessUnit = businessUnit
+        self.version = version
     }
     
     public var basePath: String {
-        return "/v1/customer/" + customer + "/businessunit/" + businessUnit
+        return "/" + version + "/customer/" + customer + "/businessunit/" + businessUnit
     }
     
     public var apiUrl: String {
@@ -36,6 +40,6 @@ public struct Environment: Codable {
 
 extension Environment: Equatable {
     public static func == (lhs: Environment, rhs: Environment) -> Bool {
-        return lhs.baseUrl == rhs.baseUrl && lhs.customer == rhs.customer && lhs.businessUnit == rhs.businessUnit
+        return lhs.baseUrl == rhs.baseUrl && lhs.customer == rhs.customer && lhs.businessUnit == rhs.businessUnit && lhs.version == rhs.version
     }
 }
