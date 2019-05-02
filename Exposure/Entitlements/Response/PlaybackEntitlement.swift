@@ -98,6 +98,34 @@ public struct PlaybackEntitlement: Codable {
     
     /// Optional `URL` for streams supporting serverside ad insertion.
     public let adMediaLocator: URL?
+    
+    
+    public init(playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? ) {
+        
+        self.playTokenExpiration = playTokenExpiration
+        self.mediaLocator = mediaLocator
+        self.playSessionId = playSessionId
+        self.live = live
+        self.ffEnabled = ffEnabled
+        self.timeshiftEnabled = timeshiftEnabled
+        self.rwEnabled = rwEnabled
+        self.airplayBlocked = airplayBlocked
+        self.playToken = playToken
+        self.fairplay = fairplay
+        self.licenseExpiration = licenseExpiration
+        self.licenseExpirationReason = licenseExpirationReason
+        self.licenseActivation = licenseActivation
+        self.entitlementType = entitlementType
+        self.minBitrate = minBitrate
+        self.maxBitrate = maxBitrate
+        self.maxResHeight = maxResHeight
+        self.mdnRequestRouterUrl = mdnRequestRouterUrl
+        self.lastViewedOffset = lastViewedOffset
+        self.lastViewedTime = lastViewedTime
+        self.liveTime = liveTime
+        self.productId = productId
+        self.adMediaLocator = adMediaLocator
+    }
 }
 
 extension PlaybackEntitlement {

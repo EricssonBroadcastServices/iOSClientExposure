@@ -54,6 +54,13 @@ extension Entitlement {
                         sessionToken: sessionToken)
     }
     
+    
+    public func enigmaAsset(assetId: String) -> PlayEnigmaAsset {
+        return PlayEnigmaAsset(assetId: assetId,
+                               environment: environment,
+                               sessionToken: sessionToken)
+    }
+    
     /// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
     ///
     /// Default streaming format is:

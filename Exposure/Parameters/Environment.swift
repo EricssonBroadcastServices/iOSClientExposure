@@ -20,7 +20,7 @@ public struct Environment: Codable {
     public let businessUnit: String
     
     /// Exposure url version
-    public let version: String
+    public var version: String
     
     public init(baseUrl: String, customer: String, businessUnit: String, version: String = "v1") {
         self.baseUrl = baseUrl
