@@ -32,7 +32,9 @@ public struct ValidateEntitlement: ExposureType, DRMRequest {
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/entitlement/" + assetId
+        var environmentV2 = environment
+        environmentV2.version = "v2"
+        return environmentV2.apiUrl + "/entitlement/" + assetId
     }
     
     public var parameters: [String: Any] {

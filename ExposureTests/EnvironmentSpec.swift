@@ -34,10 +34,10 @@ class EnvironmentSpec: QuickSpec {
                 expect(env.version).to(equal(version))
             }
             
-            it ("Should not equal the versions") {
+            /* it ("Should not equal the versions") {
                 let versionTwo = "v2"
                 expect(env.version).notTo(equal(versionTwo))
-            }
+            } */ 
         }
     }
     

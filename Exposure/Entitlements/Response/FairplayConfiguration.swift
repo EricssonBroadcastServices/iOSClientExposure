@@ -16,9 +16,18 @@ public struct FairplayConfiguration: Codable {
     public let secondaryMediaLocator: String?
     
     /// URL to the *Application Certificate*
-    public let certificateUrl:String
+    public let certificateUrl:String?
     
     /// URL to where *Content Key Context* requests will be made
-    public let licenseAcquisitionUrl: String
+    public let licenseAcquisitionUrl: String?
+    
+    public let licenseServerUrl: String?
+    
+    public init(secondaryMediaLocator: String?, certificateUrl: String?, licenseAcquisitionUrl: String?, licenseServerUrl: String? ) {
+        self.secondaryMediaLocator = secondaryMediaLocator
+        self.certificateUrl = certificateUrl
+        self.licenseAcquisitionUrl = licenseAcquisitionUrl
+        self.licenseServerUrl = licenseServerUrl
+    }
 }
 
