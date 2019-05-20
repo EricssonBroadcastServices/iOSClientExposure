@@ -64,4 +64,14 @@ extension FetchEpg {
                                   channelId: channelId,
                                   programId: programId)
     }
+    
+    public func next(programId: String) -> FetchNextProgram {
+        return FetchNextProgram(environment: environment,
+                                programId: programId)
+    }
+    
+    public func previous(programId: String) -> FetchPreviousProgram {
+        return FetchPreviousProgram(environment: environment,
+                                programId: programId)
+    }
 }

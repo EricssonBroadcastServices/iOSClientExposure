@@ -435,6 +435,8 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
+		78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */; };
+		78270DC72282F86800F3A2F5 /* FetchPreviousProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */; };
 		7831FAC42264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		7831FAC52264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		78DF49FF225B463300B8348A /* PlaybackEntitlementV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */; };
@@ -702,6 +704,8 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
+		78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgram.swift; sourceTree = "<group>"; };
+		78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgram.swift; sourceTree = "<group>"; };
 		7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2Spec.swift; sourceTree = "<group>"; };
 		78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2.swift; sourceTree = "<group>"; };
 		78DF4A00225B465B00B8348A /* BooksMarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksMarks.swift; sourceTree = "<group>"; };
@@ -1083,6 +1087,8 @@
 				76AF2F111F13AA190014F007 /* FetchEpgChannel.swift */,
 				769734B21EF19A5000F6ADC8 /* FetchEpgProgram.swift */,
 				76842F9E1F61B58200F1A0D3 /* FetchProgramAiring.swift */,
+				78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */,
+				78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1992,6 +1998,7 @@
 				76D704671F93956100D6FC6B /* SearchSpelling.swift in Sources */,
 				764DEE241EEF2D070047A179 /* PlayLive.swift in Sources */,
 				76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */,
+				78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */,
 				76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */,
 				76D70EF22039C325006CF211 /* EmptyResponse.swift in Sources */,
 				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
@@ -2089,6 +2096,7 @@
 				78DF4A15225E322F00B8348A /* PlayEnigmaAsset.swift in Sources */,
 				76288CB41F20B08B004B22AB /* EventSink.swift in Sources */,
 				76009FA11F5D66FC008E1738 /* SessionResponse.swift in Sources */,
+				78270DC72282F86800F3A2F5 /* FetchPreviousProgram.swift in Sources */,
 				76A89DC12021C75B00C23579 /* NSString+Base64.m in Sources */,
 				76B04F201FBAC9A6007011E6 /* PostRating.swift in Sources */,
 				76A842F51EA7667D00BDAF2C /* ExposureType.swift in Sources */,
