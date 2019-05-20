@@ -70,7 +70,7 @@ public class Dispatcher {
         self.configuration = Configuration()
         self.heartbeatsProvider = heartbeatsProvider
         self.networkHandler = ExposureNetworkHandler()
-        NotificationCenter.default.addObserver(self, selector: #selector(Dispatcher.appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(Dispatcher.appDidEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
     }
     
     @objc internal func appDidEnterBackground() {

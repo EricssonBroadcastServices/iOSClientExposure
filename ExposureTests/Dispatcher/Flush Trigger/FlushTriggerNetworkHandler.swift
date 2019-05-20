@@ -48,7 +48,7 @@ class FlushTriggerNetworkHandler: MockedSuccessNetworkHandler {
         case generalError
     }
     
-    var failedCallback: () -> Void = { _ in }
+    var failedCallback: () -> Void = {  }
     var failForcedFlushTrigger: Bool = false
     func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
         
