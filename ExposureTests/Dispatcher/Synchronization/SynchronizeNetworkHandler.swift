@@ -46,7 +46,7 @@ class SynchronizeNetworkHandler: MockedSuccessNetworkHandler {
         case someError
     }
     
-    var deliveryReceieved: () -> Void = { _ in }
+    var deliveryReceieved: () -> Void = {  }
     var receivedClockDelta: Int64? = nil
     internal func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
         receivedClockDelta = abs(SynchronizeNetworkHandler.repliedTime/2+(clockOffset ?? 0))
