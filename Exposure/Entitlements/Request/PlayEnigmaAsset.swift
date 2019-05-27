@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Request a `PlaybackEntitlement` for *Vod* playback.
+/// Request a `PlaybackEntitlementV2` for *Asset* playback.
 ///
 /// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
 ///
