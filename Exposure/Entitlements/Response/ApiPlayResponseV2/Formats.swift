@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Formats: Decodable {
+public struct Formats: Codable {
     
     //public let adMediaLocator: URL?
     public let format: String
@@ -45,6 +45,15 @@ public struct Formats: Decodable {
     internal enum Content: CodingKey {
         case certificateUrl
         case licenseAcquisitionUrl
+    }
+}
+
+extension Formats {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(format, forKey: .format)
+        try container.encode(mediaLocator, forKey: .mediaLocator)
     }
 }
 

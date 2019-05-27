@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct PlayBackEntitlementV2: Decodable {
+public struct PlayBackEntitlementV2: Codable {
     
     public let requestId: String?
     
@@ -63,6 +63,24 @@ extension PlayBackEntitlementV2 {
         case productId
         case publicationId
         case streamInfo
+    }
+}
+
+extension PlayBackEntitlementV2 {
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(requestId, forKey: .requestId)
+        try container.encode(bookmarks, forKey: .bookmarks)
+        try container.encode(contractRestrictions, forKey: .contractRestrictions)
+        try container.encode(entitlementType, forKey: .entitlementType)
+        try container.encode(formats, forKey: .formats)
+        try container.encode(playSessionId, forKey: .playSessionId)
+        try container.encode(playToken, forKey: .playToken)
+        try container.encode(playTokenExpiration, forKey: .playTokenExpiration)
+        try container.encodeIfPresent(productId, forKey: .productId)
+        try container.encodeIfPresent(publicationId, forKey: .publicationId)
+        try container.encodeIfPresent(streamInfo, forKey: .streamInfo)
     }
 }
 

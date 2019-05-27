@@ -448,9 +448,11 @@
 		781DC15A229BD19F007D0107 /* FetchNextProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DC158229BD19F007D0107 /* FetchNextProgramSpec.swift */; };
 		781DC15C229BD5D6007D0107 /* FetchPreviousProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DC15B229BD5D6007D0107 /* FetchPreviousProgramSpec.swift */; };
 		781DC15D229BD5D6007D0107 /* FetchPreviousProgramSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DC15B229BD5D6007D0107 /* FetchPreviousProgramSpec.swift */; };
+		781DC15F229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */; };
+		781DC160229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */; };
+		781DC162229BDF9F007D0107 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */; };
 		78270DC72282F86800F3A2F5 /* FetchPreviousProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */; };
-		7831FAC42264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		7831FAC52264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		78DF49FF225B463300B8348A /* PlaybackEntitlementV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */; };
 		78DF4A01225B465B00B8348A /* BooksMarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A00225B465B00B8348A /* BooksMarks.swift */; };
@@ -719,6 +721,7 @@
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
 		781DC158229BD19F007D0107 /* FetchNextProgramSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgramSpec.swift; sourceTree = "<group>"; };
 		781DC15B229BD5D6007D0107 /* FetchPreviousProgramSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgramSpec.swift; sourceTree = "<group>"; };
+		781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAssetSpec.swift; sourceTree = "<group>"; };
 		78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgram.swift; sourceTree = "<group>"; };
 		78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgram.swift; sourceTree = "<group>"; };
 		7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2Spec.swift; sourceTree = "<group>"; };
@@ -943,6 +946,7 @@
 				7646D67D1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift */,
 				3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */,
 				766338651F78FEB700D66160 /* ValidateDownloadSpec.swift */,
+				781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */,
 			);
 			path = Entitlement;
 			sourceTree = "<group>";
@@ -1944,6 +1948,7 @@
 				7608018B2069296F007F59D5 /* ValidateEntitlementSpec.swift in Sources */,
 				7608018C2069296F007F59D5 /* FetchProgramAiringSpec.swift in Sources */,
 				7608018D2069296F007F59D5 /* EnvironmentSpec.swift in Sources */,
+				781DC160229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */,
 				7608018E2069296F007F59D5 /* ValidateSessionTokenSpec.swift in Sources */,
 				7608018F2069296F007F59D5 /* AssetUserDataSpec.swift in Sources */,
 				760801902069296F007F59D5 /* ExposureErrorSpec.swift in Sources */,
@@ -1986,6 +1991,7 @@
 				7614A37E207F72920005C089 /* ExposureApiSpec.swift in Sources */,
 				760801B42069296F007F59D5 /* EncryptionProviderSpec.swift in Sources */,
 				760801B52069296F007F59D5 /* PlayVodSpec.swift in Sources */,
+				781DC162229BDF9F007D0107 /* PlaybackEntitlementV2Spec.swift in Sources */,
 				760801B62069296F007F59D5 /* FetchAssetListSpec.swift in Sources */,
 				760801B72069296F007F59D5 /* SeasonSpec.swift in Sources */,
 				760801B82069296F007F59D5 /* MarkerSpec.swift in Sources */,
@@ -2161,7 +2167,6 @@
 				7683FD0521510D460005149E /* Error+Extensions.swift in Sources */,
 				761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */,
 				76529D031EDC2EB600318AE2 /* SortedResponse.swift in Sources */,
-				7831FAC42264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */,
 				76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2239,6 +2244,7 @@
 				7693EDC61EADE09F00421551 /* FetchServerTimeSpec.swift in Sources */,
 				76A89E1D2021CFF300C23579 /* MockedHeartbeat.swift in Sources */,
 				76A89E1F2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift in Sources */,
+				781DC15F229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */,
 				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */,
 				7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */,
