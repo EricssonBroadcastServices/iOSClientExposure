@@ -48,7 +48,7 @@ public struct FetchEventList: ExposureType, PageableResponse, FilteredEventDates
     }
     
     internal enum Keys: String {
-        case daysBackward = "daysBackward    "
+        case daysBackward = "daysBackward"
         case daysForward = "daysForward"
         case pageSize = "pageSize"
         case pageNumber = "pageNumber"
