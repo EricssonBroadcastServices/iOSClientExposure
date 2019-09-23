@@ -103,6 +103,28 @@ FetchAsset(environment: environment)
     }
 ```
 
+
+#### Fetching Events
+Client applications may request  *Events*, or the *live events*,  ( current, upcomming or past events )  data through the `FetchEvent` endpoint.
+`Exposure` supports fetching *Event* for a range of dates. ( `daysBackward` & `daysForward` ) . Application developer should pass the from `date` when requesting the list of events.  (ex: current date) 
+
+The example below fetches *Event*  from 2 days ago to 2 days ahead, limiting the result to 100 entries and sorting the returned `[Event]` on *created*.
+
+```Swift
+FetchEvent(environment: environment)
+ .list(date: "2019-09-17") 
+ .filter(daysBackward: 2, daysForward: 2)
+ .sort(on:"-created")
+ .show(page: 1, spanning: 100)
+ .request()
+ .validate()
+ .response {
+    // Handle response
+ }
+```
+
+
+
 #### Content Search
 Client applications can do content search with autocompletion by querying *Exposure*.
 

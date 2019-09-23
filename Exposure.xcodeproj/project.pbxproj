@@ -236,8 +236,6 @@
 		760801CD2069296F007F59D5 /* TerminationNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89E132021CFF300C23579 /* TerminationNetworkHandler.swift */; };
 		760801CE2069296F007F59D5 /* ExposureResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76BBFBD21EAA4A33001DBDDB /* ExposureResponseMessage.swift */; };
 		760801CF2069296F007F59D5 /* AnalyticsBatchSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89DFC2021CFF200C23579 /* AnalyticsBatchSpec.swift */; };
-		760801D22069296F007F59D5 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
-		760801D32069296F007F59D5 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		760801D52069296F007F59D5 /* Exposure.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A842A71EA75EC900BDAF2C /* Exposure.framework */; };
 		761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AA1ECB50F300E316BF /* AssetRightsSpec.swift */; };
 		761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761336AB1ECB50F300E316BF /* LinkedEntitySpec.swift */; };
@@ -365,8 +363,6 @@
 		76A842FD1EA7667D00BDAF2C /* FetchServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842E81EA7667D00BDAF2C /* FetchServerTime.swift */; };
 		76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A842EA1EA7667D00BDAF2C /* ServerTime.swift */; };
 		76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89CE9202089E100C23579 /* Date+Extensions.swift */; };
-		76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF12020942000C23579 /* Nimble.framework */; };
-		76A89CEF2020942000C23579 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76A89CF22020942000C23579 /* Quick.framework */; };
 		76A89D4E2020F16C00C23579 /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4C2020F16C00C23579 /* Data+Extensions.swift */; };
 		76A89D4F2020F16C00C23579 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D4D2020F16C00C23579 /* String+Extensions.swift */; };
 		76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76A89D522020F1E100C23579 /* ExposureNetworkHandler.swift */; };
@@ -435,6 +431,10 @@
 		76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */; };
 		76DE9ACD1ECD790600D86C43 /* FilteredPublish.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */; };
 		76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */; };
+		7810DE15232B770C00310901 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810DE14232B770C00310901 /* EventList.swift */; };
+		7810DE16232B770C00310901 /* EventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810DE14232B770C00310901 /* EventList.swift */; };
+		7810DE18232B771800310901 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810DE17232B771800310901 /* Event.swift */; };
+		7810DE19232B771800310901 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7810DE17232B771800310901 /* Event.swift */; };
 		781DC14C229BCB9D007D0107 /* FetchPreviousProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */; };
 		781DC14D229BCBA0007D0107 /* FetchNextProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */; };
 		781DC14E229BCBC0007D0107 /* PlayEnigmaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A14225E322F00B8348A /* PlayEnigmaAsset.swift */; };
@@ -454,6 +454,16 @@
 		78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */; };
 		78270DC72282F86800F3A2F5 /* FetchPreviousProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */; };
 		7831FAC52264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
+		78397C95232F7CF300071B4D /* FetchEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78397C94232F7CF300071B4D /* FetchEventList.swift */; };
+		78397C96232F7CF300071B4D /* FetchEventList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78397C94232F7CF300071B4D /* FetchEventList.swift */; };
+		78397C99232F80A800071B4D /* EventDateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78397C98232F80A800071B4D /* EventDateFilter.swift */; };
+		78397C9A232F80A800071B4D /* EventDateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78397C98232F80A800071B4D /* EventDateFilter.swift */; };
+		784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
+		784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
+		784666C42331151600429AB6 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5B2330FA1C003A7C6E /* Quick.framework */; };
+		784666C52331151600429AB6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5C2330FA1C003A7C6E /* Nimble.framework */; };
+		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
+		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78DF49FF225B463300B8348A /* PlaybackEntitlementV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */; };
 		78DF4A01225B465B00B8348A /* BooksMarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A00225B465B00B8348A /* BooksMarks.swift */; };
 		78DF4A03225B466C00B8348A /* ContractRestrictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A02225B466C00B8348A /* ContractRestrictions.swift */; };
@@ -719,12 +729,22 @@
 		76DE9ACA1ECD78FE00D86C43 /* FilteredFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredFields.swift; sourceTree = "<group>"; };
 		76DE9ACC1ECD790600D86C43 /* FilteredPublish.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPublish.swift; sourceTree = "<group>"; };
 		76DE9ACE1ECD792B00D86C43 /* PageableResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageableResponse.swift; sourceTree = "<group>"; };
+		7810DE14232B770C00310901 /* EventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventList.swift; sourceTree = "<group>"; };
+		7810DE17232B771800310901 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		781DC158229BD19F007D0107 /* FetchNextProgramSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgramSpec.swift; sourceTree = "<group>"; };
 		781DC15B229BD5D6007D0107 /* FetchPreviousProgramSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgramSpec.swift; sourceTree = "<group>"; };
 		781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAssetSpec.swift; sourceTree = "<group>"; };
 		78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgram.swift; sourceTree = "<group>"; };
 		78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgram.swift; sourceTree = "<group>"; };
 		7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2Spec.swift; sourceTree = "<group>"; };
+		78397C94232F7CF300071B4D /* FetchEventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventList.swift; sourceTree = "<group>"; };
+		78397C98232F80A800071B4D /* EventDateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDateFilter.swift; sourceTree = "<group>"; };
+		784666C12331131F00429AB6 /* FetchEventListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventListSpec.swift; sourceTree = "<group>"; };
+		78A63A4B232F90BF003A7C6E /* FetchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEvent.swift; sourceTree = "<group>"; };
+		78A63A5B2330FA1C003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		78A63A5C2330FA1C003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		78A63A5F2330FA30003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
+		78A63A602330FA30003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
 		78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2.swift; sourceTree = "<group>"; };
 		78DF4A00225B465B00B8348A /* BooksMarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksMarks.swift; sourceTree = "<group>"; };
 		78DF4A02225B466C00B8348A /* ContractRestrictions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractRestrictions.swift; sourceTree = "<group>"; };
@@ -746,8 +766,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				760801D22069296F007F59D5 /* Nimble.framework in Frameworks */,
-				760801D32069296F007F59D5 /* Quick.framework in Frameworks */,
 				760801D52069296F007F59D5 /* Exposure.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,8 +781,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				76A89CEE2020942000C23579 /* Nimble.framework in Frameworks */,
-				76A89CEF2020942000C23579 /* Quick.framework in Frameworks */,
+				784666C42331151600429AB6 /* Quick.framework in Frameworks */,
+				784666C52331151600429AB6 /* Nimble.framework in Frameworks */,
 				76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1178,6 +1196,7 @@
 				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 				76A89D502020F1E100C23579 /* Services */,
 				766FBB5E1EC9816700EBEC53 /* Asset */,
+				7810DE12232B76ED00310901 /* Event */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
 				76A842D21EA7667D00BDAF2C /* Entitlements */,
 				3E48B75E1F83A98800D345BF /* CustomerConfig */,
@@ -1205,6 +1224,7 @@
 				7614A375207E53080005C089 /* ExposureApiSpec.swift */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
+				78A63A532330E050003A7C6E /* Event */,
 				769734B41EF26CF500F6ADC8 /* Epg */,
 				7670307D1ECB210C0026CD70 /* Asset */,
 				3E6B3B421F84D18E0071C10A /* Carousel */,
@@ -1221,6 +1241,10 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				78A63A5C2330FA1C003A7C6E /* Nimble.framework */,
+				78A63A602330FA30003A7C6E /* Nimble.framework */,
+				78A63A5B2330FA1C003A7C6E /* Quick.framework */,
+				78A63A5F2330FA30003A7C6E /* Quick.framework */,
 				76A89CF02020942000C23579 /* Mockingjay.framework */,
 				76A89CF12020942000C23579 /* Nimble.framework */,
 				76A89CF22020942000C23579 /* Quick.framework */,
@@ -1593,6 +1617,50 @@
 			path = Parameters;
 			sourceTree = "<group>";
 		};
+		7810DE12232B76ED00310901 /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				78397C97232F808900071B4D /* Parameters */,
+				78397C93232F7CD200071B4D /* Request */,
+				7810DE13232B76F800310901 /* Response */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		7810DE13232B76F800310901 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				7810DE14232B770C00310901 /* EventList.swift */,
+				7810DE17232B771800310901 /* Event.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		78397C93232F7CD200071B4D /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				78A63A4B232F90BF003A7C6E /* FetchEvent.swift */,
+				78397C94232F7CF300071B4D /* FetchEventList.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		78397C97232F808900071B4D /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				78397C98232F80A800071B4D /* EventDateFilter.swift */,
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		78A63A532330E050003A7C6E /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				784666C12331131F00429AB6 /* FetchEventListSpec.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
 		78DF49FB225B461700B8348A /* ApiPlayResponseV2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1742,6 +1810,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 76A8429D1EA75EC900BDAF2C;
@@ -1805,6 +1874,7 @@
 				760800F020692820007F59D5 /* DispatcherNetworkHandler.swift in Sources */,
 				760800F120692820007F59D5 /* AnalyticsInitializationResponse.swift in Sources */,
 				760800F220692820007F59D5 /* ExposureResponse.swift in Sources */,
+				78397C96232F7CF300071B4D /* FetchEventList.swift in Sources */,
 				760800F320692820007F59D5 /* Environment.swift in Sources */,
 				760800F420692820007F59D5 /* DeviceRights.swift in Sources */,
 				760800F520692820007F59D5 /* DeviceType.swift in Sources */,
@@ -1839,6 +1909,7 @@
 				7608010F20692820007F59D5 /* Media.swift in Sources */,
 				7608011020692820007F59D5 /* FetchEpgChannel.swift in Sources */,
 				7608011120692820007F59D5 /* Sequence+Extensions.swift in Sources */,
+				7810DE16232B770C00310901 /* EventList.swift in Sources */,
 				7608011220692820007F59D5 /* PlayProgram.swift in Sources */,
 				7608011320692820007F59D5 /* PersistedAnalytics.swift in Sources */,
 				7608011420692820007F59D5 /* SearchAutocomplete.swift in Sources */,
@@ -1866,6 +1937,7 @@
 				7608012820692820007F59D5 /* Publication.swift in Sources */,
 				7608012920692820007F59D5 /* Credentials.swift in Sources */,
 				7608012A20692820007F59D5 /* EntitlementValidation.swift in Sources */,
+				78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */,
 				7608012B20692820007F59D5 /* UserRating.swift in Sources */,
 				781DC151229BCC35007D0107 /* ContractRestrictions.swift in Sources */,
 				7608012C20692820007F59D5 /* ValidateDownload.swift in Sources */,
@@ -1928,12 +2000,14 @@
 				7608016120692820007F59D5 /* PlayVod.swift in Sources */,
 				7608016220692820007F59D5 /* UIDevice+Extensions.swift in Sources */,
 				7608016320692820007F59D5 /* TaskDelegate.swift in Sources */,
+				7810DE19232B771800310901 /* Event.swift in Sources */,
 				7608016420692820007F59D5 /* FilteredAssetIds.swift in Sources */,
 				7608016520692820007F59D5 /* FilteredDevices.swift in Sources */,
 				7683FD0621510DBE0005149E /* Error+Extensions.swift in Sources */,
 				7608016620692820007F59D5 /* FetchAssetList.swift in Sources */,
 				7608016720692820007F59D5 /* SortedResponse.swift in Sources */,
 				7608016820692820007F59D5 /* FetchRating.swift in Sources */,
+				78397C9A232F80A800071B4D /* EventDateFilter.swift in Sources */,
 				781DC14E229BCBC0007D0107 /* PlayEnigmaAsset.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1958,6 +2032,7 @@
 				760801942069296F007F59D5 /* TagsSpec.swift in Sources */,
 				760801952069296F007F59D5 /* DeviceRightsSpec.swift in Sources */,
 				760801962069296F007F59D5 /* PlaybackEntitlementSpec.swift in Sources */,
+				784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */,
 				760801972069296F007F59D5 /* SessionTokenSpec.swift in Sources */,
 				760801982069296F007F59D5 /* CarouselListSpec.swift in Sources */,
 				760801992069296F007F59D5 /* FetchAssetsByIdSpec.swift in Sources */,
@@ -2038,6 +2113,7 @@
 				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
 				76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */,
 				76288CBE1F213B0C004B22AB /* AnalyticsInitializationResponse.swift in Sources */,
+				78397C95232F7CF300071B4D /* FetchEventList.swift in Sources */,
 				76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */,
 				76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */,
 				766FBB7C1ECA2AD200EBEC53 /* DeviceRights.swift in Sources */,
@@ -2072,6 +2148,7 @@
 				766338641F78FC2400D66160 /* DownloadValidation.swift in Sources */,
 				766FBB861ECA2B7400EBEC53 /* Media.swift in Sources */,
 				76AF2F121F13AA190014F007 /* FetchEpgChannel.swift in Sources */,
+				7810DE15232B770C00310901 /* EventList.swift in Sources */,
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				7646D65F1EEFF5BE009E5C2B /* PlayProgram.swift in Sources */,
 				76A89D5D2020F1E100C23579 /* PersistedAnalytics.swift in Sources */,
@@ -2099,6 +2176,7 @@
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
 				76B04F281FBADBDF007011E6 /* UserRating.swift in Sources */,
+				78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */,
 				766338621F78FBD300D66160 /* ValidateDownload.swift in Sources */,
 				76288CB81F20B4A7004B22AB /* AnalyticsBatch.swift in Sources */,
 				7633A9F11F7E406500580002 /* IncludesUserData.swift in Sources */,
@@ -2161,12 +2239,14 @@
 				76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
 				76D70EF02039BDBA006CF211 /* UIDevice+Extensions.swift in Sources */,
+				7810DE18232B771800310901 /* Event.swift in Sources */,
 				7602010320362D0400EF495D /* TaskDelegate.swift in Sources */,
 				769734AD1EF1852C00F6ADC8 /* FilteredAssetIds.swift in Sources */,
 				76529CFB1EDBF2FE00318AE2 /* FilteredDevices.swift in Sources */,
 				7683FD0521510D460005149E /* Error+Extensions.swift in Sources */,
 				761336B91ECCD61B00E316BF /* FetchAssetList.swift in Sources */,
 				76529D031EDC2EB600318AE2 /* SortedResponse.swift in Sources */,
+				78397C99232F80A800071B4D /* EventDateFilter.swift in Sources */,
 				76B04F1C1FBAC7F4007011E6 /* FetchRating.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2191,6 +2271,7 @@
 				761336AF1ECB860300E316BF /* DeviceRightsSpec.swift in Sources */,
 				7646D6851EF00A6B009E5C2B /* PlaybackEntitlementSpec.swift in Sources */,
 				7646D6821EF00A6B009E5C2B /* SessionTokenSpec.swift in Sources */,
+				784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */,
 				3E9409AF1F862BF800253602 /* CarouselListSpec.swift in Sources */,
 				7646D66E1EF00A20009E5C2B /* FetchAssetsByIdSpec.swift in Sources */,
 				7646D6861EF00A6B009E5C2B /* PlayProgramSpec.swift in Sources */,
@@ -2281,7 +2362,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 173;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2310,7 +2394,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 173;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2332,7 +2419,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = ExposureTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
@@ -2348,7 +2438,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
 				INFOPLIST_FILE = ExposureTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
@@ -2482,7 +2575,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 173;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2507,7 +2603,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 173;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Exposure/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2525,7 +2624,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExposureTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
@@ -2539,7 +2641,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = ExposureTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
