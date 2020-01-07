@@ -462,6 +462,18 @@
 		784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
 		784666C42331151600429AB6 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5B2330FA1C003A7C6E /* Quick.framework */; };
 		784666C52331151600429AB6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5C2330FA1C003A7C6E /* Nimble.framework */; };
+		7862BB2C23C4816500A25536 /* FetchUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2B23C4816500A25536 /* FetchUserDetails.swift */; };
+		7862BB2E23C482E000A25536 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2D23C482E000A25536 /* UserDetails.swift */; };
+		7862BB3323C484B300A25536 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2D23C482E000A25536 /* UserDetails.swift */; };
+		7862BB3423C484B600A25536 /* FetchUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2B23C4816500A25536 /* FetchUserDetails.swift */; };
+		7862BB3623C484F000A25536 /* FetchUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3523C484F000A25536 /* FetchUserDetailsSpec.swift */; };
+		7862BB3723C484F000A25536 /* FetchUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3523C484F000A25536 /* FetchUserDetailsSpec.swift */; };
+		7862BB3E23C48F6E00A25536 /* UpdateUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3823C48CE500A25536 /* UpdateUserDetails.swift */; };
+		7862BB3F23C48F6F00A25536 /* UpdateUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3823C48CE500A25536 /* UpdateUserDetails.swift */; };
+		7862BB4023C492A500A25536 /* UserDetailsRequestParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */; };
+		7862BB4123C492A600A25536 /* UserDetailsRequestParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */; };
+		7862BB4323C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */; };
+		7862BB4423C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */; };
 		7884BFCC233A59DC00A30DB8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCB233A59DC00A30DB8 /* Nimble.framework */; };
 		7884BFCE233A59DC00A30DB8 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCD233A59DC00A30DB8 /* Quick.framework */; };
 		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
@@ -742,6 +754,12 @@
 		78397C94232F7CF300071B4D /* FetchEventList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventList.swift; sourceTree = "<group>"; };
 		78397C98232F80A800071B4D /* EventDateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDateFilter.swift; sourceTree = "<group>"; };
 		784666C12331131F00429AB6 /* FetchEventListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventListSpec.swift; sourceTree = "<group>"; };
+		7862BB2B23C4816500A25536 /* FetchUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserDetails.swift; sourceTree = "<group>"; };
+		7862BB2D23C482E000A25536 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		7862BB3523C484F000A25536 /* FetchUserDetailsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserDetailsSpec.swift; sourceTree = "<group>"; };
+		7862BB3823C48CE500A25536 /* UpdateUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDetails.swift; sourceTree = "<group>"; };
+		7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsRequestParameters.swift; sourceTree = "<group>"; };
+		7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDetailsSpec.swift; sourceTree = "<group>"; };
 		7884BFCB233A59DC00A30DB8 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7884BFCD233A59DC00A30DB8 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78A63A4B232F90BF003A7C6E /* FetchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEvent.swift; sourceTree = "<group>"; };
@@ -1202,6 +1220,7 @@
 				7619E54F1FCC0C5200ACACAE /* Dependencies */,
 				76A89D502020F1E100C23579 /* Services */,
 				766FBB5E1EC9816700EBEC53 /* Asset */,
+				7862BB2723C47F1700A25536 /* User */,
 				7810DE12232B76ED00310901 /* Event */,
 				76A842C91EA7667D00BDAF2C /* Authentication */,
 				76A842D21EA7667D00BDAF2C /* Entitlements */,
@@ -1228,6 +1247,7 @@
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
 				7614A375207E53080005C089 /* ExposureApiSpec.swift */,
+				7862BB2F23C4847C00A25536 /* User */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
 				78A63A532330E050003A7C6E /* Event */,
@@ -1661,6 +1681,50 @@
 			path = Parameters;
 			sourceTree = "<group>";
 		};
+		7862BB2723C47F1700A25536 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				7862BB2A23C47F3200A25536 /* Response */,
+				7862BB2923C47F2C00A25536 /* Request */,
+				7862BB2823C47F2300A25536 /* Parameters */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		7862BB2823C47F2300A25536 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */,
+			);
+			path = Parameters;
+			sourceTree = "<group>";
+		};
+		7862BB2923C47F2C00A25536 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				7862BB2B23C4816500A25536 /* FetchUserDetails.swift */,
+				7862BB3823C48CE500A25536 /* UpdateUserDetails.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		7862BB2A23C47F3200A25536 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				7862BB2D23C482E000A25536 /* UserDetails.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		7862BB2F23C4847C00A25536 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				7862BB3523C484F000A25536 /* FetchUserDetailsSpec.swift */,
+				7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		78A63A532330E050003A7C6E /* Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -1929,6 +1993,7 @@
 				7608011820692820007F59D5 /* Authenticate.swift in Sources */,
 				7608011920692820007F59D5 /* FetchProgramAiring.swift in Sources */,
 				7608011A20692820007F59D5 /* FetchAsset.swift in Sources */,
+				7862BB3423C484B600A25536 /* FetchUserDetails.swift in Sources */,
 				7608011B20692820007F59D5 /* SessionManager.swift in Sources */,
 				7608011C20692820007F59D5 /* Crypto.m in Sources */,
 				7608011D20692820007F59D5 /* SessionToken.swift in Sources */,
@@ -1971,6 +2036,7 @@
 				7608013E20692820007F59D5 /* AnalyticsConfigResponse.swift in Sources */,
 				7608013F20692820007F59D5 /* DeleteRating.swift in Sources */,
 				7608014020692820007F59D5 /* PageableResponse.swift in Sources */,
+				7862BB3323C484B300A25536 /* UserDetails.swift in Sources */,
 				781DC14C229BCB9D007D0107 /* FetchPreviousProgram.swift in Sources */,
 				7608014120692820007F59D5 /* ValidateEntitlement.swift in Sources */,
 				7608014220692820007F59D5 /* Image.swift in Sources */,
@@ -1992,6 +2058,7 @@
 				7608015120692820007F59D5 /* CustomerConfig.swift in Sources */,
 				7608015220692820007F59D5 /* Anonymous.swift in Sources */,
 				7608015320692820007F59D5 /* ExternalReference.swift in Sources */,
+				7862BB3F23C48F6F00A25536 /* UpdateUserDetails.swift in Sources */,
 				7608015420692820007F59D5 /* FetchAllRatings.swift in Sources */,
 				7608015520692820007F59D5 /* FetchRatingsList.swift in Sources */,
 				7608015620692820007F59D5 /* FairplayConfiguration.swift in Sources */,
@@ -2005,6 +2072,7 @@
 				7608015E20692820007F59D5 /* Program.swift in Sources */,
 				7608015F20692820007F59D5 /* URL+Extensions.swift in Sources */,
 				7608016020692820007F59D5 /* ValidateSessionToken.swift in Sources */,
+				7862BB4123C492A600A25536 /* UserDetailsRequestParameters.swift in Sources */,
 				7608016120692820007F59D5 /* PlayVod.swift in Sources */,
 				7608016220692820007F59D5 /* UIDevice+Extensions.swift in Sources */,
 				7608016320692820007F59D5 /* TaskDelegate.swift in Sources */,
@@ -2029,6 +2097,7 @@
 				7608018A2069296F007F59D5 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7608018B2069296F007F59D5 /* ValidateEntitlementSpec.swift in Sources */,
 				7608018C2069296F007F59D5 /* FetchProgramAiringSpec.swift in Sources */,
+				7862BB4423C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */,
 				7608018D2069296F007F59D5 /* EnvironmentSpec.swift in Sources */,
 				781DC160229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */,
 				7608018E2069296F007F59D5 /* ValidateSessionTokenSpec.swift in Sources */,
@@ -2054,6 +2123,7 @@
 				760801A12069296F007F59D5 /* DownloadVodSpec.swift in Sources */,
 				760801A22069296F007F59D5 /* LocalizedDataSpec.swift in Sources */,
 				760801A32069296F007F59D5 /* DispatcherSynchronizeSpec.swift in Sources */,
+				7862BB3723C484F000A25536 /* FetchUserDetailsSpec.swift in Sources */,
 				760801A42069296F007F59D5 /* FetchEpgProgramSpec.swift in Sources */,
 				760801A52069296F007F59D5 /* ParentalRatingSpec.swift in Sources */,
 				781DC15D229BD5D6007D0107 /* FetchPreviousProgramSpec.swift in Sources */,
@@ -2141,6 +2211,7 @@
 				76D704631F93935700D6FC6B /* Search.swift in Sources */,
 				76DE9AC41ECCF99400D86C43 /* AssetList.swift in Sources */,
 				764AE88A1FBA528300DB548C /* Rating.swift in Sources */,
+				7862BB2C23C4816500A25536 /* FetchUserDetails.swift in Sources */,
 				76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */,
 				3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */,
 				76B04F2A1FBADCE3007011E6 /* UserContentRating.swift in Sources */,
@@ -2232,6 +2303,7 @@
 				3E48B7651F83B17F00D345BF /* CustomerConfig.swift in Sources */,
 				76A842EC1EA7667D00BDAF2C /* Anonymous.swift in Sources */,
 				766FBB821ECA2B3D00EBEC53 /* ExternalReference.swift in Sources */,
+				7862BB3E23C48F6E00A25536 /* UpdateUserDetails.swift in Sources */,
 				76B04F2E1FBADDFE007011E6 /* FetchAllRatings.swift in Sources */,
 				76B04F1E1FBAC7FF007011E6 /* FetchRatingsList.swift in Sources */,
 				76A842F31EA7667D00BDAF2C /* FairplayConfiguration.swift in Sources */,
@@ -2245,8 +2317,10 @@
 				769734A11EF1803200F6ADC8 /* Program.swift in Sources */,
 				7645C5632006BFAA00133955 /* URL+Extensions.swift in Sources */,
 				76009F9F1F5D66B0008E1738 /* ValidateSessionToken.swift in Sources */,
+				7862BB4023C492A500A25536 /* UserDetailsRequestParameters.swift in Sources */,
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
 				76D70EF02039BDBA006CF211 /* UIDevice+Extensions.swift in Sources */,
+				7862BB2E23C482E000A25536 /* UserDetails.swift in Sources */,
 				7810DE18232B771800310901 /* Event.swift in Sources */,
 				7602010320362D0400EF495D /* TaskDelegate.swift in Sources */,
 				769734AD1EF1852C00F6ADC8 /* FilteredAssetIds.swift in Sources */,
@@ -2268,6 +2342,7 @@
 				76A89E1B2021CFF300C23579 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7646D68A1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift in Sources */,
 				76842FA31F61B83000F1A0D3 /* FetchProgramAiringSpec.swift in Sources */,
+				7862BB4323C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */,
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				76009FA31F5D6A44008E1738 /* ValidateSessionTokenSpec.swift in Sources */,
 				7640920E1F7E35970022F6ED /* AssetUserDataSpec.swift in Sources */,
@@ -2293,6 +2368,7 @@
 				761336B31ECC2C2600E316BF /* LocalizedDataSpec.swift in Sources */,
 				76A89E202021CFF300C23579 /* DispatcherSynchronizeSpec.swift in Sources */,
 				769734C21EF2928D00F6ADC8 /* FetchEpgProgramSpec.swift in Sources */,
+				7862BB3623C484F000A25536 /* FetchUserDetailsSpec.swift in Sources */,
 				767030831ECB27DC0026CD70 /* ParentalRatingSpec.swift in Sources */,
 				76A89E252021D91600C23579 /* MockedAnalyticsEvents.swift in Sources */,
 				7646D67E1EF00A6B009E5C2B /* AnonymousSpec.swift in Sources */,
