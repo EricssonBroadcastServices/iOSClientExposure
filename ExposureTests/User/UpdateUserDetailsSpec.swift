@@ -21,8 +21,6 @@ class UpdateUserDetailsSpec: QuickSpec {
         var env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         let sessionToken = SessionToken(value: "token")
         
-        env.version = "v2"
-        
         let userDetails = UpdateUserDetails(environment: env, sessionToken: sessionToken, language: "en")
         
         describe("Update UserDetails") {
