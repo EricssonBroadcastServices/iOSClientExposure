@@ -31,7 +31,13 @@ class UpdateUserDetailsSpec: QuickSpec {
                 expect(userDetails.headers!).to(equal(sessionToken.authorizationHeader))
             }
             
+            it("Should fail with invalid endpoint url") {
+                let endpoint = "/user/details/"
+                expect(userDetails.endpointUrl).toNot(equal(env.apiUrl+endpoint))
+            }
+            
             it("should generate a correct endpoint url") {
+                env.version = "v2"
                 let endpoint = "/user/details/"
                 expect(userDetails.endpointUrl).to(equal(env.apiUrl+endpoint))
             }

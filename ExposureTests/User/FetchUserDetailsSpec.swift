@@ -21,7 +21,7 @@ class FetchUserDetailsSpec: QuickSpec {
         var env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         let sessionToken = SessionToken(value: "token")
         
-        env.version = "v2"
+        // env.version = "v2"
         
         let userDetails = FetchUserDetails(environment: env, sessionToken: sessionToken)
         
@@ -31,7 +31,13 @@ class FetchUserDetailsSpec: QuickSpec {
                 expect(userDetails.headers!).to(equal(sessionToken.authorizationHeader))
             }
             
+            it("Should fail with invalid endpoint url") {
+                let endpoint = "/user/details/"
+                expect(userDetails.endpointUrl).toNot(equal(env.apiUrl+endpoint))
+            }
+            
             it("should generate a correct endpoint url") {
+                env.version = "v2"
                 let endpoint = "/user/details/"
                 expect(userDetails.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
@@ -53,7 +59,7 @@ class FetchUserDetailsSpec: QuickSpec {
             it("should fail with invalid json") {
                 let json: [String: Any] = [
                     "displayName":"",
-                    "language":nil,
+                    "language":NSNull(),
                     "defaultLanguage":""
                 ]
                 

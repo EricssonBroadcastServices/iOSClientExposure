@@ -11,7 +11,7 @@ import Foundation
 /// `UserDetails` contains *user's details* related to the language preferences user has.
 public struct UserDetails : Decodable {
     public let displayName: String?
-    public let language: String?
+    public let language: String
     public let defaultLanguage: String?
 }
 
