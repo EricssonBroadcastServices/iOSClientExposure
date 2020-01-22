@@ -9,7 +9,7 @@
 import Foundation
 
 /// `Event` contains *Event* information for a one specific event.
-public struct Event : Decodable {
+public struct Event : Codable {
     public let assetId: String?
     public let startTime: String?
     public let endTime: String?
