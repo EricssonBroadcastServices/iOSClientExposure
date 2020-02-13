@@ -85,6 +85,9 @@ public struct Asset {
     
     /// User specific data regarding this asset
     public let userData: AssetUserData?
+    
+    /// Duration in milliseconds
+    public var duration: Int?
 }
 
 extension Asset: Codable {
@@ -132,6 +135,7 @@ extension Asset: Codable {
         try container.encodeIfPresent(rating, forKey: .rating)
         try container.encodeIfPresent(markers, forKey: .markers)
         try container.encodeIfPresent(userData, forKey: .userData)
+        try container.encodeIfPresent(duration, forKey: .duration)
     }
     
     public init(from decoder: Decoder) throws {
@@ -178,6 +182,7 @@ extension Asset: Codable {
         rating = try container.decodeIfPresent(Float.self, forKey: .rating)
         markers = try container.decodeIfPresent([Marker].self, forKey: .markers)
         userData = try container.decodeIfPresent(AssetUserData.self, forKey: .userData)
+        duration = try container.decodeIfPresent(Int.self, forKey: .duration)
     }
 
     internal enum CodingKeys: String, CodingKey {
@@ -213,5 +218,6 @@ extension Asset: Codable {
         case rating
         case markers
         case userData
+        case duration
     }
 }
