@@ -460,8 +460,6 @@
 		78397C9A232F80A800071B4D /* EventDateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78397C98232F80A800071B4D /* EventDateFilter.swift */; };
 		784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
 		784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
-		784666C42331151600429AB6 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5B2330FA1C003A7C6E /* Quick.framework */; };
-		784666C52331151600429AB6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78A63A5C2330FA1C003A7C6E /* Nimble.framework */; };
 		7862BB2C23C4816500A25536 /* FetchUserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2B23C4816500A25536 /* FetchUserDetails.swift */; };
 		7862BB2E23C482E000A25536 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2D23C482E000A25536 /* UserDetails.swift */; };
 		7862BB3323C484B300A25536 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB2D23C482E000A25536 /* UserDetails.swift */; };
@@ -485,6 +483,20 @@
 		78DF4A07225B469200B8348A /* DRM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A06225B469200B8348A /* DRM.swift */; };
 		78DF4A09225B46A100B8348A /* StreamInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A08225B46A100B8348A /* StreamInfo.swift */; };
 		78DF4A15225E322F00B8348A /* PlayEnigmaAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A14225E322F00B8348A /* PlayEnigmaAsset.swift */; };
+		820512FC23FE94C80011A396 /* LastViewedOffsetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820512F923FE94060011A396 /* LastViewedOffsetSpec.swift */; };
+		820512FD23FE94C90011A396 /* LastViewedOffsetSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820512F923FE94060011A396 /* LastViewedOffsetSpec.swift */; };
+		820512FF23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820512FE23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift */; };
+		8205130023FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820512FE23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift */; };
+		820EF67D23FAA244002465A3 /* LastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */; };
+		820EF67F23FAA32D002465A3 /* LastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */; };
+		820EF68523FAAF40002465A3 /* FetchLastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */; };
+		820EF68623FE7AEF002465A3 /* FetchLastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */; };
+		820EF68823FE7AFA002465A3 /* LastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */; };
+		820EF68923FE7AFF002465A3 /* LastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */; };
+		8254404E23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */; };
+		8254404F23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */; };
+		8254409223FE8411001E8EA6 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8254409123FE8411001E8EA6 /* Quick.framework */; };
+		8254409423FE8448001E8EA6 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8254409323FE8448001E8EA6 /* Nimble.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -774,6 +786,15 @@
 		78DF4A06225B469200B8348A /* DRM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DRM.swift; sourceTree = "<group>"; };
 		78DF4A08225B46A100B8348A /* StreamInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamInfo.swift; sourceTree = "<group>"; };
 		78DF4A14225E322F00B8348A /* PlayEnigmaAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAsset.swift; sourceTree = "<group>"; };
+		820512F923FE94060011A396 /* LastViewedOffsetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastViewedOffsetSpec.swift; sourceTree = "<group>"; };
+		820512FE23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLastViewedOffsetListSpec.swift; sourceTree = "<group>"; };
+		820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastViewedOffsetList.swift; sourceTree = "<group>"; };
+		820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastViewedOffset.swift; sourceTree = "<group>"; };
+		820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLastViewedOffset.swift; sourceTree = "<group>"; };
+		8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLastViewedOffsetList.swift; sourceTree = "<group>"; };
+		8254409123FE8411001E8EA6 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8254409323FE8448001E8EA6 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82B588A323FE8E97007B0A43 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -805,8 +826,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				784666C42331151600429AB6 /* Quick.framework in Frameworks */,
-				784666C52331151600429AB6 /* Nimble.framework in Frameworks */,
+				8254409423FE8448001E8EA6 /* Nimble.framework in Frameworks */,
+				8254409223FE8411001E8EA6 /* Quick.framework in Frameworks */,
 				76A842B11EA75EC900BDAF2C /* Exposure.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -898,6 +919,8 @@
 		7614A374207E47EF0005C089 /* UserPlayHistory */ = {
 			isa = PBXGroup;
 			children = (
+				820EF68123FAAEE6002465A3 /* Request */,
+				820EF68023FAA390002465A3 /* Response */,
 				764423E6206FA9B20086C4B4 /* LastViewedList.swift */,
 			);
 			path = UserPlayHistory;
@@ -1247,6 +1270,7 @@
 				7693EDC51EADE09F00421551 /* FetchServerTimeSpec.swift */,
 				7646D65C1EEFF399009E5C2B /* ExposureErrorSpec.swift */,
 				7614A375207E53080005C089 /* ExposureApiSpec.swift */,
+				820512F823FE937D0011A396 /* UserPlayHistory */,
 				7862BB2F23C4847C00A25536 /* User */,
 				7646D66F1EF00A6B009E5C2B /* Authentication */,
 				7646D6751EF00A6B009E5C2B /* Entitlement */,
@@ -1267,6 +1291,9 @@
 		76A842C31EA7653600BDAF2C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				82B588A323FE8E97007B0A43 /* Nimble.framework */,
+				8254409323FE8448001E8EA6 /* Nimble.framework */,
+				8254409123FE8411001E8EA6 /* Quick.framework */,
 				7884BFCB233A59DC00A30DB8 /* Nimble.framework */,
 				7884BFCD233A59DC00A30DB8 /* Quick.framework */,
 				78A63A5C2330FA1C003A7C6E /* Nimble.framework */,
@@ -1746,6 +1773,33 @@
 			path = ApiPlayResponseV2;
 			sourceTree = "<group>";
 		};
+		820512F823FE937D0011A396 /* UserPlayHistory */ = {
+			isa = PBXGroup;
+			children = (
+				820512F923FE94060011A396 /* LastViewedOffsetSpec.swift */,
+				820512FE23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift */,
+			);
+			path = UserPlayHistory;
+			sourceTree = "<group>";
+		};
+		820EF68023FAA390002465A3 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */,
+				820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		820EF68123FAAEE6002465A3 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */,
+				820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1957,6 +2011,7 @@
 				760800F920692820007F59D5 /* CustomerConfigRequest.swift in Sources */,
 				760800FA20692820007F59D5 /* SearchResponse.swift in Sources */,
 				781DC152229BCC38007D0107 /* Formats.swift in Sources */,
+				820EF68623FE7AEF002465A3 /* FetchLastViewedOffset.swift in Sources */,
 				760800FB20692820007F59D5 /* AnalyticsEvent.swift in Sources */,
 				760800FC20692820007F59D5 /* Data+Extensions.swift in Sources */,
 				760800FD20692820007F59D5 /* JSONEncoding.swift in Sources */,
@@ -1994,6 +2049,7 @@
 				7608011920692820007F59D5 /* FetchProgramAiring.swift in Sources */,
 				7608011A20692820007F59D5 /* FetchAsset.swift in Sources */,
 				7862BB3423C484B600A25536 /* FetchUserDetails.swift in Sources */,
+				820EF68923FE7AFF002465A3 /* LastViewedOffset.swift in Sources */,
 				7608011B20692820007F59D5 /* SessionManager.swift in Sources */,
 				7608011C20692820007F59D5 /* Crypto.m in Sources */,
 				7608011D20692820007F59D5 /* SessionToken.swift in Sources */,
@@ -2007,7 +2063,9 @@
 				7608012520692820007F59D5 /* FilteredDates.swift in Sources */,
 				7608012620692820007F59D5 /* AssetUserData.swift in Sources */,
 				7608012720692820007F59D5 /* PlaybackEntitlement.swift in Sources */,
+				8254404F23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */,
 				7608012820692820007F59D5 /* Publication.swift in Sources */,
+				820EF68823FE7AFA002465A3 /* LastViewedOffsetList.swift in Sources */,
 				7608012920692820007F59D5 /* Credentials.swift in Sources */,
 				7608012A20692820007F59D5 /* EntitlementValidation.swift in Sources */,
 				78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */,
@@ -2101,6 +2159,7 @@
 				7608018D2069296F007F59D5 /* EnvironmentSpec.swift in Sources */,
 				781DC160229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */,
 				7608018E2069296F007F59D5 /* ValidateSessionTokenSpec.swift in Sources */,
+				820512FD23FE94C90011A396 /* LastViewedOffsetSpec.swift in Sources */,
 				7608018F2069296F007F59D5 /* AssetUserDataSpec.swift in Sources */,
 				760801902069296F007F59D5 /* ExposureErrorSpec.swift in Sources */,
 				760801912069296F007F59D5 /* ExternalReferenceSpec.swift in Sources */,
@@ -2148,6 +2207,7 @@
 				760801B62069296F007F59D5 /* FetchAssetListSpec.swift in Sources */,
 				760801B72069296F007F59D5 /* SeasonSpec.swift in Sources */,
 				760801B82069296F007F59D5 /* MarkerSpec.swift in Sources */,
+				8205130023FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift in Sources */,
 				760801B92069296F007F59D5 /* SearchResponseSpec.swift in Sources */,
 				760801BA2069296F007F59D5 /* SearchSpellingSpec.swift in Sources */,
 				760801BB2069296F007F59D5 /* FlushTriggerNetworkHandler.swift in Sources */,
@@ -2179,6 +2239,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				820EF67D23FAA244002465A3 /* LastViewedOffsetList.swift in Sources */,
 				76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */,
 				76A842ED1EA7667D00BDAF2C /* Login.swift in Sources */,
 				766FBB801ECA2B2B00EBEC53 /* LinkedEntity.swift in Sources */,
@@ -2212,6 +2273,7 @@
 				76DE9AC41ECCF99400D86C43 /* AssetList.swift in Sources */,
 				764AE88A1FBA528300DB548C /* Rating.swift in Sources */,
 				7862BB2C23C4816500A25536 /* FetchUserDetails.swift in Sources */,
+				820EF68523FAAF40002465A3 /* FetchLastViewedOffset.swift in Sources */,
 				76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */,
 				3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */,
 				76B04F2A1FBADCE3007011E6 /* UserContentRating.swift in Sources */,
@@ -2231,6 +2293,7 @@
 				766FBB6C1EC9A19B00EBEC53 /* Sequence+Extensions.swift in Sources */,
 				7646D65F1EEFF5BE009E5C2B /* PlayProgram.swift in Sources */,
 				76A89D5D2020F1E100C23579 /* PersistedAnalytics.swift in Sources */,
+				820EF67F23FAA32D002465A3 /* LastViewedOffset.swift in Sources */,
 				76D704651F93952F00D6FC6B /* SearchAutocomplete.swift in Sources */,
 				7640920C1F7E34680022F6ED /* AssetUserPlayHistory.swift in Sources */,
 				76288CB61F20B0D3004B22AB /* SendBatch.swift in Sources */,
@@ -2251,6 +2314,7 @@
 				769734AF1EF18A3D00F6ADC8 /* FilteredDates.swift in Sources */,
 				7640920A1F7E342C0022F6ED /* AssetUserData.swift in Sources */,
 				76A842F41EA7667D00BDAF2C /* PlaybackEntitlement.swift in Sources */,
+				8254404E23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */,
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
@@ -2346,6 +2410,7 @@
 				76BBFBC11EA8F6D2001DBDDB /* EnvironmentSpec.swift in Sources */,
 				76009FA31F5D6A44008E1738 /* ValidateSessionTokenSpec.swift in Sources */,
 				7640920E1F7E35970022F6ED /* AssetUserDataSpec.swift in Sources */,
+				820512FC23FE94C80011A396 /* LastViewedOffsetSpec.swift in Sources */,
 				7646D65D1EEFF399009E5C2B /* ExposureErrorSpec.swift in Sources */,
 				767030891ECB2BEB0026CD70 /* ExternalReferenceSpec.swift in Sources */,
 				7672F2631F93A8BD00F892C3 /* SearchResponseSpellingSpec.swift in Sources */,
@@ -2393,6 +2458,7 @@
 				769734C01EF2911A00F6ADC8 /* MarkerSpec.swift in Sources */,
 				7672F2651F93A93300F892C3 /* SearchResponseSpec.swift in Sources */,
 				7672F25F1F93A6F900F892C3 /* SearchSpellingSpec.swift in Sources */,
+				820512FF23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift in Sources */,
 				76A89E1A2021CFF300C23579 /* FlushTriggerNetworkHandler.swift in Sources */,
 				761336AC1ECB50F300E316BF /* AssetRightsSpec.swift in Sources */,
 				7672F25B1F93A2FD00F892C3 /* SearchAutocompleteSpec.swift in Sources */,
