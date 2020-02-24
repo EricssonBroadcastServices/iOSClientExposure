@@ -87,7 +87,7 @@ public struct Asset {
     public let userData: AssetUserData?
     
     /// Duration in milliseconds
-    public var durationMillis: Int64?
+    public var duration: Int64?
 }
 
 extension Asset: Codable {
@@ -135,7 +135,7 @@ extension Asset: Codable {
         try container.encodeIfPresent(rating, forKey: .rating)
         try container.encodeIfPresent(markers, forKey: .markers)
         try container.encodeIfPresent(userData, forKey: .userData)
-        try container.encodeIfPresent(durationMillis, forKey: .duration)
+        try container.encodeIfPresent(duration, forKey: .duration)
     }
     
     public init(from decoder: Decoder) throws {
@@ -182,7 +182,7 @@ extension Asset: Codable {
         rating = try container.decodeIfPresent(Float.self, forKey: .rating)
         markers = try container.decodeIfPresent([Marker].self, forKey: .markers)
         userData = try container.decodeIfPresent(AssetUserData.self, forKey: .userData)
-        durationMillis = try container.decodeIfPresent(Int64.self, forKey: .duration)
+        duration = try container.decodeIfPresent(Int64.self, forKey: .duration)
     }
 
     internal enum CodingKeys: String, CodingKey {
