@@ -22,7 +22,7 @@ public struct Asset {
     public var type: String?
     
     /// Localization data
-    public let localized: [LocalizedData]?
+    public var localized: [LocalizedData]?
     
     /// Associated tags
     public let tags: [Tag]?
