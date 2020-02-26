@@ -22,7 +22,7 @@ public struct Season: Codable {
     public let tags: [Tag]?
     
     /// Localization and internationalization
-    public let localized: [LocalizedData]?
+    public var localized: [LocalizedData]?
     
     public let tvShowId: String?
     public let seasonId: String?

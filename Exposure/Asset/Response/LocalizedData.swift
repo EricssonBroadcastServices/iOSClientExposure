@@ -16,5 +16,5 @@ public struct LocalizedData: Codable {
     public let tinyDescription: String?
     public let shortDescription: String?
     public let longDescription: String?
-    public let images: [Image]?
+    public var images: [Image]?
 }
