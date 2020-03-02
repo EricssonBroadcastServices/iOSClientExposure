@@ -493,6 +493,14 @@
 		820EF68623FE7AEF002465A3 /* FetchLastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */; };
 		820EF68823FE7AFA002465A3 /* LastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */; };
 		820EF68923FE7AFF002465A3 /* LastViewedOffset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */; };
+		824EAB892408FE530080BFEA /* ContinueTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB882408FE530080BFEA /* ContinueTVShow.swift */; };
+		824EAB8A2408FE530080BFEA /* ContinueTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB882408FE530080BFEA /* ContinueTVShow.swift */; };
+		824EAB8C2408FEB00080BFEA /* FetchContinueTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB8B2408FEB00080BFEA /* FetchContinueTVShow.swift */; };
+		824EAB8D2408FEB00080BFEA /* FetchContinueTVShow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB8B2408FEB00080BFEA /* FetchContinueTVShow.swift */; };
+		824EAB91240D3BED0080BFEA /* ContinueTVShowSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB8E240D3B340080BFEA /* ContinueTVShowSpec.swift */; };
+		824EAB92240D3BEE0080BFEA /* ContinueTVShowSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB8E240D3B340080BFEA /* ContinueTVShowSpec.swift */; };
+		824EAB94240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB93240D405C0080BFEA /* FetchContinueTVShowSpec.swift */; };
+		824EAB95240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 824EAB93240D405C0080BFEA /* FetchContinueTVShowSpec.swift */; };
 		8254404E23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */; };
 		8254404F23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */; };
 		8254409223FE8411001E8EA6 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8254409123FE8411001E8EA6 /* Quick.framework */; };
@@ -791,6 +799,10 @@
 		820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastViewedOffsetList.swift; sourceTree = "<group>"; };
 		820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastViewedOffset.swift; sourceTree = "<group>"; };
 		820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchLastViewedOffset.swift; sourceTree = "<group>"; };
+		824EAB882408FE530080BFEA /* ContinueTVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueTVShow.swift; sourceTree = "<group>"; };
+		824EAB8B2408FEB00080BFEA /* FetchContinueTVShow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchContinueTVShow.swift; sourceTree = "<group>"; };
+		824EAB8E240D3B340080BFEA /* ContinueTVShowSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueTVShowSpec.swift; sourceTree = "<group>"; };
+		824EAB93240D405C0080BFEA /* FetchContinueTVShowSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchContinueTVShowSpec.swift; sourceTree = "<group>"; };
 		8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FetchLastViewedOffsetList.swift; sourceTree = "<group>"; };
 		8254409123FE8411001E8EA6 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8254409323FE8448001E8EA6 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1778,6 +1790,8 @@
 			children = (
 				820512F923FE94060011A396 /* LastViewedOffsetSpec.swift */,
 				820512FE23FEA6390011A396 /* FetchLastViewedOffsetListSpec.swift */,
+				824EAB8E240D3B340080BFEA /* ContinueTVShowSpec.swift */,
+				824EAB93240D405C0080BFEA /* FetchContinueTVShowSpec.swift */,
 			);
 			path = UserPlayHistory;
 			sourceTree = "<group>";
@@ -1787,6 +1801,7 @@
 			children = (
 				820EF67C23FAA244002465A3 /* LastViewedOffsetList.swift */,
 				820EF67E23FAA32D002465A3 /* LastViewedOffset.swift */,
+				824EAB882408FE530080BFEA /* ContinueTVShow.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1796,6 +1811,7 @@
 			children = (
 				8254404D23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift */,
 				820EF68423FAAF40002465A3 /* FetchLastViewedOffset.swift */,
+				824EAB8B2408FEB00080BFEA /* FetchContinueTVShow.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2052,6 +2068,7 @@
 				820EF68923FE7AFF002465A3 /* LastViewedOffset.swift in Sources */,
 				7608011B20692820007F59D5 /* SessionManager.swift in Sources */,
 				7608011C20692820007F59D5 /* Crypto.m in Sources */,
+				824EAB8D2408FEB00080BFEA /* FetchContinueTVShow.swift in Sources */,
 				7608011D20692820007F59D5 /* SessionToken.swift in Sources */,
 				7608011E20692820007F59D5 /* Response.swift in Sources */,
 				7608011F20692820007F59D5 /* Logout.swift in Sources */,
@@ -2095,6 +2112,7 @@
 				7608013F20692820007F59D5 /* DeleteRating.swift in Sources */,
 				7608014020692820007F59D5 /* PageableResponse.swift in Sources */,
 				7862BB3323C484B300A25536 /* UserDetails.swift in Sources */,
+				824EAB8A2408FE530080BFEA /* ContinueTVShow.swift in Sources */,
 				781DC14C229BCB9D007D0107 /* FetchPreviousProgram.swift in Sources */,
 				7608014120692820007F59D5 /* ValidateEntitlement.swift in Sources */,
 				7608014220692820007F59D5 /* Image.swift in Sources */,
@@ -2151,6 +2169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				760801882069296F007F59D5 /* CustomerConfigSpec.swift in Sources */,
+				824EAB95240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */,
 				760801892069296F007F59D5 /* FetchEpgChannelListSpec.swift in Sources */,
 				7608018A2069296F007F59D5 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7608018B2069296F007F59D5 /* ValidateEntitlementSpec.swift in Sources */,
@@ -2225,6 +2244,7 @@
 				760801C72069296F007F59D5 /* MockedHeartbeat.swift in Sources */,
 				760801C82069296F007F59D5 /* RelatedAnalyticsNetworkHandler.swift in Sources */,
 				760801C92069296F007F59D5 /* PublicationSpec.swift in Sources */,
+				824EAB92240D3BEE0080BFEA /* ContinueTVShowSpec.swift in Sources */,
 				760801CA2069296F007F59D5 /* FetchCarouselListSpec.swift in Sources */,
 				760801CB2069296F007F59D5 /* FairplayConfigurationSpec.swift in Sources */,
 				781DC15A229BD19F007D0107 /* FetchNextProgramSpec.swift in Sources */,
@@ -2303,6 +2323,7 @@
 				766FBB671EC9829200EBEC53 /* FetchAsset.swift in Sources */,
 				760200FF20362B8100EF495D /* SessionManager.swift in Sources */,
 				76A89DC82021C75B00C23579 /* Crypto.m in Sources */,
+				824EAB8C2408FEB00080BFEA /* FetchContinueTVShow.swift in Sources */,
 				76A842EF1EA7667D00BDAF2C /* SessionToken.swift in Sources */,
 				7602010520362D1300EF495D /* Response.swift in Sources */,
 				76A44C9B1F16350E008992E9 /* Logout.swift in Sources */,
@@ -2346,6 +2367,7 @@
 				76DE9ACF1ECD792B00D86C43 /* PageableResponse.swift in Sources */,
 				7646D6631EEFFDBD009E5C2B /* ValidateEntitlement.swift in Sources */,
 				766FBB741ECA2A4600EBEC53 /* Image.swift in Sources */,
+				824EAB892408FE530080BFEA /* ContinueTVShow.swift in Sources */,
 				76D70EEE2039BB52006CF211 /* Device.swift in Sources */,
 				766FBB721ECA2A1B00EBEC53 /* LocalizedData.swift in Sources */,
 				78DF4A15225E322F00B8348A /* PlayEnigmaAsset.swift in Sources */,
@@ -2402,6 +2424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E9409B21F862F2800253602 /* CustomerConfigSpec.swift in Sources */,
+				824EAB94240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */,
 				769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */,
 				76A89E1B2021CFF300C23579 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7646D68A1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift in Sources */,
@@ -2476,6 +2499,7 @@
 				76A89E1D2021CFF300C23579 /* MockedHeartbeat.swift in Sources */,
 				76A89E1F2021CFF300C23579 /* RelatedAnalyticsNetworkHandler.swift in Sources */,
 				781DC15F229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift in Sources */,
+				824EAB91240D3BED0080BFEA /* ContinueTVShowSpec.swift in Sources */,
 				761336B11ECB8D2E00E316BF /* PublicationSpec.swift in Sources */,
 				3E6B3B441F84D2140071C10A /* FetchCarouselListSpec.swift in Sources */,
 				7646D6841EF00A6B009E5C2B /* FairplayConfigurationSpec.swift in Sources */,
