@@ -13,5 +13,24 @@ public struct UserDetails : Decodable {
     public let displayName: String?
     public let language: String
     public let defaultLanguage: String?
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        displayName = try container.decode(String.self, forKey: .displayName)
+        defaultLanguage = try container.decode(String.self, forKey: .defaultLanguage)
+        
+        //If language not present set to defaultLanguage or "en" for defaultLanguafe
+        let tempLanguage = try container.decodeIfPresent(String.self, forKey: .language)
+        let tempDefaultLanguage = defaultLanguage ?? "en"
+        
+        language = tempLanguage ?? tempDefaultLanguage
+    }
+
+    internal enum CodingKeys: String, CodingKey {
+        case displayName
+        case language
+        case defaultLanguage
+    }
 }
 
