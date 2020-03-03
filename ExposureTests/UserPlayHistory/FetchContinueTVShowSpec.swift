@@ -24,23 +24,24 @@ class FetchContinueTVShowSpec: QuickSpec {
         let sessionToken = SessionToken(value: "token")
         let assetId = "123"
         
-        let fetchLastViewedOffset = FetchContinueTVShow(assetId: assetId, environment: env, sessionToken: sessionToken)
+        let fetchContinueTVShow = FetchContinueTVShow(assetId: assetId, environment: env, sessionToken: sessionToken)
+        let headers = fetchContinueTVShow.headers
+        let endpointUrl = fetchContinueTVShow.endpointUrl
+        let parameters = fetchContinueTVShow.parameters
         
         describe("Basics") {
             
             it("should have auth token headers") {
-                expect(fetchLastViewedOffset.headers).toNot(beNil())
+                expect(headers).toNot(beNil())
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/userplayhistory/continue/tvshow/"+assetId
-                expect(fetchLastViewedOffset.endpointUrl).to(equal(env.apiUrl+endpoint))
+                let endpoint = "/userplayhistory/continue/tvshow/\(assetId)"
+                expect(endpointUrl).to(equal("\(env.apiUrl)\(endpoint)"))
             }
             
             it("should not generate parameters") {
-                let params = fetchLastViewedOffset.parameters
-
-                expect(params.count).to(equal(0))
+                expect(parameters.count).to(equal(0))
             }
         }
     }
