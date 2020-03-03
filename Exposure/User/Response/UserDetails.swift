@@ -17,10 +17,10 @@ public struct UserDetails : Decodable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
-        displayName = try container.decode(String.self, forKey: .displayName)
+        displayName = try container.decodeIfPresent(String.self, forKey: .displayName)
         defaultLanguage = try container.decode(String.self, forKey: .defaultLanguage)
         
-        //If language not present set to defaultLanguage or "en" for defaultLanguafe
+        //If language not present set to defaultLanguage or "en" for defaultLanguage
         let tempLanguage = try container.decodeIfPresent(String.self, forKey: .language)
         let tempDefaultLanguage = defaultLanguage ?? "en"
         
