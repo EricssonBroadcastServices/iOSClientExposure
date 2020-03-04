@@ -56,7 +56,7 @@ class FetchUserDetailsSpec: QuickSpec {
                 expect(result).toNot(beNil())
             }
             
-            it("should fail with invalid json") {
+            it("should not fail with invalid json") {
                 let json: [String: Any] = [
                     "displayName":"",
                     "language":NSNull(),
@@ -64,7 +64,7 @@ class FetchUserDetailsSpec: QuickSpec {
                 ]
                 
                 expect{ try json.throwingDecode(UserDetails.self) }
-                    .to(throwError(errorType: DecodingError.self))
+                    .toNot(throwError(errorType: DecodingError.self))
             }
         }
         
