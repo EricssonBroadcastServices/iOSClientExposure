@@ -10,7 +10,7 @@ import Foundation
 
 /// *Exposure* endpoint integration for handling *Anonymous* login.
 public struct Anonymous: ExposureType, Encodable {
-    public typealias Response = SessionToken
+    public typealias Response = Credentials
     
     /// Unique device identifier
     public var deviceId: String? {
@@ -28,7 +28,9 @@ public struct Anonymous: ExposureType, Encodable {
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/auth/anonymous"
+        var environmentV2 = environment
+        environmentV2.version = "v2"
+        return environmentV2.apiUrl + "/auth/anonymous"
     }
     
     public var parameters: Anonymous {
