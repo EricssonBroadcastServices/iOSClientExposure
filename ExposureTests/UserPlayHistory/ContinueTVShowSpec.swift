@@ -24,7 +24,7 @@ class ContinueTVShowSpec: QuickSpec {
                 expect(result).toNot(beNil())
                 expect(result?.asset).toNot(beNil())
                 expect(result?.startedWatching).toNot(beNil())
-                //expect(result?.lastViewOffset).toNot(beNil())
+                expect(result?.lastViewedOffset).toNot(beNil())
             }
 
             it("should not succded with missing keys") {
