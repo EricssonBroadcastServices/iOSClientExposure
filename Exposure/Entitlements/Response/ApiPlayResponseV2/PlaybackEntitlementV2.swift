@@ -30,7 +30,7 @@ public struct PlayBackEntitlementV2: Codable {
     
     public let publicationId: String?
     
-    public let streamInfo: StreamInfo
+    public let streamInfo: StreamInfo?
 }
 
 
@@ -48,7 +48,7 @@ extension PlayBackEntitlementV2 {
         playTokenExpiration = try container.decode(Int.self, forKey: .playTokenExpiration)
         productId = try container.decode(String.self, forKey: .productId)
         publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
-        streamInfo = try container.decode(StreamInfo.self, forKey: .streamInfo)
+        streamInfo = try container.decodeIfPresent(StreamInfo.self, forKey: .streamInfo)
     }
     
     internal enum CodingKeys: String, CodingKey {
