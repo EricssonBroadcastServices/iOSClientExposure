@@ -8,6 +8,17 @@
 
 import Foundation
 
+public enum AssetType: String, Codable {
+    case MOVIE = "MOVIE"
+    case TV_SHOW = "TV_SHOW"
+    case EPISODE = "EPISODE"
+    case CLIP = "CLIP"
+    case TV_CHANNEL = "TV_CHANNEL"
+    case AD = "AD"
+    case LIVE_EVENT = "LIVE_EVENT"
+    case OTHER = "OTHER"
+}
+
 public struct Asset {
     /// Date when this asset was created, in UTC format.
     public let created: String?
@@ -19,7 +30,7 @@ public struct Asset {
     public let assetId: String
     
     /// Asset type
-    public var type: String?
+    public var type: AssetType?
     
     /// Localization data
     public var localized: [LocalizedData]?
@@ -144,7 +155,7 @@ extension Asset: Codable {
         created = try container.decodeIfPresent(String.self, forKey: .created)
         changed = try container.decodeIfPresent(String.self, forKey: .changed)
         assetId = try container.decode(String.self, forKey: .assetId)
-        type = try container.decodeIfPresent(String.self, forKey: .type)
+        type = try container.decodeIfPresent(AssetType.self, forKey: .type)
         localized = try container.decodeIfPresent([LocalizedData].self, forKey: .localized)
         tags = try container.decodeIfPresent([Tag].self, forKey: .tags)
         publications = try container.decodeIfPresent([Publication].self, forKey: .publications)

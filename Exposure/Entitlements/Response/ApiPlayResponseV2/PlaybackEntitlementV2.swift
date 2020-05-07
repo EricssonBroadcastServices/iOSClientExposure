@@ -22,7 +22,7 @@ public struct PlayBackEntitlementV2: Codable {
     
     public let playSessionId: String
     
-    public let playToken: String
+    public let playToken: String?
     
     public let playTokenExpiration: Int
     
@@ -44,7 +44,7 @@ extension PlayBackEntitlementV2 {
         entitlementType = try container.decodeIfPresent(String.self, forKey: .entitlementType)
         formats = try container.decodeIfPresent([Formats].self, forKey: .formats)?.filter({ $0.format == "HLS"})
         playSessionId = try container.decode(String.self, forKey: .playSessionId)
-        playToken = try container.decode(String.self, forKey: .playToken)
+        playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
         playTokenExpiration = try container.decode(Int.self, forKey: .playTokenExpiration)
         productId = try container.decode(String.self, forKey: .productId)
         publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
