@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "PlaybackEntitlement V2 is available to use")
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement: Codable {
     // MARK: Required
