@@ -22,6 +22,25 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
+If the business unit is configured to support anonymous sessions , developers can request an anonymous `sessionToken`. 
+```Swift
+Authenticate(environment: exposureEnv)
+    .anonymous()
+    .request()
+    .validate()
+    .response{
+        if let error = $0.error {
+            // Handle Error
+        }
+
+        if let credentials = $0.value {
+            let sessionToken: SessionToken = credentials.sessionToken
+
+            // Store/pass along the returned SessionToken
+        }
+    }
+```
+
 A `sessionToken` by itself is not guaranteed to be valid. `Exposure` supports validation of existing `sessionToken`s by calling `Authenticate.validate(sessionToken:)` and will return `401` `INVALID_SESSION_TOKEN` if the supplied token is no longer valid.
 
 ```Swift
