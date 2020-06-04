@@ -453,6 +453,10 @@
 		781DC162229BDF9F007D0107 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
 		7825423524653FE600126BA2 /* CheckAssetRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825423424653FE600126BA2 /* CheckAssetRights.swift */; };
 		7825423624653FE600126BA2 /* CheckAssetRights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825423424653FE600126BA2 /* CheckAssetRights.swift */; };
+		78254238246587EC00126BA2 /* FetchDownloadinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78254237246587EC00126BA2 /* FetchDownloadinfo.swift */; };
+		78254239246587EC00126BA2 /* FetchDownloadinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78254237246587EC00126BA2 /* FetchDownloadinfo.swift */; };
+		7825423B2465883600126BA2 /* Downloadinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825423A2465883600126BA2 /* Downloadinfo.swift */; };
+		7825423C2465883600126BA2 /* Downloadinfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7825423A2465883600126BA2 /* Downloadinfo.swift */; };
 		78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */; };
 		78270DC72282F86800F3A2F5 /* FetchPreviousProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */; };
 		7831FAC52264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */; };
@@ -771,6 +775,8 @@
 		781DC15B229BD5D6007D0107 /* FetchPreviousProgramSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgramSpec.swift; sourceTree = "<group>"; };
 		781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAssetSpec.swift; sourceTree = "<group>"; };
 		7825423424653FE600126BA2 /* CheckAssetRights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAssetRights.swift; sourceTree = "<group>"; };
+		78254237246587EC00126BA2 /* FetchDownloadinfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDownloadinfo.swift; sourceTree = "<group>"; };
+		7825423A2465883600126BA2 /* Downloadinfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloadinfo.swift; sourceTree = "<group>"; };
 		78270DC42282D9F400F3A2F5 /* FetchNextProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchNextProgram.swift; sourceTree = "<group>"; };
 		78270DC62282F86800F3A2F5 /* FetchPreviousProgram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPreviousProgram.swift; sourceTree = "<group>"; };
 		7831FAC32264ADEC00743D07 /* PlaybackEntitlementV2Spec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2Spec.swift; sourceTree = "<group>"; };
@@ -1395,6 +1401,7 @@
 				7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */,
 				766338611F78FBD300D66160 /* ValidateDownload.swift */,
 				78DF4A14225E322F00B8348A /* PlayEnigmaAsset.swift */,
+				78254237246587EC00126BA2 /* FetchDownloadinfo.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1407,6 +1414,7 @@
 				76A842D91EA7667D00BDAF2C /* FairplayConfiguration.swift */,
 				7646D6641EEFFFAE009E5C2B /* EntitlementValidation.swift */,
 				766338631F78FC2400D66160 /* DownloadValidation.swift */,
+				7825423A2465883600126BA2 /* Downloadinfo.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -2018,6 +2026,7 @@
 				760800EE20692820007F59D5 /* EmptyResponse.swift in Sources */,
 				760800EF20692820007F59D5 /* Entitlement.swift in Sources */,
 				760800F020692820007F59D5 /* DispatcherNetworkHandler.swift in Sources */,
+				78254239246587EC00126BA2 /* FetchDownloadinfo.swift in Sources */,
 				760800F120692820007F59D5 /* AnalyticsInitializationResponse.swift in Sources */,
 				760800F220692820007F59D5 /* ExposureResponse.swift in Sources */,
 				78397C96232F7CF300071B4D /* FetchEventList.swift in Sources */,
@@ -2088,6 +2097,7 @@
 				8254404F23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */,
 				7608012820692820007F59D5 /* Publication.swift in Sources */,
 				820EF68823FE7AFA002465A3 /* LastViewedOffsetList.swift in Sources */,
+				7825423C2465883600126BA2 /* Downloadinfo.swift in Sources */,
 				7608012920692820007F59D5 /* Credentials.swift in Sources */,
 				7608012A20692820007F59D5 /* EntitlementValidation.swift in Sources */,
 				78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */,
@@ -2274,6 +2284,7 @@
 				78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */,
 				76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */,
 				76D70EF22039C325006CF211 /* EmptyResponse.swift in Sources */,
+				78254238246587EC00126BA2 /* FetchDownloadinfo.swift in Sources */,
 				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
 				76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */,
 				76288CBE1F213B0C004B22AB /* AnalyticsInitializationResponse.swift in Sources */,
@@ -2344,6 +2355,7 @@
 				8254404E23FE7BFC001E8EA6 /* FetchLastViewedOffsetList.swift in Sources */,
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
+				7825423B2465883600126BA2 /* Downloadinfo.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
 				76B04F281FBADBDF007011E6 /* UserRating.swift in Sources */,
 				78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */,
