@@ -10,10 +10,10 @@ import Foundation
 
 public struct Program: Decodable {
     /// The date the program was created.
-    public let created: String?
+    public var created: String?
     
     /// The date the program was changed.
-    public let changed: String?
+    public var changed: String?
     
     /// The id of the program.
     public let programId: String
@@ -31,19 +31,27 @@ public struct Program: Decodable {
     public let endTime: String?
     
     /// If this asset is currently available as VOD.
-    public let vodAvailable: Bool?
+    public var vodAvailable: Bool?
     
     /// If this asset is currently available as rough cut that is not expired.
-    public let catchup: Bool?
+    public var catchup: Bool?
     
     /// If this asset is currently blocked for catchup.
-    public let catchupBlocked: Bool?
+    public var catchupBlocked: Bool?
     
     /// The asset metadata
-    public let asset: Asset?
+    public var asset: Asset?
     
     // If this program is currently published as blackout. This means any publication contains blackout, not global blackout
-    public let blackout: Bool?
+    public var blackout: Bool?
+    
+    public init(programId: String, assetId: String, channelId: String, startTime: String?, endTime: String?) {
+        self.programId = programId
+        self.assetId = assetId
+        self.channelId = channelId
+        self.startTime = startTime
+        self.endTime = endTime
+    }
 }
 
 extension Program {
