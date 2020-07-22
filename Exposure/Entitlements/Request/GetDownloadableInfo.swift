@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct FetchDownloadinfo: ExposureType {
+public struct GetDownloadableInfo: ExposureType {
     
     public typealias Response = DownloadInfo
     
@@ -33,9 +33,6 @@ public struct FetchDownloadinfo: ExposureType {
         return newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadinfo"
     }
     
-    /* public var parameters: PlayRequest {
-     return playRequest
-     } */
     
     public var parameters: [String: Any] {
         return [:]
@@ -46,8 +43,8 @@ public struct FetchDownloadinfo: ExposureType {
     }
 }
 
-extension FetchDownloadinfo {
-    /// `PlayVod` request is specified as a `.post`
+extension GetDownloadableInfo {
+    /// `GetDownloadableInfo` request is specified as a `.get`
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest<Response> {
