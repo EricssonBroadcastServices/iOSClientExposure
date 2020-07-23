@@ -103,6 +103,19 @@ FetchAsset(environment: environment)
     }
 ```
 
+#### Download Info of an Asset
+
+Client applications can get `downloadInfo` of an `Asset`  by passing the `assetId` 
+
+```Swift
+GetDownloadableInfo(assetId: assetId, environment: environment, sessionToken: sessionToken)
+    .request()
+    .validate()
+    .response { 
+     // Handle response 
+ }
+```
+
 
 #### Fetching Events
 Client applications may request  *Events*, or the *live events*,  ( current, upcomming or past events )  data through the `FetchEvent` endpoint.
