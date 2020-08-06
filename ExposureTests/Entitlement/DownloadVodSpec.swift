@@ -18,7 +18,8 @@ class DownloadVodSpec: QuickSpec {
         let base = "https://exposure.empps.ebsd.ericsson.net"
         let customer = "BlixtGroup"
         let businessUnit = "Blixt"
-        let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+        var env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+        env.version = "v2"
         let assetId = "assetId1_qwerty"
         let sessionToken = SessionToken(value: "token")
 
@@ -35,7 +36,7 @@ class DownloadVodSpec: QuickSpec {
             }
 
             it("should generate a correct endpoint url") {
-                let endpoint = "/download/" + assetId
+                let endpoint = "/entitlement/" + assetId + "/download"
                 expect(downloadVod.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
 

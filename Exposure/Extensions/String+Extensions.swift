@@ -21,7 +21,7 @@ extension String {
        /// - Parameter format: date format
        /// - Returns: Date
        public func toDate()-> Date? {
-           if #available(iOS 10.0, *) {
+           if #available(iOS 10.0, *, tvOS 10.0, *) {
                let formatter = ISO8601DateFormatter()
                formatter.formatOptions = [.withFullDate,.withTime,.withDashSeparatorInDate,.withColonSeparatorInTime]
                if let date = formatter.date(from: self) {
@@ -40,7 +40,7 @@ extension String {
        /// - Returns: Formatted String
        public func dateInSwedishFormat() -> String {
            
-           if #available(iOS 10.0, *) {
+           if #available(iOS 10.0, *, tvOS 10.0, *) {
                let formatter = ISO8601DateFormatter()
                formatter.formatOptions = [.withFullDate,.withTime,.withDashSeparatorInDate,.withColonSeparatorInTime]
                if let newdate = formatter.date(from: self){
@@ -74,7 +74,7 @@ extension String {
        /// - Returns: Formatted Time
        public func timeIn24Hours()-> String {
            
-           if #available(iOS 10.0, *) {
+           if #available(iOS 10.0, *, tvOS 10.0, *) {
               let formatter = ISO8601DateFormatter()
               formatter.formatOptions = [.withFullDate,.withTime,.withDashSeparatorInDate,.withColonSeparatorInTime]
               if let newdate = formatter.date(from: self){
