@@ -16,7 +16,7 @@ import Foundation
 /// * `drm` FAIRPLAY
 /// * `format` HLS
 public struct DownloadVod: ExposureType, DRMRequest {
-    public typealias Response = PlaybackEntitlement
+    public typealias Response = PlayBackEntitlementV2
 
     /// Id of the asset to play
     public let assetId: String
@@ -38,11 +38,16 @@ public struct DownloadVod: ExposureType, DRMRequest {
     }
 
     public var endpointUrl: String {
-        return environment.apiUrl + "/download/" + assetId
+        var environmentV2 = environment
+        environmentV2.version = "v2"
+        
+        print("Download END POINT " , environmentV2.apiUrl + "/entitlement/" + assetId + "/download" )
+        return environmentV2.apiUrl + "/entitlement/" + assetId + "/download"
+        // return environment.apiUrl + "/download/" + assetId
     }
 
-    public var parameters: PlayRequest {
-        return playRequest
+    public var parameters: [String:Any] {
+        return [:]
     }
 
     public var headers: [String: String]? {
@@ -55,6 +60,6 @@ extension DownloadVod {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest<Response> {
-        return request(.post) 
+        return request(.get)
     }
 }

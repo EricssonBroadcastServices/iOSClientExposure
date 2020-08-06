@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `2.2.00` Release - [2.2.00](#2200)
 * `2.1.00` Release - [2.1.00](#2100)
 * `2.0.98` Release - [2.0.98](#2098)
 * `2.0.92` Release - [2.0.92](#2092)
@@ -17,8 +18,16 @@
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
 
-## 2.1.130
+## 2.2.000
+#### Features
+* `EMP-14376` Add support for downloads 
 
+## 2.1.131
+#### Features
+* `EMP-14376` App Developers can now check if an Asset is available to download.
+* `EMP-14376` App Developers can now fetch the userAvailabilityKeys related to the logged in user.
+
+## 2.1.130
 #### Changes
 * `EMP-14239` Exposure now has enum for different AssetTypes.
 

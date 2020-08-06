@@ -59,3 +59,17 @@ Authenticate(environment: exposureEnv)
 ```
 
 Destroying an authenticated user session is accomplished by calling `Authenticate.logout(sessionToken:)`
+
+
+## User AvailabilityKeys
+
+Exposure provides support to get the availability keys related the currently logged in user.
+
+```Swift
+ GetAvailabilityKeys(environment: environment, sessionToken: session)
+    .request()
+    .validate()
+    .response { 
+        // Handle Response 
+    }
+```

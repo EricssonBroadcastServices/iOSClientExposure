@@ -153,13 +153,13 @@ class PlaybackEntitlementV2Spec: QuickSpec {
                 expect(decoded!.publicationId).to(equal(entitlement!.publicationId))
                 
                 // StreamInfo
-                expect(decoded!.streamInfo.channelId).to(equal(entitlement!.streamInfo.channelId))
-                expect(decoded!.streamInfo.end).to(equal(entitlement!.streamInfo.end))
-                expect(decoded!.streamInfo.staticProgram).to(equal(entitlement!.streamInfo.staticProgram))
-                expect(decoded!.streamInfo.live).to(equal(entitlement!.streamInfo.live))
-                expect(decoded!.streamInfo.event).to(equal(entitlement!.streamInfo.event))
-                expect(decoded!.streamInfo.programId).to(equal(entitlement!.streamInfo.programId))
-                expect(decoded!.streamInfo.start).to(equal(entitlement!.streamInfo.start))
+                expect(decoded!.streamInfo?.channelId).to(equal(entitlement!.streamInfo?.channelId))
+                expect(decoded!.streamInfo?.end).to(equal(entitlement!.streamInfo?.end))
+                expect(decoded!.streamInfo?.staticProgram).to(equal(entitlement!.streamInfo?.staticProgram))
+                expect(decoded!.streamInfo?.live).to(equal(entitlement!.streamInfo?.live))
+                expect(decoded!.streamInfo?.event).to(equal(entitlement!.streamInfo?.event))
+                expect(decoded!.streamInfo?.programId).to(equal(entitlement!.streamInfo?.programId))
+                expect(decoded!.streamInfo?.start).to(equal(entitlement!.streamInfo?.start))
                
             }
         }
