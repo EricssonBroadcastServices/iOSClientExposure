@@ -33,6 +33,7 @@ class PublicationSpec: QuickSpec {
                 expect(result?.customData).toNot(beNil())
                 expect(result?.rights).toNot(beNil())
                 expect(result?.devices).toNot(beNil())
+                expect(result?.availabilityKeys).toNot(beNil())
             }
             
             it("should init with partial response") {
@@ -50,6 +51,7 @@ class PublicationSpec: QuickSpec {
                 expect(result?.customData).to(beNil())
                 expect(result?.rights).to(beNil())
                 expect(result?.devices).to(beNil())
+                expect(result?.availabilityKeys).to(beNil())
             }
             
             it("should init with empty response") {
@@ -71,6 +73,7 @@ extension PublicationSpec {
         static let countries =  ["ALL"]
         static let services = ["web"]
         static let products = ["SVOD002_qwerty"]
+        static let availabilityKeys = ["SVOD002_qwerty"]
         static let publicationId = "publication_161028120058_players_test_asset_ADS_Ocean_009_qwerty"
         
         static let customData = ["Custom":10]
@@ -87,7 +90,8 @@ extension PublicationSpec {
                 "publicationId": PublicationJSON.publicationId,
                 "customData": PublicationJSON.customData,
                 "rights": PublicationJSON.rights,
-                "devices": PublicationJSON.devices
+                "devices": PublicationJSON.devices,
+                "availabilityKeys" : PublicationJSON.availabilityKeys
             ]
         }
         
