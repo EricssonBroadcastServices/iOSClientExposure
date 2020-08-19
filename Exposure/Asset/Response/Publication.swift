@@ -17,6 +17,7 @@ public struct Publication: Codable {
     public let countries: [String]?
     public let services: [String]?
     public let products: [String]?
+    public let availabilityKeys: [String]?
     public let publicationId: String?
     
     public let customData: [String: AnyJSONType]? // JsonNode
@@ -49,6 +50,7 @@ public struct Publication: Codable {
         countries = try container.decodeIfPresent([String].self, forKey: .countries)
         services = try container.decodeIfPresent([String].self, forKey: .services)
         products = try container.decodeIfPresent([String].self, forKey: .products)
+        availabilityKeys = try container.decodeIfPresent([String].self, forKey: .availabilityKeys)
         publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
 
         customData = try container.decodeIfPresent([String: AnyJSONType].self, forKey: .customData)
@@ -57,7 +59,7 @@ public struct Publication: Codable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case publicationDate, fromDate, toDate, countries, services, products, publicationId
+        case publicationDate, fromDate, toDate, countries, services, products, availabilityKeys, publicationId
         case customData, rights, devices
     }
 }
