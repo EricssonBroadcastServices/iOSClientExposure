@@ -10,35 +10,37 @@ import Foundation
 
 /// Content rights for specific assets are subject to change throughout a `PlaybackEntitlement`s life cycle. `ValidateDownload` offers a method to validate if a user is *entitled* to download an asset.
 public struct ValidateDownload: ExposureType, DRMRequest {
-    public typealias Response = DownloadValidation
-    
-    /// Id for the asset to validate
+    public typealias Response = PlayBackEntitlementV2
+
+    /// Id of the asset to play
     public let assetId: String
-    
+
     /// `Environment` to use
     public let environment: Environment
-    
+
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
-    
-    /// `DRM` and *format* to validate.
+
+    /// `DRM` and *format* to request.
     public var playRequest: PlayRequest
-    
+
     internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
         self.assetId = assetId
         self.playRequest = playRequest
         self.environment = environment
         self.sessionToken = sessionToken
     }
-    
+
     public var endpointUrl: String {
-        return environment.apiUrl + "/download/" + assetId
+        var environmentV2 = environment
+        environmentV2.version = "v2"
+        return environmentV2.apiUrl + "/entitlement/" + assetId + "/download"
     }
-    
-    public var parameters: [String: Any] {
-        return queryParams
+
+    public var parameters: [String:Any] {
+        return [:]
     }
-    
+
     public var headers: [String: String]? {
         return sessionToken.authorizationHeader
     }

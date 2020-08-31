@@ -40,10 +40,7 @@ public struct DownloadVod: ExposureType, DRMRequest {
     public var endpointUrl: String {
         var environmentV2 = environment
         environmentV2.version = "v2"
-        
-        print("Download END POINT " , environmentV2.apiUrl + "/entitlement/" + assetId + "/download" )
         return environmentV2.apiUrl + "/entitlement/" + assetId + "/download"
-        // return environment.apiUrl + "/download/" + assetId
     }
 
     public var parameters: [String:Any] {
