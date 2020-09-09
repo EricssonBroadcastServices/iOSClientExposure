@@ -18,9 +18,11 @@ class ValidateDownloadSpec: QuickSpec {
         let base = "https://exposure.empps.ebsd.ericsson.net"
         let customer = "BlixtGroup"
         let businessUnit = "Blixt"
-        let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+        var env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         let assetId = "assetId1_qwerty"
         let sessionToken = SessionToken(value: "token")
+        
+        env.version = "v2"
         
         let request = Entitlement(environment: env,
                                   sessionToken: sessionToken)
@@ -35,7 +37,7 @@ class ValidateDownloadSpec: QuickSpec {
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/download/" + assetId
+                let endpoint = "/entitlement/" + assetId + "/download"
                 expect(request.endpointUrl).to(equal(env.apiUrl+endpoint))
             }
             
