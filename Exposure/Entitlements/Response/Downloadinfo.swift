@@ -50,6 +50,7 @@ public struct Audios: Codable {
     public let bitrate: Int
     public let language: String
     public let fileSize: Int
+    public let hlsName: String
 }
  
 public struct Videos: Codable {
@@ -60,5 +61,9 @@ public struct Videos: Codable {
 
 
 public struct Subtitles: Codable {
+    public let name: String
+    public let language: String
+    public let fileSize: Int
+    public let hlsName: String
     
 }
