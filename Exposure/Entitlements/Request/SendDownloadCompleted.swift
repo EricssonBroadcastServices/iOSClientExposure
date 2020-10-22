@@ -1,18 +1,18 @@
 //
-//  Downloadinfo.swift
+//  SendDownloadCompleted.swift
 //  Exposure
 //
-//  Created by Udaya Sri Senarathne on 2020-05-08.
+//  Created by Udaya Sri Senarathne on 2020-10-16.
 //  Copyright © 2020 emp. All rights reserved.
 //
 
 import Foundation
 
-public struct GetDownloadableInfo: ExposureType {
+
+public struct SendDownloadCompleted: ExposureType {
+    public typealias Response = DownloadCompleted
     
-    public typealias Response = DownloadInfo
-    
-    /// Id of the asset to get downloadInfo
+    /// Id of the asset downloaded
     public let assetId: String
     
     /// `Environment` to use
@@ -30,7 +30,10 @@ public struct GetDownloadableInfo: ExposureType {
     public var endpointUrl: String {
         var newEnvironment = environment
         newEnvironment.version = "v2"
-        return newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadinfo"
+        
+        print("URL " , newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadcompleted")
+        
+        return newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadcompleted"
     }
     
     
@@ -43,11 +46,12 @@ public struct GetDownloadableInfo: ExposureType {
     }
 }
 
-extension GetDownloadableInfo {
+extension SendDownloadCompleted {
     /// `GetDownloadableInfo` request is specified as a `.get`
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest<Response> {
-        return request(.get)
+        return request(.post)
     }
 }
+

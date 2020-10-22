@@ -18,6 +18,8 @@ public struct DownloadInfo: Codable {
     public let audios: [Audios]?
     public let videos: [Videos]
     public let subtitles: [Subtitles]?
+    public let downloadCount: Int?
+    public let maxDownloadCount: Int?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -29,6 +31,8 @@ public struct DownloadInfo: Codable {
         audios = try container.decodeIfPresent([Audios].self, forKey: .audios)
         videos = try container.decode([Videos].self, forKey: .videos)
         subtitles = try container.decodeIfPresent([Subtitles].self, forKey: .subtitles)
+        downloadCount = try container.decodeIfPresent(Int.self, forKey: .downloadCount)
+        maxDownloadCount = try container.decodeIfPresent(Int.self, forKey: .maxDownloadCount)
         
     }
     
@@ -41,6 +45,8 @@ public struct DownloadInfo: Codable {
         case audios
         case videos
         case subtitles
+        case downloadCount
+        case maxDownloadCount
     }
 }
 

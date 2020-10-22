@@ -1,19 +1,15 @@
 //
-//  Downloadinfo.swift
+//  GetAllDownloads.swift
 //  Exposure
 //
-//  Created by Udaya Sri Senarathne on 2020-05-08.
+//  Created by Udaya Sri Senarathne on 2020-10-20.
 //  Copyright © 2020 emp. All rights reserved.
 //
 
 import Foundation
 
-public struct GetDownloadableInfo: ExposureType {
-    
-    public typealias Response = DownloadInfo
-    
-    /// Id of the asset to get downloadInfo
-    public let assetId: String
+public struct GetAllDownloads: ExposureType {
+    public typealias Response = AllDownloads
     
     /// `Environment` to use
     public let environment: Environment
@@ -21,8 +17,7 @@ public struct GetDownloadableInfo: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
-    public init(assetId: String, environment: Environment, sessionToken: SessionToken) {
-        self.assetId = assetId
+    public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
     }
@@ -30,7 +25,7 @@ public struct GetDownloadableInfo: ExposureType {
     public var endpointUrl: String {
         var newEnvironment = environment
         newEnvironment.version = "v2"
-        return newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadinfo"
+        return newEnvironment.apiUrl + "/entitlement/downloads"
     }
     
     
@@ -43,7 +38,7 @@ public struct GetDownloadableInfo: ExposureType {
     }
 }
 
-extension GetDownloadableInfo {
+extension GetAllDownloads {
     /// `GetDownloadableInfo` request is specified as a `.get`
     ///
     /// - returns: `ExposureRequest` with request specific data
