@@ -500,6 +500,14 @@
 		788D5934253F166000C24278 /* AllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D5932253F166000C24278 /* AllDownloads.swift */; };
 		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
+		78CC876825416993005E03F3 /* SendDownloadCompletedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */; };
+		78CC876925416994005E03F3 /* SendDownloadCompletedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */; };
+		78CC876B254172EF005E03F3 /* SendDownloadRenewedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */; };
+		78CC876C254172EF005E03F3 /* SendDownloadRenewedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */; };
+		78CC876E25417369005E03F3 /* DeleteDownloadSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876D25417369005E03F3 /* DeleteDownloadSpec.swift */; };
+		78CC876F25417369005E03F3 /* DeleteDownloadSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876D25417369005E03F3 /* DeleteDownloadSpec.swift */; };
+		78CC877125417A75005E03F3 /* GetAllDownloadsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC877025417A75005E03F3 /* GetAllDownloadsSpec.swift */; };
+		78CC877225417A75005E03F3 /* GetAllDownloadsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC877025417A75005E03F3 /* GetAllDownloadsSpec.swift */; };
 		78DF49FF225B463300B8348A /* PlaybackEntitlementV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */; };
 		78DF4A01225B465B00B8348A /* BooksMarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A00225B465B00B8348A /* BooksMarks.swift */; };
 		78DF4A03225B466C00B8348A /* ContractRestrictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DF4A02225B466C00B8348A /* ContractRestrictions.swift */; };
@@ -823,6 +831,10 @@
 		78A63A5C2330FA1C003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		78A63A5F2330FA30003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		78A63A602330FA30003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadCompletedSpec.swift; sourceTree = "<group>"; };
+		78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadRenewedSpec.swift; sourceTree = "<group>"; };
+		78CC876D25417369005E03F3 /* DeleteDownloadSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDownloadSpec.swift; sourceTree = "<group>"; };
+		78CC877025417A75005E03F3 /* GetAllDownloadsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllDownloadsSpec.swift; sourceTree = "<group>"; };
 		78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEntitlementV2.swift; sourceTree = "<group>"; };
 		78DF4A00225B465B00B8348A /* BooksMarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksMarks.swift; sourceTree = "<group>"; };
 		78DF4A02225B466C00B8348A /* ContractRestrictions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractRestrictions.swift; sourceTree = "<group>"; };
@@ -1060,6 +1072,10 @@
 				3EB9A2721F6FF81F00C74093 /* DownloadVodSpec.swift */,
 				766338651F78FEB700D66160 /* ValidateDownloadSpec.swift */,
 				781DC15E229BD7C9007D0107 /* PlayEnigmaAssetSpec.swift */,
+				78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */,
+				78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */,
+				78CC876D25417369005E03F3 /* DeleteDownloadSpec.swift */,
+				78CC877025417A75005E03F3 /* GetAllDownloadsSpec.swift */,
 			);
 			path = Entitlement;
 			sourceTree = "<group>";
@@ -2244,7 +2260,9 @@
 				760801912069296F007F59D5 /* ExternalReferenceSpec.swift in Sources */,
 				760801922069296F007F59D5 /* SearchResponseSpellingSpec.swift in Sources */,
 				760801932069296F007F59D5 /* AnalyticsPersisterSpec.swift in Sources */,
+				78CC876F25417369005E03F3 /* DeleteDownloadSpec.swift in Sources */,
 				760801942069296F007F59D5 /* TagsSpec.swift in Sources */,
+				78CC876925416994005E03F3 /* SendDownloadCompletedSpec.swift in Sources */,
 				760801952069296F007F59D5 /* DeviceRightsSpec.swift in Sources */,
 				760801962069296F007F59D5 /* PlaybackEntitlementSpec.swift in Sources */,
 				784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */,
@@ -2256,6 +2274,7 @@
 				7608019C2069296F007F59D5 /* ProgramSpec.swift in Sources */,
 				7608019D2069296F007F59D5 /* LoginSpec.swift in Sources */,
 				7608019E2069296F007F59D5 /* HeartbeatNetworkHandler.swift in Sources */,
+				78CC876C254172EF005E03F3 /* SendDownloadRenewedSpec.swift in Sources */,
 				7608019F2069296F007F59D5 /* AssetListSpec.swift in Sources */,
 				760801A02069296F007F59D5 /* LinkedEntitySpec.swift in Sources */,
 				760801A12069296F007F59D5 /* DownloadVodSpec.swift in Sources */,
@@ -2276,6 +2295,7 @@
 				760801AE2069296F007F59D5 /* SynchronizeNetworkHandler.swift in Sources */,
 				760801AF2069296F007F59D5 /* ImageSpec.swift in Sources */,
 				760801B02069296F007F59D5 /* PersonSpec.swift in Sources */,
+				78CC877225417A75005E03F3 /* GetAllDownloadsSpec.swift in Sources */,
 				760801B12069296F007F59D5 /* DispatcherFlushTriggerSpec.swift in Sources */,
 				760801B22069296F007F59D5 /* DispatcherRelatedAnalyticsSpec.swift in Sources */,
 				760801B32069296F007F59D5 /* RatingSpec.swift in Sources */,
@@ -2511,7 +2531,9 @@
 				7672F2631F93A8BD00F892C3 /* SearchResponseSpellingSpec.swift in Sources */,
 				76A89E172021CFF300C23579 /* AnalyticsPersisterSpec.swift in Sources */,
 				7670307F1ECB21150026CD70 /* TagsSpec.swift in Sources */,
+				78CC876E25417369005E03F3 /* DeleteDownloadSpec.swift in Sources */,
 				761336AF1ECB860300E316BF /* DeviceRightsSpec.swift in Sources */,
+				78CC876825416993005E03F3 /* SendDownloadCompletedSpec.swift in Sources */,
 				7646D6851EF00A6B009E5C2B /* PlaybackEntitlementSpec.swift in Sources */,
 				7646D6821EF00A6B009E5C2B /* SessionTokenSpec.swift in Sources */,
 				784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */,
@@ -2523,6 +2545,7 @@
 				7646D6811EF00A6B009E5C2B /* LoginSpec.swift in Sources */,
 				76A89E1C2021CFF300C23579 /* HeartbeatNetworkHandler.swift in Sources */,
 				7680EFCF1ED61034008528D1 /* AssetListSpec.swift in Sources */,
+				78CC876B254172EF005E03F3 /* SendDownloadRenewedSpec.swift in Sources */,
 				761336AD1ECB50F300E316BF /* LinkedEntitySpec.swift in Sources */,
 				3EB9A2731F6FF81F00C74093 /* DownloadVodSpec.swift in Sources */,
 				761336B31ECC2C2600E316BF /* LocalizedDataSpec.swift in Sources */,
@@ -2543,6 +2566,7 @@
 				767030871ECB2B1E0026CD70 /* PersonSpec.swift in Sources */,
 				76A89E192021CFF300C23579 /* DispatcherFlushTriggerSpec.swift in Sources */,
 				76A89E1E2021CFF300C23579 /* DispatcherRelatedAnalyticsSpec.swift in Sources */,
+				78CC877125417A75005E03F3 /* GetAllDownloadsSpec.swift in Sources */,
 				76B04F251FBACB05007011E6 /* RatingSpec.swift in Sources */,
 				7614A37D207F72910005C089 /* ExposureApiSpec.swift in Sources */,
 				76A89E152021CFF300C23579 /* EncryptionProviderSpec.swift in Sources */,
@@ -2603,7 +2627,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2617,7 +2641,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.100;
+				MARKETING_VERSION = 2.2.200;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2626,7 +2650,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -2637,7 +2661,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2651,14 +2675,14 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.100;
+				MARKETING_VERSION = 2.2.200;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "appletvsimulator appletvos";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
@@ -2677,8 +2701,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RESOURCES_TARGETED_DEVICE_FAMILY = Universal;
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Debug;
@@ -2696,8 +2721,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RESOURCES_TARGETED_DEVICE_FAMILY = Universal;
 				SDKROOT = appletvos;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TVOS_DEPLOYMENT_TARGET = 9.0;
 			};
 			name = Release;
@@ -2752,11 +2778,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				RESOURCES_TARGETED_DEVICE_FAMILY = Universal;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -2805,10 +2833,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				RESOURCES_TARGETED_DEVICE_FAMILY = Universal;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -2820,7 +2850,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2834,14 +2864,14 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.100;
+				MARKETING_VERSION = 2.2.200;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2850,7 +2880,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2864,12 +2894,12 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.100;
+				MARKETING_VERSION = 2.2.200;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -2886,7 +2916,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -2903,7 +2933,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.ExposureTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

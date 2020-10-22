@@ -23,6 +23,14 @@ public struct DownloadCompleted: Codable {
         
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(assetId, forKey: .assetId)
+        try container.encodeIfPresent(downloadCount, forKey: .downloadCount)
+        try container.encodeIfPresent(downloads, forKey: .downloads)
+        try container.encodeIfPresent(changed, forKey: .changed)
+    }
+    
     internal enum CodingKeys: String, CodingKey {
         case assetId
         case downloadCount

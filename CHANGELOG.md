@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `2.2.20` Release - [2.2.20](#2220)
 * `2.2.10` Release - [2.2.10](#2210)
 * `2.2.00` Release - [2.2.00](#2200)
 * `2.1.00` Release - [2.1.00](#2100)
@@ -18,6 +19,12 @@
 * `0.72.x` Releases - [0.72.0](#0720)
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
+
+
+## 2.2.200
+#### Features
+* `EMP-15078` Notify DownloadBookKeeper when a download is complete or a when the DRM license is refreshed.
+* `EMP-15078` Update project to Swift 5 
 
 ## 2.2.100
 #### Changes

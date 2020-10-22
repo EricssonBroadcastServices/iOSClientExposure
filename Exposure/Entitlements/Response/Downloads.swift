@@ -29,6 +29,17 @@ public struct Downloads: Codable {
         userId = try container.decodeIfPresent(String.self, forKey: .userId)
     }
     
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(time, forKey: .time)
+        try container.encodeIfPresent(type, forKey: .type)
+        try container.encodeIfPresent(clientIp, forKey: .clientIp)
+        try container.encodeIfPresent(deviceId, forKey: .deviceId)
+        try container.encodeIfPresent(deviceType, forKey: .deviceType)
+        try container.encodeIfPresent(deviceModelId, forKey: .deviceModelId)
+        try container.encodeIfPresent(userId, forKey: .userId)
+    }
+    
     internal enum CodingKeys: String, CodingKey {
         case time
         case type

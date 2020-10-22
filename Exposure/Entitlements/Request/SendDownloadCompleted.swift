@@ -30,9 +30,6 @@ public struct SendDownloadCompleted: ExposureType {
     public var endpointUrl: String {
         var newEnvironment = environment
         newEnvironment.version = "v2"
-        
-        print("URL " , newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadcompleted")
-        
         return newEnvironment.apiUrl + "/entitlement/" + assetId + "/downloadcompleted"
     }
     
