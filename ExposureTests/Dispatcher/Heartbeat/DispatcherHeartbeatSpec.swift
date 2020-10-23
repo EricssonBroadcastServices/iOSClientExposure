@@ -47,8 +47,8 @@ class DispatcherHeartbeatSpec: QuickSpec {
                 
                 expect(dispatcher.heartbeatsEnabled).to(beTrue())
                 
-                expect(handler.payloadDelivered.count).toEventually(equal(0), timeout: 6)
-                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: 6)
+                expect(handler.payloadDelivered.count).toEventually(equal(0), timeout: .seconds(6))
+                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: .seconds(6))
             }
             
             /// Once the first event is delivered, continuous heartbeats should be sent.
@@ -70,8 +70,8 @@ class DispatcherHeartbeatSpec: QuickSpec {
                 
                 dispatcher.enqueue(event: event)
                 
-                expect(handler.payloadDelivered.count).toEventually(equal(3), timeout: 6)
-                expect(handler.heartbeatsDelivered.count).toEventually(equal(2), timeout: 2)
+                expect(handler.payloadDelivered.count).toEventually(equal(3), timeout: .seconds(6))
+                expect(handler.heartbeatsDelivered.count).toEventually(equal(2), timeout: .seconds(2))
             }
             
             /// Heartbeats should not be sent unless turned on by *client applications*
@@ -91,8 +91,8 @@ class DispatcherHeartbeatSpec: QuickSpec {
                 expect(dispatcher.heartbeatsEnabled).to(beFalse())
                 expect(dispatcher.flushTriggerEnabled).to(beTrue())
                 
-                expect(handler.payloadDelivered.count).toEventually(equal(1), timeout: 6)
-                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: 6)
+                expect(handler.payloadDelivered.count).toEventually(equal(1), timeout: .seconds(6))
+                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: .seconds(6))
             }
             
             /// Delivering heartbeats without the flushTrigger enabled makes no sense.
@@ -115,8 +115,8 @@ class DispatcherHeartbeatSpec: QuickSpec {
                 dispatcher.flushTrigger(enabled: false)
                 
                 expect(dispatcher.heartbeatsEnabled).to(beFalse())
-                expect(handler.payloadDelivered.count).toEventually(equal(1), timeout: 6)
-                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: 6)
+                expect(handler.payloadDelivered.count).toEventually(equal(1), timeout: .seconds(6))
+                expect(handler.heartbeatsDelivered.count).toEventually(equal(0), timeout: .seconds(6))
             }
         }
         

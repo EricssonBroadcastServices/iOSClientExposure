@@ -71,7 +71,7 @@ class DispatcherFlushTriggerSpec: QuickSpec {
                 dispatcher.networkHandler = networkHandler
                 dispatcher.flushTrigger(enabled: false)
                 
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(1), timeout: 6)
+                expect(networkHandler.payloadDelivered.count).toEventually(equal(1), timeout: .seconds(6))
             }
         }
     }

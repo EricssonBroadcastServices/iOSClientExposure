@@ -51,7 +51,7 @@ class DispatcherTerminationSpec: QuickSpec {
                                             startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.networkHandler = self.deliverUndelivered
                 dispatcher.terminate()
-                expect(self.deliverUndelivered.payloadDelivered.count).toEventually(equal(1), timeout: 6)
+                expect(self.deliverUndelivered.payloadDelivered.count).toEventually(equal(1), timeout: .seconds(6))
             }
             
 //            it("Should persist underlivered analytics that failed to dispatch on termination") {
