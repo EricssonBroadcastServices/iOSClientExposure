@@ -54,7 +54,7 @@ class DispatcherSynchronizeSpec: QuickSpec {
                 dispatcher.enqueue(event: event)
                 
                 expect(networkHandler.receivedClockDelta).toEventuallyNot(beNil())
-               expect(networkHandler.receivedClockDelta).toEventually(beLessThan(SynchronizeNetworkHandler.acceptedDelta), timeout: 6)
+                expect(networkHandler.receivedClockDelta).toEventually(beLessThan(SynchronizeNetworkHandler.acceptedDelta), timeout: .seconds(6))
             }
         }
     }

@@ -56,7 +56,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer
                     ).count }.toEventually(equal(0))
                 
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(2), timeout: 10)
+                expect(networkHandler.payloadDelivered.count).toEventually(equal(2), timeout: .seconds(10))
             }
             
             it("Should attempt redelivery of persistent payload using SessionToken with shared accountId") {
@@ -87,7 +87,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 expect{ try persister.analytics(accountId: self.oldButRelatedToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer
                     ).count }.toEventually(equal(0))
                 
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(2), timeout: 10)
+                expect(networkHandler.payloadDelivered.count).toEventually(equal(2), timeout: .seconds(10))
             }
             
             
@@ -119,7 +119,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 expect{ try persister.analytics(accountId: self.unrelatedAccountId.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer
                     ).count }.toEventually(equal(1))
                 
-                expect(networkHandler.payloadDelivered.count).toEventually(equal(1), timeout: 10)
+                expect(networkHandler.payloadDelivered.count).toEventually(equal(1), timeout: .seconds(10))
                 
                 expect{ try persister.clearAll(olderThan: Date().millisecondsSince1970) }.toNot(throwError())
                 expect{ try persister.analytics(accountId: self.sessionToken.accountId!, businessUnit: self.environment.businessUnit, customer: self.environment.customer
