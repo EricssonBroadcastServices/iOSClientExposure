@@ -120,11 +120,11 @@ public struct SortDescriptor {
     }
     
     internal init?(regex: String) {
-        guard regex.characters.count > 0 else { return nil }
+        guard regex.count > 0 else { return nil }
         if regex.hasPrefix("-") {
             let index = regex.index(regex.startIndex, offsetBy: 1)
             let substring = regex.substring(from: index)
-            guard substring.characters.count > 0 else { return nil }
+            guard substring.count > 0 else { return nil }
             self.key = substring
             self.ascending = false
         }
