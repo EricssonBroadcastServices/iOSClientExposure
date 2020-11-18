@@ -1,21 +1,16 @@
 //
-//  PlayAsset.swift
-//  Exposure-iOS
+//  PlayEnigmaAdsAsset.swift
+//  Exposure
 //
-//  Created by Udaya Sri Senarathne on 2019-04-10.
-//  Copyright © 2019 emp. All rights reserved.
+//  Created by Udaya Sri Senarathne on 2020-11-18.
+//  Copyright © 2020 emp. All rights reserved.
 //
 
 import Foundation
 
-/// Request a `PlaybackEntitlementV2` for *Asset* playback.
-///
-/// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
-///
-/// Default streaming format is:
-/// * `drm` FAIRPLAY
-/// * `format` HLS
-public struct PlayEnigmaAsset: ExposureType {
+
+/// Play request for an asset with ads options
+public struct PlayEnigmaAdsAsset: ExposureType {
     
     public typealias Response = PlayBackEntitlementV2
     
@@ -28,11 +23,13 @@ public struct PlayEnigmaAsset: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
-
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken) {
+    public let includeAdsOptions: AdsOptions
+    
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, includeAdsOptions: AdsOptions) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
+        self.includeAdsOptions = includeAdsOptions
     }
     
     public var endpointUrl: String {
@@ -41,19 +38,18 @@ public struct PlayEnigmaAsset: ExposureType {
         return newEnvironment.apiUrl + "/entitlement/" + assetId + "/play"
     }
     
-
-    public var parameters: [String: Any] {
-        return [:]
+    
+    public var parameters: AdsOptions {
+        return includeAdsOptions
     }
     
-    
+
     public var headers: [String: String]? {
         return sessionToken.authorizationHeader
     }
-    
 }
 
-extension PlayEnigmaAsset {
+extension PlayEnigmaAdsAsset {
     /// `PlayVod` request is specified as a `.post`
     ///
     /// - returns: `ExposureRequest` with request specific data
