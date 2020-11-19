@@ -38,9 +38,8 @@ public struct PlayEnigmaAdsAsset: ExposureType {
         return newEnvironment.apiUrl + "/entitlement/" + assetId + "/play"
     }
     
-    
-    public var parameters: AdsOptions {
-        return includeAdsOptions
+    public var parameters: [String: Any]? {
+        return includeAdsOptions.dictionaryRepresentation
     }
     
 
