@@ -16,6 +16,7 @@ public struct StreamInfo:Codable {
     public let event: Bool?
     public let programId: String?
     public let start: Int?
+    public let ssai: Bool?
     
     
     public init(from decoder: Decoder) throws {
@@ -27,6 +28,7 @@ public struct StreamInfo:Codable {
         event = try container.decodeIfPresent(Bool.self, forKey: .event)
         programId = try container.decodeIfPresent(String.self, forKey: .programId)
         start = try container.decodeIfPresent(Int.self, forKey: .start)
+        ssai = try container.decodeIfPresent(Bool.self, forKey: .ssai)
         
     }
     
@@ -38,5 +40,6 @@ public struct StreamInfo:Codable {
         case event
         case programId
         case start
+        case ssai
     }
 }

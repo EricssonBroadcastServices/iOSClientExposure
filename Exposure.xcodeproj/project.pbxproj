@@ -472,6 +472,8 @@
 		783C8DE524C874020053A429 /* AvailabilityKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C8DE324C874020053A429 /* AvailabilityKeys.swift */; };
 		784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
 		784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
+		784C81A52565585300BA4301 /* PlayEnigmaAdsAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */; };
+		784C81A62565585300BA4301 /* PlayEnigmaAdsAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */; };
 		785A7BC125398A07001273B5 /* SendDownloadCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A7BC025398A07001273B5 /* SendDownloadCompleted.swift */; };
 		785A7BC225398A07001273B5 /* SendDownloadCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A7BC025398A07001273B5 /* SendDownloadCompleted.swift */; };
 		785A7BC425398C9A001273B5 /* DownloadCompleted.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785A7BC325398C9A001273B5 /* DownloadCompleted.swift */; };
@@ -498,6 +500,10 @@
 		788D592D253F161900C24278 /* GetAllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D592B253F161900C24278 /* GetAllDownloads.swift */; };
 		788D5933253F166000C24278 /* AllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D5932253F166000C24278 /* AllDownloads.swift */; };
 		788D5934253F166000C24278 /* AllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D5932253F166000C24278 /* AllDownloads.swift */; };
+		789EAC6C255BDDB2003AC419 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC6B255BDDB2003AC419 /* Ads.swift */; };
+		789EAC6D255BDDB2003AC419 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC6B255BDDB2003AC419 /* Ads.swift */; };
+		789EAC72255C29E5003AC419 /* AdsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC71255C29E5003AC419 /* AdsOptions.swift */; };
+		789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC71255C29E5003AC419 /* AdsOptions.swift */; };
 		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78CC876825416993005E03F3 /* SendDownloadCompletedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */; };
@@ -812,6 +818,7 @@
 		783C8DE024C873C90053A429 /* GetAvailabilityKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAvailabilityKeys.swift; sourceTree = "<group>"; };
 		783C8DE324C874020053A429 /* AvailabilityKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityKeys.swift; sourceTree = "<group>"; };
 		784666C12331131F00429AB6 /* FetchEventListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventListSpec.swift; sourceTree = "<group>"; };
+		784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAdsAsset.swift; sourceTree = "<group>"; };
 		785A7BC025398A07001273B5 /* SendDownloadCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadCompleted.swift; sourceTree = "<group>"; };
 		785A7BC325398C9A001273B5 /* DownloadCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadCompleted.swift; sourceTree = "<group>"; };
 		785A7BC625398F57001273B5 /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
@@ -826,6 +833,8 @@
 		7884BFCD233A59DC00A30DB8 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788D592B253F161900C24278 /* GetAllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllDownloads.swift; sourceTree = "<group>"; };
 		788D5932253F166000C24278 /* AllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDownloads.swift; sourceTree = "<group>"; };
+		789EAC6B255BDDB2003AC419 /* Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
+		789EAC71255C29E5003AC419 /* AdsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsOptions.swift; sourceTree = "<group>"; };
 		78A63A4B232F90BF003A7C6E /* FetchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEvent.swift; sourceTree = "<group>"; };
 		78A63A5B2330FA1C003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		78A63A5C2330FA1C003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
@@ -1428,6 +1437,7 @@
 			isa = PBXGroup;
 			children = (
 				76A842D41EA7667D00BDAF2C /* PlayRequest.swift */,
+				789EAC71255C29E5003AC419 /* AdsOptions.swift */,
 			);
 			path = Parameters;
 			sourceTree = "<group>";
@@ -1443,6 +1453,7 @@
 				7646D6621EEFFDBD009E5C2B /* ValidateEntitlement.swift */,
 				766338611F78FBD300D66160 /* ValidateDownload.swift */,
 				78DF4A14225E322F00B8348A /* PlayEnigmaAsset.swift */,
+				784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */,
 				78254237246587EC00126BA2 /* GetDownloadableInfo.swift */,
 				785A7BC025398A07001273B5 /* SendDownloadCompleted.swift */,
 				785A7BCB2539B9A3001273B5 /* SendDownloadRenewed.swift */,
@@ -1845,6 +1856,7 @@
 				78DF4A04225B467D00B8348A /* Formats.swift */,
 				78DF4A06225B469200B8348A /* DRM.swift */,
 				78DF4A08225B46A100B8348A /* StreamInfo.swift */,
+				789EAC6B255BDDB2003AC419 /* Ads.swift */,
 			);
 			path = ApiPlayResponseV2;
 			sourceTree = "<group>";
@@ -2086,6 +2098,7 @@
 				760800F320692820007F59D5 /* Environment.swift in Sources */,
 				760800F420692820007F59D5 /* DeviceRights.swift in Sources */,
 				760800F520692820007F59D5 /* DeviceType.swift in Sources */,
+				789EAC6D255BDDB2003AC419 /* Ads.swift in Sources */,
 				760800F620692820007F59D5 /* DownloadVod.swift in Sources */,
 				760800F720692820007F59D5 /* StorageProvider.swift in Sources */,
 				760800F820692820007F59D5 /* FetchCarouselList.swift in Sources */,
@@ -2115,6 +2128,7 @@
 				7608010B20692820007F59D5 /* Request.swift in Sources */,
 				7608010C20692820007F59D5 /* FetchEpgChannelList.swift in Sources */,
 				7608010D20692820007F59D5 /* EventSinkInit.swift in Sources */,
+				789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BD253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				781DC150229BCC33007D0107 /* BooksMarks.swift in Sources */,
 				7608010E20692820007F59D5 /* DownloadValidation.swift in Sources */,
@@ -2216,6 +2230,7 @@
 				7608015720692820007F59D5 /* SessionDelegate.swift in Sources */,
 				7608015820692820007F59D5 /* Result.swift in Sources */,
 				7608015920692820007F59D5 /* Season.swift in Sources */,
+				784C81A62565585300BA4301 /* PlayEnigmaAdsAsset.swift in Sources */,
 				7608015A20692820007F59D5 /* URLEncoding.swift in Sources */,
 				7608015B20692820007F59D5 /* Tag.swift in Sources */,
 				7608015C20692820007F59D5 /* FilteredLocale.swift in Sources */,
@@ -2357,6 +2372,7 @@
 				78397C95232F7CF300071B4D /* FetchEventList.swift in Sources */,
 				76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */,
 				76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */,
+				789EAC6C255BDDB2003AC419 /* Ads.swift in Sources */,
 				766FBB7C1ECA2AD200EBEC53 /* DeviceRights.swift in Sources */,
 				76529CFD1EDBF61100318AE2 /* DeviceType.swift in Sources */,
 				78DF4A01225B465B00B8348A /* BooksMarks.swift in Sources */,
@@ -2386,6 +2402,7 @@
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
+				789EAC72255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BC253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */,
 				7635AEC1202A4423001512BF /* Request.swift in Sources */,
@@ -2487,6 +2504,7 @@
 				7602010120362BAF00EF495D /* SessionDelegate.swift in Sources */,
 				76D70EF92039FEE6006CF211 /* Result.swift in Sources */,
 				766FBB7E1ECA2B1600EBEC53 /* Season.swift in Sources */,
+				784C81A52565585300BA4301 /* PlayEnigmaAdsAsset.swift in Sources */,
 				76C6EE452037969500DED52E /* URLEncoding.swift in Sources */,
 				766FBB761ECA2A6F00EBEC53 /* Tag.swift in Sources */,
 				76D7046A1F9396E400D6FC6B /* FilteredLocale.swift in Sources */,
@@ -2627,7 +2645,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2641,7 +2659,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.200;
+				MARKETING_VERSION = 2.2.3;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2661,7 +2679,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2675,7 +2693,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.200;
+				MARKETING_VERSION = 2.2.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
@@ -2850,7 +2868,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2864,7 +2882,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.200;
+				MARKETING_VERSION = 2.2.3;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2880,7 +2898,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2894,7 +2912,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.200;
+				MARKETING_VERSION = 2.2.3;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
