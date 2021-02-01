@@ -494,6 +494,8 @@
 		7862BB4123C492A600A25536 /* UserDetailsRequestParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */; };
 		7862BB4323C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */; };
 		7862BB4423C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */; };
+		786D5C1625B8647700982370 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D5C1525B8647700982370 /* Sprites.swift */; };
+		786D5C1725B8647700982370 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D5C1525B8647700982370 /* Sprites.swift */; };
 		7884BFCC233A59DC00A30DB8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCB233A59DC00A30DB8 /* Nimble.framework */; };
 		7884BFCE233A59DC00A30DB8 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCD233A59DC00A30DB8 /* Quick.framework */; };
 		788D592C253F161900C24278 /* GetAllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D592B253F161900C24278 /* GetAllDownloads.swift */; };
@@ -829,6 +831,7 @@
 		7862BB3823C48CE500A25536 /* UpdateUserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDetails.swift; sourceTree = "<group>"; };
 		7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsRequestParameters.swift; sourceTree = "<group>"; };
 		7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDetailsSpec.swift; sourceTree = "<group>"; };
+		786D5C1525B8647700982370 /* Sprites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprites.swift; sourceTree = "<group>"; };
 		7884BFCB233A59DC00A30DB8 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7884BFCD233A59DC00A30DB8 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788D592B253F161900C24278 /* GetAllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllDownloads.swift; sourceTree = "<group>"; };
@@ -1857,6 +1860,7 @@
 				78DF4A06225B469200B8348A /* DRM.swift */,
 				78DF4A08225B46A100B8348A /* StreamInfo.swift */,
 				789EAC6B255BDDB2003AC419 /* Ads.swift */,
+				786D5C1525B8647700982370 /* Sprites.swift */,
 			);
 			path = ApiPlayResponseV2;
 			sourceTree = "<group>";
@@ -2243,6 +2247,7 @@
 				7608016220692820007F59D5 /* UIDevice+Extensions.swift in Sources */,
 				7608016320692820007F59D5 /* TaskDelegate.swift in Sources */,
 				7810DE19232B771800310901 /* Event.swift in Sources */,
+				786D5C1725B8647700982370 /* Sprites.swift in Sources */,
 				7608016420692820007F59D5 /* FilteredAssetIds.swift in Sources */,
 				7608016520692820007F59D5 /* FilteredDevices.swift in Sources */,
 				780060C0253D6E25003EF68F /* DeleteDownloadCompleted.swift in Sources */,
@@ -2517,6 +2522,7 @@
 				76D70EF02039BDBA006CF211 /* UIDevice+Extensions.swift in Sources */,
 				7862BB2E23C482E000A25536 /* UserDetails.swift in Sources */,
 				7810DE18232B771800310901 /* Event.swift in Sources */,
+				786D5C1625B8647700982370 /* Sprites.swift in Sources */,
 				7602010320362D0400EF495D /* TaskDelegate.swift in Sources */,
 				769734AD1EF1852C00F6ADC8 /* FilteredAssetIds.swift in Sources */,
 				780060BF253D6E25003EF68F /* DeleteDownloadCompleted.swift in Sources */,
@@ -2645,7 +2651,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2659,7 +2665,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.300;
+				MARKETING_VERSION = 2.2.400;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2679,7 +2685,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2693,7 +2699,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.300;
+				MARKETING_VERSION = 2.2.400;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
@@ -2868,7 +2874,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2882,7 +2888,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.300;
+				MARKETING_VERSION = 2.2.400;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2898,7 +2904,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2912,7 +2918,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.300;
+				MARKETING_VERSION = 2.2.400;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;

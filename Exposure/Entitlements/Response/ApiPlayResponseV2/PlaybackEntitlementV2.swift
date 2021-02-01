@@ -33,6 +33,8 @@ public struct PlayBackEntitlementV2: Codable {
     public let streamInfo: StreamInfo?
     
     public let ads: Ads?
+    
+    public let sprites:[Sprites]?
 }
 
 
@@ -52,6 +54,7 @@ extension PlayBackEntitlementV2 {
         publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
         streamInfo = try container.decodeIfPresent(StreamInfo.self, forKey: .streamInfo)
         ads = try container.decodeIfPresent(Ads.self, forKey: .ads)
+        sprites = try container.decodeIfPresent([Sprites].self, forKey: .sprites)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -67,6 +70,7 @@ extension PlayBackEntitlementV2 {
         case publicationId
         case streamInfo
         case ads
+        case sprites
     }
 }
 
@@ -86,6 +90,7 @@ extension PlayBackEntitlementV2 {
         try container.encodeIfPresent(publicationId, forKey: .publicationId)
         try container.encodeIfPresent(streamInfo, forKey: .streamInfo)
         try container.encodeIfPresent(ads, forKey: .ads)
+        try container.encodeIfPresent(sprites, forKey: .sprites)
     }
 }
 
