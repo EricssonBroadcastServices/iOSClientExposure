@@ -69,7 +69,7 @@ class PlaybackEntitlementV2Spec: QuickSpec {
             "bookmarks":bookmarks,
             "requestId":"requestId",
             "contractRestrictions" : contractRestrictions,
-            "sprites" : sprites
+            "sprites" : [sprites]
         ]
         
         let requiredJson: [String : Any] = [
