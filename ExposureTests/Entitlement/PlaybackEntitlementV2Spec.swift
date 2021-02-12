@@ -52,6 +52,11 @@ class PlaybackEntitlementV2Spec: QuickSpec {
             "timeshiftEnabled" : true
         ]
         
+        let sprites: [String: Any] = [
+            "width": 160,
+            "vtt": "export const vtt = `WEBVTT 00:00:00.000 --> 00:00:10.000 sprites.jpg#xywh=0,0,160,90"
+        ]
+        
         let json:[String: Any] = [
             "productId":"productId",
             "entitlementType": "entitlementType",
@@ -63,7 +68,8 @@ class PlaybackEntitlementV2Spec: QuickSpec {
             "streamInfo":streamInfo,
             "bookmarks":bookmarks,
             "requestId":"requestId",
-            "contractRestrictions" : contractRestrictions
+            "contractRestrictions" : contractRestrictions,
+            "sprites" : sprites
         ]
         
         let requiredJson: [String : Any] = [
