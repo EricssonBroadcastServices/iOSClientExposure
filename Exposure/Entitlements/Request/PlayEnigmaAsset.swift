@@ -28,6 +28,7 @@ public struct PlayEnigmaAsset: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
+    /// X-Adobe-Primetime-MediaToken
     public let adobePrimetimeMediaToken: String?
     
 

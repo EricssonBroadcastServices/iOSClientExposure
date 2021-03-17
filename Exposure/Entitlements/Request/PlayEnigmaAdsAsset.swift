@@ -23,6 +23,7 @@ public struct PlayEnigmaAdsAsset: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
+    /// X-Adobe-Primetime-MediaToken
     public let adobePrimetimeMediaToken: String?
     
     public let includeAdsOptions: AdsOptions
