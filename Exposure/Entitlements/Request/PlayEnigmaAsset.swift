@@ -28,11 +28,15 @@ public struct PlayEnigmaAsset: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
+    /// X-Adobe-Primetime-MediaToken
+    public let adobePrimetimeMediaToken: String?
+    
 
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken) {
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, adobePrimetimeMediaToken: String?) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
+        self.adobePrimetimeMediaToken = adobePrimetimeMediaToken
     }
     
     public var endpointUrl: String {
@@ -47,8 +51,15 @@ public struct PlayEnigmaAsset: ExposureType {
     }
     
     
+    /// Headers to apply
     public var headers: [String: String]? {
-        return sessionToken.authorizationHeader
+        var result: [String: String] = [:]
+        
+        if let adobePrimeTimeToken = adobePrimetimeMediaToken {
+             result["X-Adobe-Primetime-MediaToken"] = adobePrimeTimeToken
+        }
+        sessionToken.authorizationHeader.forEach{ result[$0] = $1 }
+        return result.isEmpty ? nil : result
     }
     
 }

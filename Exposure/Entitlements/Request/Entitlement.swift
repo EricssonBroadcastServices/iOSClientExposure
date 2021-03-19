@@ -55,17 +55,17 @@ extension Entitlement {
     }
     
     
-    public func enigmaAsset(assetId: String) -> PlayEnigmaAsset {
+    public func enigmaAsset(assetId: String, with adobePrimetimeMediaToken: String? = nil ) -> PlayEnigmaAsset {
         return PlayEnigmaAsset(assetId: assetId,
                                environment: environment,
-                               sessionToken: sessionToken)
+                               sessionToken: sessionToken, adobePrimetimeMediaToken: adobePrimetimeMediaToken)
     }
     
-    public func enigmaAsset(assetId: String, includeAds adsOptions:AdsOptions) -> PlayEnigmaAdsAsset {
+    public func enigmaAsset(assetId: String, includeAds adsOptions:AdsOptions, with adobePrimetimeMediaToken: String? = nil) -> PlayEnigmaAdsAsset {
         return PlayEnigmaAdsAsset(assetId: assetId,
                                environment: environment,
                                sessionToken: sessionToken,
-                               includeAdsOptions: adsOptions)
+                               includeAdsOptions: adsOptions, adobePrimetimeMediaToken: adobePrimetimeMediaToken)
     }
     
     /// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
