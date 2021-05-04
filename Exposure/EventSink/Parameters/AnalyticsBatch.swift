@@ -32,9 +32,12 @@ public struct AnalyticsBatch {
     
     /// JSON array of analytics events.
     /// Should be sorted on $0.timestamp
-    public let payload: [AnalyticsPayload]
+    public var payload: [AnalyticsPayload]
     
-    
+    let defaults = UserDefaults.standard
+    var sequenceNumber = 0
+    let ksequenceNumber: String = "SequenceNumber"
+      
     internal enum CodingKeys: CodingKey {
         case sessionToken
         case environment
@@ -51,9 +54,9 @@ public struct AnalyticsBatch {
     
     public init?(persistencePayload json: [String: Any]) {
         guard let token = json[PersistenceKeys.sessionToken.rawValue] as? String else { return nil }
-        guard  let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
-        guard    let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
-        guard    let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
+        guard let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
+        guard let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
+        guard let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
         
         guard let url = env[EnvironmentKeys.url.rawValue],
             let customer = env[EnvironmentKeys.customer.rawValue],
@@ -103,13 +106,60 @@ extension AnalyticsBatch {
 }
 
 extension AnalyticsBatch {
-    public func jsonParameters() -> [String: Any] {
-        return [
+    public mutating func jsonParameters() -> [String: Any] {
+       
+        var payLoadJson = [[String:Any]]()
+        
+        var json =  [
             JsonKeys.customer.rawValue: customer,
             JsonKeys.businessUnit.rawValue: businessUnit,
-            JsonKeys.sessionId.rawValue: sessionId,
-            JsonKeys.payload.rawValue: payload.map{ $0.jsonPayload }
-        ]
+            JsonKeys.sessionId.rawValue: sessionId
+        ] as [String : Any]
+        
+        for load in payload {
+            var updatedjsonLoad = load.jsonPayload
+
+            if let eventType = updatedjsonLoad["EventType"] as? String {
+                
+                /// Analytics event starting with Playback.Created , so assign sequenceNumber to be 1
+                if eventType == "Playback.Created" {
+                    sequenceNumber = 1
+                    
+                    updatedjsonLoad[ksequenceNumber] = sequenceNumber
+                    payLoadJson.append(updatedjsonLoad)
+                    
+                    // Increase the sequenceNumber value by 1 & add it to the default
+                    sequenceNumber = sequenceNumber + 1
+                    defaults.setValue(sequenceNumber, forKey: ksequenceNumber)
+                }
+                
+                /// Analytics event ends with Playback.Aborted , so assign sequenceNumber to be 0 & remove the value from defaults
+                else if (eventType == "Playback.Aborted") {
+                    
+                    if (isKeyPresentInUserDefaults(key: ksequenceNumber)) {
+                        sequenceNumber = defaults.integer(forKey: ksequenceNumber)
+                        updatedjsonLoad[ksequenceNumber] = sequenceNumber
+                        payLoadJson.append(updatedjsonLoad)
+                        sequenceNumber = 0
+                        defaults.removeObject(forKey: ksequenceNumber)
+                    }
+                    
+                } else {
+                    if (isKeyPresentInUserDefaults(key: ksequenceNumber)) {
+                        
+                        sequenceNumber = defaults.integer(forKey: ksequenceNumber)
+                        updatedjsonLoad[ksequenceNumber] = sequenceNumber
+                        payLoadJson.append(updatedjsonLoad)
+                        
+                        sequenceNumber = sequenceNumber + 1
+                        defaults.setValue(sequenceNumber, forKey: ksequenceNumber)
+                    }
+                }
+            }
+        }
+        
+        json[JsonKeys.payload.rawValue] = payLoadJson
+        return json
     }
     
     internal enum JsonKeys: String {
@@ -117,5 +167,9 @@ extension AnalyticsBatch {
         case businessUnit = "BusinessUnit"
         case sessionId = "SessionId"
         case payload = "Payload"
+    }
+    
+    func isKeyPresentInUserDefaults(key: String) -> Bool {
+        return UserDefaults.standard.object(forKey: key) != nil
     }
 }

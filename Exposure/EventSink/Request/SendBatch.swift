@@ -41,6 +41,7 @@ extension SendBatch: ExposureType {
     }
     
     public var parameters: [String: Any] {
+        var messageBatch = self.messageBatch
         var event = messageBatch.jsonParameters()
         
         /// Unix timestamp according to device clock when the batch was sent from the device.

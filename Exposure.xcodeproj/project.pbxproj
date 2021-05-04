@@ -508,6 +508,10 @@
 		789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC71255C29E5003AC419 /* AdsOptions.swift */; };
 		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
+		78C89284262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
+		78C89285262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
+		78C8928B262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */; };
+		78C8928C262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */; };
 		78CC876825416993005E03F3 /* SendDownloadCompletedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */; };
 		78CC876925416994005E03F3 /* SendDownloadCompletedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */; };
 		78CC876B254172EF005E03F3 /* SendDownloadRenewedSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */; };
@@ -843,6 +847,8 @@
 		78A63A5C2330FA1C003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		78A63A5F2330FA30003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		78A63A602330FA30003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsFromEntitlement.swift; sourceTree = "<group>"; };
+		78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDNInfoFromEntitlement.swift; sourceTree = "<group>"; };
 		78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadCompletedSpec.swift; sourceTree = "<group>"; };
 		78CC876A254172EF005E03F3 /* SendDownloadRenewedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadRenewedSpec.swift; sourceTree = "<group>"; };
 		78CC876D25417369005E03F3 /* DeleteDownloadSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteDownloadSpec.swift; sourceTree = "<group>"; };
@@ -1861,6 +1867,8 @@
 				78DF4A08225B46A100B8348A /* StreamInfo.swift */,
 				789EAC6B255BDDB2003AC419 /* Ads.swift */,
 				786D5C1525B8647700982370 /* Sprites.swift */,
+				78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */,
+				78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */,
 			);
 			path = ApiPlayResponseV2;
 			sourceTree = "<group>";
@@ -2122,6 +2130,7 @@
 				7608010320692820007F59D5 /* CarouselList.swift in Sources */,
 				7608010420692820007F59D5 /* UserContentRating.swift in Sources */,
 				7608010520692820007F59D5 /* FetchCarousel.swift in Sources */,
+				78C89285262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */,
 				7608010620692820007F59D5 /* FetchServerTime.swift in Sources */,
 				7608010720692820007F59D5 /* ContentRating.swift in Sources */,
 				7608010820692820007F59D5 /* FilteredFields.swift in Sources */,
@@ -2186,6 +2195,7 @@
 				7608012F20692820007F59D5 /* ExposureRequest.swift in Sources */,
 				7608013020692820007F59D5 /* ChannelEpg.swift in Sources */,
 				7608013120692820007F59D5 /* SearchResponseAutocomplete.swift in Sources */,
+				78C8928C262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */,
 				7608013220692820007F59D5 /* FetchAssetById.swift in Sources */,
 				7608013320692820007F59D5 /* URLConvertible.swift in Sources */,
 				7608013420692820007F59D5 /* ParentalRating.swift in Sources */,
@@ -2397,6 +2407,7 @@
 				764AE88A1FBA528300DB548C /* Rating.swift in Sources */,
 				7862BB2C23C4816500A25536 /* FetchUserDetails.swift in Sources */,
 				820EF68523FAAF40002465A3 /* FetchLastViewedOffset.swift in Sources */,
+				78C89284262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */,
 				76A89CEA202089E100C23579 /* Date+Extensions.swift in Sources */,
 				3E48B7711F83D77800D345BF /* CarouselList.swift in Sources */,
 				76B04F2A1FBADCE3007011E6 /* UserContentRating.swift in Sources */,
@@ -2461,6 +2472,7 @@
 				766FBB6E1EC9A96500EBEC53 /* FetchAssetById.swift in Sources */,
 				76D70EF72039FDED006CF211 /* URLConvertible.swift in Sources */,
 				766FBB881ECA2B9800EBEC53 /* ParentalRating.swift in Sources */,
+				78C8928B262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */,
 				766FBB651EC9822B00EBEC53 /* Asset.swift in Sources */,
 				76DAE68E201B62EF00992D5C /* ExposureResponseMessage.swift in Sources */,
 				78DF4A05225B467D00B8348A /* Formats.swift in Sources */,
@@ -2651,7 +2663,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2665,7 +2677,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.500;
+				MARKETING_VERSION = 2.2.600;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2685,7 +2697,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2699,7 +2711,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.500;
+				MARKETING_VERSION = 2.2.600;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
@@ -2874,7 +2886,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2888,7 +2900,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.500;
+				MARKETING_VERSION = 2.2.600;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2904,7 +2916,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = JCUPRVKEC5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2918,7 +2930,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.500;
+				MARKETING_VERSION = 2.2.600;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
