@@ -12,7 +12,10 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
     
     internal var requestId: String?
     
+    internal var lastSquenceNumber: Int?
+    
     func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
+        var batch = batch
         var parameters = batch.jsonParameters()
         parameters["DispatchTime"] = Date().millisecondsSince1970
         if let clockOffset = clockOffset {

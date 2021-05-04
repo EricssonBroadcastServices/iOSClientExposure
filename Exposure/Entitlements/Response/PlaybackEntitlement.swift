@@ -99,8 +99,12 @@ public struct PlaybackEntitlement: Codable {
     /// Optional `URL` for streams supporting serverside ad insertion.
     public let adMediaLocator: URL?
     
+    public let cdn: CDNInfoFromEntitlement?
     
-    public init(playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? ) {
+    public let analytics: AnalyticsFromEntitlement?
+    
+    
+    public init(playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? , cdn: CDNInfoFromEntitlement? = nil, analytics: AnalyticsFromEntitlement? = nil) {
         
         self.playTokenExpiration = playTokenExpiration
         self.mediaLocator = mediaLocator
@@ -125,6 +129,8 @@ public struct PlaybackEntitlement: Codable {
         self.liveTime = liveTime
         self.productId = productId
         self.adMediaLocator = adMediaLocator
+        self.cdn = cdn
+        self.analytics = analytics
     }
 }
 
@@ -162,6 +168,9 @@ extension PlaybackEntitlement {
         liveTime = try container.decodeIfPresent(Int64.self, forKey: .liveTime)
         productId = try container.decodeIfPresent(String.self, forKey: .productId)
         adMediaLocator = try container.decodeIfPresent(URL.self, forKey: .adMediaLocator)
+        
+        cdn = try container.decodeIfPresent(CDNInfoFromEntitlement.self, forKey: .cdn)
+        analytics = try container.decodeIfPresent(AnalyticsFromEntitlement.self, forKey: .analytics)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -196,6 +205,9 @@ extension PlaybackEntitlement {
         try container.encodeIfPresent(liveTime, forKey: .liveTime)
         try container.encodeIfPresent(productId, forKey: .productId)
         try container.encodeIfPresent(adMediaLocator, forKey: .adMediaLocator)
+        
+        try container.encodeIfPresent(cdn, forKey: .cdn)
+        try container.encodeIfPresent(analytics, forKey: .analytics)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -222,5 +234,8 @@ extension PlaybackEntitlement {
         case liveTime
         case productId
         case adMediaLocator
+        
+        case cdn
+        case analytics
     }
 }

@@ -57,6 +57,18 @@ class PlaybackEntitlementV2Spec: QuickSpec {
             "vtt": "export const vtt = `WEBVTT 00:00:00.000 --> 00:00:10.000 sprites.jpg#xywh=0,0,160,90"
         ]
         
+        let cdn: [String: Any] = [
+            "host": "primary",
+            "profile": "staticDefault",
+            "provider":"CTL"
+        ]
+        
+        let analytics: [String: Any] = [
+            "bucket": 55,
+            "postInterval": 60,
+            "tag":"default"
+        ]
+        
         let json:[String: Any] = [
             "productId":"productId",
             "entitlementType": "entitlementType",
@@ -69,7 +81,9 @@ class PlaybackEntitlementV2Spec: QuickSpec {
             "bookmarks":bookmarks,
             "requestId":"requestId",
             "contractRestrictions" : contractRestrictions,
-            "sprites" : [sprites]
+            "sprites" : [sprites],
+            "cdn" : cdn,
+            "analytics" : analytics
         ]
         
         let requiredJson: [String : Any] = [
