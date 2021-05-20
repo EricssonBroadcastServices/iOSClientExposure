@@ -30,6 +30,11 @@ extension Authenticate {
         return Login(username: username, password: password, twoFactor: twoFactor, rememberMe: rememberMe, environment: environment)
     }
     
+    
+    public func loginWithFirebase(firebaseToken: String, providerId: String, username: String?, email: String?, displayName: String? ) -> FirebaseLogin {
+        return FirebaseLogin(environment: environment, username: username, email: email, displayName: displayName, accessToken: firebaseToken, providerId: providerId)
+    }
+    
     /// Anonymous authentication.
     /// 
     /// - returns: `Anonymous` struct used to process the request.

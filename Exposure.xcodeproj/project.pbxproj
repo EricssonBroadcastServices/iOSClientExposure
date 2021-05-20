@@ -496,6 +496,8 @@
 		7862BB4423C4956C00A25536 /* UpdateUserDetailsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */; };
 		786D5C1625B8647700982370 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D5C1525B8647700982370 /* Sprites.swift */; };
 		786D5C1725B8647700982370 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D5C1525B8647700982370 /* Sprites.swift */; };
+		786EB64D264BB070003C85F8 /* FirebaseLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786EB64C264BB070003C85F8 /* FirebaseLogin.swift */; };
+		786EB64E264BB070003C85F8 /* FirebaseLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786EB64C264BB070003C85F8 /* FirebaseLogin.swift */; };
 		7884BFCC233A59DC00A30DB8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCB233A59DC00A30DB8 /* Nimble.framework */; };
 		7884BFCE233A59DC00A30DB8 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCD233A59DC00A30DB8 /* Quick.framework */; };
 		788D592C253F161900C24278 /* GetAllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D592B253F161900C24278 /* GetAllDownloads.swift */; };
@@ -836,6 +838,7 @@
 		7862BB3B23C48E8B00A25536 /* UserDetailsRequestParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsRequestParameters.swift; sourceTree = "<group>"; };
 		7862BB4223C4956C00A25536 /* UpdateUserDetailsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserDetailsSpec.swift; sourceTree = "<group>"; };
 		786D5C1525B8647700982370 /* Sprites.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sprites.swift; sourceTree = "<group>"; };
+		786EB64C264BB070003C85F8 /* FirebaseLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseLogin.swift; sourceTree = "<group>"; };
 		7884BFCB233A59DC00A30DB8 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7884BFCD233A59DC00A30DB8 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788D592B253F161900C24278 /* GetAllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllDownloads.swift; sourceTree = "<group>"; };
@@ -1418,6 +1421,7 @@
 				76A842CE1EA7667D00BDAF2C /* Login.swift */,
 				76A44C9A1F16350E008992E9 /* Logout.swift */,
 				76009F9E1F5D66B0008E1738 /* ValidateSessionToken.swift */,
+				786EB64C264BB070003C85F8 /* FirebaseLogin.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -2180,6 +2184,7 @@
 				7608012820692820007F59D5 /* Publication.swift in Sources */,
 				820EF68823FE7AFA002465A3 /* LastViewedOffsetList.swift in Sources */,
 				7825423C2465883600126BA2 /* Downloadinfo.swift in Sources */,
+				786EB64E264BB070003C85F8 /* FirebaseLogin.swift in Sources */,
 				788D592D253F161900C24278 /* GetAllDownloads.swift in Sources */,
 				7608012920692820007F59D5 /* Credentials.swift in Sources */,
 				7608012A20692820007F59D5 /* EntitlementValidation.swift in Sources */,
@@ -2457,6 +2462,7 @@
 				766FBB781ECA2A9100EBEC53 /* Publication.swift in Sources */,
 				76A842EE1EA7667D00BDAF2C /* Credentials.swift in Sources */,
 				7825423B2465883600126BA2 /* Downloadinfo.swift in Sources */,
+				786EB64D264BB070003C85F8 /* FirebaseLogin.swift in Sources */,
 				788D592C253F161900C24278 /* GetAllDownloads.swift in Sources */,
 				7646D6651EEFFFAE009E5C2B /* EntitlementValidation.swift in Sources */,
 				76B04F281FBADBDF007011E6 /* UserRating.swift in Sources */,
