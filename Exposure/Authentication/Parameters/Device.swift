@@ -8,6 +8,11 @@
 
 import Foundation
 public struct Device: Encodable {
+    
+    public var deviceId: String? {
+        return UIDevice.current.identifierForVendor?.uuidString
+    }
+    
     public init(name: String? = nil) {
         self.name = name
     }
@@ -67,6 +72,7 @@ public struct Device: Encodable {
         try container.encode(osVersion, forKey: .osVersion)
         try container.encode(manufacturer, forKey: .manufacturer)
         try container.encode(type.queryParam, forKey: .type)
+        try container.encodeIfPresent(deviceId, forKey: .deviceId)
     }
     
     /// Keys used to specify `json` body for the request.
@@ -79,5 +85,6 @@ public struct Device: Encodable {
         case osVersion
         case manufacturer
         case type
+        case deviceId
     }
 }
