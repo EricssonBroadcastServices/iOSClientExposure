@@ -44,7 +44,9 @@ public struct Login: ExposureType, Encodable {
     }
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/auth/login"
+        var environmentV3 = environment
+        environmentV3.version = "v3"
+        return environmentV3.apiUrl + "/auth/login"
     }
     
     public var parameters: Login {
@@ -63,7 +65,6 @@ public struct Login: ExposureType, Encodable {
         try container.encodeIfPresent(twoFactor, forKey: .twoFactor)
         try container.encode(rememberMe, forKey: .rememberMe)
         try container.encode(device, forKey: .device)
-        try container.encodeIfPresent(deviceId, forKey: .deviceId)
     }
     
     /// Keys used to specify `json` body for the request.

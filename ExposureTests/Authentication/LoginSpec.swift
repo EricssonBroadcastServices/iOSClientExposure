@@ -22,6 +22,8 @@ class LoginSpec: QuickSpec {
         let username = "username"
         let password = "password"
         
+        env.version = "v3"
+        
         let login = Authenticate(environment: env)
             .login(username: username, password: password)
         
