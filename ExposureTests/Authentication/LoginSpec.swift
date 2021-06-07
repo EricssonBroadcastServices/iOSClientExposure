@@ -18,9 +18,11 @@ class LoginSpec: QuickSpec {
         let base = "https://exposure.empps.ebsd.ericsson.net"
         let customer = "BlixtGroup"
         let businessUnit = "Blixt"
-        let env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
+        var env = Environment(baseUrl: base, customer: customer, businessUnit: businessUnit)
         let username = "username"
         let password = "password"
+        
+        env.version = "v3"
         
         let login = Authenticate(environment: env)
             .login(username: username, password: password)
