@@ -504,6 +504,10 @@
 		788D592D253F161900C24278 /* GetAllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D592B253F161900C24278 /* GetAllDownloads.swift */; };
 		788D5933253F166000C24278 /* AllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D5932253F166000C24278 /* AllDownloads.swift */; };
 		788D5934253F166000C24278 /* AllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D5932253F166000C24278 /* AllDownloads.swift */; };
+		789CC2EC267CCA5500835529 /* AdClips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CC2EB267CCA5500835529 /* AdClips.swift */; };
+		789CC2ED267CCA5500835529 /* AdClips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CC2EB267CCA5500835529 /* AdClips.swift */; };
+		789CC2F3267CCA6C00835529 /* AdTrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */; };
+		789CC2F4267CCA6C00835529 /* AdTrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */; };
 		789EAC6C255BDDB2003AC419 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC6B255BDDB2003AC419 /* Ads.swift */; };
 		789EAC6D255BDDB2003AC419 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC6B255BDDB2003AC419 /* Ads.swift */; };
 		789EAC72255C29E5003AC419 /* AdsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC71255C29E5003AC419 /* AdsOptions.swift */; };
@@ -843,6 +847,8 @@
 		7884BFCD233A59DC00A30DB8 /* Quick.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Quick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788D592B253F161900C24278 /* GetAllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllDownloads.swift; sourceTree = "<group>"; };
 		788D5932253F166000C24278 /* AllDownloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDownloads.swift; sourceTree = "<group>"; };
+		789CC2EB267CCA5500835529 /* AdClips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdClips.swift; sourceTree = "<group>"; };
+		789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdTrackingEvents.swift; sourceTree = "<group>"; };
 		789EAC6B255BDDB2003AC419 /* Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
 		789EAC71255C29E5003AC419 /* AdsOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsOptions.swift; sourceTree = "<group>"; };
 		78A63A4B232F90BF003A7C6E /* FetchEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEvent.swift; sourceTree = "<group>"; };
@@ -1870,6 +1876,8 @@
 				78DF4A06225B469200B8348A /* DRM.swift */,
 				78DF4A08225B46A100B8348A /* StreamInfo.swift */,
 				789EAC6B255BDDB2003AC419 /* Ads.swift */,
+				789CC2EB267CCA5500835529 /* AdClips.swift */,
+				789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */,
 				786D5C1525B8647700982370 /* Sprites.swift */,
 				78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */,
 				78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */,
@@ -2104,6 +2112,7 @@
 				760800EC20692820007F59D5 /* ServerTime.swift in Sources */,
 				760800ED20692820007F59D5 /* Airing.swift in Sources */,
 				760800EE20692820007F59D5 /* EmptyResponse.swift in Sources */,
+				789CC2ED267CCA5500835529 /* AdClips.swift in Sources */,
 				760800EF20692820007F59D5 /* Entitlement.swift in Sources */,
 				788D5934253F166000C24278 /* AllDownloads.swift in Sources */,
 				760800F020692820007F59D5 /* DispatcherNetworkHandler.swift in Sources */,
@@ -2261,6 +2270,7 @@
 				7608016120692820007F59D5 /* PlayVod.swift in Sources */,
 				7608016220692820007F59D5 /* UIDevice+Extensions.swift in Sources */,
 				7608016320692820007F59D5 /* TaskDelegate.swift in Sources */,
+				789CC2F4267CCA6C00835529 /* AdTrackingEvents.swift in Sources */,
 				7810DE19232B771800310901 /* Event.swift in Sources */,
 				786D5C1725B8647700982370 /* Sprites.swift in Sources */,
 				7608016420692820007F59D5 /* FilteredAssetIds.swift in Sources */,
@@ -2382,6 +2392,7 @@
 				764DEE241EEF2D070047A179 /* PlayLive.swift in Sources */,
 				76A842FE1EA7667D00BDAF2C /* ServerTime.swift in Sources */,
 				78270DC52282D9F400F3A2F5 /* FetchNextProgram.swift in Sources */,
+				789CC2EC267CCA5500835529 /* AdClips.swift in Sources */,
 				76842F9D1F61B45C00F1A0D3 /* Airing.swift in Sources */,
 				788D5933253F166000C24278 /* AllDownloads.swift in Sources */,
 				76D70EF22039C325006CF211 /* EmptyResponse.swift in Sources */,
@@ -2539,6 +2550,7 @@
 				76A842F11EA7667D00BDAF2C /* PlayVod.swift in Sources */,
 				76D70EF02039BDBA006CF211 /* UIDevice+Extensions.swift in Sources */,
 				7862BB2E23C482E000A25536 /* UserDetails.swift in Sources */,
+				789CC2F3267CCA6C00835529 /* AdTrackingEvents.swift in Sources */,
 				7810DE18232B771800310901 /* Event.swift in Sources */,
 				786D5C1625B8647700982370 /* Sprites.swift in Sources */,
 				7602010320362D0400EF495D /* TaskDelegate.swift in Sources */,

@@ -8,14 +8,13 @@
 
 import Foundation
 
-
 /// Ads in the entitlement/play request 
 public struct Ads: Codable {
     public let stitcher: String?
     public let stitcherProfileId: String?
     public let insertionDuration: Int?
     public let insertionMaxCount: Int?
-    
+    public let clips: [AdClips]?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -23,6 +22,7 @@ public struct Ads: Codable {
         stitcherProfileId = try container.decodeIfPresent(String.self, forKey: .stitcherProfileId)
         insertionDuration = try container.decodeIfPresent(Int.self, forKey: .insertionDuration)
         insertionMaxCount = try container.decodeIfPresent(Int.self, forKey: .insertionMaxCount)
+        clips = try container.decodeIfPresent([AdClips].self, forKey: .clips)
         
     }
     
@@ -31,5 +31,11 @@ public struct Ads: Codable {
         case stitcherProfileId
         case insertionDuration
         case insertionMaxCount
+        case clips
     }
 }
+
+
+
+
+
