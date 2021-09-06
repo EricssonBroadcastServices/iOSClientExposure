@@ -514,6 +514,10 @@
 		789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789EAC71255C29E5003AC419 /* AdsOptions.swift */; };
 		78A63A4C232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
+		78A93A6426E5ED98007A72CA /* MarkerPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6326E5ED98007A72CA /* MarkerPoints.swift */; };
+		78A93A6526E5ED98007A72CA /* MarkerPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6326E5ED98007A72CA /* MarkerPoints.swift */; };
+		78A93A6B26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
+		78A93A6C26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
 		78C89284262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
 		78C89285262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
 		78C8928B262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */; };
@@ -856,6 +860,8 @@
 		78A63A5C2330FA1C003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		78A63A5F2330FA30003A7C6E /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/tvOS/Quick.framework; sourceTree = "<group>"; };
 		78A63A602330FA30003A7C6E /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/tvOS/Nimble.framework; sourceTree = "<group>"; };
+		78A93A6326E5ED98007A72CA /* MarkerPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPoints.swift; sourceTree = "<group>"; };
+		78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerPointsSpec.swift; sourceTree = "<group>"; };
 		78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsFromEntitlement.swift; sourceTree = "<group>"; };
 		78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDNInfoFromEntitlement.swift; sourceTree = "<group>"; };
 		78CC876525416840005E03F3 /* SendDownloadCompletedSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadCompletedSpec.swift; sourceTree = "<group>"; };
@@ -1169,6 +1175,7 @@
 				769734BD1EF28EF100F6ADC8 /* Marker.swift */,
 				764092091F7E342C0022F6ED /* AssetUserData.swift */,
 				7640920B1F7E34680022F6ED /* AssetUserPlayHistory.swift */,
+				78A93A6326E5ED98007A72CA /* MarkerPoints.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1209,6 +1216,7 @@
 				769734BF1EF2911A00F6ADC8 /* MarkerSpec.swift */,
 				7640920D1F7E35970022F6ED /* AssetUserDataSpec.swift */,
 				7640920F1F7E35A20022F6ED /* AssetUserPlayHistorySpec.swift */,
+				78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */,
 			);
 			path = Asset;
 			sourceTree = "<group>";
@@ -2120,6 +2128,7 @@
 				760800F120692820007F59D5 /* AnalyticsInitializationResponse.swift in Sources */,
 				760800F220692820007F59D5 /* ExposureResponse.swift in Sources */,
 				78397C96232F7CF300071B4D /* FetchEventList.swift in Sources */,
+				78A93A6526E5ED98007A72CA /* MarkerPoints.swift in Sources */,
 				760800F320692820007F59D5 /* Environment.swift in Sources */,
 				760800F420692820007F59D5 /* DeviceRights.swift in Sources */,
 				760800F520692820007F59D5 /* DeviceType.swift in Sources */,
@@ -2154,6 +2163,7 @@
 				7608010B20692820007F59D5 /* Request.swift in Sources */,
 				7608010C20692820007F59D5 /* FetchEpgChannelList.swift in Sources */,
 				7608010D20692820007F59D5 /* EventSinkInit.swift in Sources */,
+				78A93A6C26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */,
 				789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BD253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				781DC150229BCC33007D0107 /* BooksMarks.swift in Sources */,
@@ -2400,6 +2410,7 @@
 				764DEE221EEF13240047A179 /* Entitlement.swift in Sources */,
 				76A89D5F2020F1E100C23579 /* DispatcherNetworkHandler.swift in Sources */,
 				76288CBE1F213B0C004B22AB /* AnalyticsInitializationResponse.swift in Sources */,
+				78A93A6426E5ED98007A72CA /* MarkerPoints.swift in Sources */,
 				78397C95232F7CF300071B4D /* FetchEventList.swift in Sources */,
 				76A842FB1EA7667D00BDAF2C /* ExposureResponse.swift in Sources */,
 				76A842F61EA7667D00BDAF2C /* Environment.swift in Sources */,
@@ -2434,6 +2445,7 @@
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
+				78A93A6B26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */,
 				789EAC72255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BC253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */,
@@ -2695,7 +2707,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.800;
+				MARKETING_VERSION = 2.3.000;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2729,7 +2741,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.800;
+				MARKETING_VERSION = 2.3.000;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
@@ -2918,7 +2930,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.800;
+				MARKETING_VERSION = 2.3.000;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
@@ -2948,7 +2960,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 2.2.800;
+				MARKETING_VERSION = 2.3.000;
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = Exposure;
