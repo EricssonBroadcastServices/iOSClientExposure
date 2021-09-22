@@ -498,6 +498,8 @@
 		786D5C1725B8647700982370 /* Sprites.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786D5C1525B8647700982370 /* Sprites.swift */; };
 		786EB64D264BB070003C85F8 /* FirebaseLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786EB64C264BB070003C85F8 /* FirebaseLogin.swift */; };
 		786EB64E264BB070003C85F8 /* FirebaseLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 786EB64C264BB070003C85F8 /* FirebaseLogin.swift */; };
+		787F44D926FB0458002C050F /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
+		787F44DE26FB0459002C050F /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
 		7884BFCC233A59DC00A30DB8 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCB233A59DC00A30DB8 /* Nimble.framework */; };
 		7884BFCE233A59DC00A30DB8 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7884BFCD233A59DC00A30DB8 /* Quick.framework */; };
 		788D592C253F161900C24278 /* GetAllDownloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 788D592B253F161900C24278 /* GetAllDownloads.swift */; };
@@ -516,8 +518,6 @@
 		78A63A4D232F90BF003A7C6E /* FetchEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A63A4B232F90BF003A7C6E /* FetchEvent.swift */; };
 		78A93A6426E5ED98007A72CA /* MarkerPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6326E5ED98007A72CA /* MarkerPoints.swift */; };
 		78A93A6526E5ED98007A72CA /* MarkerPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6326E5ED98007A72CA /* MarkerPoints.swift */; };
-		78A93A6B26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
-		78A93A6C26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78A93A6A26E5EDF9007A72CA /* MarkerPointsSpec.swift */; };
 		78C89284262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
 		78C89285262D9AFD00168469 /* AnalyticsFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */; };
 		78C8928B262D9C2400168469 /* CDNInfoFromEntitlement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */; };
@@ -2163,7 +2163,6 @@
 				7608010B20692820007F59D5 /* Request.swift in Sources */,
 				7608010C20692820007F59D5 /* FetchEpgChannelList.swift in Sources */,
 				7608010D20692820007F59D5 /* EventSinkInit.swift in Sources */,
-				78A93A6C26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */,
 				789EAC73255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BD253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				781DC150229BCC33007D0107 /* BooksMarks.swift in Sources */,
@@ -2301,6 +2300,7 @@
 			files = (
 				760801882069296F007F59D5 /* CustomerConfigSpec.swift in Sources */,
 				824EAB95240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */,
+				787F44DE26FB0459002C050F /* MarkerPointsSpec.swift in Sources */,
 				760801892069296F007F59D5 /* FetchEpgChannelListSpec.swift in Sources */,
 				7608018A2069296F007F59D5 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7608018B2069296F007F59D5 /* ValidateEntitlementSpec.swift in Sources */,
@@ -2445,7 +2445,6 @@
 				76B04F2C1FBADDA5007011E6 /* ContentRating.swift in Sources */,
 				76DE9ACB1ECD78FE00D86C43 /* FilteredFields.swift in Sources */,
 				76A89D5B2020F1E100C23579 /* AnalyticsPersister.swift in Sources */,
-				78A93A6B26E5EDF9007A72CA /* MarkerPointsSpec.swift in Sources */,
 				789EAC72255C29E5003AC419 /* AdsOptions.swift in Sources */,
 				780060BC253D6C0B003EF68F /* DeleteDownload.swift in Sources */,
 				76A89D5A2020F1E100C23579 /* ExposureNetworkHandler.swift in Sources */,
@@ -2583,6 +2582,7 @@
 			files = (
 				3E9409B21F862F2800253602 /* CustomerConfigSpec.swift in Sources */,
 				824EAB94240D405C0080BFEA /* FetchContinueTVShowSpec.swift in Sources */,
+				787F44D926FB0458002C050F /* MarkerPointsSpec.swift in Sources */,
 				769734BC1EF2790900F6ADC8 /* FetchEpgChannelListSpec.swift in Sources */,
 				76A89E1B2021CFF300C23579 /* DispatcherHeartbeatSpec.swift in Sources */,
 				7646D68A1EF00A6B009E5C2B /* ValidateEntitlementSpec.swift in Sources */,

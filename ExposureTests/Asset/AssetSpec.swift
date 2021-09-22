@@ -139,7 +139,7 @@ extension AssetSpec {
         static let markers = [MarkerSpec.MarkerJSON.valid()]
         static let userData = AssetUserDataSpec.AssetUserDataJSON.valid()
         static let duration = 100
-        static let markerPoints = [MarkerPointsJSON.valid()]
+        static let markerPoints = [MarkerPointsSpec.MarkerPointsJSON.valid()]
         
         static func valid() -> [String: Any] {
             return [

@@ -6,6 +6,8 @@
 //  Copyright © 2021 emp. All rights reserved.
 //
 
+import Foundation
+
 import Quick
 import Nimble
 
@@ -18,7 +20,7 @@ class MarkerPointsSpec: QuickSpec {
         describe("JSON") {
             it("should succeed with valid response") {
                 let json = MarkerPointsJSON.valid()
-                let result = json.decode(Marker.self)
+                let result = json.decode(MarkerPoint.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.type).toNot(beNil())
@@ -27,16 +29,15 @@ class MarkerPointsSpec: QuickSpec {
             
             it("should succeed with partial response") {
                 let json = MarkerPointsJSON.missingKeys()
-                let result = json.decode(Marker.self)
+                let result = json.decode(MarkerPoint.self)
                 
                 expect(result).toNot(beNil())
-                expect(result?.type).toNot(beNil())
                 expect(result?.offset).to(beNil())
             }
             
             it("should init with empty or non matching response") {
                 let json = MarkerPointsJSON.empty()
-                let result = json.decode(Marker.self)
+                let result = json.decode(MarkerPoint.self)
                 
                 expect(result).toNot(beNil())
                 expect(result?.type).to(beNil())
@@ -49,11 +50,11 @@ class MarkerPointsSpec: QuickSpec {
 }
 
 extension MarkerPointsSpec {
-    enum MarkerPointsJSON {
+    public enum MarkerPointsJSON {
         static let type = "POINT"
         static let offset = 41007
         static let endOffset = 41007
-        static let localized = [LocalizedData(locale: "sv", title: "Test Title")]
+        static let localized = [LocalizedDataSpec.LocalizedDataJSON.valid()]
         
         static func valid() -> [String: Any] {
             return [
