@@ -1,6 +1,7 @@
 # CHANGELOG
 
 * `2.3.00` Release - [2.3.00](#2300)
+* `2.2.80` Release - [2.2.80](#2280)
 * `2.2.70` Release - [2.2.70](#2270)
 * `2.2.60` Release - [2.2.60](#2260)
 * `2.2.50` Release - [2.2.50](#2250)
@@ -29,6 +30,7 @@
 
 ## 2.3.000
 #### Features
+* `Emp 16373` Add support for SSAI streams & Player cue points.
 * `EMP-16541`   Oauth login flow 
 
 ## 2.2.800
