@@ -176,6 +176,11 @@ public struct AdsOptions {
         if let gdprOptin = gdprOptin {
             returnString["gdprOptin"] = gdprOptin
         }
-       return  returnString
+        
+        // Assumed that iOS / tvOS will only support below formats & drms
+        returnString["supportedFormats"] = "hls,mp3"
+        returnString["supportedDrms"] = "fairplay"
+        
+        return  returnString
     }
 }

@@ -47,7 +47,14 @@ public struct PlayEnigmaAsset: ExposureType {
     
 
     public var parameters: [String: Any] {
-        return [:]
+        var parameters: [String: String] = [:]
+        
+        // Adding `supportedFormats` & `supportedDrms` to parameters
+        parameters["supportedFormats"] = "hls,mp3"
+        parameters["supportedDrms"] = "fairplay"
+        
+        // print(" Play request Parameters " , parameters)
+        return parameters
     }
     
     
@@ -59,6 +66,8 @@ public struct PlayEnigmaAsset: ExposureType {
              result["X-Adobe-Primetime-MediaToken"] = adobePrimeTimeToken
         }
         sessionToken.authorizationHeader.forEach{ result[$0] = $1 }
+        
+        
         return result.isEmpty ? nil : result
     }
     
@@ -69,6 +78,7 @@ extension PlayEnigmaAsset {
     ///
     /// - returns: `ExposureRequest` with request specific data
     public func request() -> ExposureRequest<Response> {
+
         return request(.get)
     }
 }

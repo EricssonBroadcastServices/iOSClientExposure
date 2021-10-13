@@ -71,7 +71,7 @@ public struct FetchLastViewedOffsetList: ExposureType, FilteredAssetIds, SortedR
                 .joined(separator: ",")
         }
         
-        print(params)
+        // print(params)
         
         return params
     }
