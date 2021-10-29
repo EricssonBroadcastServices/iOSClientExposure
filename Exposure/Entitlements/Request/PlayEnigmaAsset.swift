@@ -52,8 +52,6 @@ public struct PlayEnigmaAsset: ExposureType {
         // Adding `supportedFormats` & `supportedDrms` to parameters
         parameters["supportedFormats"] = "hls,mp3"
         parameters["supportedDrms"] = "fairplay"
-        
-        // print(" Play request Parameters " , parameters)
         return parameters
     }
     
