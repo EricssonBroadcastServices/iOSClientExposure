@@ -9,7 +9,7 @@
 import Foundation
 
 /// Content rights for specific assets are subject to change throughout a `PlaybackEntitlement`s life cycle. `ValidateEntitlement` offers a method to validate a previously granted *entitlement*, returning an updated `PlaybackEntitlement.Status`.
-public struct ValidateEntitlement: ExposureType, DRMRequest {
+public struct ValidateEntitlement: ExposureType {
     public typealias Response = EntitlementValidation
     
     /// Id for the asset to validate
@@ -21,12 +21,9 @@ public struct ValidateEntitlement: ExposureType, DRMRequest {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
-    /// `DRM` and *format* to validate.
-    public var playRequest: PlayRequest
-    
-    internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
+
+    public init(assetId: String, environment: Environment, sessionToken: SessionToken) {
         self.assetId = assetId
-        self.playRequest = playRequest
         self.environment = environment
         self.sessionToken = sessionToken
     }
@@ -34,29 +31,17 @@ public struct ValidateEntitlement: ExposureType, DRMRequest {
     public var endpointUrl: String {
         var environmentV2 = environment
         environmentV2.version = "v2"
-        return environmentV2.apiUrl + "/entitlement/" + assetId
+        
+        print(" Entitlement EndPoint " , environmentV2.apiUrl + "/entitlement/" + assetId + "/entitle" )
+        return environmentV2.apiUrl + "/entitlement/" + assetId + "/entitle"
     }
     
     public var parameters: [String: Any] {
-        return queryParams
+        return [:]
     }
     
     public var headers: [String: String]? {
         return sessionToken.authorizationHeader
-    }
-}
-
-extension ValidateEntitlement {
-    internal enum Keys: String {
-        case drm = "drm"
-        case format = "format"
-    }
-    
-    internal var queryParams: [String: Any] {
-        return [
-            Keys.drm.rawValue: playRequest.drm,
-            Keys.format.rawValue: playRequest.format
-        ]
     }
 }
 
