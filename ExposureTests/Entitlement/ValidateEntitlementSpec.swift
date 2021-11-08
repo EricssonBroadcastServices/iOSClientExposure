@@ -24,12 +24,8 @@ class ValidateEntitlementSpec: QuickSpec {
         
         env.version = "v2"
         
-        let request = Entitlement(environment: env,
-                        
-                                  sessionToken: sessionToken)
-            .validate(assetId: assetId)
-            .use(drm: "UNENCRYPTED")
-            .use(format: "HLS")
+        let request = Entitlement(environment: env,sessionToken: sessionToken)
+                        .validate(assetId: assetId)
         
         describe("ValidateEntitlement") {
             it("should have headers") {
@@ -38,43 +34,46 @@ class ValidateEntitlementSpec: QuickSpec {
             }
             
             it("should generate a correct endpoint url") {
-                let endpoint = "/entitlement/" + assetId
+                let endpoint = "/entitlement/" + assetId + "/entitle"
                 expect(request.endpointUrl).to(equal(env.apiUrl+endpoint))
-            }
-            
-            it("should record DRM and format") {
-                let drm = request.drm
-                let format = request.format
-                
-                expect(drm).to(equal("UNENCRYPTED"))
-                expect(format).to(equal("HLS"))
             }
         }
         
         describe("EntitlementValidation") {
+            
+            let streamInfo: [String: Any] = [
+                "live" : false,
+                "static" : true,
+                "event" : false,
+                "start" : 1555329600,
+                "channelId" : "channelId",
+                "programId" : "programId",
+                "end": 15555399
+            ]
+            
+            let json: [String : Any] = [
+                "accountId":"accountId",
+                "requestId":"requestId",
+                "productId":"productId",
+                "publicationId":"publicationId",
+                "streamInfo":streamInfo,
+                "status":"SUCCESS",
+                ]
+            
+            let requiredKeys: [String : Any] = [
+                "status":"SUCCESS",
+                ]
+            
+            
             it("should process with valid json") {
-                let json: [String : Any] = [
-                    "status":"SUCCESS",
-                    "paymentDone":false
-                    ]
-                
                 let result = json.decode(EntitlementValidation.self)
-                
                 expect(result).toNot(beNil())
-                
                 expect(result?.status).to(equal("SUCCESS"))
-                
-                expect(result?.paymentDone).to(equal(false))
             }
             
-            it("should fail with invalid json") {
-                let json: [String: Any] = [
-                    "WRONG_KEY":"SUCCESS",
-                    "OTHER_MISTAKE":false
-                ]
-                
-                expect{ try json.throwingDecode(EntitlementValidation.self) }
-                    .to(throwError(errorType: DecodingError.self))
+            it("should init with required keys") {
+                let result = requiredKeys.decode(EntitlementValidation.self)
+                expect(result).toNot(beNil())
             }
         }
     }

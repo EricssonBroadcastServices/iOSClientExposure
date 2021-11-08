@@ -34,7 +34,7 @@ class ExposureErrorSpec: QuickSpec {
             }
             
             it("should have an error domain") {
-                let error = ExposureError.exposureResponse(reason: ExposureResponseMessage(httpCode: 10, message: "ERROR"))
+                let error = ExposureError.exposureResponse(reason: ExposureResponseMessage(httpCode: 10, message: "ERROR", actions: nil))
                 expect(error.domain).to(equal(String(describing: type(of: error))+"Domain"))
             }
         }
