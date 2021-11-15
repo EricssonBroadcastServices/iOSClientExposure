@@ -35,7 +35,7 @@ public struct ExposureResponseMessage: Decodable {
     
     public let actions: [EntitlementErrorAction]?
     
-    public init(httpCode: Int, message: String, actions:[EntitlementErrorAction]? ) {
+    public init(httpCode: Int, message: String, actions:[EntitlementErrorAction]? = nil ) {
         self.httpCode = httpCode
         self.message = message
         self.actions = actions
