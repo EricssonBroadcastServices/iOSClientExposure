@@ -31,8 +31,6 @@ public struct ValidateEntitlement: ExposureType {
     public var endpointUrl: String {
         var environmentV2 = environment
         environmentV2.version = "v2"
-        
-        print(" Entitlement EndPoint " , environmentV2.apiUrl + "/entitlement/" + assetId + "/entitle" )
         return environmentV2.apiUrl + "/entitlement/" + assetId + "/entitle"
     }
     
