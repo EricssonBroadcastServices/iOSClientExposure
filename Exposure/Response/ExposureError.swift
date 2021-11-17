@@ -77,6 +77,16 @@ extension ExposureError {
 }
 
 extension ExposureError {
+    public var actions: [EntitlementErrorAction]? {
+        switch self {
+            case .generalError(error: _): return nil
+            case .serialization(reason: _): return nil
+            case .exposureResponse(reason: let error): return error.actions
+        }
+    }
+}
+
+extension ExposureError {
     public var domain: String { return String(describing: type(of: self))+"Domain" }
 }
 

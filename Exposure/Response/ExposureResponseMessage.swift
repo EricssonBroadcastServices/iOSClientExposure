@@ -33,15 +33,19 @@ public struct ExposureResponseMessage: Decodable {
     /// Related error message returned by *Exposure*
     public let message: String
     
-    public init(httpCode: Int, message: String) {
+    public let actions: [EntitlementErrorAction]?
+    
+    public init(httpCode: Int, message: String, actions:[EntitlementErrorAction]? = nil ) {
         self.httpCode = httpCode
         self.message = message
+        self.actions = actions
     }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         httpCode = try container.decode(Int.self, forKey: .httpCode)
+        actions = try container.decodeIfPresent([EntitlementErrorAction].self, forKey: .actions)
         if let errorMessage = try container.decodeIfPresent(String.self, forKey: .message) {
             message = errorMessage
         }
@@ -64,5 +68,78 @@ public struct ExposureResponseMessage: Decodable {
     internal enum CodingKeys: CodingKey {
         case httpCode
         case message
+        case actions
+    }
+}
+
+
+
+/// Entitlement end point `/entitle` may return different error actions
+public struct EntitlementErrorAction: Decodable {
+    public let type: String?
+    public let publication: EntitlementErrorActionPublication?
+    public let offerings: [EntitlementErrorActionOfferings]?
+    
+    public init(type: String?, publication: EntitlementErrorActionPublication?, offerings:  [EntitlementErrorActionOfferings]? ) {
+        self.type = type
+        self.publication = publication
+        self.offerings = offerings
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        type = try container.decodeIfPresent(String.self, forKey: .type)
+        publication = try container.decodeIfPresent(EntitlementErrorActionPublication.self, forKey: .publication)
+        offerings = try container.decodeIfPresent([EntitlementErrorActionOfferings].self, forKey: .offerings)
+    }
+    
+    internal enum CodingKeys: CodingKey {
+        case type
+        case publication
+        case offerings
+    }
+    
+}
+
+public struct EntitlementErrorActionPublication: Decodable {
+    public let availableAt: String?
+    public let publicationId: String?
+    
+    public init(availableAt: String?, publicationId: String? ) {
+        self.availableAt = availableAt
+        self.publicationId = publicationId
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        availableAt = try container.decodeIfPresent(String.self, forKey: .availableAt)
+        publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
+    }
+    
+    internal enum CodingKeys: CodingKey {
+        case availableAt
+        case publicationId
+    }
+    
+}
+
+public struct EntitlementErrorActionOfferings: Decodable {
+    public let offeringId: String?
+    public let publications:[EntitlementErrorActionPublication]?
+    
+    public init(offeringId: String?, publications: [EntitlementErrorActionPublication]? ) {
+        self.offeringId = offeringId
+        self.publications = publications
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        offeringId = try container.decodeIfPresent(String.self, forKey: .offeringId)
+        publications = try container.decodeIfPresent([EntitlementErrorActionPublication].self, forKey: .publications)
+    }
+    
+    internal enum CodingKeys: CodingKey {
+        case offeringId
+        case publications
     }
 }
