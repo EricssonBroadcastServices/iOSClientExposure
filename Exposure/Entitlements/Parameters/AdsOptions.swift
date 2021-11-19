@@ -142,7 +142,7 @@ public struct AdsOptions {
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
-            returnString["deviceMake"] = device.type
+            returnString["deviceType"] = device.type.queryParam
         }
         
         if let width = width {
@@ -167,10 +167,12 @@ public struct AdsOptions {
         
         if let appStoreUrl = appStoreUrl {
             returnString["appStoreUrl"] = appStoreUrl
-        }
+        } 
         
         if let ifa = ifa {
             returnString["ifa"] = ifa
+        } else {
+            returnString["ifa"] = device.deviceId
         }
         
         if let gdprOptin = gdprOptin {
@@ -180,7 +182,7 @@ public struct AdsOptions {
         // Assumed that iOS / tvOS will only support below formats & drms
         returnString["supportedFormats"] = "hls,mp3"
         returnString["supportedDrms"] = "fairplay"
-        
+
         return  returnString
     }
 }
