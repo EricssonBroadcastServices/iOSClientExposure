@@ -131,7 +131,7 @@ platform :ios do
     private_lane :update_graph do
         cartfile = File.expand_path("..",Dir.pwd)
         
-        sh "cd #{cartfile} carthage.sh update --use-submodules --no-use-binaries --cache-builds --use-xcframeworks"
+        sh "cd #{cartfile} carthage.sh update --use-submodules --no-use-binaries --use-xcframeworks"
 #        carthage(
 #                 command: "update",
 #                 platform: "iOS,tvOS",
