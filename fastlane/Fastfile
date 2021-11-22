@@ -26,13 +26,16 @@ platform :ios do
         ensure_git_branch(branch: ENV["DEVELOPMENT_BRANCH"])
         ensure_git_status_clean
         
-        update_graph
+#        update_graph
+
+        sh "cd .. && carthage.sh update --use-submodules --use-xcframeworks"
         
-        bump_build_number
         
         run_unit_tests
         
-        clean_build_artifacts
+        bump_build_number
+        
+#        clean_build_artifacts
         
         push_to_git_remote
         
