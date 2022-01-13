@@ -17,6 +17,7 @@ public enum AssetType: String, Codable {
     case AD = "AD"
     case LIVE_EVENT = "LIVE_EVENT"
     case OTHER = "OTHER"
+    case COLLECTION = "COLLECTION"
 }
 
 public struct Asset {
