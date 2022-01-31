@@ -10,9 +10,17 @@ import Foundation
 
 public struct PlayBackEntitlementV2: Codable {
     
+    public let assetId: String?
+    
+    public let accountId: String?
+    
+    public let audioOnly:Bool?
+    
     public let requestId: String?
     
     public let bookmarks: BooksMarks?
+    
+
     
     public let contractRestrictions: ContractRestrictions?
     
@@ -48,6 +56,12 @@ extension PlayBackEntitlementV2 {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
+        assetId = try container.decodeIfPresent(String.self, forKey: .assetId)
+        
+        accountId = try container.decodeIfPresent(String.self, forKey: .accountId)
+        
+        audioOnly =  try container.decodeIfPresent(Bool.self, forKey: .audioOnly)
+        
         requestId = try container.decodeIfPresent(String.self, forKey: .requestId)
         bookmarks = try container.decodeIfPresent(BooksMarks.self, forKey: .bookmarks)
         contractRestrictions = try container.decodeIfPresent(ContractRestrictions.self, forKey: .contractRestrictions)
@@ -67,8 +81,11 @@ extension PlayBackEntitlementV2 {
     }
     
     internal enum CodingKeys: String, CodingKey {
+        case assetId
+        case accountId
         case requestId
         case bookmarks
+        case audioOnly
         case contractRestrictions
         case entitlementType
         case formats
@@ -90,6 +107,10 @@ extension PlayBackEntitlementV2 {
 extension PlayBackEntitlementV2 {
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(assetId, forKey: .assetId)
+        try container.encode(accountId, forKey: .accountId)
+        try container.encode(audioOnly, forKey: .audioOnly)
         
         try container.encode(requestId, forKey: .requestId)
         try container.encode(bookmarks, forKey: .bookmarks)
