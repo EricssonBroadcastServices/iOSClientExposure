@@ -23,7 +23,8 @@ class PlaybackEntitlementV2Spec: QuickSpec {
                     "certificateUrl" : "certificateUrl"
                 ]
             ],
-            "mediaLocator": "https://cache-dev.cdn.ebsd.ericsson.net/L23/000079/000079_enigma.isml/live.mpd?t=2019-04-15T12%3A00%3A00.000"
+            "mediaLocator": "https://cache-dev.cdn.ebsd.ericsson.net/L23/000079/000079_enigma.isml/live.mpd?t=2019-04-15T12%3A00%3A00.000",
+            "liveDelay":3500
         ]
         
         let streamInfo: [String: Any] = [
@@ -70,6 +71,9 @@ class PlaybackEntitlementV2Spec: QuickSpec {
         ]
         
         let json:[String: Any] = [
+            "assetId":"assetId",
+            "accountId":"accountId",
+            "audioOnly":true,
             "productId":"productId",
             "entitlementType": "entitlementType",
             "publicationId":"publicationId",

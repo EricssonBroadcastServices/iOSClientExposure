@@ -19,9 +19,7 @@ public struct PlayBackEntitlementV2: Codable {
     public let requestId: String?
     
     public let bookmarks: BooksMarks?
-    
 
-    
     public let contractRestrictions: ContractRestrictions?
     
     public let entitlementType: String?

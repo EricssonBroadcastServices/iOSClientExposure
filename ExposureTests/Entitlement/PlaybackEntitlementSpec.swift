@@ -22,6 +22,9 @@ class PlaybackEntitlementSpec: QuickSpec {
             "licenseServerUrl": "licenseServerUrl"
         ]
         let json:[String: Any] = [
+            "assetId":"assetId",
+            "accountId":"accountId",
+            "audioOnly":true,
             "playToken":"playToken",
             "fairplayConfig":fairplayJson,
             "mediaLocator":"mediaLocator",
