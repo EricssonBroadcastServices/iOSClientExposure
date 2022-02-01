@@ -10,6 +10,13 @@ import Foundation
 
 /// `PlaybackEntitlement`s contain all information required to configure and initiate `DRM` protected playback of an *asset* in the requested *format*.
 public struct PlaybackEntitlement: Codable {
+    
+    public let assetId: String?
+    
+    public let accountId: String?
+    
+    public let audioOnly:Bool?
+    
     // MARK: Required
     /// The expiration of the the play token. The player needs to be initialized and done the play call before this.
     public let playTokenExpiration: String
@@ -103,9 +110,14 @@ public struct PlaybackEntitlement: Codable {
     
     public let analytics: AnalyticsFromEntitlement?
     
+    public let liveDelay: Int64?
     
-    public init(playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? , cdn: CDNInfoFromEntitlement? = nil, analytics: AnalyticsFromEntitlement? = nil) {
+    
+    public init( assetId: String?, accountId: String?, audioOnly: Bool?, playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? , cdn: CDNInfoFromEntitlement? = nil, analytics: AnalyticsFromEntitlement? = nil, liveDelay: Int64? = nil ) {
         
+        self.accountId = accountId
+        self.assetId = assetId
+        self.audioOnly = audioOnly
         self.playTokenExpiration = playTokenExpiration
         self.mediaLocator = mediaLocator
         self.playSessionId = playSessionId
@@ -131,12 +143,18 @@ public struct PlaybackEntitlement: Codable {
         self.adMediaLocator = adMediaLocator
         self.cdn = cdn
         self.analytics = analytics
+        self.liveDelay = liveDelay
     }
 }
 
 extension PlaybackEntitlement {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        assetId = try container.decodeIfPresent(String.self, forKey: .assetId)
+        accountId = try container.decodeIfPresent(String.self, forKey: .accountId)
+        audioOnly =  try container.decodeIfPresent(Bool.self, forKey: .audioOnly)
+        
         // Required
         playTokenExpiration = try container.decode(String.self, forKey: .playTokenExpiration)
         mediaLocator = try container.decode(URL.self, forKey: .mediaLocator)
@@ -171,10 +189,16 @@ extension PlaybackEntitlement {
         
         cdn = try container.decodeIfPresent(CDNInfoFromEntitlement.self, forKey: .cdn)
         analytics = try container.decodeIfPresent(AnalyticsFromEntitlement.self, forKey: .analytics)
+        
+        liveDelay = try container.decodeIfPresent(Int64.self, forKey: .liveDelay)
     }
     
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(assetId, forKey: .assetId)
+        try container.encode(accountId, forKey: .accountId)
+        try container.encode(audioOnly, forKey: .audioOnly)
         
         try container.encode(playTokenExpiration, forKey: .playTokenExpiration)
         try container.encode(mediaLocator, forKey: .mediaLocator)
@@ -208,9 +232,14 @@ extension PlaybackEntitlement {
         
         try container.encodeIfPresent(cdn, forKey: .cdn)
         try container.encodeIfPresent(analytics, forKey: .analytics)
+        
+        try container.encodeIfPresent(liveDelay, forKey: .liveDelay)
     }
     
     internal enum CodingKeys: String, CodingKey {
+        case assetId
+        case accountId
+        case audioOnly
         case playToken
         case fairplay = "fairplayConfig"
         case mediaLocator
@@ -237,5 +266,7 @@ extension PlaybackEntitlement {
         
         case cdn
         case analytics
+        
+        case liveDelay
     }
 }

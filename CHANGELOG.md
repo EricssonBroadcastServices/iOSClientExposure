@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `2.5.00` Release - [2.5.00](#2500)
 * `2.4.30` Release - [2.4.30](#2430)
 * `2.4.10` Release - [2.4.10](#2410)
 * `2.4.00` Release - [2.4.00](#2400)
@@ -31,13 +32,17 @@
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
 
+## 2.5.000
+#### Features
+* `EMP-17612` Update entitlements response to support audio only playback
+
 ## 2.4.300
 #### Features
-* `EEMP-16833` Add collection type to assets
+* `EMP-16833` Add collection type to assets
 
 ## 2.4.100
 #### Features
-* `EEMP-17283` Add default `ifa` value for `AdsOptions`
+* `EMP-17283` Add default `ifa` value for `AdsOptions`
 
 ## 2.4.000
 #### Features

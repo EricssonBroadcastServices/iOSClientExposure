@@ -14,6 +14,7 @@ public struct Formats: Codable {
     public let format: String
     public let mediaLocator: URL
     public var fairplay = [FairplayConfiguration]()
+    public var liveDelay: Int64?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -21,6 +22,8 @@ public struct Formats: Codable {
         format = try container.decode(String.self, forKey: .format)
         
         mediaLocator = try container.decode(URL.self, forKey: .mediaLocator)
+        
+        liveDelay = try container.decodeIfPresent(Int64.self, forKey: .liveDelay)
         
         self.fairplay = [FairplayConfiguration]()
         
@@ -40,6 +43,7 @@ public struct Formats: Codable {
         case drm
         case format
         case mediaLocator
+        case liveDelay
     }
     
     internal enum Content: CodingKey {
