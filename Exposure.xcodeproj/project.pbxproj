@@ -470,6 +470,8 @@
 		783C8DE224C873C90053A429 /* GetAvailabilityKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C8DE024C873C90053A429 /* GetAvailabilityKeys.swift */; };
 		783C8DE424C874020053A429 /* AvailabilityKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C8DE324C874020053A429 /* AvailabilityKeys.swift */; };
 		783C8DE524C874020053A429 /* AvailabilityKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783C8DE324C874020053A429 /* AvailabilityKeys.swift */; };
+		783F0D8427BA4DD100C3E2BD /* VideoClicks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783F0D8327BA4DD100C3E2BD /* VideoClicks.swift */; };
+		783F0D8527BA4DD100C3E2BD /* VideoClicks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 783F0D8327BA4DD100C3E2BD /* VideoClicks.swift */; };
 		784666C22331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
 		784666C32331131F00429AB6 /* FetchEventListSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784666C12331131F00429AB6 /* FetchEventListSpec.swift */; };
 		784C81A52565585300BA4301 /* PlayEnigmaAdsAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */; };
@@ -835,6 +837,7 @@
 		78397C98232F80A800071B4D /* EventDateFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDateFilter.swift; sourceTree = "<group>"; };
 		783C8DE024C873C90053A429 /* GetAvailabilityKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAvailabilityKeys.swift; sourceTree = "<group>"; };
 		783C8DE324C874020053A429 /* AvailabilityKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailabilityKeys.swift; sourceTree = "<group>"; };
+		783F0D8327BA4DD100C3E2BD /* VideoClicks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClicks.swift; sourceTree = "<group>"; };
 		784666C12331131F00429AB6 /* FetchEventListSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchEventListSpec.swift; sourceTree = "<group>"; };
 		784C81A42565585300BA4301 /* PlayEnigmaAdsAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayEnigmaAdsAsset.swift; sourceTree = "<group>"; };
 		785A7BC025398A07001273B5 /* SendDownloadCompleted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDownloadCompleted.swift; sourceTree = "<group>"; };
@@ -1826,6 +1829,17 @@
 			path = Parameters;
 			sourceTree = "<group>";
 		};
+		783F0D8627BA4DFC00C3E2BD /* Ads */ = {
+			isa = PBXGroup;
+			children = (
+				789EAC6B255BDDB2003AC419 /* Ads.swift */,
+				789CC2EB267CCA5500835529 /* AdClips.swift */,
+				789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */,
+				783F0D8327BA4DD100C3E2BD /* VideoClicks.swift */,
+			);
+			path = Ads;
+			sourceTree = "<group>";
+		};
 		7862BB2723C47F1700A25536 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -1881,15 +1895,13 @@
 		78DF49FB225B461700B8348A /* ApiPlayResponseV2 */ = {
 			isa = PBXGroup;
 			children = (
+				783F0D8627BA4DFC00C3E2BD /* Ads */,
 				78DF49FE225B463300B8348A /* PlaybackEntitlementV2.swift */,
 				78DF4A00225B465B00B8348A /* BooksMarks.swift */,
 				78DF4A02225B466C00B8348A /* ContractRestrictions.swift */,
 				78DF4A04225B467D00B8348A /* Formats.swift */,
 				78DF4A06225B469200B8348A /* DRM.swift */,
 				78DF4A08225B46A100B8348A /* StreamInfo.swift */,
-				789EAC6B255BDDB2003AC419 /* Ads.swift */,
-				789CC2EB267CCA5500835529 /* AdClips.swift */,
-				789CC2F2267CCA6C00835529 /* AdTrackingEvents.swift */,
 				786D5C1525B8647700982370 /* Sprites.swift */,
 				78C89283262D9AFD00168469 /* AnalyticsFromEntitlement.swift */,
 				78C8928A262D9C2400168469 /* CDNInfoFromEntitlement.swift */,
@@ -2117,6 +2129,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				760800E720692820007F59D5 /* ElasticSearch.swift in Sources */,
+				783F0D8527BA4DD100C3E2BD /* VideoClicks.swift in Sources */,
 				760800E820692820007F59D5 /* Login.swift in Sources */,
 				760800E920692820007F59D5 /* LinkedEntity.swift in Sources */,
 				760800EA20692820007F59D5 /* SearchSpelling.swift in Sources */,
@@ -2400,6 +2413,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				820EF67D23FAA244002465A3 /* LastViewedOffsetList.swift in Sources */,
+				783F0D8427BA4DD100C3E2BD /* VideoClicks.swift in Sources */,
 				76529D051EDC4A1E00318AE2 /* ElasticSearch.swift in Sources */,
 				76A842ED1EA7667D00BDAF2C /* Login.swift in Sources */,
 				766FBB801ECA2B2B00EBEC53 /* LinkedEntity.swift in Sources */,
