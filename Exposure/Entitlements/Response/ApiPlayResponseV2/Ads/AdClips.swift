@@ -14,6 +14,7 @@ public struct AdClips: Codable {
     public let category: String?
     public let duration: Float?
     public let impressionUrlTemplates: [String]?
+    public let videoClicks: VideoClicks?
     public let trackingEvents: AdTrackingEvents?
     
     
@@ -25,7 +26,7 @@ public struct AdClips: Codable {
         duration = try container.decodeIfPresent(Float.self, forKey: .duration)
         impressionUrlTemplates = try container.decodeIfPresent([String].self, forKey: .impressionUrlTemplates)
         trackingEvents = try container.decodeIfPresent(AdTrackingEvents.self, forKey: .trackingEvents)
-        
+        videoClicks = try container.decodeIfPresent(VideoClicks.self, forKey: .videoClicks)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -35,6 +36,7 @@ public struct AdClips: Codable {
         case duration
         case impressionUrlTemplates
         case trackingEvents
+        case videoClicks
     }
     
 }
