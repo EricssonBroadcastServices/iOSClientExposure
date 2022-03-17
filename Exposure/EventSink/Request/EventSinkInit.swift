@@ -13,8 +13,11 @@ public struct EventSinkInit{
     /// Exposure environment
     public let environment: Environment
     
-    internal init(environment: Environment) {
+    public let analyticsBaseUrl: String?
+    
+    internal init(environment: Environment, analyticsBaseUrl: String? = nil ) {
         self.environment = environment
+        self.analyticsBaseUrl = analyticsBaseUrl
     }
 }
 
@@ -22,7 +25,12 @@ extension EventSinkInit: ExposureType {
     public typealias Response = AnalyticsInitializationResponse
     
     public var endpointUrl: String {
-        return environment.baseUrl + "/eventsink/init"
+        if let  analyticsBaseUrl = analyticsBaseUrl {
+            return "\(analyticsBaseUrl)/v2/customer/\(environment.customer)/businessunit/\(environment.businessUnit)/eventsink/init"
+        } else {
+            return environment.baseUrl + "/eventsink/init"
+        }
+        
     }
     
     public var parameters: [String: Any]? {

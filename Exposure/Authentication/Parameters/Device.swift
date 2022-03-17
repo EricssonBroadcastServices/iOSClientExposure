@@ -9,8 +9,14 @@
 import Foundation
 public struct Device: Encodable {
     
-    public var deviceId: String? {
-        return UIDevice.current.identifierForVendor?.uuidString
+    /// String identifier to recognize the device. This should be the same Id as was sent during the login request to the exposure API.
+    ///
+    /// NOTE: Implementation details for "identifierForVendor" states this:
+    /// "If the value is nil, wait and get the value again later. This happens, for example, after the device has been restarted but before the user has unlocked the device."
+    ///
+    /// This implementation ignores the above scenario with the expressed reasoning such a rare event is not worth the complexity of a possible workaround. "UNKNOWN_DEVICE_ID" will be sent in the event this occurs.
+    public var deviceId: String {
+        return UIDevice.current.identifierForVendor?.uuidString ?? "UNKNOWN_DEVICE_ID"
     }
     
     public init(name: String? = nil) {
@@ -25,6 +31,10 @@ public struct Device: Encodable {
     /// Width of the screen in `points`
     public var width: Int {
         return Int(UIScreen.main.bounds.size.width)
+    }
+    
+    public var cpuType: String? {
+        return nil
     }
     
     /// Device model as reported in Apple's internal formatting

@@ -27,16 +27,49 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
             headers["X-Request-Id"] = requestId
         }
         
-        let url = batch.environment.baseUrl + "/eventsink/send"
-        
-        let request = sessionManager.request(url,
-                                             method: .post,
-                                             parameters: parameters,
-                                             encoding: JSONEncoding(),
-                                             headers: headers)
-        ExposureRequest<AnalyticsConfigResponse>(dataRequest: request)
-            .validate()
-            .response{ callback($0.value, $0.error) }
+        // Check if there is a custom anlytics base url
+        if let analyticsBaseUrl = batch.analyticsBaseUrl {
+            
+            let url = "\(analyticsBaseUrl)/v2/customer/\(batch.customer)/businessunit/\(batch.businessUnit)/eventsink/send"
+            let request = sessionManager.request(url,
+                                                 method: .post,
+                                                 parameters: parameters,
+                                                 encoding: JSONEncoding(),
+                                                 headers: headers)
+
+            ExposureRequest<Data>(dataRequest: request)
+                .validate()
+                .response{
+                    if let statusCode = $0.response?.statusCode {
+                        if statusCode == 200 {
+                            var config = AnalyticsConfigResponse()
+                            if let  jsonPayload = batch.payload.first?.jsonPayload, let analyticsPostInterval = jsonPayload["AnalyticsPostInterval"] as? Int {
+                                config.secondsUntilNextReport = Int64(analyticsPostInterval)
+                                callback(config, nil)
+                            } else {
+                                callback(config, nil)
+                            }
+                        } else {
+                            callback(nil, $0.error)
+                        }
+                    } else {
+                        callback(nil, $0.error)
+                    }
+                }
+        } else {
+            
+            // Use `AnalyticsConfigResponse` if it is the old / exposure end point
+            let url = "\( batch.environment.baseUrl)/eventsink/send"
+            let request = sessionManager.request(url,
+                                                 method: .post,
+                                                 parameters: parameters,
+                                                 encoding: JSONEncoding(),
+                                                 headers: headers)
+            ExposureRequest<AnalyticsConfigResponse>(dataRequest: request)
+                .validate()
+                .response{ callback($0.value, $0.error) }
+            
+        }
     }
     
     func initialize(using environment: Environment, callback: @escaping (AnalyticsInitializationResponse?, ExposureError?) -> Void) {

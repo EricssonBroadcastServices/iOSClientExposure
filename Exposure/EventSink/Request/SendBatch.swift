@@ -21,12 +21,17 @@ public struct SendBatch {
         return messageBatch.environment
     }
     
+    public var analyticsBaseUrl: String? {
+        return messageBatch.analyticsBaseUrl
+    }
+    
     /// MARK: Parameters
     public let messageBatch: AnalyticsBatch
     
     /// Estimated offset between the device clock and the server clock, in milliseconds. A positive value means that the device is ahead of the server.
     public let clockOffset: Int64?
     
+
     internal init(messageBatch: AnalyticsBatch, clockOffset: Int64? = nil) {
         self.messageBatch = messageBatch
         self.clockOffset = clockOffset
@@ -37,7 +42,11 @@ extension SendBatch: ExposureType {
     public typealias Response = AnalyticsConfigResponse
     
     public var endpointUrl: String {
-        return environment.baseUrl + "/eventsink/send"
+        if let analyticsBaseUrl = analyticsBaseUrl {
+            return "\(analyticsBaseUrl)/v2/customer/\(environment.customer)/businessunit/\(environment.businessUnit)/eventsink/send"
+        } else {
+            return environment.baseUrl + "/eventsink/send"
+        }
     }
     
     public var parameters: [String: Any] {
