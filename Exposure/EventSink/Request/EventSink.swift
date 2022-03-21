@@ -27,7 +27,7 @@ extension EventSink {
     ///
     /// - parameter environment: *Exposure* environment
     /// - returns: `EventSinkInit` struct used to process the request.
-    public func initialize(using environment: Environment) -> EventSinkInit {
-        return EventSinkInit(environment: environment)
+    public func initialize(using environment: Environment, analyticsBaseUrl: String? = nil ) -> EventSinkInit {
+        return EventSinkInit(environment: environment, analyticsBaseUrl: analyticsBaseUrl)
     }
 }

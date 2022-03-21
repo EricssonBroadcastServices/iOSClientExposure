@@ -9,9 +9,9 @@
 import Foundation
 
 /// Configuration data detailing the *Exposure Analytics Environment* for client applications.
-public struct AnalyticsConfigResponse: Decodable {
+public struct AnalyticsConfigResponse: Codable {
     /// The requested time untill next contact with the *Analytics Engine*
-    public let secondsUntilNextReport: Int64?
+    public var secondsUntilNextReport: Int64?
     
     /// If application metrics should  be included when sending payload
     public let includeApplicationMetrics: Bool?
@@ -27,4 +27,15 @@ public struct AnalyticsConfigResponse: Decodable {
     
     /// The current timestamp, in unix epoch time.
     public let timestampNow: Int64?
+    
+    public init(secondsUntilNextReport: Int64? = nil , includeApplicationMetrics: Bool? = nil , includeNetworkMetrics: Bool? = nil ,includeGpsMetrics: Bool? = nil, includeDeviceMetrics: Bool? = nil ,timestampNow: Int64? = nil ) {
+        
+        self.secondsUntilNextReport = secondsUntilNextReport
+        self.includeApplicationMetrics = includeApplicationMetrics
+        self.includeNetworkMetrics = includeNetworkMetrics
+        self.includeGpsMetrics = includeGpsMetrics
+        self.includeDeviceMetrics = includeDeviceMetrics
+        self.timestampNow = timestampNow
+    }
 }
+

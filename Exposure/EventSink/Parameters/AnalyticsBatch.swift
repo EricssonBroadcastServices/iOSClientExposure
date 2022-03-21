@@ -16,6 +16,8 @@ public struct AnalyticsBatch {
     /// Exposure environment
     public let environment: Environment
     
+    public let analyticsBaseUrl: String?
+    
     // MARK: Parameters
     /// EMP Customer Group identifier
     public var customer: String {
@@ -44,11 +46,12 @@ public struct AnalyticsBatch {
         case sessionId
         case payload
     }
-    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = []) {
+    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = [], analyticsBaseUrl: String? = nil ) {
         self.environment = environment
         self.sessionToken = sessionToken
         self.sessionId = playToken
         self.payload = payload
+        self.analyticsBaseUrl = analyticsBaseUrl
     }
     
     
@@ -56,6 +59,7 @@ public struct AnalyticsBatch {
         guard let token = json[PersistenceKeys.sessionToken.rawValue] as? String else { return nil }
         guard let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
         guard let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
+        guard let analyticsBaseUrl = json[PersistenceKeys.analyticsBaseUrl.rawValue] as? String else { return nil }
         guard let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
         
         guard let url = env[EnvironmentKeys.url.rawValue],
@@ -64,7 +68,7 @@ public struct AnalyticsBatch {
         self.environment = Environment(baseUrl: url, customer: customer, businessUnit: businessUnit)
         self.sessionToken = SessionToken(value: token)
         self.sessionId = session
-        
+        self.analyticsBaseUrl = analyticsBaseUrl
         self.payload = payloadData.map{ PersistedAnalyticsPayload(payload: $0) }
     }
     
@@ -77,6 +81,7 @@ public struct AnalyticsBatch {
                 EnvironmentKeys.url.rawValue: environment.baseUrl
             ],
             PersistenceKeys.sessionId.rawValue: sessionId,
+            PersistenceKeys.analyticsBaseUrl.rawValue: analyticsBaseUrl,
             PersistenceKeys.payload.rawValue: payload.map{ $0.jsonPayload }
         ]
     }
@@ -85,6 +90,7 @@ public struct AnalyticsBatch {
         case sessionToken
         case environment
         case sessionId
+        case analyticsBaseUrl
         case payload
     }
     internal enum EnvironmentKeys: String {
@@ -113,7 +119,7 @@ extension AnalyticsBatch {
         var json =  [
             JsonKeys.customer.rawValue: customer,
             JsonKeys.businessUnit.rawValue: businessUnit,
-            JsonKeys.sessionId.rawValue: sessionId
+            JsonKeys.sessionId.rawValue: sessionId,
         ] as [String : Any]
         
         for load in payload {
