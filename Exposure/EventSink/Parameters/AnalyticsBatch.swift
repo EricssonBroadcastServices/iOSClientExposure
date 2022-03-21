@@ -81,7 +81,7 @@ public struct AnalyticsBatch {
                 EnvironmentKeys.url.rawValue: environment.baseUrl
             ],
             PersistenceKeys.sessionId.rawValue: sessionId,
-            PersistenceKeys.analyticsBaseUrl.rawValue: analyticsBaseUrl,
+            PersistenceKeys.analyticsBaseUrl.rawValue: analyticsBaseUrl ?? "",
             PersistenceKeys.payload.rawValue: payload.map{ $0.jsonPayload }
         ]
     }
