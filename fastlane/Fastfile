@@ -28,11 +28,12 @@ platform :ios do
         
 #        update_graph
 
-        sh "cd .. && carthage.sh update --use-submodules --use-xcframeworks"
+        #sh "cd .. && carthage.sh update --use-submodules --use-xcframeworks"
         
-        
-        run_unit_tests
-        
+        build_spm
+
+        #run_spm_tests
+
         bump_build_number
         
 #        clean_build_artifacts
@@ -41,6 +42,7 @@ platform :ios do
         
         notify_slack_dev_success
     end
+
     
     lane :release do
         version = "v" + get_version_number(
@@ -85,6 +87,31 @@ platform :ios do
     end
     
     # Private lanes
+
+    desc "Build project using spm"
+    lane :build_spm do
+
+        sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
+        UI.success("== iOS Project Build Success ==")
+
+        sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
+        UI.success("== tvOS Project Build Success ==")
+
+
+    end
+
+    desc "Build project using spm"
+    lane :run_spm_tests do
+
+        # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
+        # UI.success("== iOS Project Unit Tests were Success ==")
+
+        # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
+        # UI.success("== tvOS Project Unit Tests were Success ==")
+
+
+    end
+
     desc "Runs all the tests"
     lane :run_unit_tests do
         
