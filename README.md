@@ -39,6 +39,15 @@
 
 ## Installation
 
+### Swift Package Manager
+
+The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
+Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+dependencies: [
+    .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.0.0")
+]
+
 ### Carthage
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
 
@@ -58,6 +67,11 @@ github "EricssonBroadcastServices/iOSClientExposure"
 Running `carthage update` will fetch your dependencies and place them in `/Carthage/Checkouts`. You either build the `.framework`s and drag them in your `Xcode` or attach the fetched projects to your `Xcode workspace`.
 
 Finally, make sure you add the `.framework`s to your targets *General -> Embedded Binaries* section.
+
+### CocoaPods
+CocoaPods is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Alamofire into your Xcode project using CocoaPods, specify it in your Podfile:
+
+pod 'iOSClientExposure', '~>  3.0.0'
 
 ## Getting Started
 `Exposure` conveys seamless integration with the *EMP Exposure Layer* and enables client applications quick access to functionality such as *authentication*, *entitlement requests* and *EPG*.
