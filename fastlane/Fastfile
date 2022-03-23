@@ -46,8 +46,8 @@ platform :ios do
     
     lane :release do
         version = "v" + get_version_number(
-                                           xcodeproj: ENV["XCODE_PROJECT"],
-                                           target: ENV["RELEASE_VERSION_TARGET"]
+                                           xcodeproj: "iOSClientExposure.xcodeproj",
+                                           target: "iOSClientExposure"
                                            )
         
         if !git_tag_exists(tag: version)
@@ -176,15 +176,11 @@ platform :ios do
     
     private_lane :bump_build_number do
 
-        def workspace = pwd()
-
-        def xcodeProj = "${workspace}/iOSClientExposure.xcodeproj"
-
-        new_build_number = increment_build_number(xcodeproj: xcodeProj)
+        new_build_number = increment_build_number(xcodeproj: "iOSClientExposure.xcodeproj")
         UI.message("Build: #{new_build_number}")
         commit_version_bump(
                             message: "Build number: #{new_build_number}",
-                            xcodeproj: xcodeProj
+                            xcodeproj: "iOSClientExposure.xcodeproj"
                             )
     end
     
