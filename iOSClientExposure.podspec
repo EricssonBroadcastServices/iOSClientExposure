@@ -9,5 +9,4 @@ spec.documentation_url = "https://github.com/EricssonBroadcastServices/iOSClient
 spec.platforms = { :ios => "9.0", :tvos => "9.0" }
 spec.source       = { :git => "https://github.com/EricssonBroadcastServices/iOSClientExposure.git", :tag => "v#{spec.version}" }
 spec.source_files  = "Sources/iOSClientExposure/**/*.swift"
-spec.xcconfig = { "SWIFT_VERSION" => "5.0" }
 end
