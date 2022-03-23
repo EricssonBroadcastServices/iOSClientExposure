@@ -11,7 +11,7 @@ import UIKit
 
 extension UIDevice {
     /// Extracts the *Exposure* formatted `DeviceType` from the current *device*
-    @available(*, deprecated: 2.0.87, message: "Use Device.type instead")
+    @available(*, deprecated, message: "Use Device.type instead")
     public static func deviceType() -> DeviceType {
         return DeviceType(model: Device(name: nil).model)
     }

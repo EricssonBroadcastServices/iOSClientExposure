@@ -98,7 +98,7 @@ extension SessionToken {
     }
     
     /// Returns true if the session token has the correct format
-    @available(*, deprecated: 2.0.89, message: "Token format is considered valid for all strings.")
+    @available(*, deprecated, message: "Token format is considered valid for all strings.")
     public var hasValidFormat: Bool {
         return true
     }
