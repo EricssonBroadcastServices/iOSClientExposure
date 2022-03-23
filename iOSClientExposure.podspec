@@ -7,7 +7,6 @@ spec.license      = { :type => "Apache", :file => "https://github.com/EricssonBr
 spec.author             = { "EMP" => "jenkinsredbee@gmail.com" }
 spec.documentation_url = "https://github.com/EricssonBroadcastServices/iOSClientExposure/tree/master/Documentation"
 spec.platforms = { :ios => "9.0", :tvos => "9.0" }
-spec.swift_version = "5.0"
 spec.source       = { :git => "https://github.com/EricssonBroadcastServices/iOSClientExposure.git", :tag => "v#{spec.version}" }
 spec.source_files  = "Sources/iOSClientExposure/**/*.swift"
 spec.xcconfig = { "SWIFT_VERSION" => "5.0" }
