@@ -37,7 +37,7 @@
 
 ## 3.0.000
 #### Features
-* `EMP-17893` 
+* `EMP-17893` Add support to SPM & Cocoapods
 
 ## 2.7.000
 #### Features

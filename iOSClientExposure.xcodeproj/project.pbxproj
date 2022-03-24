@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7831103727EC5988009B3114 /* UPGRADE_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */; };
 		78E6E12727EA189F00F12EC3 /* CustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */; };
 		78E6E12827EA18A000F12EC3 /* CustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */; };
 		78E6E12927EA18A000F12EC3 /* CustomerConfigFileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E03027EA189F00F12EC3 /* CustomerConfigFileRequest.swift */; };
@@ -384,6 +385,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = "<group>"; };
+		7831103827EC5990009B3114 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		7831103A27EC5998009B3114 /* content-discovery.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "content-discovery.md"; sourceTree = "<group>"; };
+		7831103B27EC5998009B3114 /* authentication-best-practices.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "authentication-best-practices.md"; sourceTree = "<group>"; };
+		7831103C27EC5998009B3114 /* error-handling-and-response-validation.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "error-handling-and-response-validation.md"; sourceTree = "<group>"; };
+		7831103D27EC5998009B3114 /* requesting-playback-entitlements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "requesting-playback-entitlements.md"; sourceTree = "<group>"; };
+		7831103E27EC5998009B3114 /* analytics-delivery.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "analytics-delivery.md"; sourceTree = "<group>"; };
+		7831103F27EC59A2009B3114 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		788C4AC427EA0E4700223283 /* iOSClientExposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788C4C8D27EA0FC000223283 /* iOSClientExposure_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfig.swift; sourceTree = "<group>"; };
@@ -595,9 +604,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7831103927EC5998009B3114 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				7831103A27EC5998009B3114 /* content-discovery.md */,
+				7831103B27EC5998009B3114 /* authentication-best-practices.md */,
+				7831103C27EC5998009B3114 /* error-handling-and-response-validation.md */,
+				7831103D27EC5998009B3114 /* requesting-playback-entitlements.md */,
+				7831103E27EC5998009B3114 /* analytics-delivery.md */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
 		788C4ABA27EA0E4700223283 = {
 			isa = PBXGroup;
 			children = (
+				7831103927EC5998009B3114 /* Documentation */,
+				7831103F27EC59A2009B3114 /* CHANGELOG.md */,
+				7831103827EC5990009B3114 /* README.md */,
+				7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */,
 				78E6E02B27EA189F00F12EC3 /* iOSClientExposure */,
 				78E6E11C27EA189F00F12EC3 /* iOSClientExposureObjc */,
 				788C4AC527EA0E4700223283 /* Products */,
@@ -1421,6 +1446,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7831103727EC5988009B3114 /* UPGRADE_GUIDE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
