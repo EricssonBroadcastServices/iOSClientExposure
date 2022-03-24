@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "788C4C8C27EA0FC000223283"
-               BuildableName = "iOSClientExposure_tvOS.framework"
+               BuildableName = "iOSClientExposure.framework"
                BlueprintName = "iOSClientExposure-tvOS"
                ReferencedContainer = "container:iOSClientExposure.xcodeproj">
             </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "788C4C8C27EA0FC000223283"
-            BuildableName = "iOSClientExposure_tvOS.framework"
+            BuildableName = "iOSClientExposure.framework"
             BlueprintName = "iOSClientExposure-tvOS"
             ReferencedContainer = "container:iOSClientExposure.xcodeproj">
          </BuildableReference>
