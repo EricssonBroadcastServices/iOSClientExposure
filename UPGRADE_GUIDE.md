@@ -1,8 +1,9 @@
 # Upgrade Guide
 
 ## 3.0.00
-Project is now distributed via swift package manager & cocoapods. 
-Unit tests have been moved to SPM tests & dependencies will be used as packages. 
+Project is now distributed via Swift package manager , Cocoapods & Carthage.
+Unit tests have been moved to SPM tests & dependencies will be used as packages.
+Module name has been renamed from `Exposure` to `iOSClientExposure`. 
 
 ## 2.1.00
 Project is updated to use Swift version 4.2
