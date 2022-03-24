@@ -394,7 +394,7 @@
 		7831103E27EC5998009B3114 /* analytics-delivery.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "analytics-delivery.md"; sourceTree = "<group>"; };
 		7831103F27EC59A2009B3114 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		788C4AC427EA0E4700223283 /* iOSClientExposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		788C4C8D27EA0FC000223283 /* iOSClientExposure_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		788C4C8D27EA0FC000223283 /* iOSClientExposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfig.swift; sourceTree = "<group>"; };
 		78E6E03027EA189F00F12EC3 /* CustomerConfigFileRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfigFileRequest.swift; sourceTree = "<group>"; };
 		78E6E03127EA189F00F12EC3 /* CustomerConfigRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfigRequest.swift; sourceTree = "<group>"; };
@@ -633,7 +633,7 @@
 			isa = PBXGroup;
 			children = (
 				788C4AC427EA0E4700223283 /* iOSClientExposure.framework */,
-				788C4C8D27EA0FC000223283 /* iOSClientExposure_tvOS.framework */,
+				788C4C8D27EA0FC000223283 /* iOSClientExposure.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1402,7 +1402,7 @@
 			);
 			name = "iOSClientExposure-tvOS";
 			productName = "iOSClientExposure-tvOS";
-			productReference = 788C4C8D27EA0FC000223283 /* iOSClientExposure_tvOS.framework */;
+			productReference = 788C4C8D27EA0FC000223283 /* iOSClientExposure.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -1986,7 +1986,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -2019,7 +2019,7 @@
 				);
 				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -2053,7 +2053,7 @@
 				MARKETING_VERSION = 3.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2087,7 +2087,7 @@
 				MARKETING_VERSION = 3.0.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
