@@ -46,7 +46,7 @@
 ### Swift Package Manager
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
-Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+Once you have your Swift package set up, adding `iOSClientExposure` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 
 dependencies: [
     .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.0.0")
@@ -73,7 +73,7 @@ Running `carthage update` will fetch your dependencies and place them in `/Carth
 Finally, make sure you add the `.framework`s to your targets *General -> Embedded Binaries* section.
 
 ### CocoaPods
-CocoaPods is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate Alamofire into your Xcode project using CocoaPods, specify it in your Podfile:
+CocoaPods is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate `iOSClientExposure` into your Xcode project using CocoaPods, specify it in your Podfile:
 
 pod 'iOSClientExposure', '~>  3.0.0'
 
