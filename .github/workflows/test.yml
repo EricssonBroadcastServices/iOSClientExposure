@@ -25,7 +25,12 @@ jobs:
     - uses: actions/checkout@v3
     - name: Show eligible build destinations for iOSClientExposure
       run: xcodebuild -showdestinations -scheme iOSClientExposure
-    - name: Build and test ( iOS 15.0)
-      run: xcodebuild test -scheme iOSClientExposure -destination 'platform=iOS Simulator,OS=15.0,name=iPhone 12 Pro'
-    - name: Build and test ( tvOS 15.0)
-      run: xcodebuild test -scheme iOSClientExposure -destination 'platform=tvOS Simulator,OS=15.0,name=Apple TV 4K (2nd generation)'
+    - name: Build iOS ( iOS 15.0)
+      run: swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"
+    - name: Build tvOS ( tvOS 15.0)
+      run: swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"
+    - name: Run tests - iOS
+      run: swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"
+    - name: Run tests
+      run: swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"
+
