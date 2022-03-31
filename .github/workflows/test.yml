@@ -1,0 +1,31 @@
+name: Test on iOS /tvOS  platforms
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        xcode: ['13.0']
+        scheme: ['iOSClientExposure']
+        command: ['test']
+        platform: ['iOS', 'tvOS']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Show eligible build destinations for iOSClientExposure
+      run: xcodebuild -showdestinations -scheme iOSClientExposure
+    - name: Build and test ( iOS 15.0)
+      run: xcodebuild test -scheme iOSClientExposure -destination 'platform=iOS Simulator,OS=15.0,name=iPhone 12 Pro'
+    - name: Build and test ( tvOS 15.0)
+      run: xcodebuild test -scheme iOSClientExposure -destination 'platform=tvOS Simulator,OS=15.0,name=Apple TV 4K (2nd generation)'
