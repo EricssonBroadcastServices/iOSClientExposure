@@ -47,10 +47,11 @@
 
 The Swift Package Manager is a tool for automating the distribution of Swift code and is integrated into the swift compiler.
 Once you have your Swift package set up, adding `iOSClientExposure` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
-
+```sh
 dependencies: [
-    .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.0.0")
+    .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.0.1")
 ]
+```
 
 ### Carthage
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependency graph without interfering with your `Xcode` project setup. `CI` integration through [fastlane](https://github.com/fastlane/fastlane) is also available.
@@ -75,7 +76,9 @@ Finally, make sure you add the `.framework`s to your targets *General -> Embedde
 ### CocoaPods
 CocoaPods is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate `iOSClientExposure` into your Xcode project using CocoaPods, specify it in your Podfile:
 
-pod 'iOSClientExposure', '~>  3.0.0'
+```sh
+pod 'iOSClientExposure', '~>  3.0.1'
+```
 
 ## Getting Started
 `Exposure` conveys seamless integration with the *EMP Exposure Layer* and enables client applications quick access to functionality such as *authentication*, *entitlement requests* and *EPG*.
