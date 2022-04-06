@@ -64,7 +64,7 @@ extension PlayBackEntitlementV2 {
         bookmarks = try container.decodeIfPresent(BooksMarks.self, forKey: .bookmarks)
         contractRestrictions = try container.decodeIfPresent(ContractRestrictions.self, forKey: .contractRestrictions)
         entitlementType = try container.decodeIfPresent(String.self, forKey: .entitlementType)
-        formats = try container.decodeIfPresent([Formats].self, forKey: .formats)?.filter({ $0.format == "HLS"})
+        formats = try container.decodeIfPresent([Formats].self, forKey: .formats)?.filter({ $0.format == "HLS" || $0.format == "MP3" })
         playSessionId = try container.decode(String.self, forKey: .playSessionId)
         playToken = try container.decodeIfPresent(String.self, forKey: .playToken)
         playTokenExpiration = try container.decode(Int.self, forKey: .playTokenExpiration)
