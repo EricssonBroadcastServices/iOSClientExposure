@@ -31,12 +31,16 @@ public struct PlayEnigmaAsset: ExposureType {
     /// X-Adobe-Primetime-MediaToken
     public let adobePrimetimeMediaToken: String?
     
+    // used to play a specific material variant : "default" material contains a full length movie, and a "TRAILER" material might contain only an extract: a virtual subclip generated using the VOD to VOD flow)
+    public let materialProfile: String?
+    
 
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, adobePrimetimeMediaToken: String?) {
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, adobePrimetimeMediaToken: String?, materialProfile: String? ) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
         self.adobePrimetimeMediaToken = adobePrimetimeMediaToken
+        self.materialProfile = materialProfile
     }
     
     public var endpointUrl: String {
@@ -52,6 +56,11 @@ public struct PlayEnigmaAsset: ExposureType {
         // Adding `supportedFormats` & `supportedDrms` to parameters
         parameters["supportedFormats"] = "hls,mp3"
         parameters["supportedDrms"] = "fairplay"
+        
+        // Add materialProfile if available
+        if let materialProfile = materialProfile {
+            parameters["materialProfile"] = materialProfile
+        }
         return parameters
     }
     

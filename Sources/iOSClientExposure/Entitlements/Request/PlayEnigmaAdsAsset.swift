@@ -26,14 +26,23 @@ public struct PlayEnigmaAdsAsset: ExposureType {
     /// X-Adobe-Primetime-MediaToken
     public let adobePrimetimeMediaToken: String?
     
+    // used to play a specific material variant : "default" material contains a full length movie, and a "TRAILER" material might contain only an extract: a virtual subclip generated using the VOD to VOD flow)
+    public let materialProfile: String?
+    
     public let includeAdsOptions: AdsOptions
     
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, includeAdsOptions: AdsOptions, adobePrimetimeMediaToken: String?) {
+    
+    // Custom Ad params
+    public let customAdParams: [String: Any]?
+    
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, includeAdsOptions: AdsOptions, adobePrimetimeMediaToken: String?, materialProfile: String?, customAdParams: [String: Any]? ) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
         self.includeAdsOptions = includeAdsOptions
         self.adobePrimetimeMediaToken = adobePrimetimeMediaToken
+        self.materialProfile = materialProfile
+        self.customAdParams = customAdParams
     }
     
     public var endpointUrl: String {
@@ -43,7 +52,20 @@ public struct PlayEnigmaAdsAsset: ExposureType {
     }
     
     public var parameters: [String: Any]? {
-        return includeAdsOptions.dictionaryRepresentation
+        
+        var parameters = includeAdsOptions.dictionaryRepresentation
+        
+        if let materialProfile = materialProfile {
+            parameters["materialProfile"] = materialProfile
+        }
+        
+        if let customAdParams = customAdParams {
+            for adParam in customAdParams {
+                parameters[adParam.key] = adParam.value
+            }
+        }
+        return parameters
+        
     }
     
 
