@@ -382,6 +382,8 @@
 		78E6E29C27EA18AE00F12EC3 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */; };
 		78E6E29D27EA18AE00F12EC3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12627EA189F00F12EC3 /* NSData+Base64.m */; };
 		78E6E29E27EA18AE00F12EC3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12627EA189F00F12EC3 /* NSData+Base64.m */; };
+		78FD660228E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
+		78FD660328E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -584,6 +586,7 @@
 		78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
 		78E6E12627EA189F00F12EC3 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		78E6E29F27EA18F400F12EC3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78FD660128E2E6E70074B31E /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -643,6 +646,7 @@
 			children = (
 				78E6E29F27EA18F400F12EC3 /* Info.plist */,
 				78E6E08727EA189F00F12EC3 /* Exposure.h */,
+				78FD660128E2E6E70074B31E /* Version.swift */,
 				78E6E0F327EA189F00F12EC3 /* ExposureType.swift */,
 				78E6E02C27EA189F00F12EC3 /* CustomerConfig */,
 				78E6E03227EA189F00F12EC3 /* Crypto */,
@@ -1489,6 +1493,7 @@
 				78E6E28D27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */,
 				78E6E28527EA18AD00F12EC3 /* AnalyticsPersister.swift in Sources */,
 				78E6E1DF27EA18A600F12EC3 /* SearchAutocomplete.swift in Sources */,
+				78FD660228E2E6E70074B31E /* Version.swift in Sources */,
 				78E6E18F27EA18A300F12EC3 /* FetchAssetById.swift in Sources */,
 				78E6E1F527EA18A700F12EC3 /* AnalyticsFromEntitlement.swift in Sources */,
 				78E6E25F27EA18AB00F12EC3 /* SessionToken.swift in Sources */,
@@ -1678,6 +1683,7 @@
 				78E6E28E27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */,
 				78E6E28627EA18AD00F12EC3 /* AnalyticsPersister.swift in Sources */,
 				78E6E1E027EA18A600F12EC3 /* SearchAutocomplete.swift in Sources */,
+				78FD660328E2E6E70074B31E /* Version.swift in Sources */,
 				78E6E19027EA18A300F12EC3 /* FetchAssetById.swift in Sources */,
 				78E6E1F627EA18A700F12EC3 /* AnalyticsFromEntitlement.swift in Sources */,
 				78E6E26027EA18AB00F12EC3 /* SessionToken.swift in Sources */,
