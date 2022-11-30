@@ -14,29 +14,23 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
     
     internal var lastSquenceNumber: Int?
     
-    func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
-        var batch = batch
-        var parameters = batch.jsonParameters()
-        parameters["DispatchTime"] = Date().millisecondsSince1970
-        if let clockOffset = clockOffset {
-            parameters["ClockOffset"] = clockOffset
-        }
-        
-        var headers = batch.sessionToken.authorizationHeader
-        if let requestId = requestId {
-            headers["X-Request-Id"] = requestId
-        }
+    
+    /// Send analytics events to the server
+    /// - Parameters:
+    ///   - batch: analytics batch
+    ///   - parameters: params
+    ///   - headers: headers
+    ///   - callback: completion callback
+    fileprivate func sendAnalyticsToTheServer(_ batch: AnalyticsBatch, _ parameters: [String : Any], _ headers: [String : String], _ callback:  @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
         
         // Check if there is a custom anlytics base url
-        if let analyticsBaseUrl = batch.analyticsBaseUrl {
-            
+        if let analyticsBaseUrl = batch.analytics?.baseUrl {
             let url = "\(analyticsBaseUrl)/v2/customer/\(batch.customer)/businessunit/\(batch.businessUnit)/eventsink/send"
             let request = sessionManager.request(url,
                                                  method: .post,
                                                  parameters: parameters,
                                                  encoding: JSONEncoding(),
                                                  headers: headers)
-
             ExposureRequest<Data>(dataRequest: request)
                 .validate()
                 .response{
@@ -57,7 +51,6 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
                     }
                 }
         } else {
-            
             // Use `AnalyticsConfigResponse` if it is the old / exposure end point
             let url = "\( batch.environment.baseUrl)/eventsink/send"
             let request = sessionManager.request(url,
@@ -69,6 +62,29 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
                 .validate()
                 .response{ callback($0.value, $0.error) }
             
+        }
+    }
+    
+    func deliver(batch: AnalyticsBatch, clockOffset: Int64?, callback: @escaping (AnalyticsConfigResponse?, ExposureError?) -> Void) {
+        var batch = batch
+        var parameters = batch.jsonParameters()
+        parameters["DispatchTime"] = Date().millisecondsSince1970
+        if let clockOffset = clockOffset {
+            parameters["ClockOffset"] = clockOffset
+        }
+        
+        var headers = batch.sessionToken.authorizationHeader
+        if let requestId = requestId {
+            headers["X-Request-Id"] = requestId
+        }
+
+        let userdefaults = UserDefaults.standard
+        let key = "shouldSendAnalytics"
+        
+        if userdefaults.bool(forKey: key) == true {
+                sendAnalyticsToTheServer(batch, parameters, headers, callback)
+        } else {
+            // Should not send any analytics
         }
     }
     

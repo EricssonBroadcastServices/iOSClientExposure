@@ -16,7 +16,14 @@ public struct AnalyticsBatch {
     /// Exposure environment
     public let environment: Environment
     
+    public let analytics: AnalyticsFromEntitlement?
+    
     public let analyticsBaseUrl: String?
+
+    public let analyticsPercentage: Int?
+
+    public let analyticsPostInterval: Int?
+    
     
     // MARK: Parameters
     /// EMP Customer Group identifier
@@ -46,12 +53,16 @@ public struct AnalyticsBatch {
         case sessionId
         case payload
     }
-    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = [], analyticsBaseUrl: String? = nil ) {
+    public init(sessionToken: SessionToken, environment: Environment, playToken: String, payload: [AnalyticsPayload] = [], analytics: AnalyticsFromEntitlement? = nil, analyticsBaseUrl: String? = nil , analyticsPercentage: Int? = nil , analyticsPostInterval: Int? = nil ) {
         self.environment = environment
         self.sessionToken = sessionToken
         self.sessionId = playToken
         self.payload = payload
+        
+        self.analytics = analytics
         self.analyticsBaseUrl = analyticsBaseUrl
+        self.analyticsPercentage =  analyticsPercentage
+        self.analyticsPostInterval = analyticsPostInterval
     }
     
     
@@ -60,6 +71,10 @@ public struct AnalyticsBatch {
         guard let env = json[PersistenceKeys.environment.rawValue] as? [String: String] else { return nil }
         guard let session = json[PersistenceKeys.sessionId.rawValue] as? String else { return nil }
         guard let analyticsBaseUrl = json[PersistenceKeys.analyticsBaseUrl.rawValue] as? String else { return nil }
+        
+        guard let analyticsPercentage = json[PersistenceKeys.analyticsPercentage.rawValue] as? Int else { return nil }
+        guard let analyticsPostInterval = json[PersistenceKeys.analyticsPostInterval.rawValue] as? Int else { return nil }
+        
         guard let payloadData = json[PersistenceKeys.payload.rawValue] as? [[String: Any]] else { return nil }
         
         guard let url = env[EnvironmentKeys.url.rawValue],
@@ -68,7 +83,13 @@ public struct AnalyticsBatch {
         self.environment = Environment(baseUrl: url, customer: customer, businessUnit: businessUnit)
         self.sessionToken = SessionToken(value: token)
         self.sessionId = session
+        
         self.analyticsBaseUrl = analyticsBaseUrl
+        self.analyticsPercentage = analyticsPercentage
+        self.analyticsPostInterval = analyticsPostInterval
+        
+        self.analytics = nil
+        
         self.payload = payloadData.map{ PersistedAnalyticsPayload(payload: $0) }
     }
     
@@ -81,7 +102,9 @@ public struct AnalyticsBatch {
                 EnvironmentKeys.url.rawValue: environment.baseUrl
             ],
             PersistenceKeys.sessionId.rawValue: sessionId,
-            PersistenceKeys.analyticsBaseUrl.rawValue: analyticsBaseUrl ?? environment.baseUrl,
+            PersistenceKeys.analyticsBaseUrl.rawValue: analytics?.baseUrl ?? environment.baseUrl,
+            PersistenceKeys.analyticsPostInterval.rawValue: analytics?.postInterval ?? 60,
+            PersistenceKeys.analyticsPercentage.rawValue: analytics?.percentage ?? 100,
             PersistenceKeys.payload.rawValue: payload.map{ $0.jsonPayload }
         ]
     }
@@ -90,7 +113,12 @@ public struct AnalyticsBatch {
         case sessionToken
         case environment
         case sessionId
+        
+        case analytics
         case analyticsBaseUrl
+        case analyticsPostInterval
+        case analyticsPercentage
+        
         case payload
     }
     internal enum EnvironmentKeys: String {
@@ -120,7 +148,9 @@ extension AnalyticsBatch {
             JsonKeys.customer.rawValue: customer,
             JsonKeys.businessUnit.rawValue: businessUnit,
             JsonKeys.sessionId.rawValue: sessionId,
-            JsonKeys.analyticsBaseUrl.rawValue : analyticsBaseUrl ?? environment.baseUrl,
+            JsonKeys.analyticsBaseUrl.rawValue : analytics?.baseUrl ?? environment.baseUrl,
+            JsonKeys.analyticsPercentage.rawValue : analytics?.percentage ?? 100,
+            JsonKeys.analyticsPostInterval.rawValue : analytics?.postInterval ?? 60,
         ] as [String : Any]
         
         for load in payload {
@@ -174,7 +204,10 @@ extension AnalyticsBatch {
         case businessUnit = "BusinessUnit"
         case sessionId = "SessionId"
         case payload = "Payload"
+        case analytics = "analytics"
         case analyticsBaseUrl = "analyticsBase"
+        case analyticsPercentage = "analyticsPercentage"
+        case analyticsPostInterval = "analyticsPostInterval"
     }
     
     func isKeyPresentInUserDefaults(key: String) -> Bool {
