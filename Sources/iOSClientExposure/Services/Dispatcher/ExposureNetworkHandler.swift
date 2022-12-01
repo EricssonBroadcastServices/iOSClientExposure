@@ -25,6 +25,7 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
         
         // Check if there is a custom anlytics base url
         if let analyticsBaseUrl = batch.analytics?.baseUrl {
+            
             let url = "\(analyticsBaseUrl)/v2/customer/\(batch.customer)/businessunit/\(batch.businessUnit)/eventsink/send"
             let request = sessionManager.request(url,
                                                  method: .post,
@@ -51,6 +52,7 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
                     }
                 }
         } else {
+            
             // Use `AnalyticsConfigResponse` if it is the old / exposure end point
             let url = "\( batch.environment.baseUrl)/eventsink/send"
             let request = sessionManager.request(url,
@@ -77,12 +79,12 @@ internal struct ExposureNetworkHandler: DispatcherNetworkHandler {
         if let requestId = requestId {
             headers["X-Request-Id"] = requestId
         }
-
+        
         let userdefaults = UserDefaults.standard
         let key = "shouldSendAnalytics"
         
         if userdefaults.bool(forKey: key) == true {
-                sendAnalyticsToTheServer(batch, parameters, headers, callback)
+            sendAnalyticsToTheServer(batch, parameters, headers, callback)
         } else {
             // Should not send any analytics
         }

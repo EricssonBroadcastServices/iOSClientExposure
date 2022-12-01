@@ -68,7 +68,8 @@ class PlaybackEntitlementV2Spec: QuickSpec {
         let analytics: [String: Any] = [
             "bucket": 55,
             "postInterval": 60,
-            "tag":"default"
+            "tag":"default",
+            "percentage":100
         ]
         
         let json:[String: Any] = [

@@ -63,7 +63,7 @@ public class Dispatcher {
     /// Callback that will be fired whenever realtime analytics dispatch fails with an `ExposureResponseMessage`
     public var onExposureResponseMessage: (ExposureResponseMessage) -> Void = { _ in }
     
-    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent?, analytics: AnalyticsFromEntitlement? ) {
+    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, analytics: AnalyticsFromEntitlement?, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent? ) {
         
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                            environment: environment,

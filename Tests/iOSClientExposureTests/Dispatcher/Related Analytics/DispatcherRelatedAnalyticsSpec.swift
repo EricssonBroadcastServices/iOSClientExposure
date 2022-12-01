@@ -18,6 +18,13 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
     let oldButRelatedToken = SessionToken(value: "anotherCrmToken|RelatedDispatchAccountId1|userId|changedField|1111|2222|false|otherField|RealyFinalField")
     let unrelatedAccountId = SessionToken(value: "anotherCrmToken|CompletelyDifferentAccountId|userId|changedField|1111|2222|false|otherField|RealyFinalField")
     
+    let analytics: [String: Any] = [
+        "bucket": 55,
+        "postInterval": 60,
+        "tag":"default",
+        "percentage":100
+    ]
+    
     override func spec() {
         describe("Related Analytics") {
             // Process Related Analytics
@@ -32,6 +39,8 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
             
             let event = Started(timestamp: 1000)
             
+            let decodedAnalytics = try? self.analytics.decode(AnalyticsFromEntitlement.self)
+            
             it("Should deliver previously persisted analytics before current batch") {
                 let persistedBatch = AnalyticsBatch(sessionToken: self.sessionToken,
                                                     environment: self.environment,
@@ -44,6 +53,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics:decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 let networkHandler = RelatedAnalyticsNetworkHandler()
@@ -74,6 +84,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics:decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 let networkHandler = RelatedAnalyticsNetworkHandler()
@@ -106,6 +117,7 @@ class DispatcherRelatedAnalyticsSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics:decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
 
                 let networkHandler = RelatedAnalyticsNetworkHandler()

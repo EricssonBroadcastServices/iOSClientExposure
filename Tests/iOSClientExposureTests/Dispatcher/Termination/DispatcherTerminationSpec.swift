@@ -18,6 +18,14 @@ class DispatcherTerminationSpec: QuickSpec {
     
     let deliverUndelivered = TerminationNetworkHandler()
     let persistUndelivered = TerminationNetworkHandler()
+    
+    let analytics: [String: Any] = [
+        "bucket": 55,
+        "postInterval": 60,
+        "tag":"default",
+        "percentage":100
+    ]
+    
     override func spec() {
         describe("Termination") {
             //
@@ -31,11 +39,13 @@ class DispatcherTerminationSpec: QuickSpec {
             //
             
             let event = Started(timestamp: 1000)
+            let decodedAnalytics = try? self.analytics.decode(AnalyticsFromEntitlement.self)
             
             it("Should disable flush trigger and heartbeats on termination") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.heartbeat(enabled: true)
                 dispatcher.flushTrigger(enabled: true)
@@ -48,6 +58,7 @@ class DispatcherTerminationSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics:decodedAnalytics,
                                             startupEvents: [event]) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 dispatcher.networkHandler = self.deliverUndelivered
                 dispatcher.terminate()

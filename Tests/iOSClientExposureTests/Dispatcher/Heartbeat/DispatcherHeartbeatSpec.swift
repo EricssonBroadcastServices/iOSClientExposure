@@ -16,15 +16,25 @@ class DispatcherHeartbeatSpec: QuickSpec {
     let environment = Environment(baseUrl: "url", customer: "DispatcherCustomer", businessUnit: "DispatcherBusinessUnit")
     let sessionToken = SessionToken(value: "crmToken|DispatcherAccountId1|userId|anotherField|1000|2000|false|field|finalField")
     
+    let analytics: [String: Any] = [
+        "bucket": 55,
+        "postInterval": 60,
+        "tag":"default",
+        "percentage":100
+    ]
+    
     override func spec() {
         describe("Heartbeats") {
             let event = Started(timestamp: 1000)
+            let decodedAnalytics = try? self.analytics.decode(AnalyticsFromEntitlement.self)
+            
             
             /// Heartbeats should be disabled by default
             it("Should have heartbeats disabled by default") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 expect(dispatcher.heartbeatsEnabled).to(beFalse())
             }
@@ -35,7 +45,7 @@ class DispatcherHeartbeatSpec: QuickSpec {
             it("Should not start delivering heartbeats before first event is sent") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
-                                            playSessionId: UUID().uuidString,
+                                            playSessionId: UUID().uuidString, analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 expect(dispatcher.heartbeatsEnabled).to(beFalse())
@@ -55,7 +65,7 @@ class DispatcherHeartbeatSpec: QuickSpec {
             it("Should deliver continuous heartbeats if enabled") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
-                                            playSessionId: UUID().uuidString,
+                                            playSessionId: UUID().uuidString, analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 
                 expect(dispatcher.heartbeatsEnabled).to(beFalse())
@@ -80,7 +90,7 @@ class DispatcherHeartbeatSpec: QuickSpec {
             it("Should not deliver heartbeats unless enabled") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
-                                            playSessionId: UUID().uuidString,
+                                            playSessionId: UUID().uuidString, analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let handler = HeartbeatNetworkHandler()
                 dispatcher.networkHandler = handler
@@ -102,7 +112,7 @@ class DispatcherHeartbeatSpec: QuickSpec {
             it("Should not deliver heartbeats if flush trigger is disabled") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
-                                            playSessionId: UUID().uuidString,
+                                            playSessionId: UUID().uuidString, analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let handler = HeartbeatNetworkHandler()
                 dispatcher.networkHandler = handler
