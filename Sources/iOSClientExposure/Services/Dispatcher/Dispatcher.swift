@@ -63,12 +63,13 @@ public class Dispatcher {
     /// Callback that will be fired whenever realtime analytics dispatch fails with an `ExposureResponseMessage`
     public var onExposureResponseMessage: (ExposureResponseMessage) -> Void = { _ in }
     
-    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent?, analyticsBaseUrl: String? = nil ) {
+    public init(environment: Environment, sessionToken: SessionToken, playSessionId: String, analytics: AnalyticsFromEntitlement?, startupEvents: [AnalyticsEvent], heartbeatsProvider: @escaping () -> AnalyticsEvent? ) {
+        
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                            environment: environment,
                                            playToken: playSessionId,
                                            payload: startupEvents,
-                                           analyticsBaseUrl: analyticsBaseUrl)
+                                           analytics: analytics)
         self.configuration = Configuration()
         self.heartbeatsProvider = heartbeatsProvider
         self.networkHandler = ExposureNetworkHandler()
@@ -117,14 +118,14 @@ public class Dispatcher {
                                      environment: current.environment,
                                      playToken: current.sessionId,
                                      payload: combinedPayload,
-                                     analyticsBaseUrl: current.analyticsBaseUrl)
+                                     analytics: current.analytics)
             self.undeliveredBatch = nil
         }
         
         currentBatch = AnalyticsBatch(sessionToken: currentBatch.sessionToken,
                                       environment: currentBatch.environment,
                                       playToken: currentBatch.sessionId,
-                                      analyticsBaseUrl: current.analyticsBaseUrl)
+                                      analytics:current.analytics)
         return current
     }
     
@@ -403,7 +404,7 @@ extension Dispatcher {
                                           environment: batch.environment,
                                           playToken: batch.sessionId,
                                           payload: combinedPayload,
-                                          analyticsBaseUrl: batch.analyticsBaseUrl)
+                                          analytics: batch.analytics)
     }
 }
 
@@ -517,7 +518,7 @@ extension Dispatcher {
                                                   environment: delivery.batch.environment,
                                                   playToken: delivery.batch.sessionId,
                                                   payload: delivery.batch.payload,
-                                                  analyticsBaseUrl: delivery.batch.analyticsBaseUrl)
+                                                  analytics: delivery.batch.analytics)
                 
                 networkHandler.deliver(batch: updatedBatch, clockOffset: configuration.synchronizedClockOffset) { response, error in
                     if response != nil {
@@ -654,6 +655,6 @@ extension Dispatcher {
                                       environment: currentBatch.environment,
                                       playToken: currentBatch.sessionId,
                                       payload: current,
-                                      analyticsBaseUrl: currentBatch.analyticsBaseUrl)
+                                      analytics: currentBatch.analytics)
     }
 }

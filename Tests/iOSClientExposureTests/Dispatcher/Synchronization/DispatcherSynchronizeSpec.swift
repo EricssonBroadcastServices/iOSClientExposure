@@ -15,6 +15,12 @@ import Nimble
 class DispatcherSynchronizeSpec: QuickSpec {
     let environment = Environment(baseUrl: "url", customer: "DispatcherCustomer", businessUnit: "DispatcherBusinessUnit")
     let sessionToken = SessionToken(value: "crmToken|DispatcherAccountId1|userId|anotherField|1000|2000|false|field|finalField")
+    let analytics: [String: Any] = [
+        "bucket": 55,
+        "postInterval": 60,
+        "tag":"default",
+        "percentage":100
+    ]
     
     override func spec() {
         describe("Termination") {
@@ -28,11 +34,13 @@ class DispatcherSynchronizeSpec: QuickSpec {
             //          - should update configuration.reportingTimeinterval
             //
             let event = Started(timestamp: 1000)
+            let decodedAnalytics = try? self.analytics.decode(AnalyticsFromEntitlement.self)
             
             it("Should forward errors during sync phase") {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics:decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let networkHandler = SynchronizeNetworkHandler()
                 networkHandler.failsToSync = true
@@ -48,6 +56,7 @@ class DispatcherSynchronizeSpec: QuickSpec {
                 let dispatcher = Dispatcher(environment: self.environment,
                                             sessionToken: self.sessionToken,
                                             playSessionId: UUID().uuidString,
+                                            analytics: decodedAnalytics,
                                             startupEvents: []) { return MockedHeartbeat(timestamp: Date().millisecondsSince1970, offsetTime: 1000) }
                 let networkHandler = SynchronizeNetworkHandler()
                 dispatcher.networkHandler = networkHandler
