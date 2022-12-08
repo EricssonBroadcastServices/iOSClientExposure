@@ -52,24 +52,28 @@ public struct DownloadInfo: Codable {
 
 
 public struct Audios: Codable {
-    public let name: String
-    public let bitrate: Int
-    public let language: String
-    public let fileSize: Int
-    public let hlsName: String
+    public let name: String?
+    public let bitrate: Int?
+    public let language: String?
+    public let fileSize: Int?
+    public let hlsName: String?
 }
  
 public struct Videos: Codable {
-    public let name: String
-    public let bitrate: Int
-    public let fileSize: Int
+    public let name: String?
+    public let bitrate: Int?
+    public let fileSize: Int?
+    public let language: String?
+    public let width: Int?
+    public let height: Int?
+    public let hlsName: String?
 }
 
 
 public struct Subtitles: Codable {
-    public let name: String
-    public let language: String
-    public let fileSize: Int
-    public let hlsName: String
+    public let name: String?
+    public let language: String?
+    public let fileSize: Int?
+    public let hlsName: String?
     
 }
