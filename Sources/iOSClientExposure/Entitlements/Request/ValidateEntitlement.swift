@@ -21,11 +21,14 @@ public struct ValidateEntitlement: ExposureType {
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
     
+    public let  programStartTime: String?
+    
 
-    public init(assetId: String, environment: Environment, sessionToken: SessionToken) {
+    public init(assetId: String, environment: Environment, sessionToken: SessionToken, programStartTime: String? = nil  ) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
+        self.programStartTime = programStartTime
     }
     
     public var endpointUrl: String {
@@ -35,7 +38,13 @@ public struct ValidateEntitlement: ExposureType {
     }
     
     public var parameters: [String: Any] {
-        return [:]
+        var parameters: [String: String] = [:]
+        if let programStartTime = programStartTime {
+            parameters["time"] = programStartTime
+            return parameters
+        } else {
+            return [:]
+        }
     }
     
     public var headers: [String: String]? {
