@@ -43,6 +43,9 @@ public struct AdsOptions {
     /// Desktop, Tablet, Mobile or TV
     public let deviceType: String?
     
+    /// Device model
+    public let deviceModel: String?
+    
     /// Device width
     public let width: NSNumber?
     
@@ -81,7 +84,7 @@ public struct AdsOptions {
     ///   - appName: app name
     ///   - appStoreUrl: appstore url
     ///   - gdprOptin: gdprOptin
-    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil , appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
+    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil , appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
         
         self.uid = uid
         self.autoplay = autoplay
@@ -98,6 +101,7 @@ public struct AdsOptions {
         self.appBundle = appBundle
         self.appStoreUrl = appStoreUrl
         self.gdprOptin = gdprOptin
+        self.deviceModel = deviceModel
     }
     
     
@@ -137,6 +141,12 @@ public struct AdsOptions {
             returnString["deviceMake"] = deviceMake
         } else {
             returnString["deviceMake"] = device.manufacturer
+        }
+        
+        if let deviceModel = deviceModel {
+            returnString["deviceModel"] = deviceModel
+        } else {
+            returnString["deviceModel"] = device.model
         }
         
         if let deviceType = deviceType {
