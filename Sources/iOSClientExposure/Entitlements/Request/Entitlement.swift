@@ -101,13 +101,13 @@ extension Entitlement {
     /// Checks if the user is entitled to the asset with assetId.
     ///
     /// - parameter assetId: asset to validate
-    /// - parameter programStartTime: program start time
+    /// - parameter entitlementDate: date/time to run the entitlement for ( ex : programStartTime + 1ms )
     /// - returns: `ValidateEntitlement` struct used to process the request
-    public func validate(assetId: String, programStartTime: String?) -> ValidateEntitlement {
+    public func validate(assetId: String, entitlementDate: String?) -> ValidateEntitlement {
         return ValidateEntitlement(assetId: assetId,
                                    environment: environment,
                                    sessionToken: sessionToken,
-                                   programStartTime: programStartTime )
+                                   entitlementDate: entitlementDate )
     }
     
     /// Checks if the user is entitled to the asset with assetId.

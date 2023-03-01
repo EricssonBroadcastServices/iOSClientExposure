@@ -48,7 +48,7 @@
 
 ## 3.1.600
 #### Changes
-* `EMP-19026` Add new param `epg` to play response. Pass `programStartTime` if available when doing `entitlement` request.
+* `EMP-19026` Add new param `epg` to play response. Pass `entitlementDate` if available when doing `entitlement` request.
 
 ## 3.1.500
 #### Changes

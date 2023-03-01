@@ -26,7 +26,7 @@ class ValidateEntitlementSpec: QuickSpec {
         env.version = "v2"
         
         let request = Entitlement(environment: env,sessionToken: sessionToken)
-            .validate(assetId: assetId, programStartTime: "12345")
+            .validate(assetId: assetId, entitlementDate: "12345")
         
         describe("ValidateEntitlement") {
             it("should have headers") {
