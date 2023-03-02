@@ -15,7 +15,7 @@ public struct Entitlement {
     
     /// `SessionToken` identifying the user making the request
     public let sessionToken: SessionToken
-    
+
     public init(environment: Environment, sessionToken: SessionToken) {
         self.environment = environment
         self.sessionToken = sessionToken
@@ -101,11 +101,13 @@ extension Entitlement {
     /// Checks if the user is entitled to the asset with assetId.
     ///
     /// - parameter assetId: asset to validate
+    /// - parameter entitlementDate: date/time to run the entitlement for ( ex : programStartTime + 1ms )
     /// - returns: `ValidateEntitlement` struct used to process the request
-    public func validate(assetId: String) -> ValidateEntitlement {
+    public func validate(assetId: String, entitlementDate: String?) -> ValidateEntitlement {
         return ValidateEntitlement(assetId: assetId,
                                    environment: environment,
-                                   sessionToken: sessionToken)
+                                   sessionToken: sessionToken,
+                                   entitlementDate: entitlementDate )
     }
     
     /// Checks if the user is entitled to the asset with assetId.

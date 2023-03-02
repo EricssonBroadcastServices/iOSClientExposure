@@ -47,6 +47,8 @@ public struct PlayBackEntitlementV2: Codable {
     public let cdn: CDNInfoFromEntitlement?
     
     public let durationInMs: Double?
+    
+    public let epg: EPG?
 }
 
 
@@ -76,6 +78,7 @@ extension PlayBackEntitlementV2 {
         analytics = try container.decodeIfPresent(AnalyticsFromEntitlement.self, forKey: .analytics)
         cdn = try container.decodeIfPresent(CDNInfoFromEntitlement.self, forKey: .cdn)
         durationInMs = try container.decodeIfPresent(Double.self, forKey: .durationInMs)
+        epg = try container.decodeIfPresent(EPG.self, forKey: .epg)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -98,6 +101,7 @@ extension PlayBackEntitlementV2 {
         case analytics
         case cdn
         case durationInMs
+        case epg
 
     }
 }
@@ -126,6 +130,7 @@ extension PlayBackEntitlementV2 {
         try container.encodeIfPresent(analytics, forKey: .analytics)
         try container.encodeIfPresent(cdn, forKey: .cdn)
         try container.encodeIfPresent(durationInMs, forKey: .durationInMs)
+        try container.encodeIfPresent(epg, forKey: .epg)
     }
 }
 
