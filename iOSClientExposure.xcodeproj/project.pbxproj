@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7831103727EC5988009B3114 /* UPGRADE_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */; };
+		78C50F4429CD88A900DCC7C5 /* EPG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C50F4329CD88A900DCC7C5 /* EPG.swift */; };
+		78C50F4529CD88A900DCC7C5 /* EPG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C50F4329CD88A900DCC7C5 /* EPG.swift */; };
 		78E6E12727EA189F00F12EC3 /* CustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */; };
 		78E6E12827EA18A000F12EC3 /* CustomerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */; };
 		78E6E12927EA18A000F12EC3 /* CustomerConfigFileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E03027EA189F00F12EC3 /* CustomerConfigFileRequest.swift */; };
@@ -397,6 +399,7 @@
 		7831103F27EC59A2009B3114 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		788C4AC427EA0E4700223283 /* iOSClientExposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		788C4C8D27EA0FC000223283 /* iOSClientExposure.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = iOSClientExposure.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		78C50F4329CD88A900DCC7C5 /* EPG.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EPG.swift; path = ApiPlayResponseV2/EPG.swift; sourceTree = "<group>"; };
 		78E6E02E27EA189F00F12EC3 /* CustomerConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfig.swift; sourceTree = "<group>"; };
 		78E6E03027EA189F00F12EC3 /* CustomerConfigFileRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfigFileRequest.swift; sourceTree = "<group>"; };
 		78E6E03127EA189F00F12EC3 /* CustomerConfigRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerConfigRequest.swift; sourceTree = "<group>"; };
@@ -1040,6 +1043,7 @@
 		78E6E0AD27EA189F00F12EC3 /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				78C50F4329CD88A900DCC7C5 /* EPG.swift */,
 				78E6E0AE27EA189F00F12EC3 /* DownloadCompleted.swift */,
 				78E6E0AF27EA189F00F12EC3 /* FairplayConfiguration.swift */,
 				78E6E0B027EA189F00F12EC3 /* PlaybackEntitlement.swift */,
@@ -1556,6 +1560,7 @@
 				78E6E27B27EA18AC00F12EC3 /* FetchEvent.swift in Sources */,
 				78E6E25927EA18AB00F12EC3 /* Environment.swift in Sources */,
 				78E6E1D927EA18A600F12EC3 /* FilteredLocale.swift in Sources */,
+				78C50F4429CD88A900DCC7C5 /* EPG.swift in Sources */,
 				78E6E25327EA18AB00F12EC3 /* FetchEpgChannel.swift in Sources */,
 				78E6E24527EA18AA00F12EC3 /* Airing.swift in Sources */,
 				78E6E22B27EA18A900F12EC3 /* GetDownloadableInfo.swift in Sources */,
@@ -1746,6 +1751,7 @@
 				78E6E27C27EA18AC00F12EC3 /* FetchEvent.swift in Sources */,
 				78E6E25A27EA18AB00F12EC3 /* Environment.swift in Sources */,
 				78E6E1DA27EA18A600F12EC3 /* FilteredLocale.swift in Sources */,
+				78C50F4529CD88A900DCC7C5 /* EPG.swift in Sources */,
 				78E6E25427EA18AB00F12EC3 /* FetchEpgChannel.swift in Sources */,
 				78E6E24627EA18AA00F12EC3 /* Airing.swift in Sources */,
 				78E6E22C27EA18A900F12EC3 /* GetDownloadableInfo.swift in Sources */,

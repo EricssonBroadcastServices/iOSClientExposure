@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 /// Client / device specific information that can be used for ad targeting
 ///
@@ -152,7 +152,8 @@ public struct AdsOptions {
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
-            returnString["deviceType"] = device.type.queryParam
+            
+            returnString["deviceType"] = device.type.ssaiDeviceType
         }
         
         if let width = width {
@@ -193,6 +194,23 @@ public struct AdsOptions {
         returnString["supportedFormats"] = "hls,mp3"
         returnString["supportedDrms"] = "fairplay"
 
+        
+        print(" SSAI ADS OPTIONS ==> " )
+        
+        print(" GET APPLE TV DEVICE MODEL ")
+        
+        let modelName = UIDevice.current.modelName
+        let appleTVAIdentifier = UIDevice.current.appleTVAIdentifier
+        let appleTVModelNumber = UIDevice.current.appleTVModelNumber
+        let appleTVModel = UIDevice.current.appleTVModel
+        
+        print("modelName => ", modelName )
+        print("appleTVAIdentifier => ", appleTVAIdentifier )
+        print("appleTVModelNumber => ", appleTVModelNumber )
+        print("appleTVModel => ", appleTVModel )
+        
+        // print(returnString)
+        
         return  returnString
     }
 }
