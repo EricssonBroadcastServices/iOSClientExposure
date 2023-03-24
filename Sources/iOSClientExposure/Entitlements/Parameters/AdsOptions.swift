@@ -52,8 +52,14 @@ public struct AdsOptions {
     /// Device height
     public let height: NSNumber?
     
-    /// User device ID
+    /// User advertising ID
     public let ifa: String?
+    
+    /// type of the advertising identifier : ex : If user has authorised tracking ,  ifaType  = "idfa"
+    public let ifaType: String?
+    
+    /// True if the user opted-out of ad tracking:
+    public let limitAdTracking: Bool?
     
     /// App bundle id
     public let appBundle: String?
@@ -84,7 +90,7 @@ public struct AdsOptions {
     ///   - appName: app name
     ///   - appStoreUrl: appstore url
     ///   - gdprOptin: gdprOptin
-    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil , appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
+    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
         
         self.uid = uid
         self.autoplay = autoplay
@@ -97,6 +103,8 @@ public struct AdsOptions {
         self.width = width
         self.height = height
         self.ifa = ifa
+        self.ifaType = ifaType
+        self.limitAdTracking = limitAdTracking
         self.appName = appName
         self.appBundle = appBundle
         self.appStoreUrl = appStoreUrl
@@ -146,13 +154,12 @@ public struct AdsOptions {
         if let deviceModel = deviceModel {
             returnString["deviceModel"] = deviceModel
         } else {
-            returnString["deviceModel"] = device.model
+            returnString["deviceModel"] = UIDevice.current.appleTVModel
         }
         
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
-            
             returnString["deviceType"] = device.type.ssaiDeviceType
         }
         
@@ -186,6 +193,14 @@ public struct AdsOptions {
             returnString["ifa"] = device.deviceId
         }
         
+        if let ifaType = ifaType {
+            returnString["ifaType"] = ifaType
+        }
+        
+        if let limitAdTracking = limitAdTracking {
+            returnString["limitAdTracking"] = limitAdTracking
+        }
+        
         if let gdprOptin = gdprOptin {
             returnString["gdprOptin"] = gdprOptin
         }
@@ -201,12 +216,12 @@ public struct AdsOptions {
         
         let modelName = UIDevice.current.modelName
         let appleTVAIdentifier = UIDevice.current.appleTVAIdentifier
-        let appleTVModelNumber = UIDevice.current.appleTVModelNumber
+        // let appleTVModelNumber = UIDevice.current.appleTVModelNumber
         let appleTVModel = UIDevice.current.appleTVModel
         
         print("modelName => ", modelName )
         print("appleTVAIdentifier => ", appleTVAIdentifier )
-        print("appleTVModelNumber => ", appleTVModelNumber )
+        // print("appleTVModelNumber => ", appleTVModelNumber )
         print("appleTVModel => ", appleTVModel )
         
         // print(returnString)
