@@ -43,8 +43,11 @@ public struct AdsOptions {
     /// Desktop, Tablet, Mobile or TV
     public let deviceType: String?
     
-    /// Device model
+    /// Device model : ( atv-1:atv-1: 1st generation (A1218) / atv-4k-2: 4K 2nd generation (A2169) etc. )
     public let deviceModel: String?
+    
+    /// Device Model number ( `A` number of Apple TV : A1218: 1st generation / A2169: 4K 2nd generation etc.)
+    public let deviceModelNumber: String?
     
     /// Device width
     public let width: NSNumber?
@@ -90,7 +93,7 @@ public struct AdsOptions {
     ///   - appName: app name
     ///   - appStoreUrl: appstore url
     ///   - gdprOptin: gdprOptin
-    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
+    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, deviceModelNumber: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
         
         self.uid = uid
         self.autoplay = autoplay
@@ -110,6 +113,7 @@ public struct AdsOptions {
         self.appStoreUrl = appStoreUrl
         self.gdprOptin = gdprOptin
         self.deviceModel = deviceModel
+        self.deviceModelNumber = deviceModelNumber
     }
     
     
@@ -151,16 +155,24 @@ public struct AdsOptions {
             returnString["deviceMake"] = device.manufacturer
         }
         
-        if let deviceModel = deviceModel {
-            returnString["deviceModel"] = deviceModel
-        } else {
-            returnString["deviceModel"] = UIDevice.current.appleTVModel
-        }
-        
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
             returnString["deviceType"] = device.type.ssaiDeviceType
+        }
+        
+        if let deviceModel = deviceModel {
+            returnString["deviceModel"] = deviceModel
+        } else {
+            // Should not set by the SDK at the moment
+            // returnString["deviceModel"] = UIDevice.current.appleTVModel
+        }
+        
+        if let deviceModelNumber = deviceModelNumber {
+            returnString["deviceModelNumber"] = deviceModelNumber
+        } else {
+            // Should not set by the SDK at the moment
+            // returnString["deviceModelNumber"] = UIDevice.current.appleTVModelNumber
         }
         
         if let width = width {
@@ -208,23 +220,6 @@ public struct AdsOptions {
         // Assumed that iOS / tvOS will only support below formats & drms
         returnString["supportedFormats"] = "hls,mp3"
         returnString["supportedDrms"] = "fairplay"
-
-        
-        print(" SSAI ADS OPTIONS ==> " )
-        
-        print(" GET APPLE TV DEVICE MODEL ")
-        
-        let modelName = UIDevice.current.modelName
-        let appleTVAIdentifier = UIDevice.current.appleTVAIdentifier
-        // let appleTVModelNumber = UIDevice.current.appleTVModelNumber
-        let appleTVModel = UIDevice.current.appleTVModel
-        
-        print("modelName => ", modelName )
-        print("appleTVAIdentifier => ", appleTVAIdentifier )
-        // print("appleTVModelNumber => ", appleTVModelNumber )
-        print("appleTVModel => ", appleTVModel )
-        
-        // print(returnString)
         
         return  returnString
     }
