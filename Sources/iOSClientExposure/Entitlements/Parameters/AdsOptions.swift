@@ -164,15 +164,13 @@ public struct AdsOptions {
         if let deviceModel = deviceModel {
             returnString["deviceModel"] = deviceModel
         } else {
-            // Should not set by the SDK at the moment
-            // returnString["deviceModel"] = UIDevice.current.appleTVModel
+            returnString["deviceModel"] = UIDevice.current.appleTVModel
         }
         
         if let deviceModelNumber = deviceModelNumber {
             returnString["deviceModelNumber"] = deviceModelNumber
         } else {
-            // Should not set by the SDK at the moment
-            // returnString["deviceModelNumber"] = UIDevice.current.appleTVModelNumber
+            returnString["deviceModelNumber"] = UIDevice.current.appleTVModelNumber
         }
         
         if let width = width {
