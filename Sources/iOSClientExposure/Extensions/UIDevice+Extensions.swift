@@ -60,7 +60,7 @@ extension UIDevice {
         }
     }
     
-    var appleTVModelNumber: String? {
+    /* var appleTVModelNumber: String? {
         guard self.userInterfaceIdiom == .tv else { return nil }
         var systemInfo = utsname()
         uname(&systemInfo)
@@ -81,7 +81,7 @@ extension UIDevice {
         case "AppleTV11,2", "AppleTV11,3": return "A2843"
         default: return "UNKNOWN"
         }
-    }
+    } */
     
     var appleTVAIdentifier: String? {
         var systemInfo = utsname()
