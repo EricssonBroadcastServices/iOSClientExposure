@@ -54,18 +54,37 @@ extension Entitlement {
                         sessionToken: sessionToken)
     }
     
-    
-    public func enigmaAsset(assetId: String, with adobePrimetimeMediaToken: String? = nil, use materialProfile: String? = nil ) -> PlayEnigmaAsset {
+    /// Play any asset 
+    /// - Parameters:
+    ///   - assetId: asset id
+    ///   - adobePrimetimeMediaToken: adobePrimetimeMediaToken
+    ///   - materialProfile: specific material variant : "default" material contains a full length movie, and a "TRAILER" material might contain only an extract: a virtual subclip generated using the VOD to VOD flow)
+    ///   - deviceMake: deviceMake : `Apple`
+    ///   - deviceModel: device model  ex `appletv-11-1 / iphone-12-5`
+    /// - Returns: `PlayEnigmaAsset` struct used to process the request
+    public func enigmaAsset(assetId: String, with adobePrimetimeMediaToken: String? = nil, use materialProfile: String? = nil, deviceMake:String? = nil, deviceModel: String? = nil ) -> PlayEnigmaAsset {
         return PlayEnigmaAsset(assetId: assetId,
                                environment: environment,
-                               sessionToken: sessionToken, adobePrimetimeMediaToken: adobePrimetimeMediaToken, materialProfile: materialProfile)
+                               sessionToken: sessionToken, adobePrimetimeMediaToken: adobePrimetimeMediaToken, materialProfile: materialProfile, deviceMake: deviceMake, deviceModel: deviceModel)
     }
     
-    public func enigmaAsset(assetId: String, includeAds adsOptions:AdsOptions, with adobePrimetimeMediaToken: String? = nil, use materialProfile: String? = nil, add customAdParams: [String: Any]? = nil ) -> PlayEnigmaAdsAsset {
+    
+    
+    /// Play Assets with Ads
+    /// - Parameters:
+    ///   - assetId: asset id
+    ///   - adsOptions: ssai specific ads options
+    ///   - adobePrimetimeMediaToken: adobePrimetimeMediaToken
+    ///   - materialProfile: specific material variant : "default" material contains a full length movie, and a "TRAILER" material might contain only an extract: a virtual subclip generated using the VOD to VOD flow
+    ///   - customAdParams: ssai specific custom ads params
+    ///   - deviceMake: deviceMake : `Apple`
+    ///   - deviceModel: device model  ex `appletv-11-1 / iphone-12-5`
+    /// - Returns: `PlayEnigmaAdsAsset` struct used to process the request
+    public func enigmaAsset(assetId: String, includeAds adsOptions:AdsOptions, with adobePrimetimeMediaToken: String? = nil, use materialProfile: String? = nil, add customAdParams: [String: Any]? = nil, deviceMake:String? = nil, deviceModel: String? = nil ) -> PlayEnigmaAdsAsset {
         return PlayEnigmaAdsAsset(assetId: assetId,
                                environment: environment,
                                sessionToken: sessionToken,
-                                  includeAdsOptions: adsOptions, adobePrimetimeMediaToken: adobePrimetimeMediaToken, materialProfile: materialProfile, customAdParams: customAdParams)
+                                  includeAdsOptions: adsOptions, adobePrimetimeMediaToken: adobePrimetimeMediaToken, materialProfile: materialProfile, customAdParams: customAdParams, deviceMake: deviceMake, deviceModel: deviceModel)
     }
     
     /// If the *entitlement checks* pass, will return the information needed to initialize the player for the requested streaming format.
@@ -91,11 +110,13 @@ extension Entitlement {
     /// * `format` HLS
     ///
     /// - parameter assetId: asset to request
+    /// - parameter deviceMake: deviceMake : `Apple`
+    /// - parameter deviceModel: device model ex `appletv-11-1 / iphone-12-5`
     /// - returns: `DownloadVod` struct used to process the request
-    public func download(assetId: String) -> DownloadVod {
+    public func download(assetId: String, deviceMake:String? = nil, deviceModel: String? = nil ) -> DownloadVod {
         return DownloadVod(assetId: assetId,
                            environment: environment,
-                           sessionToken: sessionToken)
+                           sessionToken: sessionToken, deviceMake: deviceMake , deviceModel: deviceModel)
     }
     
     /// Checks if the user is entitled to the asset with assetId.

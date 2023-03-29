@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 /// Play request for an asset with ads options
 public struct PlayEnigmaAdsAsset: ExposureType {
@@ -31,11 +31,16 @@ public struct PlayEnigmaAdsAsset: ExposureType {
     
     public let includeAdsOptions: AdsOptions
     
-    
     // Custom Ad params
     public let customAdParams: [String: Any]?
     
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, includeAdsOptions: AdsOptions, adobePrimetimeMediaToken: String?, materialProfile: String?, customAdParams: [String: Any]? ) {
+    /// manufacturer of device such as `Apple`
+    public let deviceMake: String?
+    
+    /// Device model : ( appletv-11-2 / iphone-12-5 etc. )
+    public let deviceModel: String?
+    
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, includeAdsOptions: AdsOptions, adobePrimetimeMediaToken: String?, materialProfile: String?, customAdParams: [String: Any]?, deviceMake: String? = nil , deviceModel:String? = nil) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
@@ -43,6 +48,8 @@ public struct PlayEnigmaAdsAsset: ExposureType {
         self.adobePrimetimeMediaToken = adobePrimetimeMediaToken
         self.materialProfile = materialProfile
         self.customAdParams = customAdParams
+        self.deviceMake = deviceMake
+        self.deviceModel = deviceModel
     }
     
     public var endpointUrl: String {
@@ -64,6 +71,22 @@ public struct PlayEnigmaAdsAsset: ExposureType {
                 parameters[adParam.key] = adParam.value
             }
         }
+        
+        // Device specific manifest filtering params
+        let device: Device = Device()
+        
+        if let deviceMake = deviceMake {
+            parameters["deviceMake"] = deviceMake
+        } else {
+            parameters["deviceMake"] = device.manufacturer.lowercased()
+        }
+
+        if let deviceModel = deviceModel {
+            parameters["deviceModel"] = deviceModel
+        } else {
+            parameters["deviceModel"] = UIDevice.current.appleDeviceModel
+        }
+        
         return parameters
         
     }

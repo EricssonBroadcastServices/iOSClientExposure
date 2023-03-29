@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Request a `PlaybackEntitlementV2` for *Asset* playback.
 ///
@@ -34,13 +35,20 @@ public struct PlayEnigmaAsset: ExposureType {
     // used to play a specific material variant : "default" material contains a full length movie, and a "TRAILER" material might contain only an extract: a virtual subclip generated using the VOD to VOD flow)
     public let materialProfile: String?
     
+    /// manufacturer of device such as `Apple`
+    public let deviceMake: String?
+    
+    /// Device model : ( appletv-11-2 / iphone-12-5 etc. )
+    public let deviceModel: String?
 
-    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, adobePrimetimeMediaToken: String?, materialProfile: String? ) {
+    internal init(assetId: String, environment: Environment, sessionToken: SessionToken, adobePrimetimeMediaToken: String?, materialProfile: String?, deviceMake: String? = nil , deviceModel:String? = nil ) {
         self.assetId = assetId
         self.environment = environment
         self.sessionToken = sessionToken
         self.adobePrimetimeMediaToken = adobePrimetimeMediaToken
         self.materialProfile = materialProfile
+        self.deviceMake = deviceMake
+        self.deviceModel = deviceModel
     }
     
     public var endpointUrl: String {
@@ -49,7 +57,6 @@ public struct PlayEnigmaAsset: ExposureType {
         return newEnvironment.apiUrl + "/entitlement/" + assetId + "/play"
     }
     
-
     public var parameters: [String: Any] {
         var parameters: [String: String] = [:]
         
@@ -61,6 +68,22 @@ public struct PlayEnigmaAsset: ExposureType {
         if let materialProfile = materialProfile {
             parameters["materialProfile"] = materialProfile
         }
+        
+        // Device specific manifest filtering params
+        let device: Device = Device()
+        
+        if let deviceMake = deviceMake {
+            parameters["deviceMake"] = deviceMake
+        } else {
+            parameters["deviceMake"] = device.manufacturer.lowercased()
+        }
+        
+        if let deviceModel = deviceModel {
+            parameters["deviceModel"] = deviceModel
+        } else {
+            parameters["deviceModel"] = UIDevice.current.appleDeviceModel
+        }
+        
         return parameters
     }
     

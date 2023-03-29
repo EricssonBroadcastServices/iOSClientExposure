@@ -49,7 +49,10 @@
 
 ## 3.1.700
 #### Changes
-* `EMP-19630` Provide device info as ad-params in play-requests
+* `EMP-19630` pass `deviceMake`, `deviceModel` when making entitlement calls for playback & downloads. 
+* `EMP-19630` Added new ssai params `ifa`, `ifaType` & `limitAdTracking`
+* `EMP-19630` change the value of the `deviceType` to `ctv,tablet or mobile` in ssai params in SDK as fallback values.  
+
 
 ## 3.1.600
 #### Changes

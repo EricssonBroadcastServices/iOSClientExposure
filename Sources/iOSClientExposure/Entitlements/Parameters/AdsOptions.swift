@@ -37,18 +37,10 @@ public struct AdsOptions {
     /// a consent string passed from various Consent Management Platforms (CMP’s)
     public let consent: String?
     
-    /// manufacturer of device such as Apple or Samsung
-    public let deviceMake: String?
-    
     /// Desktop, Tablet, Mobile or TV
     public let deviceType: String?
     
-    /// Device model : ( atv-1:atv-1: 1st generation (A1218) / atv-4k-2: 4K 2nd generation (A2169) etc. )
-    public let deviceModel: String?
-    
-    /// Device Model number ( `A` number of Apple TV : A1218: 1st generation / A2169: 4K 2nd generation etc.)
-    public let deviceModelNumber: String?
-    
+
     /// Device width
     public let width: NSNumber?
     
@@ -93,7 +85,7 @@ public struct AdsOptions {
     ///   - appName: app name
     ///   - appStoreUrl: appstore url
     ///   - gdprOptin: gdprOptin
-    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, deviceModelNumber: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
+    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil, deviceType: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
         
         self.uid = uid
         self.autoplay = autoplay
@@ -101,7 +93,6 @@ public struct AdsOptions {
         self.longitude = longitude
         self.mute = mute
         self.consent = consent
-        self.deviceMake = deviceMake
         self.deviceType = deviceType
         self.width = width
         self.height = height
@@ -112,8 +103,6 @@ public struct AdsOptions {
         self.appBundle = appBundle
         self.appStoreUrl = appStoreUrl
         self.gdprOptin = gdprOptin
-        self.deviceModel = deviceModel
-        self.deviceModelNumber = deviceModelNumber
     }
     
     
@@ -149,29 +138,10 @@ public struct AdsOptions {
             returnString["consent"] = consent
         }
         
-        if let deviceMake = deviceMake {
-            returnString["deviceMake"] = deviceMake
-        } else {
-            returnString["deviceMake"] = device.manufacturer
-        }
-        
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
             returnString["deviceType"] = device.type.ssaiDeviceType
-        }
-        
-        if let deviceModel = deviceModel {
-            returnString["deviceModel"] = deviceModel
-        } else {
-            returnString["deviceModel"] = UIDevice.current.appleTVModel
-        }
-        
-        if let deviceModelNumber = deviceModelNumber {
-            returnString["deviceModelNumber"] = deviceModelNumber
-        } else {
-            // Should not set by the SDK at the moment
-            // returnString["deviceModelNumber"] = UIDevice.current.appleTVModelNumber
         }
         
         if let width = width {
