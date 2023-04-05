@@ -55,7 +55,7 @@ public enum DeviceType {
         }
     }
     
-    /// Keys used to specify `DeviceType` as a query parameter for the request.
+    /// Keys used to specify `DeviceType` as a query parameter for the request. ( mainly used for `/login` & analytics )
     internal var queryParam: String {
         switch self {
         case .mobile: return "MOBILE"
@@ -67,8 +67,8 @@ public enum DeviceType {
     }
     
     
-    /// Keys used to specify `DeviceType` as a query parameter for the request.
-    internal var ssaiDeviceType: String {
+    /// Keys used to specify `DeviceType` as a query parameter for the `/play` request when using SSAI
+    internal var deviceTypeForPlay: String {
         switch self {
         case .mobile: return "mobile"
         case .tablet: return "tablet"
