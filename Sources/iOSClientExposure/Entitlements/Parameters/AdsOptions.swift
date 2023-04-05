@@ -177,13 +177,6 @@ public struct AdsOptions {
             returnString["limitAdTracking"] = limitAdTracking
         }
         
-        
-        // Should be removed
-        
-//        if let gdprOptin = gdprOptin {
-//            returnString["gdprOptin"] = gdprOptin
-//        }
-        
         // Assumed that iOS / tvOS will only support below formats & drms
         returnString["supportedFormats"] = "hls,mp3"
         returnString["supportedDrms"] = "fairplay"
