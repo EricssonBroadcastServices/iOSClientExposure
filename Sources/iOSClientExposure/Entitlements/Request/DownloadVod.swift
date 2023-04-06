@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 /// Request a `PlaybackEntitlement` for *DownloadVod*.
 ///
@@ -29,12 +30,21 @@ public struct DownloadVod: ExposureType, DRMRequest {
 
     /// `DRM` and *format* to request.
     public var playRequest: PlayRequest
+    
+    /// manufacturer of device such as `Apple`
+    public let deviceMake: String?
+    
+    /// Device model : ( appletv-11-2 / iphone-12-5 etc. )
+    public let deviceModel: String?
+    
 
-    internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken) {
+    internal init(assetId: String, playRequest: PlayRequest = PlayRequest(), environment: Environment, sessionToken: SessionToken, deviceMake: String? = nil , deviceModel:String? = nil ) {
         self.assetId = assetId
         self.playRequest = playRequest
         self.environment = environment
         self.sessionToken = sessionToken
+        self.deviceMake = deviceMake
+        self.deviceModel = deviceModel
     }
 
     public var endpointUrl: String {
@@ -44,7 +54,24 @@ public struct DownloadVod: ExposureType, DRMRequest {
     }
 
     public var parameters: [String:Any] {
-        return [:]
+        
+        // Device specific manifest filtering params
+        var returnString: [String: Any] = [:]
+        
+        let device: Device = Device()
+        if let deviceMake = deviceMake {
+            returnString["deviceMake"] = deviceMake
+        } else {
+            returnString["deviceMake"] = device.manufacturer.lowercased()
+        }
+
+        if let deviceModel = deviceModel {
+            returnString["deviceModel"] = deviceModel
+        } else {
+            returnString["deviceModel"] = UIDevice.current.appleDeviceModel
+        }
+        
+        return returnString
     }
 
     public var headers: [String: String]? {

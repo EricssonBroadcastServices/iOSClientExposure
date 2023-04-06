@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import UIKit
 
 /// Client / device specific information that can be used for ad targeting
 ///
@@ -37,23 +37,23 @@ public struct AdsOptions {
     /// a consent string passed from various Consent Management Platforms (CMP’s)
     public let consent: String?
     
-    /// manufacturer of device such as Apple or Samsung
-    public let deviceMake: String?
-    
     /// Desktop, Tablet, Mobile or TV
     public let deviceType: String?
-    
-    /// Device model
-    public let deviceModel: String?
-    
+
     /// Device width
     public let width: NSNumber?
     
     /// Device height
     public let height: NSNumber?
     
-    /// User device ID
+    /// User advertising ID
     public let ifa: String?
+    
+    /// type of the advertising identifier : ex : If user has authorised tracking ,  ifaType  = "idfa"
+    public let ifaType: String?
+    
+    /// True if the user opted-out of ad tracking:
+    public let limitAdTracking: Bool?
     
     /// App bundle id
     public let appBundle: String?
@@ -64,8 +64,6 @@ public struct AdsOptions {
     /// App store url
     public let appStoreUrl: String?
     
-    /// a flag for European Union traffic consenting to advertising
-    public let gdprOptin: Bool?
     
     /// Specifies optional AdsOptions
     /// - Parameters:
@@ -83,8 +81,7 @@ public struct AdsOptions {
     ///   - appBundle: app bundle id
     ///   - appName: app name
     ///   - appStoreUrl: appstore url
-    ///   - gdprOptin: gdprOptin
-    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil , deviceMake:String? = nil, deviceType: String? = nil, deviceModel: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil , appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil, gdprOptin:Bool? = nil ) {
+    public init(uid:String? = nil, autoplay: Bool? = nil,  latitude:NSNumber? = nil , longitude:NSNumber? = nil ,  mute:Bool? = nil , consent:String? = nil, deviceType: String? = nil, width: NSNumber? = nil, height: NSNumber? = nil, ifa:String? = nil, ifaType:String? = nil, limitAdTracking: Bool? = nil, appBundle: String? = nil, appName: String? = nil, appStoreUrl: String? = nil ) {
         
         self.uid = uid
         self.autoplay = autoplay
@@ -92,16 +89,15 @@ public struct AdsOptions {
         self.longitude = longitude
         self.mute = mute
         self.consent = consent
-        self.deviceMake = deviceMake
         self.deviceType = deviceType
         self.width = width
         self.height = height
         self.ifa = ifa
+        self.ifaType = ifaType
+        self.limitAdTracking = limitAdTracking
         self.appName = appName
         self.appBundle = appBundle
         self.appStoreUrl = appStoreUrl
-        self.gdprOptin = gdprOptin
-        self.deviceModel = deviceModel
     }
     
     
@@ -137,22 +133,10 @@ public struct AdsOptions {
             returnString["consent"] = consent
         }
         
-        if let deviceMake = deviceMake {
-            returnString["deviceMake"] = deviceMake
-        } else {
-            returnString["deviceMake"] = device.manufacturer
-        }
-        
-        if let deviceModel = deviceModel {
-            returnString["deviceModel"] = deviceModel
-        } else {
-            returnString["deviceModel"] = device.model
-        }
-        
         if let deviceType = deviceType {
             returnString["deviceType"] = deviceType
         } else {
-            returnString["deviceType"] = device.type.queryParam
+            returnString["deviceType"] = device.type.deviceTypeForPlay
         }
         
         if let width = width {
@@ -185,14 +169,18 @@ public struct AdsOptions {
             returnString["ifa"] = device.deviceId
         }
         
-        if let gdprOptin = gdprOptin {
-            returnString["gdprOptin"] = gdprOptin
+        if let ifaType = ifaType {
+            returnString["ifaType"] = ifaType
+        }
+        
+        if let limitAdTracking = limitAdTracking {
+            returnString["limitAdTracking"] = limitAdTracking
         }
         
         // Assumed that iOS / tvOS will only support below formats & drms
         returnString["supportedFormats"] = "hls,mp3"
         returnString["supportedDrms"] = "fairplay"
-
+        
         return  returnString
     }
 }

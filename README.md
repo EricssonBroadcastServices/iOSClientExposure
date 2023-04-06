@@ -35,7 +35,7 @@
 ## Requirements
 
 * `iOS` 9.0+
-* `tvOS` 9.0+
+* `tvOS` 10.0+
 * `Swift` 4.0+
 * `Xcode` 9.0+
 
@@ -49,7 +49,7 @@ The Swift Package Manager is a tool for automating the distribution of Swift cod
 Once you have your Swift package set up, adding `iOSClientExposure` as a dependency is as easy as adding it to the dependencies value of your Package.swift.
 ```sh
 dependencies: [
-    .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.1.6")
+    .package(url: "https://github.com/EricssonBroadcastServices/iOSClientExposure", from: "3.1.7")
 ]
 ```
 
@@ -77,7 +77,7 @@ Finally, make sure you add the `.framework`s to your targets *General -> Embedde
 CocoaPods is a dependency manager for Cocoa projects. For usage and installation instructions, visit their website. To integrate `iOSClientExposure` into your Xcode project using CocoaPods, specify it in your Podfile:
 
 ```sh
-pod 'iOSClientExposure', '~>  3.1.6'
+pod 'iOSClientExposure', '~>  3.1.7'
 ```
 
 ## Getting Started

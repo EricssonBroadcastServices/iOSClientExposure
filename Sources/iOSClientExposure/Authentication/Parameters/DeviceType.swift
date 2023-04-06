@@ -13,6 +13,7 @@ public enum DeviceType {
     case mobile
     case tablet
     case appleTv
+    case airplay
     case other(string: String)
     
     internal init?(string: String?) {
@@ -25,6 +26,7 @@ public enum DeviceType {
         case "MOBILE": self = .mobile
         case "TABLET": self = .tablet
         case "APPLE_TV": self = .appleTv
+        case "airplay": self = .airplay
         default: self = .other(string: string)
         }
     }
@@ -53,12 +55,25 @@ public enum DeviceType {
         }
     }
     
-    /// Keys used to specify `DeviceType` as a query parameter for the request.
+    /// Keys used to specify `DeviceType` as a query parameter for the request. ( mainly used for `/login` & analytics )
     internal var queryParam: String {
         switch self {
         case .mobile: return "MOBILE"
         case .tablet: return "TABLET"
         case .appleTv: return "APPLE_TV"
+        case .airplay: return "airplay"
+        case .other(string: let value): return value
+        }
+    }
+    
+    
+    /// Keys used to specify `DeviceType` as a query parameter for the `/play` request when using SSAI
+    internal var deviceTypeForPlay: String {
+        switch self {
+        case .mobile: return "mobile"
+        case .tablet: return "tablet"
+        case .appleTv: return "ctv"
+        case .airplay: return "airplay"
         case .other(string: let value): return value
         }
     }
