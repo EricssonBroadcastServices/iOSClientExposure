@@ -86,31 +86,82 @@ platform :ios do
         end
     end
     
-    # Private lanes
 
-    desc "Build project using spm"
-    lane :build_spm do
+    desc "Build Xcode project "
+    lane :build_xcode_project do
 
-        sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
+      #fastlane gym --project "iOSClientExposure.xcodeproj" --scheme "iOSClientExposure" --skip_package_ipa true --clean 
+
+      build_app(
+        project: "iOSClientExposure.xcodeproj",
+        configuration: "Release",
+        scheme: "iOSClientExposure",
+        silent: true,
+        clean: true,
+        skip_package_ipa: true
+      )
         UI.success("== iOS Project Build Success ==")
 
-        sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
+      build_app(
+        project: "iOSClientExposure.xcodeproj",
+        configuration: "Release",
+        scheme: "iOSClientExposure-tvOS",
+        silent: true,
+        clean: true,
+        skip_package_ipa: true
+      )
         UI.success("== tvOS Project Build Success ==")
 
-
+     
     end
 
-    desc "Build project using spm"
+
+    desc "Run unit tests"
     lane :run_spm_tests do
 
-        # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
-        # UI.success("== iOS Project Unit Tests were Success ==")
+        run_tests(
+          workspace: '.swiftpm/xcode/package.xcworkspace', # ignore .xcodeproj if it exists
+          devices: ['iPhone 13 Pro Max'],
+          scheme: 'iOSClientExposure',
+          derived_data_path: '/Users/udaya/EricssonBroadcastServices/test',
+          slack_url:'https://hooks.slack.com/services/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'
+        )
 
-        # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
-        # UI.success("== tvOS Project Unit Tests were Success ==")
+        UI.success("== iOS Unit tests were Success ==")
 
+         run_tests(
+          workspace: '.swiftpm/xcode/package.xcworkspace', # ignore .xcodeproj if it exists
+          devices: ['Apple TV'],
+          scheme: 'iOSClientExposure-tvOS',
+          derived_data_path: '/Users/udaya/EricssonBroadcastServices/test',
+          slack_url:'https://hooks.slack.com/services/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'
+        )
+
+        UI.success("== iOS Unit tests were Success ==")
 
     end
+
+    desc "Validate pod spec"
+    lane :validate_pod do
+     
+      sh 'cd .. && pod lib lint --allow-warnings'
+      UI.success("== Pod Validation passed ==")
+
+    end
+
+
+
+    # desc "Build project using spm"
+    # lane :run_spm_tests do
+
+    #     # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
+    #     # UI.success("== iOS Project Unit Tests were Success ==")
+
+    #     # sh 'swift test -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
+    #     # UI.success("== tvOS Project Unit Tests were Success ==")
+
+
+    # end
 
     desc "Runs all the tests"
     lane :run_unit_tests do
