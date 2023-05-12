@@ -117,14 +117,17 @@ platform :ios do
 
 
     desc "Run unit tests"
-    lane :run_spm_tests do
+    lane :run_spm_tests do |options|
+
+      workspace =  "#{options[:workspace]}"
+      slackUrl =  "#{options[:slackUrl]}"
 
         run_tests(
           workspace: '.swiftpm/xcode/package.xcworkspace', # ignore .xcodeproj if it exists
           devices: ['iPhone 13 Pro Max'],
           scheme: 'iOSClientExposure',
-          derived_data_path: '/Users/udaya/EricssonBroadcastServices/test',
-          slack_url:'https://hooks.slack.com/services/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'
+          derived_data_path: '#{workspace}/unit_tests',
+          slack_url:slackUrl
         )
 
         UI.success("== iOS Unit tests were Success ==")
@@ -133,8 +136,8 @@ platform :ios do
           workspace: '.swiftpm/xcode/package.xcworkspace', # ignore .xcodeproj if it exists
           devices: ['Apple TV'],
           scheme: 'iOSClientExposure-tvOS',
-          derived_data_path: '/Users/udaya/EricssonBroadcastServices/test',
-          slack_url:'https://hooks.slack.com/services/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'
+          derived_data_path: '#{workspace}/unit_tests',
+          slack_url:slackUrl
         )
 
         UI.success("== iOS Unit tests were Success ==")

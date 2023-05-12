@@ -44,7 +44,7 @@ node("Players iMac") {
             sh """
                 #!/bin/bash
                 cd ${workspace}
-                fastlane ios run_spm_tests
+                fastlane ios run_spm_tests workspace:${workspace} slackUrl:${SLACK_URL}
             """ 
 
             echo "Unit Tests were successfully completed 🎉"
