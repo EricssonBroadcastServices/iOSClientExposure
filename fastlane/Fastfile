@@ -152,6 +152,21 @@ platform :ios do
 
     end
 
+    desc "Version bump"
+    lane :increment_versions do |options|
+
+      bump_type =  "#{options[:bump_type]}"
+     
+      version = version_bump_podspec(path: "iOSClientExposure.podspec", bump_type: bump_type)
+
+      increment_build_number_in_plist(target: 'iOSClientExposure')
+      increment_version_number_in_plist(target: 'iOSClientExposure' ,  bump_type: bump_type )
+
+
+      UI.success("== Version bump success ==")
+
+    end
+
 
 
     # desc "Build project using spm"

@@ -65,6 +65,23 @@ node("Players iMac") {
             echo "Pod validation success 🎉"
         }
 
+        stage('Version bumps 🎣') {
+
+            echo "Start increamenting the  Versions 🚗"
+
+            def workspace = pwd()
+
+            def version = ""
+
+            sh """
+                #!/bin/bash
+                cd ${workspace}
+                fastlane ios increment_versions bump_type:${bump_type}
+            """ 
+            
+            echo "Version bumps  success 🎉"
+        }
+
     } catch(e) {
         echo "Showing error::::::::::::"
         echo "Error has occured ${e}"
