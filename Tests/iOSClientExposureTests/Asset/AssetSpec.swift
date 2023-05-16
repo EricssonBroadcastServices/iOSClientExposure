@@ -56,7 +56,7 @@ class AssetSpec: QuickSpec {
                 expect(result?.rating).toNot(beNil())
                 expect(result?.markers).toNot(beNil())
                 expect(result?.userData).toNot(beNil())
-                expect(result?.duration).toNot(beNil())
+                expect(result?.assetFeatures).toNot(beNil())
             }
             
             it("should init with required keys") {
@@ -140,6 +140,7 @@ extension AssetSpec {
         static let userData = AssetUserDataSpec.AssetUserDataJSON.valid()
         static let duration = 100
         static let markerPoints = [MarkerPointsSpec.MarkerPointsJSON.valid()]
+        static let assetFeatures = [AssetFeatureSpec.AssetFeatureJSON.valid()]
         
         static func valid() -> [String: Any] {
             return [
@@ -176,7 +177,8 @@ extension AssetSpec {
                 "markers": AssetJSON.markers,
                 "userData": AssetJSON.userData,
                 "duration": AssetJSON.duration,
-                "markerPoints": AssetJSON.markerPoints
+                "markerPoints": AssetJSON.markerPoints,
+                "assetFeatures": AssetJSON.assetFeatures
             ]
         }
         

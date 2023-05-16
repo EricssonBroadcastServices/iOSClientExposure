@@ -6,6 +6,7 @@
 
 # Exposure
 
+* [AssetFeatures](#AssetFeatures)
 * [Features](#features)
 * [License](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/LICENSE)
 * [Requirements](#requirements)
@@ -21,6 +22,7 @@
 * [Upgrade Guides](#upgrade-guides)
 
 ## Features
+- [x] Asset Features
 - [x] Asset search
 - [x] Authentication
 - [x] Playback Entitlement requests

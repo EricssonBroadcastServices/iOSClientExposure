@@ -368,22 +368,6 @@
 		78E6E28C27EA18AD00F12EC3 /* EncryptionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11A27EA189F00F12EC3 /* EncryptionProvider.swift */; };
 		78E6E28D27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */; };
 		78E6E28E27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */; };
-		78E6E28F27EA18AD00F12EC3 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11F27EA189F00F12EC3 /* NSString+Base64.m */; };
-		78E6E29027EA18AD00F12EC3 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11F27EA189F00F12EC3 /* NSString+Base64.m */; };
-		78E6E29127EA18AD00F12EC3 /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12027EA189F00F12EC3 /* NSData+Base64.h */; };
-		78E6E29227EA18AD00F12EC3 /* NSData+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12027EA189F00F12EC3 /* NSData+Base64.h */; };
-		78E6E29327EA18AE00F12EC3 /* NSData+CommonCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12127EA189F00F12EC3 /* NSData+CommonCrypto.h */; };
-		78E6E29427EA18AE00F12EC3 /* NSData+CommonCrypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12127EA189F00F12EC3 /* NSData+CommonCrypto.h */; };
-		78E6E29527EA18AE00F12EC3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12227EA189F00F12EC3 /* Crypto.h */; };
-		78E6E29627EA18AE00F12EC3 /* Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12227EA189F00F12EC3 /* Crypto.h */; };
-		78E6E29727EA18AE00F12EC3 /* NSString+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12327EA189F00F12EC3 /* NSString+Base64.h */; };
-		78E6E29827EA18AE00F12EC3 /* NSString+Base64.h in Headers */ = {isa = PBXBuildFile; fileRef = 78E6E12327EA189F00F12EC3 /* NSString+Base64.h */; };
-		78E6E29927EA18AE00F12EC3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12427EA189F00F12EC3 /* Crypto.m */; };
-		78E6E29A27EA18AE00F12EC3 /* Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12427EA189F00F12EC3 /* Crypto.m */; };
-		78E6E29B27EA18AE00F12EC3 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */; };
-		78E6E29C27EA18AE00F12EC3 /* NSData+CommonCrypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */; };
-		78E6E29D27EA18AE00F12EC3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12627EA189F00F12EC3 /* NSData+Base64.m */; };
-		78E6E29E27EA18AE00F12EC3 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E12627EA189F00F12EC3 /* NSData+Base64.m */; };
 		78FD660228E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
 		78FD660328E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
 /* End PBXBuildFile section */
@@ -580,14 +564,6 @@
 		78E6E11927EA189F00F12EC3 /* StorageProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageProvider.swift; sourceTree = "<group>"; };
 		78E6E11A27EA189F00F12EC3 /* EncryptionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EncryptionProvider.swift; sourceTree = "<group>"; };
 		78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherNetworkHandler.swift; sourceTree = "<group>"; };
-		78E6E11F27EA189F00F12EC3 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
-		78E6E12027EA189F00F12EC3 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
-		78E6E12127EA189F00F12EC3 /* NSData+CommonCrypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+CommonCrypto.h"; sourceTree = "<group>"; };
-		78E6E12227EA189F00F12EC3 /* Crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crypto.h; sourceTree = "<group>"; };
-		78E6E12327EA189F00F12EC3 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
-		78E6E12427EA189F00F12EC3 /* Crypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crypto.m; sourceTree = "<group>"; };
-		78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+CommonCrypto.m"; sourceTree = "<group>"; };
-		78E6E12627EA189F00F12EC3 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
 		78E6E29F27EA18F400F12EC3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78FD660128E2E6E70074B31E /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -630,7 +606,6 @@
 				7831103827EC5990009B3114 /* README.md */,
 				7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */,
 				78E6E02B27EA189F00F12EC3 /* iOSClientExposure */,
-				78E6E11C27EA189F00F12EC3 /* iOSClientExposureObjc */,
 				788C4AC527EA0E4700223283 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1315,38 +1290,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		78E6E11C27EA189F00F12EC3 /* iOSClientExposureObjc */ = {
-			isa = PBXGroup;
-			children = (
-				78E6E11D27EA189F00F12EC3 /* Dependencies */,
-			);
-			name = iOSClientExposureObjc;
-			path = Sources/iOSClientExposureObjc;
-			sourceTree = "<group>";
-		};
-		78E6E11D27EA189F00F12EC3 /* Dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				78E6E11E27EA189F00F12EC3 /* Crypto */,
-			);
-			path = Dependencies;
-			sourceTree = "<group>";
-		};
-		78E6E11E27EA189F00F12EC3 /* Crypto */ = {
-			isa = PBXGroup;
-			children = (
-				78E6E11F27EA189F00F12EC3 /* NSString+Base64.m */,
-				78E6E12027EA189F00F12EC3 /* NSData+Base64.h */,
-				78E6E12127EA189F00F12EC3 /* NSData+CommonCrypto.h */,
-				78E6E12227EA189F00F12EC3 /* Crypto.h */,
-				78E6E12327EA189F00F12EC3 /* NSString+Base64.h */,
-				78E6E12427EA189F00F12EC3 /* Crypto.m */,
-				78E6E12527EA189F00F12EC3 /* NSData+CommonCrypto.m */,
-				78E6E12627EA189F00F12EC3 /* NSData+Base64.m */,
-			);
-			path = Crypto;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1354,11 +1297,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78E6E29127EA18AD00F12EC3 /* NSData+Base64.h in Headers */,
 				78E6E1B127EA18A500F12EC3 /* Exposure.h in Headers */,
-				78E6E29327EA18AE00F12EC3 /* NSData+CommonCrypto.h in Headers */,
-				78E6E29527EA18AE00F12EC3 /* Crypto.h in Headers */,
-				78E6E29727EA18AE00F12EC3 /* NSString+Base64.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1366,11 +1305,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78E6E29227EA18AD00F12EC3 /* NSData+Base64.h in Headers */,
 				78E6E1B227EA18A500F12EC3 /* Exposure.h in Headers */,
-				78E6E29427EA18AE00F12EC3 /* NSData+CommonCrypto.h in Headers */,
-				78E6E29627EA18AE00F12EC3 /* Crypto.h in Headers */,
-				78E6E29827EA18AE00F12EC3 /* NSString+Base64.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1546,7 +1481,6 @@
 				78E6E15D27EA18A100F12EC3 /* LinkedEntity.swift in Sources */,
 				78E6E19927EA18A400F12EC3 /* JSONEncoding.swift in Sources */,
 				78E6E26927EA18AC00F12EC3 /* Login.swift in Sources */,
-				78E6E28F27EA18AD00F12EC3 /* NSString+Base64.m in Sources */,
 				78E6E1CD27EA18A600F12EC3 /* Error+Extensions.swift in Sources */,
 				78E6E17327EA18A200F12EC3 /* AssetUserData.swift in Sources */,
 				78E6E12927EA18A000F12EC3 /* CustomerConfigFileRequest.swift in Sources */,
@@ -1589,7 +1523,6 @@
 				78E6E19327EA18A300F12EC3 /* TaskDelegate.swift in Sources */,
 				78E6E21727EA18A900F12EC3 /* SendDownloadRenewed.swift in Sources */,
 				78E6E21B27EA18A900F12EC3 /* PlayVod.swift in Sources */,
-				78E6E29D27EA18AE00F12EC3 /* NSData+Base64.m in Sources */,
 				78E6E1A127EA18A400F12EC3 /* Request.swift in Sources */,
 				78E6E13F27EA18A000F12EC3 /* FetchRatingsList.swift in Sources */,
 				78E6E18127EA18A300F12EC3 /* ElasticSearch.swift in Sources */,
@@ -1635,7 +1568,6 @@
 				78E6E28B27EA18AD00F12EC3 /* EncryptionProvider.swift in Sources */,
 				78E6E18D27EA18A300F12EC3 /* FetchAsset.swift in Sources */,
 				78E6E20727EA18A800F12EC3 /* Downloadinfo.swift in Sources */,
-				78E6E29927EA18AE00F12EC3 /* Crypto.m in Sources */,
 				78E6E16727EA18A200F12EC3 /* AssetRights.swift in Sources */,
 				78E6E14F27EA18A100F12EC3 /* PersistedAnalyticsPayload.swift in Sources */,
 				78E6E1C327EA18A500F12EC3 /* UIDevice+Extensions.swift in Sources */,
@@ -1649,7 +1581,6 @@
 				78E6E1AB27EA18A400F12EC3 /* UserDetailsRequestParameters.swift in Sources */,
 				78E6E22927EA18A900F12EC3 /* GetAllDownloads.swift in Sources */,
 				78E6E1C727EA18A600F12EC3 /* URL+Extensions.swift in Sources */,
-				78E6E29B27EA18AE00F12EC3 /* NSData+CommonCrypto.m in Sources */,
 				78E6E1AD27EA18A400F12EC3 /* UpdateUserDetails.swift in Sources */,
 				78E6E1FD27EA18A800F12EC3 /* StreamInfo.swift in Sources */,
 				78E6E28327EA18AD00F12EC3 /* PersistedAnalytics.swift in Sources */,
@@ -1737,7 +1668,6 @@
 				78E6E15E27EA18A100F12EC3 /* LinkedEntity.swift in Sources */,
 				78E6E19A27EA18A400F12EC3 /* JSONEncoding.swift in Sources */,
 				78E6E26A27EA18AC00F12EC3 /* Login.swift in Sources */,
-				78E6E29027EA18AD00F12EC3 /* NSString+Base64.m in Sources */,
 				78E6E1CE27EA18A600F12EC3 /* Error+Extensions.swift in Sources */,
 				78E6E17427EA18A200F12EC3 /* AssetUserData.swift in Sources */,
 				78E6E12A27EA18A000F12EC3 /* CustomerConfigFileRequest.swift in Sources */,
@@ -1780,7 +1710,6 @@
 				78E6E19427EA18A300F12EC3 /* TaskDelegate.swift in Sources */,
 				78E6E21827EA18A900F12EC3 /* SendDownloadRenewed.swift in Sources */,
 				78E6E21C27EA18A900F12EC3 /* PlayVod.swift in Sources */,
-				78E6E29E27EA18AE00F12EC3 /* NSData+Base64.m in Sources */,
 				78E6E1A227EA18A400F12EC3 /* Request.swift in Sources */,
 				78E6E14027EA18A000F12EC3 /* FetchRatingsList.swift in Sources */,
 				78E6E18227EA18A300F12EC3 /* ElasticSearch.swift in Sources */,
@@ -1826,7 +1755,6 @@
 				78E6E28C27EA18AD00F12EC3 /* EncryptionProvider.swift in Sources */,
 				78E6E18E27EA18A300F12EC3 /* FetchAsset.swift in Sources */,
 				78E6E20827EA18A800F12EC3 /* Downloadinfo.swift in Sources */,
-				78E6E29A27EA18AE00F12EC3 /* Crypto.m in Sources */,
 				78E6E16827EA18A200F12EC3 /* AssetRights.swift in Sources */,
 				78E6E15027EA18A100F12EC3 /* PersistedAnalyticsPayload.swift in Sources */,
 				78E6E1C427EA18A500F12EC3 /* UIDevice+Extensions.swift in Sources */,
@@ -1840,7 +1768,6 @@
 				78E6E1AC27EA18A400F12EC3 /* UserDetailsRequestParameters.swift in Sources */,
 				78E6E22A27EA18A900F12EC3 /* GetAllDownloads.swift in Sources */,
 				78E6E1C827EA18A600F12EC3 /* URL+Extensions.swift in Sources */,
-				78E6E29C27EA18AE00F12EC3 /* NSData+CommonCrypto.m in Sources */,
 				78E6E1AE27EA18A400F12EC3 /* UpdateUserDetails.swift in Sources */,
 				78E6E1FE27EA18A800F12EC3 /* StreamInfo.swift in Sources */,
 				78E6E28427EA18AD00F12EC3 /* PersistedAnalytics.swift in Sources */,
@@ -1996,7 +1923,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.700;
+				MARKETING_VERSION = 3.2.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
@@ -2029,7 +1956,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.1.700;
+				MARKETING_VERSION = 3.2.00;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
