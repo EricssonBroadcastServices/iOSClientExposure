@@ -162,6 +162,10 @@ platform :ios do
       increment_build_number_in_plist(target: 'iOSClientExposure')
       increment_version_number_in_plist(target: 'iOSClientExposure' ,  bump_type: bump_type )
 
+      commit_version_bump(
+        message: "Version Bump",# create a commit with a custom message
+         include: %w[iOSClientExposure.podspec]
+      )
 
       UI.success("== Version bump success ==")
 
