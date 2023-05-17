@@ -49,7 +49,7 @@
 
 ## 3.2.0
 #### Changes
-* `EMP-19801` Add new param `Asset Features` to Asset response.
+* `EMP-19801` Add new param `AssetFeatures` to Asset response.
 
 ## 3.1.700
 #### Changes
