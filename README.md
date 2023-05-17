@@ -5,8 +5,6 @@
 [![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
 
 # Exposure
-
-* [AssetFeatures](#AssetFeatures)
 * [Features](#features)
 * [License](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/LICENSE)
 * [Requirements](#requirements)
@@ -22,7 +20,6 @@
 * [Upgrade Guides](#upgrade-guides)
 
 ## Features
-- [x] Asset Features
 - [x] Asset search
 - [x] Authentication
 - [x] Playback Entitlement requests
