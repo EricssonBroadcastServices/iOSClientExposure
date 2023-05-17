@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 spec.name         = "iOSClientExposure"
-spec.version      = "3.1.700"
+spec.version      = "3.2.0"
 spec.summary      = "RedBeeMedia iOS SDK Exposure Module"
 spec.homepage     = "https://github.com/EricssonBroadcastServices"
 spec.license      = { :type => "Apache", :file => "https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/LICENSE" }

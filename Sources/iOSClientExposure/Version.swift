@@ -8,4 +8,4 @@
 import Foundation
 
 /// Global constant for framework version
-public let ExposureVersion = "3.1.700"
+public let ExposureVersion = "3.2.0"

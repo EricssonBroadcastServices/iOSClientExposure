@@ -106,6 +106,9 @@ public struct Asset {
     
     /// Player Cue points : INTRO / POINT / CHAPTER  / CREDITS etc
     public var markerPoints: [MarkerPoint]?
+    
+    /// Asset  Features
+    public let assetFeatures: [AssetFeature]?
 }
 
 extension Asset: Codable {
@@ -155,6 +158,7 @@ extension Asset: Codable {
         try container.encodeIfPresent(userData, forKey: .userData)
         try container.encodeIfPresent(duration, forKey: .duration)
         try container.encodeIfPresent(markerPoints, forKey: .markerPoints)
+        try container.encodeIfPresent(assetFeatures, forKey: .assetFeatures)
     }
     
     public init(from decoder: Decoder) throws {
@@ -203,6 +207,7 @@ extension Asset: Codable {
         userData = try container.decodeIfPresent(AssetUserData.self, forKey: .userData)
         duration = try container.decodeIfPresent(Int64.self, forKey: .duration)
         markerPoints = try container.decodeIfPresent([MarkerPoint].self, forKey: .markerPoints)
+        assetFeatures = try container.decodeIfPresent([AssetFeature].self, forKey: .assetFeatures)
     }
 
     internal enum CodingKeys: String, CodingKey {
@@ -240,5 +245,6 @@ extension Asset: Codable {
         case userData
         case duration
         case markerPoints
+        case assetFeatures
     }
 }

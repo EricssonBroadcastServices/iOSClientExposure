@@ -25,9 +25,6 @@ let package = Package(
         .target(
             name: "iOSClientExposure",
             dependencies: [], exclude: ["Info.plist"]),
-        .target(
-            name: "iOSClientExposureObjc",
-            dependencies: []),
         .testTarget(
             name: "iOSClientExposureTests",
             dependencies: ["iOSClientExposure","Quick", "Nimble"], exclude: ["Info.plist"]),
