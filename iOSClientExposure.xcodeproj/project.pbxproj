@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68F3252C2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
+		68F3252D2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
+		68F3252F2A14B9570046D42D /* AssetFeatureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */; };
+		68F325302A14B9570046D42D /* AssetFeatureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */; };
 		7831103727EC5988009B3114 /* UPGRADE_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */; };
 		78C50F4429CD88A900DCC7C5 /* EPG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C50F4329CD88A900DCC7C5 /* EPG.swift */; };
 		78C50F4529CD88A900DCC7C5 /* EPG.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C50F4329CD88A900DCC7C5 /* EPG.swift */; };
@@ -373,6 +377,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		68F3252B2A14B9490046D42D /* AssetFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeature.swift; sourceTree = "<group>"; };
+		68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeatureImage.swift; sourceTree = "<group>"; };
 		7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = "<group>"; };
 		7831103827EC5990009B3114 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		7831103A27EC5998009B3114 /* content-discovery.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "content-discovery.md"; sourceTree = "<group>"; };
@@ -791,6 +797,8 @@
 				78E6E05927EA189F00F12EC3 /* ExternalReference.swift */,
 				78E6E05A27EA189F00F12EC3 /* AssetRights.swift */,
 				78E6E05B27EA189F00F12EC3 /* Media.swift */,
+				68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */,
+				68F3252B2A14B9490046D42D /* AssetFeature.swift */,
 				78E6E05C27EA189F00F12EC3 /* AssetList.swift */,
 				78E6E05D27EA189F00F12EC3 /* Asset.swift */,
 				78E6E05E27EA189F00F12EC3 /* Tag.swift */,
@@ -1437,6 +1445,7 @@
 				78E6E1F527EA18A700F12EC3 /* AnalyticsFromEntitlement.swift in Sources */,
 				78E6E25F27EA18AB00F12EC3 /* SessionToken.swift in Sources */,
 				78E6E15527EA18A100F12EC3 /* EventSink.swift in Sources */,
+				68F3252C2A14B9490046D42D /* AssetFeature.swift in Sources */,
 				78E6E19D27EA18A400F12EC3 /* HTTPMethod.swift in Sources */,
 				78E6E1E127EA18A600F12EC3 /* Search.swift in Sources */,
 				78E6E1F727EA18A700F12EC3 /* Sprites.swift in Sources */,
@@ -1469,6 +1478,7 @@
 				78E6E1BB27EA18A500F12EC3 /* FetchCarouselItem.swift in Sources */,
 				78E6E14B27EA18A100F12EC3 /* AnalyticsConfigResponse.swift in Sources */,
 				78E6E12D27EA18A000F12EC3 /* AES.swift in Sources */,
+				68F3252F2A14B9570046D42D /* AssetFeatureImage.swift in Sources */,
 				78E6E1BF27EA18A500F12EC3 /* FetchServerTime.swift in Sources */,
 				78E6E26B27EA18AC00F12EC3 /* Logout.swift in Sources */,
 				78E6E1A327EA18A400F12EC3 /* SessionManager.swift in Sources */,
@@ -1624,6 +1634,7 @@
 				78E6E1F627EA18A700F12EC3 /* AnalyticsFromEntitlement.swift in Sources */,
 				78E6E26027EA18AB00F12EC3 /* SessionToken.swift in Sources */,
 				78E6E15627EA18A100F12EC3 /* EventSink.swift in Sources */,
+				68F3252D2A14B9490046D42D /* AssetFeature.swift in Sources */,
 				78E6E19E27EA18A400F12EC3 /* HTTPMethod.swift in Sources */,
 				78E6E1E227EA18A700F12EC3 /* Search.swift in Sources */,
 				78E6E1F827EA18A700F12EC3 /* Sprites.swift in Sources */,
@@ -1656,6 +1667,7 @@
 				78E6E1BC27EA18A500F12EC3 /* FetchCarouselItem.swift in Sources */,
 				78E6E14C27EA18A100F12EC3 /* AnalyticsConfigResponse.swift in Sources */,
 				78E6E12E27EA18A000F12EC3 /* AES.swift in Sources */,
+				68F325302A14B9570046D42D /* AssetFeatureImage.swift in Sources */,
 				78E6E1C027EA18A500F12EC3 /* FetchServerTime.swift in Sources */,
 				78E6E26C27EA18AC00F12EC3 /* Logout.swift in Sources */,
 				78E6E1A427EA18A400F12EC3 /* SessionManager.swift in Sources */,
@@ -1832,7 +1844,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1890,7 +1902,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1917,7 +1929,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/iOSClientExposure/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1950,7 +1962,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/iOSClientExposure/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1998,7 +2010,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Debug;
 		};
@@ -2032,7 +2044,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
 			};
 			name = Release;
 		};
