@@ -16,6 +16,7 @@
     - [Content Discovery](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/content-discovery.md)
     - [Analytics Delivery](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/analytics-delivery.md)
     - [Error Handling and Response Validation](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/error-handling-and-response-validation.md)
+    - [Firebase Login](https://github.com/EricssonBroadcastServices/iOSClientExposure/blob/master/Documentation/authentication-best-practices.md)
 * [Release Notes](#release-notes)
 * [Upgrade Guides](#upgrade-guides)
 
