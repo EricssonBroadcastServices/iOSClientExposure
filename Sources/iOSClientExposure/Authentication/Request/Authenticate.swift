@@ -31,8 +31,8 @@ extension Authenticate {
     }
     
     
-    public func loginWithFirebase(firebaseToken: String, providerId: String, username: String?, email: String?, displayName: String? ) -> FirebaseLogin {
-        return FirebaseLogin(environment: environment, username: username, email: email, displayName: displayName, accessToken: firebaseToken, providerId: providerId)
+    public func loginWithFirebase(firebaseToken: String, providerId: String, username: String?, language: String?, email: String?, displayName: String? ) -> FirebaseLogin {
+        return FirebaseLogin(environment: environment, username: username, language: language, email: email, displayName: displayName, accessToken: firebaseToken, providerId: providerId)
     }
     
     /// Anonymous authentication.

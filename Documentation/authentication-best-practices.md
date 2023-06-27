@@ -22,6 +22,25 @@ Authenticate(environment: exposureEnv)
     }
 ```
 
+Login using Firebase
+```Swift
+Authenticate(environment: enviornment)
+    .loginWithFirebase(firebaseToken: accesstoken, providerId: providerId, username: username, language: code, email: email, displayName: displayName)
+    .request()
+    .validate()
+    .response {
+        if let error = $0.error {
+            // Handle Error
+        }
+        
+        
+        if let sessionToken = $0.value?.sessionToken {
+            // Store/pass along the returned SessionToken
+        }
+    }
+}
+```
+
 If the business unit is configured to support anonymous sessions , developers can request an anonymous `sessionToken`. 
 ```Swift
 Authenticate(environment: exposureEnv)

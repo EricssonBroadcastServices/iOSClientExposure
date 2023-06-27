@@ -31,14 +31,16 @@ public struct FirebaseLogin: ExposureType, Encodable {
     public let username: String?
     public let email: String?
     public let displayName: String?
+    public let language: String?
     
-    internal init(environment: Environment, username:String?, email:String?, displayName: String?, accessToken: String, providerId: String) {
+    internal init(environment: Environment, username:String?, language: String?, email:String?, displayName: String?, accessToken: String, providerId: String) {
         self.environment = environment
         self.accessToken = accessToken
         self.providerId = providerId
         self.username = username
         self.email = email
         self.displayName = displayName
+        self.language = language
     }
 
     public var endpointUrl: String {
@@ -67,6 +69,7 @@ public struct FirebaseLogin: ExposureType, Encodable {
         try container.encodeIfPresent(email, forKey: .email)
         try container.encodeIfPresent(displayName, forKey: .displayName)
         try container.encode(true, forKey: .emailVerified)
+        try container.encodeIfPresent(language, forKey: .language)
     }
     
     /// Keys used to specify `json` body for the request.
@@ -79,6 +82,7 @@ public struct FirebaseLogin: ExposureType, Encodable {
         case email
         case displayName
         case emailVerified
+        case language
     }
 }
 
