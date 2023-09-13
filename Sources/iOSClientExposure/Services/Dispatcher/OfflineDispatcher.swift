@@ -37,13 +37,13 @@ public class OfflineDispatcher {
     fileprivate var flushTrigger: Timer?
     
     /// The interval, in seconds, between each analytics flush
-    internal var flushInterval: TimeInterval = 1 * 10  // : 5 * 60  => 5 Minutes
+    internal var flushInterval: TimeInterval = 5 * 60  // : 5 * 60  => 5 Minutes
         
     /// Network handler
     internal var networkHandler: DispatcherNetworkHandler
 
     /// Internal log level
-    internal static var logLevel: LogLevel = .debug // TODO :=  Should changed to none before release //
+    internal static var logLevel: LogLevel = .none
     
     /// LogLevel option
     internal enum LogLevel {
