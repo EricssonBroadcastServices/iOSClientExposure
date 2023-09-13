@@ -14,6 +14,8 @@
 fastlane_version "2.28.7"
 
 default_platform :ios
+podspec_name = "iOSClientExposure.podspec" 
+
 
 platform :ios do
     before_all do
@@ -43,62 +45,118 @@ platform :ios do
         notify_slack_dev_success
     end
 
-    
-    lane :release do
-        version = "v" + get_version_number(
-                                           xcodeproj: "iOSClientExposure.xcodeproj",
-                                           target: "iOSClientExposure"
-                                           )
-        
-        if !git_tag_exists(tag: version)
-            
-            Action.sh("git branch '#{version}'")
-            Action.sh("git checkout '#{version}'")
-            
-            fix_dependencies
-            
-            if !Action.sh("git diff --name-only").empty?
-                Action.sh("git add -A")
-                Action.sh("git commit -m 'Version: #{version}'")
-            end
-            
-            update_graph
-            run_unit_tests
-            
-            add_git_tag(tag: version)
-            Action.sh("git push origin --all")
-            Action.sh("git push --tags")
-            
-            current_time = Time.now.to_f
-            project_name = ENV["PROJECT_TITLE"]
-            
-            slack(
-                  use_webhook_configured_username_and_icon: true,
-                  default_payloads: [],
-                  attachment_properties: {
-                        pretext: "#{project_name} #{version} released",
-                        color: "good",
-                        text: "Released!",
-                        footer: ENV["DEV_TEAM_NAME"],
-                        ts: current_time,
-                    }
-                  )
-        end
-    end
-    
-    # Private lanes
 
+    desc "Release a new version with a patch bump_type"
+    lane :patch do
+        release("patch")
+    end
+
+    desc "Release a new version with a minor bump_type"
+    lane :minor do
+        release("minor")
+    end
+
+    desc "Release a new version with a major bump_type"
+    lane :major do
+        release("major")
+    end
+
+
+    ### Build for different dependecy management systems 
+    #### 
+    ### ================== 
     desc "Build project using spm"
     lane :build_spm do
 
         sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-ios13.0-simulator"'
-        UI.success("== iOS Project Build Success ==")
+        UI.success("== iOS Project build successfully with spm ==")
 
         sh 'swift build -Xswiftc "-sdk" -Xswiftc "`xcrun --sdk appletvsimulator --show-sdk-path`" -Xswiftc "-target" -Xswiftc "x86_64-apple-tvos13.0-simulator"'
-        UI.success("== tvOS Project Build Success ==")
-
-
+        UI.success("== tvOS Project build successfully with spm ==")
     end
+
+
+    desc "Build project using Carthage"
+    lane :build_carthage do 
+        carthage(command: "update", no_skip_current: false, use_xcframeworks: true, new_resolver: true, platform: "ios")
+        UI.success("== iOS Project build successfully with Carthage ==")
+
+        carthage(command: "update", no_skip_current: false, use_xcframeworks: true, new_resolver: true, platform: "tvos")
+        UI.success("== tvOS Project build successfully with Carthage ==")
+    end
+
+    desc "Build project using Cocoapods"
+    lane :build_pod do 
+        #path = ENV["PATH"]
+        Dir.chdir("..") do
+            sh 'pod lib lint --allow-warnings'
+            #pod_lib_lint(allow_warnings: true)
+          end
+        
+    end
+
+
+    desc "Releases a new version automatically"
+    lane :release do
+    
+        pod_lib_lint(allow_warnings: true)
+        
+        version = version_bump_podspec(path: podspec_name)
+        
+        git_add(path: podspec_name)
+        git_commit(path: [podspec_name],
+               message: "#{version} release")
+        add_git_tag(tag: "#{version}")
+        push_to_git_remote
+        
+        pod_push(allow_warnings: true)
+  end
+
+    
+    # lane :release do
+    #     version = "v" + get_version_number(
+    #                                        xcodeproj: "iOSClientExposure.xcodeproj",
+    #                                        target: "iOSClientExposure"
+    #                                        )
+        
+    #     if !git_tag_exists(tag: version)
+            
+    #         Action.sh("git branch '#{version}'")
+    #         Action.sh("git checkout '#{version}'")
+            
+    #         fix_dependencies
+            
+    #         if !Action.sh("git diff --name-only").empty?
+    #             Action.sh("git add -A")
+    #             Action.sh("git commit -m 'Version: #{version}'")
+    #         end
+            
+    #         update_graph
+    #         run_unit_tests
+            
+    #         add_git_tag(tag: version)
+    #         Action.sh("git push origin --all")
+    #         Action.sh("git push --tags")
+            
+    #         current_time = Time.now.to_f
+    #         project_name = ENV["PROJECT_TITLE"]
+            
+    #         slack(
+    #               use_webhook_configured_username_and_icon: true,
+    #               default_payloads: [],
+    #               attachment_properties: {
+    #                     pretext: "#{project_name} #{version} released",
+    #                     color: "good",
+    #                     text: "Released!",
+    #                     footer: ENV["DEV_TEAM_NAME"],
+    #                     ts: current_time,
+    #                 }
+    #               )
+    #     end
+    # end
+    
+    # Private lanes
+
 
     desc "Build project using spm"
     lane :run_spm_tests do
@@ -111,6 +169,7 @@ platform :ios do
 
 
     end
+
 
     desc "Runs all the tests"
     lane :run_unit_tests do

@@ -377,6 +377,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6857B8AC2A725682003257A1 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		68F3252B2A14B9490046D42D /* AssetFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeature.swift; sourceTree = "<group>"; };
 		68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeatureImage.swift; sourceTree = "<group>"; };
 		7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = "<group>"; };
@@ -607,6 +608,7 @@
 		788C4ABA27EA0E4700223283 = {
 			isa = PBXGroup;
 			children = (
+				6857B8AC2A725682003257A1 /* fastlane */,
 				7831103927EC5998009B3114 /* Documentation */,
 				7831103F27EC59A2009B3114 /* CHANGELOG.md */,
 				7831103827EC5990009B3114 /* README.md */,
