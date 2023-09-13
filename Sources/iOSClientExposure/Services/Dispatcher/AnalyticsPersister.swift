@@ -11,6 +11,7 @@ import Foundation
 internal enum PersisterError: Error {
     case failedToPersistWithMalformattedSessionToken
     case failedToPersistMissingAccountId
+    case failedToPersistToGivenFileURL
 }
 
 /// Responsible for managing persistence of analytics data.
@@ -71,10 +72,131 @@ public struct AnalyticsPersister: StorageProvider {
         try encryptedData?.persist(as: filename, at: directoryUrl)
     }
     
+
+    
+    /// Extract persisted offline analytics from local storage
+    /// - Parameters:
+    ///   - env: EnvironmentEnvironmentEnvironmentEnvironmentEnvironment
+    ///   - session: SessionToken
+    /// - Returns: Array of `PersistedAnalytics`
+    func extractPersistOfflineAnalytics(env: Environment , session: SessionToken) throws -> [PersistedAnalytics] {
+        var allPersistedAnalytics: [PersistedAnalytics] = []
+        
+        guard let accountId = session.accountId else {
+            throw PersisterError.failedToPersistMissingAccountId
+        }
+        
+        let directoryUrl = try storageDirectory(businessUnit: env.businessUnit,
+                                                customer: env.customer,
+                                                accountId: accountId)
+        
+        return try files(at: directoryUrl, preloadingKeys: [.isDirectoryKey, .isRegularFileKey]) { url, enumerator in
+            
+            let resourceValues = try url.resourceValues(forKeys: [.isDirectoryKey, .isRegularFileKey])
+            
+            if let isDirectory = resourceValues.isDirectory, let isFile = resourceValues.isRegularFile {
+                return !isDirectory && isFile
+            }
+            return false
+        }
+        .flatMap{ url -> [PersistedAnalytics] in
+            do {
+                let data = try Data(contentsOf: url)
+                
+                // 2. Decrypt the data
+                guard let decryptedData = try decrypt(data: data) else { return allPersistedAnalytics }
+                
+                if let json = try JSONSerialization.jsonObject(with: decryptedData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] {
+                    
+                    if let sessions = json["sessions"] as? [[String:Any]]{
+                        for session in sessions {
+                            if let batch = AnalyticsBatch(persistencePayload: session) {
+                                let persistedAnalytics = PersistedAnalytics(url: url, batch: batch)
+                                allPersistedAnalytics.append(persistedAnalytics)
+                            }
+                        }
+                    }
+                    return allPersistedAnalytics
+                }
+            }
+            catch {
+                return allPersistedAnalytics
+            }
+            return allPersistedAnalytics
+        }
+    }
+    
+    /// Persist Offline Analytics
+    /// - Parameter analytics: offline analytics
+    public func persistOfflineAnalytics(analytics: OfflineAnalyticsBatch) throws {
+        
+        let filename = "\(analytics.assetId)"
+        
+        guard let accountId = analytics.sessionToken.accountId else {
+            throw PersisterError.failedToPersistMissingAccountId
+        }
+        
+        // create the directory url
+        let directoryUrl = try storageDirectory(businessUnit: analytics.businessUnit,
+                                                customer: analytics.customer,
+                                                accountId: accountId)
+        let fileURL = directoryUrl.appendingPathComponent(filename)
+        
+        do {
+            let persistedData = try Data(contentsOf: fileURL)
+
+            if let json = try JSONSerialization.jsonObject(with: persistedData, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] {
+                
+                // Check for previous sessions
+                var array = json["sessions"] as? [[String:Any]] ?? [[String:Any]]()
+                
+                var sequenceNumber = 0
+                
+                // Find the last `sequenceNumber` from the persist json
+                if let lastSequenceNumber = array.last?["sequenceNumber"] as? Int {
+                    sequenceNumber = lastSequenceNumber + 1
+                }
+                
+                let item: [String: Any] = [
+                    "sequenceNumber": sequenceNumber,
+                    "sessionId": "\(analytics.sessionId)_\(sequenceNumber)",
+                    "payload": analytics.payload.map{ $0.jsonPayload },
+                    "sessionToken": analytics.sessionToken.value,
+                    "environment": analytics.persistenceEnviornmentPayload,
+                    "analyticsBaseUrl": analytics.analyticsBaseUrl ?? analytics.environment.baseUrl,
+                    "analyticsPostInterval": analytics.analytics?.postInterval ?? 60 ,
+                    "analyticsPercentage": analytics.analytics?.percentage ?? 100
+                ]
+                
+                array.append(item)
+                var newjson = json
+                newjson["sessions"] = array
+                
+                let updatedData = try JSONSerialization.data(withJSONObject: newjson, options: .prettyPrinted)
+                
+                // 2. Encrypt the data (Currently in Utilities)
+                let encryptedData = try encrypt(data: updatedData)
+                
+                // Update the file with updated json data
+                try encryptedData?.persist(as: filename, at: directoryUrl)
+            }
+            
+        } catch {
+            let data = try JSONSerialization.data(withJSONObject: analytics.persistencePayload, options: .prettyPrinted)
+            do {
+                let encryptedData = try encrypt(data: data)
+                try encryptedData?.persist(as: filename, at: directoryUrl)
+            } catch {
+                throw PersisterError.failedToPersistToGivenFileURL
+            }
+        }
+    }
+    
+    
     /// Retrieves *all* perviously persisted analytics data related the specified `accountId`, `customer` and `businessUnit`.
     ///
     /// For more information regarding error handling in relation to `CCCryptorStatus`, please *CommonCrypto/CommonCryptoError.h*
-    /// 
+    ///
     /// - parameter accountId: account for which to retrieve data
     /// - parameter businessUnit: related to `accountId`
     /// - parameter customer: relted to `accountId`

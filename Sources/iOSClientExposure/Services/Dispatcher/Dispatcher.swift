@@ -634,12 +634,15 @@ extension Dispatcher {
     }
 }
 
+
+
 extension Dispatcher {
     /// Adds an analytics event to the currently active batch.
     /// Once that is done, the buffer will be flushed as nessescary.
     /// 
     /// - parameter event: analytics event to dispatch
     public func enqueue(event: AnalyticsEvent) {
+        
         appendToCurrentBatch(event: event)
         flush(forced: false)
     }
