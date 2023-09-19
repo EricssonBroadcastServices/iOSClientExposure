@@ -39,7 +39,7 @@ public struct OfflineAnalyticsBatch {
     let defaults = UserDefaults.standard
     
     // Starting the sequence with 1
-    var sequenceNumber = 1
+    var sequenceNumber:Int
     let ksequenceNumber: String = "SequenceNumber"
     
     internal enum CodingKeys: CodingKey {
@@ -51,7 +51,7 @@ public struct OfflineAnalyticsBatch {
         case playload
     }
     
-    public init(assetId: String, analyticsBatch: [AnalyticsBatch], sessionToken: SessionToken, environment: Environment, playToken: String, analytics: AnalyticsFromEntitlement? = nil, analyticsBaseUrl: String? = nil, payload: [AnalyticsPayload] ) {
+    public init(assetId: String, analyticsBatch: [AnalyticsBatch], sessionToken: SessionToken, environment: Environment, playToken: String, analytics: AnalyticsFromEntitlement? = nil, analyticsBaseUrl: String? = nil, payload: [AnalyticsPayload], sequenceNumber: Int ) {
         
         
         self.assetId = assetId
@@ -63,6 +63,7 @@ public struct OfflineAnalyticsBatch {
         
         self.analytics = analytics
         self.analyticsBaseUrl = analyticsBaseUrl
+        self.sequenceNumber = sequenceNumber
         
         self.payload = payload
         
@@ -108,6 +109,8 @@ public struct OfflineAnalyticsBatch {
             PersistenceKeys.assetId.rawValue: assetId,
             PersistenceKeys.sessions.rawValue: [
                 [
+                    
+                    
                     PersistenceKeys.sessionToken.rawValue: sessionToken.value,
                     PersistenceKeys.environment.rawValue: [
                         EnvironmentKeys.businessUnit.rawValue: environment.businessUnit,

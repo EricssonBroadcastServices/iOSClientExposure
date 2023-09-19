@@ -12,6 +12,7 @@ internal enum PersisterError: Error {
     case failedToPersistWithMalformattedSessionToken
     case failedToPersistMissingAccountId
     case failedToPersistToGivenFileURL
+    case failedToPersistSequenceNumber
 }
 
 /// Responsible for managing persistence of analytics data.
@@ -128,7 +129,7 @@ public struct AnalyticsPersister: StorageProvider {
     
     /// Persist Offline Analytics
     /// - Parameter analytics: offline analytics
-    public func persistOfflineAnalytics(analytics: OfflineAnalyticsBatch) throws {
+    public func persistOfflineAnalytics(analytics: OfflineAnalyticsBatch, sequenceNumber: Int) throws {
         
         let filename = "\(analytics.assetId)"
         
@@ -149,13 +150,6 @@ public struct AnalyticsPersister: StorageProvider {
                 
                 // Check for previous sessions
                 var array = json["sessions"] as? [[String:Any]] ?? [[String:Any]]()
-                
-                var sequenceNumber = 0
-                
-                // Find the last `sequenceNumber` from the persist json
-                if let lastSequenceNumber = array.last?["sequenceNumber"] as? Int {
-                    sequenceNumber = lastSequenceNumber + 1
-                }
                 
                 let item: [String: Any] = [
                     "sequenceNumber": sequenceNumber,
@@ -179,6 +173,7 @@ public struct AnalyticsPersister: StorageProvider {
                 
                 // Update the file with updated json data
                 try encryptedData?.persist(as: filename, at: directoryUrl)
+                
             }
             
         } catch {
@@ -189,6 +184,65 @@ public struct AnalyticsPersister: StorageProvider {
             } catch {
                 throw PersisterError.failedToPersistToGivenFileURL
             }
+        }
+    }
+    
+    
+    
+    /// Get the sequence number for a given session id : This will be used to create the new session id : sessionId_sequenceNumber
+    /// - Parameters:
+    ///   - businessUnit: business unit
+    ///   - customer: customer unit
+    ///   - accountId: account Id
+    ///   - sessionId: session Id
+    /// - Returns: sequence number
+    internal func getSequenceNumberForSession(businessUnit: String, customer: String, accountId: String, sessionId: String) -> Int {
+        
+        // Start the sequence Number from 1
+        var sequenceNumber = 1
+        
+        do {
+            let directoryUrl = try storageDirectory(businessUnit: businessUnit,
+                                                    customer: customer,
+                                                    accountId: accountId)
+            
+            let sequenceFileUrl = directoryUrl.appendingPathComponent("\(sessionId)")
+        
+            do {
+                // Get the data from the file
+                let sequenceData = try Data(contentsOf: sequenceFileUrl)
+                
+                // Get the sequenceNumber in Int
+                let value = sequenceData.withUnsafeBytes { $0.load(as: Int.self) }
+                
+                // Create the next sequenceNumber
+                sequenceNumber = value + 1
+                
+                // Persist new sequenceNumber
+                try self.persitSessionIds(sessionId, directoryUrl, sequenceNumber)
+                return value + 1
+                
+            } catch {
+                try self.persitSessionIds(sessionId, directoryUrl, sequenceNumber)
+                return sequenceNumber
+            }
+        } catch {
+            return sequenceNumber
+        }
+    }
+    
+    
+    /// Persist sequence number locally
+    /// - Parameters:
+    ///   - filename: filename
+    ///   - directoryUrl: directory url
+    ///   - sequenceNumber: sequence number
+    fileprivate func persitSessionIds(_ filename: String, _ directoryUrl: URL,  _ sequenceNumber: Int) throws {
+        do {
+            let data = withUnsafeBytes(of: sequenceNumber) { Data($0) }
+            try data.persist(as: filename, at: directoryUrl)
+        } catch {
+            throw PersisterError.failedToPersistSequenceNumber
         }
     }
     
@@ -248,6 +302,7 @@ public struct AnalyticsPersister: StorageProvider {
                 }
         }
     }
+
     
     /// Removes the specified analytics batch from disk
     ///

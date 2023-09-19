@@ -120,19 +120,24 @@ extension OfflineDispatcher {
                                           payload: current,
                                           analytics: currentBatch.analytics)
             
-            let newUpdatedOfflineBatch = OfflineAnalyticsBatch(assetId: assetId, analyticsBatch: [currentBatch], sessionToken: currentBatch.sessionToken, environment: currentBatch.environment, playToken: currentBatch.sessionId, payload: currentBatch.payload)
-            
             if (event.eventType == "Playback.Completed") || (event.eventType == "Playback.Aborted") || (event.eventType == "Playback.Error" || (event.eventType == "Playback.GracePeriodEnded") ) {
-                endAnalyticsSession(newUpdatedOfflineBatch)
+                endAnalyticsSession(currentBatch, assetId: assetId)
             } else {
                 // Other analytics events, do nothing
             }
         }
     }
     
-    fileprivate func endAnalyticsSession(_ newUpdatedOfflineBatch: OfflineAnalyticsBatch) {
+    fileprivate func endAnalyticsSession(_ currentBatch:AnalyticsBatch , assetId: String) {
         do {
-            try AnalyticsPersister().persistOfflineAnalytics(analytics: newUpdatedOfflineBatch)
+            var sequenceNumber = 1
+            if let accountId = currentBatch.sessionToken.accountId {
+                sequenceNumber  = AnalyticsPersister().getSequenceNumberForSession(businessUnit: currentBatch.businessUnit, customer: currentBatch.customer, accountId: accountId, sessionId: currentBatch.sessionId)
+            }
+            
+            let newUpdatedOfflineBatch = OfflineAnalyticsBatch(assetId: assetId, analyticsBatch: [currentBatch], sessionToken: currentBatch.sessionToken, environment: currentBatch.environment, playToken: currentBatch.sessionId, payload: currentBatch.payload, sequenceNumber: sequenceNumber)
+            
+            try AnalyticsPersister().persistOfflineAnalytics(analytics: newUpdatedOfflineBatch, sequenceNumber: sequenceNumber)
             OfflineDispatcher.log(message: "💾 Offline Analytics data saved to disk")
         } catch {
             // should not happen, but handle the error in case.
