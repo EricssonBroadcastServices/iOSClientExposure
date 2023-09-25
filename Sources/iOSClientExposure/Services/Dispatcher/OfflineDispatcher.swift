@@ -111,7 +111,6 @@ extension OfflineDispatcher {
             OfflineDispatcher.log(message: "⏳ GracePeriod has Started")
             self.flushTrigger?.invalidate()
         } else {
-            
             var current =  self.currentBatch.payload
             current.append(event)
             currentBatch = AnalyticsBatch(sessionToken: currentBatch.sessionToken,
@@ -139,6 +138,11 @@ extension OfflineDispatcher {
             
             try AnalyticsPersister().persistOfflineAnalytics(analytics: newUpdatedOfflineBatch, sequenceNumber: sequenceNumber)
             OfflineDispatcher.log(message: "💾 Offline Analytics data saved to disk")
+            
+            // Trying to flush the events already saved to the disk
+            self.flushTriggerEvent()
+            
+            
         } catch {
             // should not happen, but handle the error in case.
             OfflineDispatcher.log(message: "🚨 Offline Analytics saving to disk failed \(error)")
@@ -179,7 +183,9 @@ extension OfflineDispatcher {
     fileprivate func flush() {
         state = .flushing
         do {
-            let allPersistedAnalytics = try AnalyticsPersister().extractPersistOfflineAnalytics(env: currentBatch.environment, session: currentBatch.sessionToken)
+            
+            guard let accountId = currentBatch.sessionToken.accountId else { return }
+            let allPersistedAnalytics = try AnalyticsPersister().extractPersistOfflineAnalytics(env: currentBatch.environment, accountId: accountId)
             for (_, persisted ) in allPersistedAnalytics.enumerated() {
                 
                 OfflineDispatcher.log(message: "Found offline analytics from local storage")
@@ -200,8 +206,6 @@ extension OfflineDispatcher {
                     }
                 }
             }
-            
-            
         } catch {
             // Error extracting offline analytics, will try again when periodically flusher hit the clock.
             self.state = .idle

@@ -80,12 +80,8 @@ public struct AnalyticsPersister: StorageProvider {
     ///   - env: EnvironmentEnvironmentEnvironmentEnvironmentEnvironment
     ///   - session: SessionToken
     /// - Returns: Array of `PersistedAnalytics`
-    func extractPersistOfflineAnalytics(env: Environment , session: SessionToken) throws -> [PersistedAnalytics] {
+    func extractPersistOfflineAnalytics(env: Environment , accountId: String) throws -> [PersistedAnalytics] {
         var allPersistedAnalytics: [PersistedAnalytics] = []
-        
-        guard let accountId = session.accountId else {
-            throw PersisterError.failedToPersistMissingAccountId
-        }
         
         let directoryUrl = try storageDirectory(businessUnit: env.businessUnit,
                                                 customer: env.customer,
