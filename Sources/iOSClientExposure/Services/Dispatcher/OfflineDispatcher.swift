@@ -51,6 +51,8 @@ public class OfflineDispatcher {
         case debug
     }
     
+    var tmpAnalyticsBatch: String = ""
+    
     public init(environment: Environment, sessionToken: SessionToken, assetId: String, playSessionId: String, analytics: AnalyticsFromEntitlement?, startupEvents: [AnalyticsEvent] ) {
         self.currentBatch = AnalyticsBatch(sessionToken: sessionToken,
                                             environment: environment,
@@ -72,6 +74,7 @@ public class OfflineDispatcher {
     public func terminate() {
         OfflineDispatcher.log(message: "❗️ Terminating Offline Dispatcher")
         self.flushTrigger?.invalidate()
+        self.tmpAnalyticsBatch = ""
     }
     
 }
@@ -109,8 +112,6 @@ extension OfflineDispatcher {
         // If the eventType is `GracePeriodStarted`, stop the period flush trigger
         if event.eventType == "Playback.GracePeriodStarted" {
             OfflineDispatcher.log(message: "⏳ GracePeriod has Started")
-            
-            
             self.flushTrigger?.invalidate()
         } else {
             var current =  self.currentBatch.payload
@@ -192,24 +193,32 @@ extension OfflineDispatcher {
             for (_, persisted ) in allPersistedAnalytics.enumerated() {
                 
                 OfflineDispatcher.log(message: "Found offline analytics from local storage")
-  
+                
                 if persisted.batch.payload.count > 3 {
-                    self.networkHandler.deliver(batch: persisted.batch, clockOffset: 0) { [weak self] response, error in
-                        if response != nil {
-                            OfflineDispatcher.log(message: "✅ Delivered offline persisted analytics ")
-                            OfflineDispatcher.log(status:  "📤", delivery: persisted.batch)
-                            self?.state = .idle
-                            do {
-                                let _ = try AnalyticsPersister().delete(persistedAnalytics: persisted)
-                            } catch { OfflineDispatcher.log(message: "✅ Deleted delivered offline analytics") }
-                        }
-                        if let error = error {
-                            self?.state = .idle
-                            OfflineDispatcher.log(message: "🚨 Error delivering offline analytics. Dispatcher missing. Re-persisting batch: \(error.code), \(error.message)")
+                    // keep track of last delivered batch for preventing the duplications
+                    if self.tmpAnalyticsBatch == persisted.batch.sessionId {
+                        // Prevent duplications
+                    } else {
+                        self.tmpAnalyticsBatch = persisted.batch.sessionId
+                        
+                        self.networkHandler.deliver(batch: persisted.batch, clockOffset: 0) { [weak self] response, error in
+                            if response != nil {
+                                OfflineDispatcher.log(message: "✅ Delivered offline persisted analytics ")
+                                OfflineDispatcher.log(status:  "📤", delivery: persisted.batch)
+                                self?.state = .idle
+                                do {
+                                    let _ = try AnalyticsPersister().delete(persistedAnalytics: persisted)
+                                } catch { OfflineDispatcher.log(message: "✅ Deleted delivered offline analytics") }
+                            }
+                            if let error = error {
+                                self?.state = .idle
+                                OfflineDispatcher.log(message: "🚨 Error delivering offline analytics. Dispatcher missing. Re-persisting batch: \(error.code), \(error.message)")
+                            }
                         }
                     }
                 } else {
                     do {
+                        // should not happen, but handle this anyway.
                         let _ = try AnalyticsPersister().delete(persistedAnalytics: persisted)
                     } catch {
                         OfflineDispatcher.log(message: "✅ Deleted unwanted offline analytics")
@@ -221,7 +230,6 @@ extension OfflineDispatcher {
             self.state = .idle
             OfflineDispatcher.log(message: "🚨 Error extracting offline analytics : \(error)")
         }
-           
     }
 }
 
