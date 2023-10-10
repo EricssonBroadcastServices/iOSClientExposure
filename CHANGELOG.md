@@ -54,6 +54,8 @@
 #### Changes
 * `EMP-20039` Added functionality for analytics for offline playback.
 * `EMP-20039` Bumped up the minimum deployment version to `iOS/tvOS 12`.
+* `EMP-20382` Add new API `downloadverified`
+
 
 ## 3.2.1
 #### Changes
