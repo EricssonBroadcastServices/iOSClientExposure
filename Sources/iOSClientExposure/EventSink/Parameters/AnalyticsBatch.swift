@@ -126,6 +126,10 @@ public struct AnalyticsBatch {
         case businessUnit
         case url
     }
+    
+    static func ==(lhs: AnalyticsBatch, rhs: AnalyticsBatch) -> Bool {
+        return (lhs.sessionToken == rhs.sessionToken)
+    }
 }
 
 extension AnalyticsBatch {
