@@ -36,6 +36,8 @@ public struct PlayBackEntitlementV2: Codable {
     
     public let publicationId: String?
     
+    public var publicationEnd: String?
+    
     public let streamInfo: StreamInfo?
     
     public let ads: Ads?
@@ -72,6 +74,7 @@ extension PlayBackEntitlementV2 {
         playTokenExpiration = try container.decode(Int.self, forKey: .playTokenExpiration)
         productId = try container.decode(String.self, forKey: .productId)
         publicationId = try container.decodeIfPresent(String.self, forKey: .publicationId)
+        publicationEnd = try container.decodeIfPresent(String.self, forKey: .publicationEnd)
         streamInfo = try container.decodeIfPresent(StreamInfo.self, forKey: .streamInfo)
         ads = try container.decodeIfPresent(Ads.self, forKey: .ads)
         sprites = try container.decodeIfPresent([Sprites].self, forKey: .sprites)
@@ -95,6 +98,7 @@ extension PlayBackEntitlementV2 {
         case playTokenExpiration
         case productId
         case publicationId
+        case publicationEnd
         case streamInfo
         case ads
         case sprites
@@ -124,6 +128,7 @@ extension PlayBackEntitlementV2 {
         try container.encode(playTokenExpiration, forKey: .playTokenExpiration)
         try container.encodeIfPresent(productId, forKey: .productId)
         try container.encodeIfPresent(publicationId, forKey: .publicationId)
+        try container.encodeIfPresent(publicationEnd, forKey: .publicationEnd)
         try container.encodeIfPresent(streamInfo, forKey: .streamInfo)
         try container.encodeIfPresent(ads, forKey: .ads)
         try container.encodeIfPresent(sprites, forKey: .sprites)
