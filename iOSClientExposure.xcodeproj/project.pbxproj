@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		687873542AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */; };
+		687873552AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */; };
 		68F3252C2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
 		68F3252D2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
 		68F3252F2A14B9570046D42D /* AssetFeatureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */; };
@@ -377,6 +379,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineAnalyticsBatch.swift; sourceTree = "<group>"; };
 		68F3252B2A14B9490046D42D /* AssetFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeature.swift; sourceTree = "<group>"; };
 		68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeatureImage.swift; sourceTree = "<group>"; };
 		7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = "<group>"; };
@@ -758,6 +761,7 @@
 		78E6E04927EA189F00F12EC3 /* Parameters */ = {
 			isa = PBXGroup;
 			children = (
+				687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */,
 				78E6E04A27EA189F00F12EC3 /* AnalyticsBatch.swift */,
 				78E6E04B27EA189F00F12EC3 /* PersistedAnalyticsPayload.swift */,
 				78E6E04C27EA189F00F12EC3 /* AnalyticsEvent.swift */,
@@ -1575,6 +1579,7 @@
 				78E6E18327EA18A300F12EC3 /* FilteredPublish.swift in Sources */,
 				78E6E1F927EA18A700F12EC3 /* BooksMarks.swift in Sources */,
 				78E6E22127EA18A900F12EC3 /* SendDownloadCompleted.swift in Sources */,
+				687873542AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */,
 				78E6E28B27EA18AD00F12EC3 /* EncryptionProvider.swift in Sources */,
 				78E6E18D27EA18A300F12EC3 /* FetchAsset.swift in Sources */,
 				78E6E20727EA18A800F12EC3 /* Downloadinfo.swift in Sources */,
@@ -1764,6 +1769,7 @@
 				78E6E18427EA18A300F12EC3 /* FilteredPublish.swift in Sources */,
 				78E6E1FA27EA18A700F12EC3 /* BooksMarks.swift in Sources */,
 				78E6E22227EA18A900F12EC3 /* SendDownloadCompleted.swift in Sources */,
+				687873552AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */,
 				78E6E28C27EA18AD00F12EC3 /* EncryptionProvider.swift in Sources */,
 				78E6E18E27EA18A300F12EC3 /* FetchAsset.swift in Sources */,
 				78E6E20827EA18A800F12EC3 /* Downloadinfo.swift in Sources */,
