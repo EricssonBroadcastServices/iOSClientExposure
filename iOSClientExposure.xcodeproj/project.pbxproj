@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		687873542AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */; };
 		687873552AD571910047C9C0 /* OfflineAnalyticsBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */; };
+		68DED0A82AE7E2CD00FA50BF /* OfflineDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DED0A72AE7E2CD00FA50BF /* OfflineDispatcher.swift */; };
+		68DED0A92AE7E2CD00FA50BF /* OfflineDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68DED0A72AE7E2CD00FA50BF /* OfflineDispatcher.swift */; };
 		68F3252C2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
 		68F3252D2A14B9490046D42D /* AssetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252B2A14B9490046D42D /* AssetFeature.swift */; };
 		68F3252F2A14B9570046D42D /* AssetFeatureImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */; };
@@ -380,6 +382,7 @@
 
 /* Begin PBXFileReference section */
 		687873532AD571910047C9C0 /* OfflineAnalyticsBatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineAnalyticsBatch.swift; sourceTree = "<group>"; };
+		68DED0A72AE7E2CD00FA50BF /* OfflineDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineDispatcher.swift; sourceTree = "<group>"; };
 		68F3252B2A14B9490046D42D /* AssetFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeature.swift; sourceTree = "<group>"; };
 		68F3252E2A14B9570046D42D /* AssetFeatureImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssetFeatureImage.swift; sourceTree = "<group>"; };
 		7831103627EC5988009B3114 /* UPGRADE_GUIDE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = UPGRADE_GUIDE.md; sourceTree = "<group>"; };
@@ -1284,6 +1287,7 @@
 		78E6E11327EA189F00F12EC3 /* Dispatcher */ = {
 			isa = PBXGroup;
 			children = (
+				68DED0A72AE7E2CD00FA50BF /* OfflineDispatcher.swift */,
 				78E6E11427EA189F00F12EC3 /* Dispatcher.swift */,
 				78E6E11527EA189F00F12EC3 /* PersistedAnalytics.swift */,
 				78E6E11627EA189F00F12EC3 /* AnalyticsPersister.swift */,
@@ -1567,6 +1571,7 @@
 				78E6E12B27EA18A000F12EC3 /* CustomerConfigRequest.swift in Sources */,
 				78E6E1D727EA18A600F12EC3 /* SearchResponseAutocomplete.swift in Sources */,
 				78E6E15927EA18A100F12EC3 /* LocalizedData.swift in Sources */,
+				68DED0A82AE7E2CD00FA50BF /* OfflineDispatcher.swift in Sources */,
 				78E6E17F27EA18A300F12EC3 /* FilteredFields.swift in Sources */,
 				78E6E28927EA18AD00F12EC3 /* StorageProvider.swift in Sources */,
 				78E6E1D127EA18A600F12EC3 /* SearchResponseList.swift in Sources */,
@@ -1757,6 +1762,7 @@
 				78E6E12C27EA18A000F12EC3 /* CustomerConfigRequest.swift in Sources */,
 				78E6E1D827EA18A600F12EC3 /* SearchResponseAutocomplete.swift in Sources */,
 				78E6E15A27EA18A100F12EC3 /* LocalizedData.swift in Sources */,
+				68DED0A92AE7E2CD00FA50BF /* OfflineDispatcher.swift in Sources */,
 				78E6E18027EA18A300F12EC3 /* FilteredFields.swift in Sources */,
 				78E6E28A27EA18AD00F12EC3 /* StorageProvider.swift in Sources */,
 				78E6E1D227EA18A600F12EC3 /* SearchResponseList.swift in Sources */,
@@ -1941,7 +1947,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
@@ -1974,7 +1980,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;
 				SDKROOT = iphoneos;
@@ -2007,7 +2013,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;
@@ -2041,7 +2047,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.3.0;
+				MARKETING_VERSION = 3.4.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.emp.Exposure;
 				PRODUCT_NAME = iOSClientExposure;

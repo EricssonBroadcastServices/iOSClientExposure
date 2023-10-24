@@ -44,7 +44,7 @@ public class Dispatcher {
     fileprivate var configuration: Configuration
     
     /// Provides the `dispatcher` with a configured heartbeat if available
-    fileprivate var heartbeatsProvider: () -> AnalyticsEvent?
+    public var heartbeatsProvider: () -> AnalyticsEvent?
     
     /// Simple timer used to trigger the anaytics flush proceedure
     fileprivate var flushTrigger: Timer?
@@ -139,7 +139,6 @@ public class Dispatcher {
         }
     }
 }
-
 
 
 extension Dispatcher {
@@ -643,7 +642,13 @@ extension Dispatcher {
     /// - parameter event: analytics event to dispatch
     public func enqueue(event: AnalyticsEvent) {
         
-        appendToCurrentBatch(event: event)
+        // Prevent sending `GracePeriodStarted` event as an analytic event. 
+        if event.eventType == "Playback.GracePeriodStarted" {
+            Dispatcher.log(message: "⏳ GracePeriod has Started")
+            self.flushTrigger?.invalidate()
+        } else {
+            appendToCurrentBatch(event: event)
+        }
         flush(forced: false)
     }
     
