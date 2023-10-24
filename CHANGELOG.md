@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `3.4.0` Release - [3.4.0](#340)
 * `3.3.0` Release - [3.3.0](#330)
 * `3.2.1` Release - [3.2.1](#321)
 * `3.2.0` Release - [3.2.0](#320)
@@ -48,6 +49,11 @@
 * `0.72.x` Releases - [0.72.0](#0720)
 * `0.2.x` Releases - [0.2.0](#020) | [0.2.1](#021) | [0.2.2](#022)
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
+
+
+## 3.4.0
+#### Features
+* `EMP-13788` Add support for analytics events `Playback.AppBackgrounded` , `Playback.AppResumed` & `Playback.GracePeriodEnded`
 
 
 ## 3.3.0
