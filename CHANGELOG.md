@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* `3.4.1` Release - [3.4.1](#341)
 * `3.4.0` Release - [3.4.0](#340)
 * `3.3.0` Release - [3.3.0](#330)
 * `3.2.1` Release - [3.2.1](#321)
@@ -51,6 +52,12 @@
 * `0.1.x` Releases - [0.1.0](#010) | [0.1.1](#011) | [0.1.2](#012) | [0.1.3](#013) | [0.1.4](#014) | [0.1.5](#015) | [0.1.6](#016) | [0.1.7](#017) | [0.1.8](#018) | [0.1.9](#019)
 
 
+## 3.4.1
+#### Bug Fix
+* `EMP-21115` Resolved the inconsistency in reporting VideoLength within `Playback.Started` events.
+* `EMP-21114` Fixed an issue related to duplicate offline analytics events
+*  Corrected the typo issue : `flushOfflineAnalytics()`
+
 ## 3.4.0
 #### Features
 * `EMP-13788` Add support for analytics events `Playback.AppBackgrounded` , `Playback.AppResumed` & `Playback.GracePeriodEnded`
@@ -76,7 +83,6 @@
 * `EMP-19630` pass `deviceMake`, `deviceModel` when making entitlement calls for playback & downloads. 
 * `EMP-19630` Added new ssai params `ifa`, `ifaType` & `limitAdTracking`
 * `EMP-19630` change the value of the `deviceType` to `ctv,tablet or mobile` in ssai params in SDK as fallback values.  
-
 
 ## 3.1.600
 #### Changes

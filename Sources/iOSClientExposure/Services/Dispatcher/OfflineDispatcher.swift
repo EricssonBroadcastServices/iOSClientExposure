@@ -146,7 +146,6 @@ extension OfflineDispatcher {
             // Trying to flush the events already saved to the disk
             self.flushTriggerEvent()
             
-            
         } catch {
             // should not happen, but handle the error in case.
             OfflineDispatcher.log(message: "🚨 Offline Analytics saving to disk failed \(error)")
@@ -167,6 +166,8 @@ extension OfflineDispatcher {
     
     /// Invalidate flush trigger
     fileprivate func invalidateFlushTrigger() {
+        
+        OfflineDispatcher.log(message:"🔪 Invalidating flush trigger !")
         flushTrigger?.invalidate()
         flushTrigger = nil
     }
@@ -183,6 +184,18 @@ extension OfflineDispatcher {
         }
     }
     
+    
+    /// Delete already delivered analytics batch
+    /// - Parameter persisted: PersistedAnalytics
+    fileprivate func deleteAlreadyDeliveredBatch(_ persisted: PersistedAnalytics) {
+        do {
+            let _ = try AnalyticsPersister().delete(persistedAnalytics: persisted)
+            OfflineDispatcher.log(message: "✅ Deleted delivered offline analytics")
+        } catch {
+            OfflineDispatcher.log(message: "🚨 Error on deleted delivered offline analytics \(error.localizedDescription)")
+        }
+    }
+    
     /// Flusing Offline analytics tp backend event sink
     fileprivate func flush() {
         state = .flushing
@@ -192,23 +205,23 @@ extension OfflineDispatcher {
             let allPersistedAnalytics = try AnalyticsPersister().extractPersistOfflineAnalytics(env: currentBatch.environment, accountId: accountId)
             for (_, persisted ) in allPersistedAnalytics.enumerated() {
                 
-                OfflineDispatcher.log(message: "Found offline analytics from local storage")
-                
+                OfflineDispatcher.log(message: "⛲️ Found offline analytics from local storage")
+
                 if persisted.batch.payload.count > 3 {
                     // keep track of last delivered batch for preventing the duplications
                     if self.tmpAnalyticsBatch == persisted.batch.sessionId {
                         // Prevent duplications
+                        self.deleteAlreadyDeliveredBatch(persisted)
                     } else {
                         self.tmpAnalyticsBatch = persisted.batch.sessionId
-                        
+
                         self.networkHandler.deliver(batch: persisted.batch, clockOffset: 0) { [weak self] response, error in
                             if response != nil {
                                 OfflineDispatcher.log(message: "✅ Delivered offline persisted analytics ")
                                 OfflineDispatcher.log(status:  "📤", delivery: persisted.batch)
                                 self?.state = .idle
-                                do {
-                                    let _ = try AnalyticsPersister().delete(persistedAnalytics: persisted)
-                                } catch { OfflineDispatcher.log(message: "✅ Deleted delivered offline analytics") }
+                                
+                                self?.deleteAlreadyDeliveredBatch(persisted)
                             }
                             if let error = error {
                                 self?.state = .idle
