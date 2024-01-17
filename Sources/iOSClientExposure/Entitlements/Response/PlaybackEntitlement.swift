@@ -114,7 +114,9 @@ public struct PlaybackEntitlement: Codable {
     
     public let epg: EPG?
     
-    public init( assetId: String?, accountId: String?, audioOnly: Bool?, playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? , cdn: CDNInfoFromEntitlement? = nil, analytics: AnalyticsFromEntitlement? = nil, liveDelay: Int64? = nil , epg: EPG? = nil ) {
+    public let durationInMs: Double?
+    
+    public init( assetId: String?, accountId: String?, audioOnly: Bool?, playTokenExpiration: String, mediaLocator: URL, playSessionId: String, live: Bool, ffEnabled: Bool, timeshiftEnabled: Bool, rwEnabled: Bool, airplayBlocked: Bool, playToken: String?, fairplay: FairplayConfiguration?, licenseExpiration: String?, licenseExpirationReason: String?, licenseActivation: String?, entitlementType: String?, minBitrate: Int64?, maxBitrate: Int64?, maxResHeight: Int?, mdnRequestRouterUrl: String?, lastViewedOffset: Int?, lastViewedTime: Int64?, liveTime: Int64?, productId: String?, adMediaLocator: URL? , cdn: CDNInfoFromEntitlement? = nil, analytics: AnalyticsFromEntitlement? = nil, liveDelay: Int64? = nil , epg: EPG? = nil,  durationInMs: Double? = nil  ) {
         
         self.accountId = accountId
         self.assetId = assetId
@@ -146,6 +148,7 @@ public struct PlaybackEntitlement: Codable {
         self.analytics = analytics
         self.liveDelay = liveDelay
         self.epg = epg
+        self.durationInMs = durationInMs
     }
 }
 
@@ -194,6 +197,7 @@ extension PlaybackEntitlement {
         
         liveDelay = try container.decodeIfPresent(Int64.self, forKey: .liveDelay)
         epg = try container.decodeIfPresent(EPG.self, forKey: .epg)
+        durationInMs = try container.decodeIfPresent(Double.self, forKey: .durationInMs)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -238,6 +242,7 @@ extension PlaybackEntitlement {
         
         try container.encodeIfPresent(liveDelay, forKey: .liveDelay)
         try container.encodeIfPresent(epg, forKey: .epg)
+        try container.encodeIfPresent(durationInMs, forKey: .durationInMs)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -267,12 +272,10 @@ extension PlaybackEntitlement {
         case liveTime
         case productId
         case adMediaLocator
-        
         case cdn
         case analytics
-        
         case liveDelay
-        
         case epg
+        case durationInMs
     }
 }

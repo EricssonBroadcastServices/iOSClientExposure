@@ -17,7 +17,7 @@ public class BackgroundAnalyticsManager {
     public init() {}
 
     /// Pass notification `didRefreshedInBackgroundNotification`
-    public func fushOfflineAnalytics() {
+    public func flushOfflineAnalytics() {
         let notificationName = "didRefreshedInBackgroundNotification"
         NotificationCenter.default.post(name:  NSNotification.Name(rawValue:notificationName), object: nil)
     }
