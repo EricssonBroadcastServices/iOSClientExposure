@@ -63,9 +63,10 @@ public class SessionManager {
         let requestUrl = try url.asURL()
         var urlRequest = URLRequest(url: requestUrl)
         urlRequest.httpMethod = method.rawValue
-        headers?.forEach{ key, value in
+        headers?.forEach { key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
+        urlRequest.setValue(CustomUserAgent.stringValue, forHTTPHeaderField: "User-Agent")
         return urlRequest
     }
     
