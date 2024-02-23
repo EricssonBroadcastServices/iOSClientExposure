@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -378,6 +378,8 @@
 		78E6E28E27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */; };
 		78FD660228E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
 		78FD660328E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
+		DC0F8EB52B88D2C300BAB474 /* CustomUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */; };
+		DC0F8EB62B88D2C300BAB474 /* CustomUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -578,6 +580,7 @@
 		78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherNetworkHandler.swift; sourceTree = "<group>"; };
 		78E6E29F27EA18F400F12EC3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78FD660128E2E6E70074B31E /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserAgent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -864,6 +867,7 @@
 				78E6E07A27EA189F00F12EC3 /* Response.swift */,
 				78E6E07B27EA189F00F12EC3 /* Request.swift */,
 				78E6E07C27EA189F00F12EC3 /* SessionManager.swift */,
+				DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */,
 				78E6E07D27EA189F00F12EC3 /* URLEncoding.swift */,
 				78E6E07E27EA189F00F12EC3 /* SessionDelegate.swift */,
 			);
@@ -1490,6 +1494,7 @@
 				78E6E1BF27EA18A500F12EC3 /* FetchServerTime.swift in Sources */,
 				78E6E26B27EA18AC00F12EC3 /* Logout.swift in Sources */,
 				78E6E1A327EA18A400F12EC3 /* SessionManager.swift in Sources */,
+				DC0F8EB52B88D2C300BAB474 /* CustomUserAgent.swift in Sources */,
 				78E6E27327EA18AC00F12EC3 /* Authenticate.swift in Sources */,
 				78E6E15F27EA18A100F12EC3 /* Person.swift in Sources */,
 				78E6E19127EA18A300F12EC3 /* FetchAssetList.swift in Sources */,
@@ -1681,6 +1686,7 @@
 				78E6E1C027EA18A500F12EC3 /* FetchServerTime.swift in Sources */,
 				78E6E26C27EA18AC00F12EC3 /* Logout.swift in Sources */,
 				78E6E1A427EA18A400F12EC3 /* SessionManager.swift in Sources */,
+				DC0F8EB62B88D2C300BAB474 /* CustomUserAgent.swift in Sources */,
 				78E6E27427EA18AC00F12EC3 /* Authenticate.swift in Sources */,
 				78E6E16027EA18A200F12EC3 /* Person.swift in Sources */,
 				78E6E19227EA18A300F12EC3 /* FetchAssetList.swift in Sources */,
