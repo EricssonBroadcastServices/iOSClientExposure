@@ -43,13 +43,16 @@ extension FetchEpg {
     ///
     /// - returns: `FetchEpgChannelList` struct used to process the request.
     public func channels() -> FetchEpgChannelList {
-        return FetchEpgChannelList(environment: environment)
+        return FetchEpgChannelList(
+            environment: environment,
+            date: date,
+            version: version
+        )
     }
     
     /// Fetches EPG data for a specific channel.
     ///
     /// - parameter id: channel to requested
-    /// - parameter version: endpoint version to be Used (v2 recommended)
     /// - returns: `FetchEpgChannel` struct used to process the request.
     public func channel(id: String) -> FetchEpgChannel {
         return FetchEpgChannel(
@@ -65,8 +68,12 @@ extension FetchEpg {
     /// - parameter ids: array of channelIds to request
     /// - returns: `FetchEpgChannelList` struct used to process the request.
     public func channels(ids: [String]) -> FetchEpgChannelList {
-        return FetchEpgChannelList(environment: environment)
-            .filter(onlyAssetIds: ids)
+        return FetchEpgChannelList(
+            environment: environment,
+            date: date,
+            version: version
+        )
+        .filter(onlyAssetIds: ids)
     }
     
     /// Fetches programming data for a specific program on a specified channel.

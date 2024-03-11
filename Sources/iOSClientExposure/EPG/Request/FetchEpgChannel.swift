@@ -41,6 +41,7 @@ public struct FetchEpgChannel: ExposureType, SortedResponse, PageableResponse, F
     
     /// `Environment` to use
     public let environment: Environment
+    
     private let version: FetchEpg.Version
     private let date: Date
     
@@ -87,7 +88,6 @@ public struct FetchEpgChannel: ExposureType, SortedResponse, PageableResponse, F
             ]
         case .v2:
             params = [
-                Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
                 Keys.pageNumber.rawValue: pageFilter.page,
                 Keys.pageSize.rawValue: pageFilter.size,
                 Keys.daysBackward.rawValue: dateFilter.daysBackward(date: date),
