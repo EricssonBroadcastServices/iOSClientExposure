@@ -18,6 +18,19 @@ extension Date {
         return formatter
     }
     
+    /// The simple date (YYYY-MM-DD)
+    private func simpleDateFormatter() -> DateFormatter {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_GB")
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }
+    
+    /// Todays string date in simple format (YYYY-MM-DD)
+    public var todaySimple: String {
+        simpleDateFormatter().string(from: self)
+    }
+    
     /// Unix epoch time in milliseconds
     public var millisecondsSince1970: Int64 {
         return Int64((timeIntervalSince1970 * 1000.0).rounded())
