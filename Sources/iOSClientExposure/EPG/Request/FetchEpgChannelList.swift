@@ -41,13 +41,13 @@ public struct FetchEpgChannelList: ExposureType, SortedResponse, PageableRespons
     /// `Environment` to use
     public let environment: Environment
     
-    private let version: FetchEpg.Version
+    private let version: FetchEpg.EnvironmentVersion
     private let date: Date
     
     internal init(
         environment: Environment,
         date: Date = Date(),
-        version: FetchEpg.Version
+        version: FetchEpg.EnvironmentVersion
     ) {
         self.environment = environment
         self.sortDescription = SortDescription()

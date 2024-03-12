@@ -12,7 +12,7 @@ import Foundation
 public struct FetchEpg {
     /// `Environment` to use
     public let environment: Environment
-    private let version: Version
+    private let version: EnvironmentVersion
     private let date: Date
     
     @available(
@@ -28,7 +28,7 @@ public struct FetchEpg {
     public init(
         environment: Environment,
         date: Date = Date(),
-        version: Version
+        version: EnvironmentVersion = .v2
     ) {
         var env = environment
         env.version = version.rawValue
@@ -112,7 +112,7 @@ extension FetchEpg {
 //MARK: - FetchEpg Endpoint Version
 
 public extension FetchEpg {
-    enum Version: String {
+    enum EnvironmentVersion: String {
         case v1
         case v2
     }
