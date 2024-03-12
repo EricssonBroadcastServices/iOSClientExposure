@@ -13,7 +13,12 @@ public struct FetchEpgChannel: ExposureType, SortedResponse, PageableResponse, F
     public typealias Response = ChannelEpg
     
     public var endpointUrl: String {
-        return environment.apiUrl + "/epg/" + channelId
+        switch version {
+        case .v1:
+            return environment.apiUrl + "/epg/" + channelId
+        case .v2:
+            return environment.apiUrl + "/epg/" + channelId + "/date/" + date.todaySimple
+        }
     }
     
     public var parameters: [String: Any] {
@@ -37,7 +42,15 @@ public struct FetchEpgChannel: ExposureType, SortedResponse, PageableResponse, F
     /// `Environment` to use
     public let environment: Environment
     
-    internal init(environment: Environment, channelId: String) {
+    private let version: FetchEpg.EnvironmentVersion
+    private let date: Date
+    
+    internal init(
+        environment: Environment,
+        channelId: String,
+        date: Date = Date(),
+        version: FetchEpg.EnvironmentVersion
+    ) {
         self.environment = environment
         self.channelId = channelId
         
@@ -45,25 +58,42 @@ public struct FetchEpgChannel: ExposureType, SortedResponse, PageableResponse, F
         self.pageFilter = PageFilter()
         self.publishFilter = PublishFilter()
         self.dateFilter = DateFilter()
+        
+        self.date = date
+        self.version = version
     }
     
     internal enum Keys: String {
-        case onlyPublished = "onlyPublished"
-        case pageSize = "pageSize"
-        case pageNumber = "pageNumber"
-        case sort = "sort"
-        case from = "from"
-        case to = "to"
+        case onlyPublished
+        case pageSize
+        case pageNumber
+        case sort
+        case from
+        case to
+        case daysBackward
+        case daysForward
     }
     
     internal var queryParams: [String: Any] {
-        var params:[String: Any] = [
-            Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
-            Keys.pageNumber.rawValue: pageFilter.page,
-            Keys.pageSize.rawValue: pageFilter.size,
-            Keys.from.rawValue: dateFilter.startMillis,
-            Keys.to.rawValue: dateFilter.endMillis
-        ]
+        var params:[String: Any]
+        
+        switch version {
+        case .v1:
+            params = [
+                Keys.onlyPublished.rawValue: publishFilter.onlyPublished,
+                Keys.pageNumber.rawValue: pageFilter.page,
+                Keys.pageSize.rawValue: pageFilter.size,
+                Keys.from.rawValue: dateFilter.startMillis,
+                Keys.to.rawValue: dateFilter.endMillis
+            ]
+        case .v2:
+            params = [
+                Keys.pageNumber.rawValue: pageFilter.page,
+                Keys.pageSize.rawValue: pageFilter.size,
+                Keys.daysBackward.rawValue: dateFilter.daysBackward(date: date),
+                Keys.daysForward.rawValue: dateFilter.daysForward(date: date)
+            ]
+        }
         
         if let sort = sortDescription.descriptors {
             // Query string is keys separated by ",".
