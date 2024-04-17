@@ -378,6 +378,8 @@
 		78E6E28E27EA18AD00F12EC3 /* DispatcherNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */; };
 		78FD660228E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
 		78FD660328E2E6E70074B31E /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FD660128E2E6E70074B31E /* Version.swift */; };
+		DC0D6C672BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DC0D6C662BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy */; };
+		DC0D6C682BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = DC0D6C662BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy */; };
 		DC0F8EB52B88D2C300BAB474 /* CustomUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */; };
 		DC0F8EB62B88D2C300BAB474 /* CustomUserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */; };
 /* End PBXBuildFile section */
@@ -580,6 +582,7 @@
 		78E6E11B27EA189F00F12EC3 /* DispatcherNetworkHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherNetworkHandler.swift; sourceTree = "<group>"; };
 		78E6E29F27EA18F400F12EC3 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78FD660128E2E6E70074B31E /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
+		DC0D6C662BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		DC0F8EB42B88D2C300BAB474 /* CustomUserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserAgent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -641,6 +644,7 @@
 				78E6E08727EA189F00F12EC3 /* Exposure.h */,
 				78FD660128E2E6E70074B31E /* Version.swift */,
 				78E6E0F327EA189F00F12EC3 /* ExposureType.swift */,
+				DC0D6C662BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy */,
 				78E6E02C27EA189F00F12EC3 /* CustomerConfig */,
 				78E6E03227EA189F00F12EC3 /* Crypto */,
 				78E6E03427EA189F00F12EC3 /* Rating */,
@@ -1409,6 +1413,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC0D6C672BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy in Resources */,
 				7831103727EC5988009B3114 /* UPGRADE_GUIDE.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1417,6 +1422,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC0D6C682BD0086A00D8E3F7 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
