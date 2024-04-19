@@ -11,7 +11,8 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "iOSClientExposure",
-            targets: ["iOSClientExposure"]),
+            targets: ["iOSClientExposure"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -24,9 +25,14 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "iOSClientExposure",
-            dependencies: [], exclude: ["Info.plist"]),
+            dependencies: [], 
+            exclude: ["Info.plist"],
+            resources: [.copy("PrivacyInfo.xcprivacy")]
+        ),
         .testTarget(
             name: "iOSClientExposureTests",
-            dependencies: ["iOSClientExposure","Quick", "Nimble"], exclude: ["Info.plist"]),
+            dependencies: ["iOSClientExposure","Quick", "Nimble"], 
+            exclude: ["Info.plist"]
+        ),
     ]
 )
