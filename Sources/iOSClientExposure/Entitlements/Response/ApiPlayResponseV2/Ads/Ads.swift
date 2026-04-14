@@ -15,7 +15,8 @@ public struct Ads: Codable {
     public let insertionDuration: Int?
     public let insertionMaxCount: Int?
     public let clips: [AdClips]?
-    
+	public let adMarkers: [AdMarker]?
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         stitcher = try container.decodeIfPresent(String.self, forKey: .stitcher)
@@ -23,7 +24,7 @@ public struct Ads: Codable {
         insertionDuration = try container.decodeIfPresent(Int.self, forKey: .insertionDuration)
         insertionMaxCount = try container.decodeIfPresent(Int.self, forKey: .insertionMaxCount)
         clips = try container.decodeIfPresent([AdClips].self, forKey: .clips)
-        
+		adMarkers = try container.decodeIfPresent([AdMarker].self, forKey: .adMarkers)
     }
     
     internal enum CodingKeys: String, CodingKey {
@@ -32,6 +33,7 @@ public struct Ads: Codable {
         case insertionDuration
         case insertionMaxCount
         case clips
+		case adMarkers
     }
 }
 
