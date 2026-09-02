@@ -220,6 +220,8 @@
 		78E6E1EE27EA18A700F12EC3 /* VideoClicks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B527EA189F00F12EC3 /* VideoClicks.swift */; };
 		78E6E1EF27EA18A700F12EC3 /* AdClips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B627EA189F00F12EC3 /* AdClips.swift */; };
 		78E6E1F027EA18A700F12EC3 /* AdClips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B627EA189F00F12EC3 /* AdClips.swift */; };
+		AD1A2B3C4D5E6F7080910012 /* AdMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A2B3C4D5E6F7080910011 /* AdMarker.swift */; };
+		AD1A2B3C4D5E6F7080910013 /* AdMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1A2B3C4D5E6F7080910011 /* AdMarker.swift */; };
 		78E6E1F127EA18A700F12EC3 /* AdTrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B727EA189F00F12EC3 /* AdTrackingEvents.swift */; };
 		78E6E1F227EA18A700F12EC3 /* AdTrackingEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B727EA189F00F12EC3 /* AdTrackingEvents.swift */; };
 		78E6E1F327EA18A700F12EC3 /* Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78E6E0B827EA189F00F12EC3 /* Ads.swift */; };
@@ -501,6 +503,7 @@
 		78E6E0B227EA189F00F12EC3 /* Downloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
 		78E6E0B527EA189F00F12EC3 /* VideoClicks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoClicks.swift; sourceTree = "<group>"; };
 		78E6E0B627EA189F00F12EC3 /* AdClips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdClips.swift; sourceTree = "<group>"; };
+		AD1A2B3C4D5E6F7080910011 /* AdMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdMarker.swift; sourceTree = "<group>"; };
 		78E6E0B727EA189F00F12EC3 /* AdTrackingEvents.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdTrackingEvents.swift; sourceTree = "<group>"; };
 		78E6E0B827EA189F00F12EC3 /* Ads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Ads.swift; sourceTree = "<group>"; };
 		78E6E0B927EA189F00F12EC3 /* AnalyticsFromEntitlement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsFromEntitlement.swift; sourceTree = "<group>"; };
@@ -1079,6 +1082,7 @@
 			children = (
 				78E6E0B527EA189F00F12EC3 /* VideoClicks.swift */,
 				78E6E0B627EA189F00F12EC3 /* AdClips.swift */,
+				AD1A2B3C4D5E6F7080910011 /* AdMarker.swift */,
 				78E6E0B727EA189F00F12EC3 /* AdTrackingEvents.swift */,
 				78E6E0B827EA189F00F12EC3 /* Ads.swift */,
 			);
@@ -1485,6 +1489,7 @@
 				78E6E23B27EA18AA00F12EC3 /* FetchLastViewedOffsetList.swift in Sources */,
 				78E6E21527EA18A800F12EC3 /* PlayEnigmaAsset.swift in Sources */,
 				78E6E1EF27EA18A700F12EC3 /* AdClips.swift in Sources */,
+				AD1A2B3C4D5E6F7080910012 /* AdMarker.swift in Sources */,
 				78E6E16527EA18A200F12EC3 /* ExternalReference.swift in Sources */,
 				78E6E12727EA189F00F12EC3 /* CustomerConfig.swift in Sources */,
 				78E6E28127EA18AD00F12EC3 /* Dispatcher.swift in Sources */,
@@ -1677,6 +1682,7 @@
 				78E6E23C27EA18AA00F12EC3 /* FetchLastViewedOffsetList.swift in Sources */,
 				78E6E21627EA18A800F12EC3 /* PlayEnigmaAsset.swift in Sources */,
 				78E6E1F027EA18A700F12EC3 /* AdClips.swift in Sources */,
+				AD1A2B3C4D5E6F7080910013 /* AdMarker.swift in Sources */,
 				78E6E16627EA18A200F12EC3 /* ExternalReference.swift in Sources */,
 				78E6E12827EA18A000F12EC3 /* CustomerConfig.swift in Sources */,
 				78E6E28227EA18AD00F12EC3 /* Dispatcher.swift in Sources */,
